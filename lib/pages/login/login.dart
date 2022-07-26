@@ -250,7 +250,7 @@ class _LogInState extends State<LogIn> {
                     fontSize: 20),
               ),
             );
-            _scaffoldkey.currentState!.showSnackBar(snackbar);
+            // _scaffoldkey.currentState!.showSnackBar(snackbar);
           }
         },
         child: Container(
@@ -424,7 +424,7 @@ class _LogInState extends State<LogIn> {
       padding: const EdgeInsets.all(10),
       child: TextFormField(
         validator: ((value) {
-          if (value!.isEmpty ) {
+          if (value!.isEmpty) {
             return "ກາລຸນາໃສ່ນາມສະກຸນໃຫ້ຖືກຕ້ອງ";
           } else {
             return null;
@@ -452,10 +452,9 @@ class _LogInState extends State<LogIn> {
               content: Text(
                 "ລົງທະບຽນສຳເລັດແລ້ວ",
                 style: TextStyle(
-                  fontFamily: 'NotoSansLao-Regular',
-                  fontSize: 20,
-                  color: Colors.white
-                ),
+                    fontFamily: 'NotoSansLao-Regular',
+                    fontSize: 20,
+                    color: Colors.white),
               ),
             );
             _scaffoldkey.currentState!.showSnackBar(snackbar);
