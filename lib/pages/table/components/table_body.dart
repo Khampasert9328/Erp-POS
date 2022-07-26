@@ -5,9 +5,10 @@ class TableBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        "hiii Table",
+    return SingleChildScrollView(
+      child: Column(
+        
+
       ),
     );
   }
