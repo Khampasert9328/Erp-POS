@@ -1,3 +1,4 @@
+import 'package:erp_pos/constant/images.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 
@@ -308,7 +309,7 @@ class _Dasboard1State extends State<Dasboard1> {
                             height: 42,
                             width: 42,
                             child: Image.asset(
-                              "images/Rectangle 4598.png",
+                              POSImages.staregg,
                             ),
                           ),
                           const SizedBox(
@@ -334,7 +335,7 @@ class _Dasboard1State extends State<Dasboard1> {
                                         width: 8,
                                         height: 8,
                                         child: Image.asset(
-                                          "images/Ellipse 71.png",
+                                          POSImages.tiger,
                                         ),
                                       ),
                                       const SizedBox(
@@ -386,7 +387,7 @@ class _Dasboard1State extends State<Dasboard1> {
                             height: 42,
                             width: 42,
                             child: Image.asset(
-                              "images/Rectangle 4599.png",
+                              POSImages.tiger,
                             ),
                           ),
                           const SizedBox(
@@ -412,7 +413,7 @@ class _Dasboard1State extends State<Dasboard1> {
                                         width: 8,
                                         height: 8,
                                         child: Image.asset(
-                                          "images/Ellipse 71.png",
+                                          POSImages.tiger,
                                         ),
                                       ),
                                       const SizedBox(
@@ -460,12 +461,10 @@ class _Dasboard1State extends State<Dasboard1> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
+                          Image.asset(
                             height: 42,
                             width: 42,
-                            child: Image.asset(
-                              "images/Rectangle 4598.png",
-                            ),
+                            POSImages.cocacola,
                           ),
                           const SizedBox(
                             width: 10,
@@ -490,7 +489,7 @@ class _Dasboard1State extends State<Dasboard1> {
                                         width: 8,
                                         height: 8,
                                         child: Image.asset(
-                                          "images/Ellipse 74.png",
+                                          POSImages.yellow,
                                         ),
                                       ),
                                       const SizedBox(
@@ -572,7 +571,7 @@ class _Dasboard1State extends State<Dasboard1> {
                               height: 65,
                               width: 65,
                               child: Image.asset(
-                                'images/Rectangle 4598.png',
+                                POSImages.bcelone,
                               ),
                             ),
                             const Padding(
@@ -646,7 +645,7 @@ class _Dasboard1State extends State<Dasboard1> {
                               height: 65,
                               width: 65,
                               child: Image.asset(
-                                'images/unnamed 7.png',
+                                POSImages.bcelone,
                               ),
                             ),
                             const Padding(
@@ -720,7 +719,7 @@ class _Dasboard1State extends State<Dasboard1> {
                               height: 65,
                               width: 65,
                               child: Image.asset(
-                                'images/1200x600wa 2.png',
+                                POSImages.mmoney,
                               ),
                             ),
                             const Padding(
@@ -776,7 +775,6 @@ class _Dasboard1State extends State<Dasboard1> {
                         ),
                       ),
                     ),
-
                     const SizedBox(
                       height: 10,
                     ),
@@ -795,7 +793,7 @@ class _Dasboard1State extends State<Dasboard1> {
                               height: 65,
                               width: 65,
                               child: Image.asset(
-                                'images/unnamed 8.png',
+                                POSImages.umoney,
                               ),
                             ),
                             const Padding(
