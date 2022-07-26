@@ -1,14 +1,14 @@
 import 'package:erp_pos/pages/table/components/table_body.dart';
 import 'package:flutter/material.dart';
 
-class Table extends StatefulWidget {
-  const Table({Key? key}) : super(key: key);
+class POSTable extends StatefulWidget {
+  const POSTable({Key? key}) : super(key: key);
 
   @override
-  State<Table> createState() => _TableState();
+  State<POSTable> createState() => _POSTableState();
 }
 
-class _TableState extends State<Table> {
+class _POSTableState extends State<POSTable> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
