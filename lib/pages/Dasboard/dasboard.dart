@@ -91,10 +91,10 @@ class _DasboardState extends State<Dasboard> {
             ),
           ),
         ),
-        body: const TabBarView(
+        body:  TabBarView(
           children: [
             Dasboard1(),
-            Table1(),
+            Table(),
             Menu(),
             Order(),
             Bill(),
