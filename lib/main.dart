@@ -1,5 +1,5 @@
 import 'package:erp_pos/pages/Dasboard/dasboard.dart';
-import 'package:erp_pos/pages/login/login.dart';
+import 'constant/routes.dart' as custom_route;
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,8 +11,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
+      routes: custom_route.Route.getAll(),
       home: Dasboard(),
     );
   }
