@@ -2,7 +2,7 @@ import 'package:erp_pos/pages/Bill/bill.dart';
 import 'package:erp_pos/pages/Dasboard/dasboard1.dart';
 import 'package:erp_pos/pages/Menu/menu.dart';
 import 'package:erp_pos/pages/Order/order.dart';
-import 'package:erp_pos/pages/Table/table.dart';
+import 'package:erp_pos/pages/table/table.dart';
 import 'package:flutter/material.dart';
 
 class Dasboard extends StatefulWidget {
@@ -91,10 +91,10 @@ class _DasboardState extends State<Dasboard> {
             ),
           ),
         ),
-        body: const TabBarView(
+        body:  TabBarView(
           children: [
             Dasboard1(),
-            Table1(),
+            Table(),
             Menu(),
             Order(),
             Bill(),

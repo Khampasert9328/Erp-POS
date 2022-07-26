@@ -11,8 +11,6 @@ class Table extends StatefulWidget {
 class _TableState extends State<Table> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: TableBody(),
-    );
+    return Container();
   }
 }
