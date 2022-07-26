@@ -11,6 +11,11 @@ class POSTable extends StatefulWidget {
 class _POSTableState extends State<POSTable> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Table'),
+      ),
+      body: TableBody(),
+    );
   }
 }
