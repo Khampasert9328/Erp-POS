@@ -3,10 +3,9 @@ import 'package:erp_pos/pages/Bill/bill.dart';
 import 'package:erp_pos/pages/Dasboard/dasboard1.dart';
 import 'package:erp_pos/pages/Menu/menu.dart';
 import 'package:erp_pos/pages/Order/order.dart';
-import 'package:erp_pos/pages/Table/table.dart';
-import 'package:erp_pos/pages/table/table.dart';
 import 'package:flutter/material.dart';
 
+import '../Table/table.dart';
 class Dasboard extends StatefulWidget {
   const Dasboard({Key? key}) : super(key: key);
 
@@ -29,7 +28,7 @@ class _DasboardState extends State<Dasboard> {
               children: [
                 const CircleAvatar(
                   radius: 20,
-                  backgroundImage: AssetImage('images/Ellipse 69.png'),
+                  backgroundImage: AssetImage(POSImages.ellipse),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -59,7 +58,7 @@ class _DasboardState extends State<Dasboard> {
                   height: 20,
                   width: 20,
                   child: Image.asset(
-                    "images/setting.png",
+                    POSImages.setting,
                   ),
                 ),
               )
@@ -93,7 +92,7 @@ class _DasboardState extends State<Dasboard> {
             ),
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             Dasboard1(),
             POSTable(),
@@ -126,7 +125,7 @@ class _DasboardState extends State<Dasboard> {
                   width: 30,
                   height: 30,
                   child: Image.asset(
-                    "images/Dashboard.png",
+                    POSImages.dashboard,
                   ),
                 ),
               ),
@@ -136,7 +135,7 @@ class _DasboardState extends State<Dasboard> {
                   width: 30,
                   height: 30,
                   child: Image.asset(
-                    "images/table.png",
+                    POSImages.table,
                   ),
                 ),
               ),
@@ -146,7 +145,7 @@ class _DasboardState extends State<Dasboard> {
                   width: 30,
                   height: 30,
                   child: Image.asset(
-                    "images/menu.png",
+                    POSImages.menu,
                   ),
                 ),
               ),
@@ -156,7 +155,7 @@ class _DasboardState extends State<Dasboard> {
                   width: 30,
                   height: 30,
                   child: Image.asset(
-                    "images/order.png",
+                    POSImages.order,
                   ),
                 ),
               ),
