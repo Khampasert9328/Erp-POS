@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
 class Mystyle {
@@ -17,6 +17,25 @@ class Mystyle {
       height: 2,
       width: 130,
       color: Colors.blue,
+    );
+  }
+  Widget tiTle1(String message) {
+    return Text(
+      message,
+      style: const TextStyle(
+        fontFamily: "Phetsarath-OT",
+        fontSize: 18,
+        fontWeight: FontWeight.bold
+      ),
+    );
+  }
+  Widget subtiTle1(String message) {
+    return Text(
+      message,
+      style: const TextStyle(
+        fontFamily: "Phetsarath-OT",
+        fontSize: 15,
+      ),
     );
   }
 }

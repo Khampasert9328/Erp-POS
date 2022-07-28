@@ -15,4 +15,9 @@ class POSImages {
   static const tiger = 'images/Ellipse 71.png';
   static const staregg = 'images/star_agg.png';
   static const cocacola = 'images/cocacola.png';
+  static const area = 'images/ic-zone.png';
+  static const search = 'images/search.png';
+  static const ic_dropdown = 'images/ic-dropdown.png';
+  static const plus = 'images/plus.png';
+  static const tableStatus = 'images/table_status.png';
 }

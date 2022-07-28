@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, _){
         return  MaterialApp(
+          theme: ThemeData(fontFamily: 'Phetsarath'),
           debugShowCheckedModeBanner: false,
           routes: custom_route.Route.getAll(),
           home: HomePage(),
