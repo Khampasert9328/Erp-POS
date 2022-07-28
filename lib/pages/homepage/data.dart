@@ -1,5 +1,5 @@
 import 'package:erp_pos/constant/images.dart';
-import 'package:erp_pos/pages/food_menu/menu.dart';
+import 'package:erp_pos/pages/food_menu/food_menu.dart';
 import 'package:erp_pos/pages/homepage/models/homepage_bottom_bar.dart';
 import 'package:erp_pos/pages/table/table.dart';
 import 'package:flutter/cupertino.dart';

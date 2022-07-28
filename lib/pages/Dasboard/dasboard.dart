@@ -2,7 +2,7 @@ import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/pages/Bill/bill.dart';
 import 'package:erp_pos/pages/Dasboard/dasboard1.dart';
 import 'package:erp_pos/pages/Order/order.dart';
-import 'package:erp_pos/pages/food_menu/menu.dart';
+import 'package:erp_pos/pages/food_menu/food_menu.dart';
 import 'package:flutter/material.dart';
 import '../Table/table.dart';
 
