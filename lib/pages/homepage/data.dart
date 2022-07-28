@@ -24,10 +24,10 @@ class HomePageData{
   ];
 
   static  List<HomePageBottomBarModel> homePageBottomBar = [
-    HomePageBottomBarModel(title: 'ພາບລວມ', icon: POSImages.dashboard),
-    HomePageBottomBarModel(title: 'ໂຕະ', icon: POSImages.table),
-    HomePageBottomBarModel(title: 'ເມນູອາຫານ', icon: POSImages.menu),
-    HomePageBottomBarModel(title: 'ອໍເດີ', icon: POSImages.order),
-    HomePageBottomBarModel(title: 'ໃບບິນ', icon: POSImages.bill),
+    HomePageBottomBarModel(title: 'ພາບລວມ', icon: ERPImages.dashboard),
+    HomePageBottomBarModel(title: 'ໂຕະ', icon: ERPImages.table),
+    HomePageBottomBarModel(title: 'ເມນູອາຫານ', icon: ERPImages.menu),
+    HomePageBottomBarModel(title: 'ອໍເດີ', icon: ERPImages.order),
+    HomePageBottomBarModel(title: 'ໃບບິນ', icon: ERPImages.bill),
   ];
 }

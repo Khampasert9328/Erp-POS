@@ -1,4 +1,4 @@
-class POSImages {
+class ERPImages {
   static const bill = 'images/bill.png';
   static const table = 'images/table.png';
   static const order = 'images/order.png';

@@ -28,7 +28,7 @@ class _DasboardState extends State<Dasboard> {
               children: [
                 const CircleAvatar(
                   radius: 20,
-                  backgroundImage: AssetImage(POSImages.ellipse),
+                  backgroundImage: AssetImage(ERPImages.ellipse),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -58,7 +58,7 @@ class _DasboardState extends State<Dasboard> {
                   height: 20,
                   width: 20,
                   child: Image.asset(
-                    POSImages.setting,
+                    ERPImages.setting,
                   ),
                 ),
               )
@@ -125,7 +125,7 @@ class _DasboardState extends State<Dasboard> {
                   width: 30,
                   height: 30,
                   child: Image.asset(
-                    POSImages.dashboard,
+                    ERPImages.dashboard,
                   ),
                 ),
               ),
@@ -135,7 +135,7 @@ class _DasboardState extends State<Dasboard> {
                   width: 30,
                   height: 30,
                   child: Image.asset(
-                    POSImages.table,
+                    ERPImages.table,
                   ),
                 ),
               ),
@@ -145,7 +145,7 @@ class _DasboardState extends State<Dasboard> {
                   width: 30,
                   height: 30,
                   child: Image.asset(
-                    POSImages.menu,
+                    ERPImages.menu,
                   ),
                 ),
               ),
@@ -155,7 +155,7 @@ class _DasboardState extends State<Dasboard> {
                   width: 30,
                   height: 30,
                   child: Image.asset(
-                    POSImages.order,
+                    ERPImages.order,
                   ),
                 ),
               ),
@@ -165,7 +165,7 @@ class _DasboardState extends State<Dasboard> {
                   width: 30,
                   height: 30,
                   child: Image.asset(
-                    POSImages.bill,
+                    ERPImages.bill,
                   ),
                 ),
               ),
