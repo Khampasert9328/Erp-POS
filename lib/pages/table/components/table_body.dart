@@ -51,7 +51,7 @@ class _TableBodyState extends State<TableBody> {
                           ? ERPTheme.GREY_COLOR
                           : ERPTheme.BASE_COLOR,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20.sp,
+                      fontSize: 19.sp,
                     ),
                   ),
                 ),
@@ -68,7 +68,7 @@ class _TableBodyState extends State<TableBody> {
                           ? ERPTheme.BASE_COLOR
                           : ERPTheme.GREY_COLOR,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20.sp,
+                      fontSize: 19.sp,
                     ),
                   ),
                 ),
