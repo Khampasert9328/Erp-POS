@@ -3,11 +3,16 @@
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/pages/table/components/buttom_dialog.dart';
+import 'package:erp_pos/pages/table/components/card_item.dart';
 import 'package:erp_pos/pages/table/components/dropdown.dart';
 import 'package:erp_pos/pages/table/components/dropdown_status.dart';
+import 'package:erp_pos/pages/table/components/dummy_data.dart';
 import 'package:erp_pos/pages/table/components/listview_table.dart';
+import 'package:erp_pos/pages/table/components/models/card_models.dart';
 import 'package:erp_pos/pages/table/components/navbar_status.dart';
 import 'package:erp_pos/pages/table/components/search_table.dart';
+import 'package:erp_pos/pages/table/components/textContainer.dart';
+import 'package:erp_pos/pages/table/components/textdate.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -100,9 +105,17 @@ class _TableBodyState extends State<TableBody> {
                       activeColor: ERPTheme.GREEN_COLOR,
                       value: isWitch,
                       onChanged: (vale) {
-                        setState(() {
-                          isWitch = vale;
-                        });
+                        if (isWitch == false) {
+                          setState(() {
+                            isWitch = vale;
+                            Mystyle().dialogOpen(context);
+                          });
+                        } else {
+                          setState(() {
+                            isWitch = vale;
+                            Mystyle().dialogOff(context);
+                          });
+                        }
                       },
                     ),
                   ],
@@ -125,7 +138,7 @@ class _TableBodyState extends State<TableBody> {
                     IconButton(
                       onPressed: () {
                         //todo
-                        dialogbuttom();
+                        Mystyle().dialogbuttom(context);
                       },
                       icon: Image.asset(
                         POSImages.area,
@@ -157,36 +170,25 @@ class _TableBodyState extends State<TableBody> {
                 const NavBarStatus(),
               ],
             ),
+            SizedBox(
+              height: 10.h,
+            ),
+            GridView.count(
+              childAspectRatio: (1 / .4),
+              crossAxisCount: 3,
+              crossAxisSpacing: 10,
+              shrinkWrap: true,
+              mainAxisSpacing: 10,
+              children: DummyData.map(
+                (CardModels) => CardItem(
+                  title: CardModels.title,
+                  color: CardModels.color,
+                ),
+              ).toList(),
+            ),
           ],
         ),
       ),
-    );
-  }
-
-  Future dialogbuttom() {
-    return showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context) {
-        return Container(
-          child: AlertDialog(
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Mystyle().tiTle1("ການກັ່ນຕອງ"),
-                Mystyle().subtiTle1("ໂຊນ ຫຼື ພື້ນທີ່"),
-                ERPDropdown(),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Mystyle().subtiTle1("ສະຖານະໂຕະ"),
-                ERPDropdownStatus()
-              ],
-            ),
-            actions: [ButtomDialog()],
-          ),
-        );
-      },
     );
   }
 }
