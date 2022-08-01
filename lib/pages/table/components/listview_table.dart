@@ -16,13 +16,13 @@ class ListViewTable extends StatefulWidget {
   State<ListViewTable> createState() => _ListViewTableState();
 }
 
-bool changScreenTabBar = false;
-
 List<String> item = [
   'ຫ້ອງອາຫານຊັ້ນ01',
   'ຫ້ອງອາຫານຊັ້ນ02',
   'ຫ້ອງອາຫານຊັ້ນ03',
 ];
+
+int selectIndex = 0;
 
 class _ListViewTableState extends State<ListViewTable> {
   @override
@@ -46,7 +46,7 @@ class _ListViewTableState extends State<ListViewTable> {
         ),
         Expanded(
           child: Container(
-            height: 20.h,
+            height: 25.h,
             child: ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
@@ -55,20 +55,31 @@ class _ListViewTableState extends State<ListViewTable> {
                   return GestureDetector(
                     onTap: () {
                       setState(() {
-                        changScreenTabBar = false;
+                        selectIndex = index;
                       });
                     },
                     child: Padding(
-                      padding:  EdgeInsets.only(left: 8.w, right: 8.w),
-                      child: Text(
-                        item[index],
-                        style: TextStyle(
-                          color: !changScreenTabBar
-                              ? ERPTheme.BASE_COLOR
-                              : ERPTheme.GREY_COLOR,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.sp,
-                        ),
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item[index],
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: selectIndex == index
+                                    ? ERPTheme.BLACK_COLOR
+                                    : ERPTheme.GREY_COLOR),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 2),
+                            width: 30,
+                            height: 2,
+                            color: selectIndex == index
+                                ? ERPTheme.BLACK_COLOR
+                                : Colors.transparent,
+                          )
+                        ],
                       ),
                     ),
                   );
