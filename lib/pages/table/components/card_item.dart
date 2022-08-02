@@ -31,39 +31,44 @@ class CardItem extends StatelessWidget {
           ),
         );
       },
-      child: Container(
-        padding: EdgeInsets.all(15),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14.sp,
+      child: Stack(
+        children: [
+          Container(
+            padding: EdgeInsets.all(15),
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                  Text(
+                    id,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.sp,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            decoration: BoxDecoration(
+              color: ERPTheme.GREY_COLOR,
+              border: Border(
+                left: BorderSide(
+                  color: color,
+                  width: 10.w,
                 ),
               ),
-              Text(
-                id,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14.sp,
-                ),
-              )
-            ],
-          ),
-        ),
-        decoration: BoxDecoration(
-          color: ERPTheme.GREY_COLOR,
-          border: Border(
-            left: BorderSide(
-              color: color,
-              width: 10.w,
+              //borderRadius: BorderRadius.circular(5),
             ),
           ),
-          //borderRadius: BorderRadius.circular(5),
-        ),
+          
+        ],
       ),
     );
   }

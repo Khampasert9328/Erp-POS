@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-class ERPdate extends StatefulWidget {
-  const ERPdate({Key? key}) : super(key: key);
+class ERPdateTime extends StatefulWidget {
+  const ERPdateTime({Key? key}) : super(key: key);
 
   @override
-  State<ERPdate> createState() => _ERPdateState();
+  State<ERPdateTime> createState() => _ERPdateTimeState();
 }
 
 TextEditingController _dateStart = TextEditingController();
@@ -19,7 +19,7 @@ TimeOfDay? time = TimeOfDay(hour: 10, minute: 30);
 bool datetime = true;
 
 
-class _ERPdateState extends State<ERPdate> {
+class _ERPdateTimeState extends State<ERPdateTime> {
   @override
   Widget build(BuildContext context) {
     final hours = time!.hour.toString().padLeft(2, '0');
@@ -68,7 +68,7 @@ class _ERPdateState extends State<ERPdate> {
           },
           child: Container(
             
-            padding: EdgeInsets.symmetric(horizontal: 38.w, vertical: 5.h),
+            padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 5.h),
             decoration: BoxDecoration(
               color: ERPTheme.GREY_COLOR,
               borderRadius: BorderRadius.circular(
@@ -76,16 +76,12 @@ class _ERPdateState extends State<ERPdate> {
               ),
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Image.asset(
-                      POSImages.datetime,
-                      width: 30.w,
-                      height: 30.h,
-                    ),
-                  ],
+                Image.asset(
+                  POSImages.datetime,
+                  width: 30.w,
+                  height: 30.h,
                 ),
                 SizedBox(
                   width: 5.w,
@@ -104,6 +100,61 @@ class _ERPdateState extends State<ERPdate> {
                       day,
                       style: TextStyle(fontSize: 10.sp, color: Colors.grey),
                     )
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 10.w,
+        ),
+        GestureDetector(
+          onTap: () async {
+            TimeOfDay? newTime = await showTimePicker(
+              context: context,
+              initialTime: time!,
+            );
+            if (time != null) {
+              setState(() {
+              time = newTime;
+            });
+            } else {
+                 print("Date is not selected");
+            }
+            
+            
+          },
+          child: Container(
+            //width: 150,
+            padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 5.h),
+            decoration: BoxDecoration(
+              color: ERPTheme.GREY_COLOR,
+              borderRadius: BorderRadius.circular(
+                5.r,
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset(
+                  POSImages.clock,
+                  width: 30.w,
+                  height: 30.h,
+                ),
+                SizedBox(
+                  width: 5.w,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Text(
+                        '$hours:$minute',
+                        style: TextStyle(
+                            fontSize: 12.sp, fontWeight: FontWeight.w700),
+                      ),
+                    ),
                   ],
                 )
               ],

@@ -1,10 +1,9 @@
 
+import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/pages/table/components/models/card_models.dart';
 import 'package:flutter/material.dart';
 
-
-// ignore: unnecessary_const
-const DummyData = const [
+const DummyData =  [
   CardModels(
     id: "1",
     title: "TB0",
@@ -28,7 +27,7 @@ const DummyData = const [
   CardModels(
     id: "5",
     title: "TB0",
-    color:Colors.pinkAccent
+    color: Color(0xFFFCE00D2)
   ),
   CardModels(
     id: "6",
@@ -43,7 +42,7 @@ const DummyData = const [
   CardModels(
     id: "8",
     title: "TB0",
-    color:Colors.pinkAccent
+    color:Color(0xFFFCE00D2)
   ),
   CardModels(
     id: "9",
@@ -63,7 +62,7 @@ const DummyData = const [
   CardModels(
     id: "12",
     title: "TB0",
-    color:Colors.pinkAccent
+    color:Color(0xFFFCE00D2)
   ),
   CardModels(
     id: "13",
@@ -83,7 +82,7 @@ const DummyData = const [
    CardModels(
     id: "16",
     title: "TB0",
-    color:Colors.pinkAccent
+    color:Color(0xFFFCE00D2)
   ),
    CardModels(
     id: "17",
@@ -98,7 +97,7 @@ const DummyData = const [
   CardModels(
     id: "19",
     title: "TB0",
-    color:Colors.pinkAccent
+    color:Color(0xFFFCE00D2)
   ),
   CardModels(
     id: "20",
@@ -113,7 +112,7 @@ const DummyData = const [
   CardModels(
     id: "22",
     title: "TB0",
-    color:Colors.pinkAccent
+    color:Color(0xFFFCE00D2)
   ),
   CardModels(
     id: "23",

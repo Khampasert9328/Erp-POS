@@ -19,7 +19,7 @@ class POSImages {
   static const search = 'images/search.png';
   static const ic_dropdown = 'images/ic-dropdown.png';
   static const plus = 'images/plus.png';
-  static const tableStatus = 'images/table_status.png';
+  static const tableStatus = 'images/newtable.png';
   static const datetime = 'images/datetime.png';
   static const clock = 'images/ic-clock.png';
   static const offtable = 'images/off_table.png';

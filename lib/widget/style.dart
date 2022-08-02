@@ -4,7 +4,7 @@ import 'package:erp_pos/pages/table/components/buttom_dialog.dart';
 import 'package:erp_pos/pages/table/components/dropdown.dart';
 import 'package:erp_pos/pages/table/components/dropdown_status.dart';
 import 'package:erp_pos/pages/table/components/textContainer.dart';
-import 'package:erp_pos/pages/table/components/textdate.dart';
+import 'package:erp_pos/pages/table/components/textdatetime.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -99,7 +99,7 @@ class Mystyle {
                   height: 10.h,
                 ),
                 Mystyle().subtiTle1("ວັນທີ ແລະ ເວລາ"),
-                ERPdate(),
+                ERPdateTime(),
                 SizedBox(
                   height: 10.h,
                 ),
@@ -131,7 +131,7 @@ class Mystyle {
                   height: 10.h,
                 ),
                 Mystyle().subtiTle1("ວັນທີ ແລະ ເວລາ"),
-                ERPdate(),
+                ERPdateTime(),
                 SizedBox(
                   height: 10.h,
                 ),

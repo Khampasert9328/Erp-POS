@@ -4,7 +4,7 @@ import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/pages/table/components/buil_buildbuttonbooking.dart';
 import 'package:erp_pos/pages/table/components/input_detail.dart';
 import 'package:erp_pos/pages/table/components/style/textfield.dart';
-import 'package:erp_pos/pages/table/components/textdate.dart';
+import 'package:erp_pos/pages/table/components/textdatetime.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -138,7 +138,7 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
-                      ERPdate(),
+                      ERPdateTime(),
                     ],
                   ),
                   const SizedBox(

@@ -67,7 +67,7 @@ class _ListViewTableState extends State<ListViewTable> {
                             item[index],
                             style: TextStyle(
                               fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
+
                                 color: selectIndex == index
                                     ? ERPTheme.BLACK_COLOR
                                     : ERPTheme.GREY_COLOR),

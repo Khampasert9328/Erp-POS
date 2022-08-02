@@ -59,11 +59,17 @@ class _DetailTableState extends State<DetailTable> {
       floatingActionButton: isWitch == false
           ? Text("")
           : Container(
-              padding: EdgeInsets.symmetric(vertical: 7, horizontal: 30.0),
+              padding: EdgeInsets.symmetric(
+                vertical: 7.w,
+                horizontal: 30.0.h,
+              ),
               width: double.infinity,
               child: widget.color == Colors.pinkAccent
                   ? Text("")
-                  : BuidlButtonBooking(),
+                  : Container(
+                      child: widget.color == Colors.red
+                          ? Text("")
+                          : BuidlButtonBooking()),
             ),
       body: SingleChildScrollView(
         child: Padding(
