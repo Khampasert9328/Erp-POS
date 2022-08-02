@@ -13,7 +13,7 @@ class Mystyle {
     return Text(
       message,
       style: const TextStyle(
-        fontFamily: "NotoSansLao-Regular",
+        fontFamily: "Phetsarath-OT",
         fontSize: 23,
       ),
     );
@@ -23,7 +23,10 @@ class Mystyle {
     return Text(
       message,
       style: const TextStyle(
-          fontFamily: "NotoSansLao-Regular", fontSize: 18, color: Colors.red),
+        fontFamily: "Phetsarath-OT",
+        fontSize: 18,
+        color: Colors.red,
+      ),
     );
   }
 
@@ -75,7 +78,9 @@ class Mystyle {
                 ERPDropdownStatus()
               ],
             ),
-            actions: [ButtomDialog()],
+            actions: [
+              ButtomDialog(),
+            ],
           ),
         );
       },
@@ -194,6 +199,10 @@ class Mystyle {
   showdialogsuccess(context) {
     // ignore: avoid_single_cascade_in_expression_statements
     AwesomeDialog(
+      titleTextStyle: TextStyle(
+        fontFamily: 'Phetsarath-OT',
+        fontSize: 20.sp
+      ),
       context: context,
       dialogType: DialogType.SUCCES,
       animType: AnimType.BOTTOMSLIDE,

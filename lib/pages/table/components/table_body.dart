@@ -42,8 +42,11 @@ class _TableBodyState extends State<TableBody> {
         padding: EdgeInsets.only(top: 30.h, left: 25.w, right: 21),
         child: Column(
           children: [
+            SizedBox(
+              height: 15.h,
+            ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
                   onTap: () {
@@ -54,6 +57,7 @@ class _TableBodyState extends State<TableBody> {
                   child: Text(
                     "ສະຖານະປັດຈຸບັນ",
                     style: TextStyle(
+                      fontFamily: "Phetsarath-OT",
                       color: !changScreen
                           ? ERPTheme.GREY_COLOR
                           : ERPTheme.BASE_COLOR,
@@ -71,6 +75,7 @@ class _TableBodyState extends State<TableBody> {
                   child: Text(
                     "ການຈອງລ່ວງໜ້າ",
                     style: TextStyle(
+                      fontFamily: "Phetsarath-OT",
                       color: !changScreen
                           ? ERPTheme.BASE_COLOR
                           : ERPTheme.GREY_COLOR,
@@ -92,8 +97,9 @@ class _TableBodyState extends State<TableBody> {
                           Text(
                             "ເລືອກວັນ",
                             style: TextStyle(
+                              fontFamily: "Phetsarath-OT",
                               fontSize: 15.sp,
-                              fontWeight: FontWeight.bold
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           SizedBox(
@@ -109,7 +115,7 @@ class _TableBodyState extends State<TableBody> {
                               ? Text(
                                   "ປິດຮ້ານ",
                                   style: TextStyle(
-                                  
+                                    fontFamily: "Phetsarath-OT",
                                     fontSize: 20.sp,
                                     color: ERPTheme.GREEN_COLOR,
                                   ),
@@ -117,7 +123,7 @@ class _TableBodyState extends State<TableBody> {
                               : Text(
                                   "ເປີດຮ້ານດຳເນີນການ",
                                   style: TextStyle(
-                           
+                                    fontFamily: "Phetsarath-OT",
                                     fontSize: 20.sp,
                                     color: ERPTheme.GREEN_COLOR,
                                   ),
@@ -201,7 +207,7 @@ class _TableBodyState extends State<TableBody> {
               height: 10.h,
             ),
             GridView.count(
-              childAspectRatio: (1 / .5),
+              childAspectRatio: (1 / .4),
               crossAxisCount: 3,
               crossAxisSpacing: 10,
               shrinkWrap: true,

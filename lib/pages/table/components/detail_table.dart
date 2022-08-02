@@ -111,37 +111,34 @@ class _DetailTableState extends State<DetailTable> {
                         Padding(
                           padding: EdgeInsets.only(right: 100.w, left: 100.w),
                           child: Container(
-                            padding: EdgeInsets.all(20.h),
-                            child: Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    widget.title,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20.sp,
-                                    ),
-                                  ),
-                                  Text(
-                                    widget.id,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20.sp,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            padding: EdgeInsets.only(left: 12.0),
                             decoration: BoxDecoration(
-                              color: ERPTheme.GREY_COLOR,
-                              border: Border(
-                                left: BorderSide(
-                                  color: widget.color,
-                                  width: 10.0,
+                              borderRadius: BorderRadius.circular(5),
+                              color: widget.color,
+                            ),
+                            height: 50,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5)),
+                                color: ERPTheme.GREY_COLOR,
+                              ),
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      widget.title,
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    Text(
+                                      widget.id,
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              //borderRadius: BorderRadius.circular(5),
                             ),
                           ),
                         ),
@@ -194,7 +191,7 @@ class _DetailTableState extends State<DetailTable> {
                         SizedBox(
                           height: 10.h,
                         ),
-                        widget.color == Colors.pinkAccent
+                        widget.color == Color(0xFFFCE00D2)
                             ? Column(
                                 children: [
                                   Row(
@@ -239,7 +236,7 @@ class _DetailTableState extends State<DetailTable> {
                                   ),
                                 ],
                               )
-                            : Text(""),
+                            : const Text(""),
                       ],
                     )
             ],

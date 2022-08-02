@@ -31,42 +31,35 @@ class CardItem extends StatelessWidget {
           ),
         );
       },
-      child: Stack(
-        children: [
-          Container(
-            padding: EdgeInsets.all(15),
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.sp,
-                    ),
-                  ),
-                  Text(
-                    id,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.sp,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            decoration: BoxDecoration(
-              color: ERPTheme.GREY_COLOR,
-              border: Border(
-                left: BorderSide(
-                  color: color,
-                  width: 10.w,
+      child: Container(
+        padding: EdgeInsets.only(left: 12.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: color,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topRight: const Radius.circular(5),
+                bottomRight: Radius.circular(5)),
+            color: ERPTheme.GREY_COLOR,
+          ),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(color: Colors.black),
                 ),
-              ),
+                Text(
+                  id,
+                  style: TextStyle(color: Colors.black),
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
