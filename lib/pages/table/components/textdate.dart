@@ -25,6 +25,7 @@ class _ERPdateState extends State<ERPdate> {
     final hours = time!.hour.toString().padLeft(2, '0');
     final minute = time!.minute.toString().padLeft(2, '0');
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GestureDetector(
           onTap: () async {
@@ -66,7 +67,7 @@ class _ERPdateState extends State<ERPdate> {
             }
           },
           child: Container(
-            //width: 150,
+            
             padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 5.h),
             decoration: BoxDecoration(
               color: ERPTheme.GREY_COLOR,
@@ -75,6 +76,7 @@ class _ERPdateState extends State<ERPdate> {
               ),
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Image.asset(
                   POSImages.datetime,
@@ -125,7 +127,7 @@ class _ERPdateState extends State<ERPdate> {
           },
           child: Container(
             //width: 150,
-            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+            padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 5.h),
             decoration: BoxDecoration(
               color: ERPTheme.GREY_COLOR,
               borderRadius: BorderRadius.circular(
@@ -133,6 +135,7 @@ class _ERPdateState extends State<ERPdate> {
               ),
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Image.asset(
                   POSImages.clock,

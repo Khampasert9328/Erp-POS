@@ -1,4 +1,3 @@
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/pages/table/components/buttom_dialog.dart';
@@ -19,43 +18,43 @@ class Mystyle {
       ),
     );
   }
+
   Widget texttitle(String message) {
     return Text(
       message,
-      style:  const TextStyle(
-        fontFamily: "NotoSansLao-Regular",
-        fontSize: 18,
-        color: Colors.red
-      ),
+      style: const TextStyle(
+          fontFamily: "NotoSansLao-Regular", fontSize: 18, color: Colors.red),
     );
   }
 
-  Widget sent(){
+  Widget sent() {
     return Container(
       height: 2,
       width: 130,
       color: Colors.blue,
     );
   }
+
   Widget tiTle1(String message) {
     return Text(
       message,
       style: const TextStyle(
-        fontFamily: "Phetsarath-OT",
-        fontSize: 18,
-        fontWeight: FontWeight.bold
-      ),
+          fontFamily: "Phetsarath-OT",
+          fontSize: 18,
+          fontWeight: FontWeight.bold),
     );
   }
+
   Widget subtiTle1(String message) {
     return Text(
       message,
       style: const TextStyle(
         fontFamily: "Phetsarath-OT",
-        fontSize: 15,
+        fontSize: 16,
       ),
     );
   }
+
   Future dialogbuttom(BuildContext context) {
     return showDialog(
       barrierDismissible: false,
@@ -82,7 +81,7 @@ class Mystyle {
       },
     );
   }
-  
+
   Future dialogOpen(BuildContext context) {
     return showDialog(
       barrierDismissible: false,
@@ -173,7 +172,6 @@ class Mystyle {
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                
                 Row(
                   children: [
                     Mystyle().subtiTle1("ໂຊນ:"),
@@ -182,15 +180,17 @@ class Mystyle {
                 ),
                 Mystyle().tiTle1("ເລກໂຕະ"),
                 TextContainer(hintext: "ປ້ອນຂໍ້ມູນ", suffixIcon: ""),
-                
               ],
             ),
-            actions: [ButtomDialog()],
+            actions: [
+              ButtomDialog(),
+            ],
           ),
         );
       },
     );
   }
+
   showdialogsuccess(context) {
     // ignore: avoid_single_cascade_in_expression_statements
     AwesomeDialog(

@@ -22,20 +22,24 @@ class _NavBarStatusState extends State<NavBarStatus> {
         Container(
           child: Row(
             children: [
-             CircleAvatar(
-                  backgroundColor: ERPTheme.GREEN_COLOR,
-                  radius: 15,
-                  child: Image.asset(
-                    POSImages.tableStatus,
-                    height: 15.h,
-                    width: 15.w,
-                  ),
+              CircleAvatar(
+                backgroundColor: ERPTheme.GREEN_COLOR,
+                radius: 15,
+                child: Image.asset(
+                  POSImages.tableStatus,
+                  height: 15.h,
+                  width: 15.w,
                 ),
-            
+              ),
               SizedBox(
                 width: 5.w,
               ),
-              Text("00 ວ່າງ"),
+              Text(
+                "00 ວ່າງ",
+                style: TextStyle(
+                  fontSize: 13.sp,
+                ),
+              ),
             ],
           ),
         ),
@@ -54,7 +58,12 @@ class _NavBarStatusState extends State<NavBarStatus> {
               SizedBox(
                 width: 5.w,
               ),
-              Text("00 ບໍ່ວ່າງ"),
+              Text(
+                "00 ບໍ່ວ່າງ",
+                style: TextStyle(
+                  fontSize: 13.sp,
+                ),
+              ),
             ],
           ),
         ),
@@ -73,12 +82,16 @@ class _NavBarStatusState extends State<NavBarStatus> {
               SizedBox(
                 width: 5.w,
               ),
-              Text("00 ຈອງແລ້ວ"),
+              Text(
+                "00 ຈອງແລ້ວ",
+                style: TextStyle(
+                  fontSize: 13.sp,
+                ),
+              ),
             ],
           ),
         ),
       ],
     );
   }
-
 }

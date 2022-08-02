@@ -1,5 +1,6 @@
 import 'package:erp_pos/constant/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SearchTable extends StatefulWidget {
   const SearchTable({Key? key}) : super(key: key);
@@ -18,15 +19,17 @@ class _SearchTableState extends State<SearchTable> {
           border: Border.all(color: ERPTheme.WHITE_COLOR),
           borderRadius: BorderRadius.circular(5),
         ),
-        child: const Padding(
-          padding: EdgeInsets.only(
+        child: Padding(
+          padding: const EdgeInsets.only(
             left: 20.0,
           ),
           child: TextField(
             decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: 'ຄົ້ນຫາໂຕະ',
-            ),
+                border: InputBorder.none,
+                hintText: 'ຄົ້ນຫາໂຕະ',
+                hintStyle: TextStyle(
+                  fontSize: 15.sp,
+                )),
           ),
         ),
       ),

@@ -183,6 +183,7 @@ class _TableBodyState extends State<TableBody> {
                 (CardModels) => CardItem(
                   title: CardModels.title,
                   color: CardModels.color,
+                  id: CardModels.id,
                 ),
               ).toList(),
             ),
