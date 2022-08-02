@@ -127,7 +127,7 @@ class _ERPdateTimeState extends State<ERPdateTime> {
           },
           child: Container(
             //width: 150,
-            padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 5.h),
+            padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 5.h),
             decoration: BoxDecoration(
               color: ERPTheme.GREY_COLOR,
               borderRadius: BorderRadius.circular(

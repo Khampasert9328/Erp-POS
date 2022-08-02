@@ -93,10 +93,11 @@ class _TableBodyState extends State<TableBody> {
                             "ເລືອກວັນ",
                             style: TextStyle(
                               fontSize: 15.sp,
+                              fontWeight: FontWeight.bold
                             ),
                           ),
                           SizedBox(
-                            width: 10.h,
+                            width: 7.h,
                           ),
                           ERPdate()
                         ],
@@ -200,7 +201,7 @@ class _TableBodyState extends State<TableBody> {
               height: 10.h,
             ),
             GridView.count(
-              childAspectRatio: (1 / .4),
+              childAspectRatio: (1 / .5),
               crossAxisCount: 3,
               crossAxisSpacing: 10,
               shrinkWrap: true,

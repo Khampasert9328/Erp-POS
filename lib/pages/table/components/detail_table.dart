@@ -64,7 +64,7 @@ class _DetailTableState extends State<DetailTable> {
                 horizontal: 30.0.h,
               ),
               width: double.infinity,
-              child: widget.color == Colors.pinkAccent
+              child: widget.color == Color(0xFFFCE00D2)
                   ? Text("")
                   : Container(
                       child: widget.color == Colors.red

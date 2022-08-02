@@ -64,10 +64,8 @@ class CardItem extends StatelessWidget {
                   width: 10.w,
                 ),
               ),
-              //borderRadius: BorderRadius.circular(5),
             ),
           ),
-          
         ],
       ),
     );
