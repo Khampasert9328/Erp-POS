@@ -46,7 +46,7 @@ class _ListViewTableState extends State<ListViewTable> {
         ),
         Expanded(
           child: Container(
-            height: 25.h,
+            height: 30.h,
             child: ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
@@ -66,7 +66,8 @@ class _ListViewTableState extends State<ListViewTable> {
                           Text(
                             item[index],
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                              fontSize: 18.sp,
+
                                 color: selectIndex == index
                                     ? ERPTheme.BLACK_COLOR
                                     : ERPTheme.GREY_COLOR),

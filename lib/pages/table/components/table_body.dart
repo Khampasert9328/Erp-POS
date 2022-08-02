@@ -10,9 +10,11 @@ import 'package:erp_pos/pages/table/components/dummy_data.dart';
 import 'package:erp_pos/pages/table/components/listview_table.dart';
 import 'package:erp_pos/pages/table/components/models/card_models.dart';
 import 'package:erp_pos/pages/table/components/navbar_status.dart';
+import 'package:erp_pos/pages/table/components/navbar_status_booking_next.dart';
 import 'package:erp_pos/pages/table/components/search_table.dart';
 import 'package:erp_pos/pages/table/components/textContainer.dart';
 import 'package:erp_pos/pages/table/components/textdate.dart';
+import 'package:erp_pos/pages/table/components/textdatetime.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -81,54 +83,77 @@ class _TableBodyState extends State<TableBody> {
             ),
             Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    isWitch == false
-                        ? Text(
-                            "ປິດຮ້ານ",
+                SizedBox(
+                  height: 15.h,
+                ),
+                changScreen == false
+                    ? Row(
+                        children: [
+                          Text(
+                            "ເລືອກວັນ",
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.sp,
-                              color: ERPTheme.GREEN_COLOR,
-                            ),
-                          )
-                        : Text(
-                            "ເປີດຮ້ານດຳເນີນການ",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.sp,
-                              color: ERPTheme.GREEN_COLOR,
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.bold
                             ),
                           ),
-                    Switch(
-                      activeColor: ERPTheme.GREEN_COLOR,
-                      value: isWitch,
-                      onChanged: (vale) {
-                        if (isWitch == false) {
-                          setState(() {
-                            isWitch = vale;
-                            Mystyle().dialogOpen(context);
-                          });
-                        } else {
-                          setState(() {
-                            isWitch = vale;
-                            Mystyle().dialogOff(context);
-                          });
-                        }
-                      },
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.only(right: 60.sp),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(formatDate),
-                    ],
-                  ),
-                ),
+                          SizedBox(
+                            width: 7.h,
+                          ),
+                          ERPdate()
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          isWitch == false
+                              ? Text(
+                                  "ປິດຮ້ານ",
+                                  style: TextStyle(
+                                  
+                                    fontSize: 20.sp,
+                                    color: ERPTheme.GREEN_COLOR,
+                                  ),
+                                )
+                              : Text(
+                                  "ເປີດຮ້ານດຳເນີນການ",
+                                  style: TextStyle(
+                           
+                                    fontSize: 20.sp,
+                                    color: ERPTheme.GREEN_COLOR,
+                                  ),
+                                ),
+                          Switch(
+                            activeColor: ERPTheme.GREEN_COLOR,
+                            value: isWitch,
+                            onChanged: (vale) {
+                              if (isWitch == false) {
+                                setState(() {
+                                  isWitch = vale;
+                                  Mystyle().dialogOpen(context);
+                                });
+                              } else {
+                                setState(() {
+                                  isWitch = vale;
+                                  Mystyle().dialogOff(context);
+                                });
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                changScreen == false
+                    ? Text("")
+                    : Padding(
+                        padding: EdgeInsets.only(right: 60.sp),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              formatDate,
+                            ),
+                          ],
+                        ),
+                      ),
                 SizedBox(
                   height: 7.h,
                 ),
@@ -167,14 +192,16 @@ class _TableBodyState extends State<TableBody> {
                 SizedBox(
                   height: 10.h,
                 ),
-                const NavBarStatus(),
+                changScreen == false
+                    ? const NavBarStatusBooking()
+                    : NavBarStatus(),
               ],
             ),
             SizedBox(
               height: 10.h,
             ),
             GridView.count(
-              childAspectRatio: (1 / .4),
+              childAspectRatio: (1 / .5),
               crossAxisCount: 3,
               crossAxisSpacing: 10,
               shrinkWrap: true,
@@ -182,7 +209,10 @@ class _TableBodyState extends State<TableBody> {
               children: DummyData.map(
                 (CardModels) => CardItem(
                   title: CardModels.title,
-                  color: CardModels.color,
+                  color: changScreen == false
+                      ? ERPTheme.PINK_COLOR
+                      : CardModels.color,
+                  id: CardModels.id,
                 ),
               ).toList(),
             ),

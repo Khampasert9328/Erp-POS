@@ -1,11 +1,10 @@
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/pages/table/components/buttom_dialog.dart';
 import 'package:erp_pos/pages/table/components/dropdown.dart';
 import 'package:erp_pos/pages/table/components/dropdown_status.dart';
 import 'package:erp_pos/pages/table/components/textContainer.dart';
-import 'package:erp_pos/pages/table/components/textdate.dart';
+import 'package:erp_pos/pages/table/components/textdatetime.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,43 +18,43 @@ class Mystyle {
       ),
     );
   }
+
   Widget texttitle(String message) {
     return Text(
       message,
-      style:  const TextStyle(
-        fontFamily: "NotoSansLao-Regular",
-        fontSize: 18,
-        color: Colors.red
-      ),
+      style: const TextStyle(
+          fontFamily: "NotoSansLao-Regular", fontSize: 18, color: Colors.red),
     );
   }
 
-  Widget sent(){
+  Widget sent() {
     return Container(
       height: 2,
       width: 130,
       color: Colors.blue,
     );
   }
+
   Widget tiTle1(String message) {
     return Text(
       message,
       style: const TextStyle(
-        fontFamily: "Phetsarath-OT",
-        fontSize: 18,
-        fontWeight: FontWeight.bold
-      ),
+          fontFamily: "Phetsarath-OT",
+          fontSize: 18,
+          fontWeight: FontWeight.bold),
     );
   }
+
   Widget subtiTle1(String message) {
     return Text(
       message,
       style: const TextStyle(
         fontFamily: "Phetsarath-OT",
-        fontSize: 15,
+        fontSize: 16,
       ),
     );
   }
+
   Future dialogbuttom(BuildContext context) {
     return showDialog(
       barrierDismissible: false,
@@ -82,7 +81,7 @@ class Mystyle {
       },
     );
   }
-  
+
   Future dialogOpen(BuildContext context) {
     return showDialog(
       barrierDismissible: false,
@@ -100,7 +99,7 @@ class Mystyle {
                   height: 10.h,
                 ),
                 Mystyle().subtiTle1("ວັນທີ ແລະ ເວລາ"),
-                ERPdate(),
+                ERPdateTime(),
                 SizedBox(
                   height: 10.h,
                 ),
@@ -132,7 +131,7 @@ class Mystyle {
                   height: 10.h,
                 ),
                 Mystyle().subtiTle1("ວັນທີ ແລະ ເວລາ"),
-                ERPdate(),
+                ERPdateTime(),
                 SizedBox(
                   height: 10.h,
                 ),
@@ -173,7 +172,6 @@ class Mystyle {
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                
                 Row(
                   children: [
                     Mystyle().subtiTle1("ໂຊນ:"),
@@ -182,15 +180,17 @@ class Mystyle {
                 ),
                 Mystyle().tiTle1("ເລກໂຕະ"),
                 TextContainer(hintext: "ປ້ອນຂໍ້ມູນ", suffixIcon: ""),
-                
               ],
             ),
-            actions: [ButtomDialog()],
+            actions: [
+              ButtomDialog(),
+            ],
           ),
         );
       },
     );
   }
+
   showdialogsuccess(context) {
     // ignore: avoid_single_cascade_in_expression_statements
     AwesomeDialog(

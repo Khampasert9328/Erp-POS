@@ -12,17 +12,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class DetailTable extends StatefulWidget {
+  final id;
   final title;
   final color;
-  const DetailTable({Key? key, required this.title, required this.color})
-      : super(key: key);
+  const DetailTable({
+    Key? key,
+    required this.title,
+    required this.color,
+    required this.id,
+  }) : super(key: key);
 
   @override
   State<DetailTable> createState() => _DetailTableState();
 }
 
 class _DetailTableState extends State<DetailTable> {
-  bool isWitch = false;
+  bool isWitch = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,82 +35,121 @@ class _DetailTableState extends State<DetailTable> {
         elevation: 0,
         backgroundColor: ERPTheme.WHITE_COLOR,
         centerTitle: true,
-        title: Text(
-          "TB00",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: ERPTheme.BLACK_COLOR,
-          ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              widget.title,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: ERPTheme.BLACK_COLOR,
+              ),
+            ),
+            Text(
+              widget.id,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: ERPTheme.BLACK_COLOR,
+              ),
+            ),
+          ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: isWitch == false
           ? Text("")
           : Container(
-              padding: EdgeInsets.symmetric(vertical: 7, horizontal: 30.0),
+              padding: EdgeInsets.symmetric(
+                vertical: 7.w,
+                horizontal: 30.0.h,
+              ),
               width: double.infinity,
-              child: widget.color == Colors.pinkAccent
+              child: widget.color == Color(0xFFFCE00D2)
                   ? Text("")
-                  : BuidlButtonBooking(),
+                  : Container(
+                      child: widget.color == Colors.red
+                          ? Text("")
+                          : BuidlButtonBooking()),
             ),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Switch(
-                  activeColor: ERPTheme.GREEN_COLOR,
-                  value: isWitch,
-                  onChanged: (vale) {
-                    if (isWitch == false) {
-                      setState(() {
-                        isWitch = vale;
-                      });
-                    } else {
-                      setState(() {
-                        isWitch = vale;
-                      });
-                    }
-                  },
-                ),
-              ],
-            ),
-            isWitch == false
-                ? Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Center(child: Image.asset(POSImages.offtable)),
-                  )
-                : Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(right: 100.w, left: 100.w),
-                        child: Container(
-                          padding: EdgeInsets.all(20.h),
-                          child: const Center(
-                            child: Text("TB00"),
-                          ),
-                          decoration: BoxDecoration(
-                            color: ERPTheme.GREY_COLOR,
-                            border: Border(
-                              left: BorderSide(
-                                color: widget.color,
-                                width: 10.0,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(
+            right: 15.w,
+            left: 15.w,
+            top: 20.h,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Switch(
+                    activeColor: ERPTheme.GREEN_COLOR,
+                    value: isWitch,
+                    onChanged: (vale) {
+                      if (isWitch == true) {
+                        setState(() {
+                          isWitch = vale;
+                        });
+                      } else {
+                        setState(() {
+                          isWitch = vale;
+                        });
+                      }
+                    },
+                  ),
+                ],
+              ),
+              isWitch == false
+                  ? Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Center(child: Image.asset(POSImages.offtable)),
+                    )
+                  : Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(right: 100.w, left: 100.w),
+                          child: Container(
+                            padding: EdgeInsets.all(20.h),
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    widget.title,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20.sp,
+                                    ),
+                                  ),
+                                  Text(
+                                    widget.id,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20.sp,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            //borderRadius: BorderRadius.circular(5),
+                            decoration: BoxDecoration(
+                              color: ERPTheme.GREY_COLOR,
+                              border: Border(
+                                left: BorderSide(
+                                  color: widget.color,
+                                  width: 10.0,
+                                ),
+                              ),
+                              //borderRadius: BorderRadius.circular(5),
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Row(
+                        Row(
                           children: [
                             CircleAvatar(
                               backgroundColor: widget.color,
-                              radius: 15,
+                              radius: 15.h,
                               child: Image.asset(
                                 POSImages.tableStatus,
                                 height: 15.h,
@@ -115,37 +159,43 @@ class _DetailTableState extends State<DetailTable> {
                             SizedBox(
                               width: 5.w,
                             ),
-                            Text(checkStatus(widget.color))
+                            Text(
+                              checkStatus(
+                                widget.color,
+                              ),
+                              style: TextStyle(
+                                fontSize: 13.sp,
+                              ),
+                            ),
                           ],
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Row(
+                        SizedBox(
+                          height: 15.h,
+                        ),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Mystyle().subtiTle1("ເລກໂຕະ"),
-                            Mystyle().tiTle1("TB00")
+                            Row(
+                              children: [
+                                Mystyle().tiTle1(widget.title),
+                                Mystyle().tiTle1(widget.id),
+                              ],
+                            )
                           ],
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 15.w, left: 15.w),
-                        child: Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Mystyle().subtiTle1("ຊື່ໂຊນ ຫຼື ພື້ນທີ່"),
                             Mystyle().tiTle1("ຫ້ອງອາຫານຊັ້ນ 01")
                           ],
                         ),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      widget.color == Colors.pinkAccent
-                          ? Padding(
-                              padding: EdgeInsets.only(right: 15.w, left: 15.w),
-                              child: Column(
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        widget.color == Colors.pinkAccent
+                            ? Column(
                                 children: [
                                   Row(
                                     mainAxisAlignment:
@@ -188,12 +238,12 @@ class _DetailTableState extends State<DetailTable> {
                                     ],
                                   ),
                                 ],
-                              ),
-                            )
-                          : Text(""),
-                    ],
-                  )
-          ],
+                              )
+                            : Text(""),
+                      ],
+                    )
+            ],
+          ),
         ),
       ),
     );
