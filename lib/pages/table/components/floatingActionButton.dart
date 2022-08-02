@@ -4,7 +4,6 @@ import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
 
 class BuildFloatingActionButton extends StatelessWidget {
- 
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
@@ -22,7 +21,10 @@ class BuildFloatingActionButton extends StatelessWidget {
       ),
       label: const Text(
         "ເພີ່ມໂຕະ",
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontFamily: "Phetsarath-OT"
+        ),
       ),
     );
   }
