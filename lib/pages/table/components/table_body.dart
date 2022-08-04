@@ -54,16 +54,28 @@ class _TableBodyState extends State<TableBody> {
                       changScreen = true;
                     });
                   },
-                  child: Text(
-                    "ສະຖານະປັດຈຸບັນ",
-                    style: TextStyle(
-                      fontFamily: "Phetsarath-OT",
-                      color: !changScreen
-                          ? ERPTheme.GREY_COLOR
-                          : ERPTheme.BASE_COLOR,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.sp,
-                    ),
+                  child: Column(
+                    children: [
+                      Text(
+                        "ສະຖານະປັດຈຸບັນ",
+                        style: TextStyle(
+                          fontFamily: "Phetsarath-OT",
+                          color: !changScreen
+                              ? ERPTheme.GREY_COLOR
+                              : ERPTheme.BASE_COLOR,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.sp,
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 2),
+                        width: 150.w,
+                        height: 5.h,
+                        color: !changScreen
+                            ? ERPTheme.GREY_COLOR
+                            : ERPTheme.BASE_COLOR,
+                      ),
+                    ],
                   ),
                 ),
                 GestureDetector(
@@ -72,16 +84,28 @@ class _TableBodyState extends State<TableBody> {
                       changScreen = false;
                     });
                   },
-                  child: Text(
-                    "ການຈອງລ່ວງໜ້າ",
-                    style: TextStyle(
-                      fontFamily: "Phetsarath-OT",
-                      color: !changScreen
-                          ? ERPTheme.BASE_COLOR
-                          : ERPTheme.GREY_COLOR,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.sp,
-                    ),
+                  child: Column(
+                    children: [
+                      Text(
+                        "ການຈອງລ່ວງໜ້າ",
+                        style: TextStyle(
+                          fontFamily: "Phetsarath-OT",
+                          color: !changScreen
+                              ? ERPTheme.BASE_COLOR
+                              : ERPTheme.GREY_COLOR,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.sp,
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 2),
+                        width: 150.w,
+                        height: 5.h,
+                        color: !changScreen
+                            ? ERPTheme.BASE_COLOR
+                            : ERPTheme.GREY_COLOR,
+                      ),
+                    ],
                   ),
                 ),
               ],
