@@ -17,18 +17,19 @@ class _SearchTableState extends State<SearchTable> {
         decoration: BoxDecoration(
           color: ERPTheme.GREY_COLOR,
           border: Border.all(color: ERPTheme.WHITE_COLOR),
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(15),
         ),
         child: Padding(
           padding: const EdgeInsets.only(
-            left: 20.0,
+            left: 15.0,
           ),
           child: TextField(
             decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: 'ຄົ້ນຫາໂຕະ',
                 hintStyle: TextStyle(
-                  fontSize: 15.sp,
+                  fontFamily: "Phetsarath-OT",
+                  fontSize: 14.sp,
                 )),
           ),
         ),

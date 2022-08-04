@@ -18,7 +18,6 @@ String clock = '';
 TimeOfDay? time = TimeOfDay(hour: 10, minute: 30);
 bool datetime = true;
 
-
 class _ERPdateState extends State<ERPdate> {
   @override
   Widget build(BuildContext context) {
@@ -67,8 +66,7 @@ class _ERPdateState extends State<ERPdate> {
             }
           },
           child: Container(
-            
-            padding: EdgeInsets.symmetric(horizontal: 38.w, vertical: 5.h),
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 7.h),
             decoration: BoxDecoration(
               color: ERPTheme.GREY_COLOR,
               borderRadius: BorderRadius.circular(
@@ -82,8 +80,8 @@ class _ERPdateState extends State<ERPdate> {
                   children: [
                     Image.asset(
                       POSImages.datetime,
-                      width: 30.w,
-                      height: 30.h,
+                      width: 25.w,
+                      height: 25.h,
                     ),
                   ],
                 ),

@@ -17,9 +17,9 @@ class ListViewTable extends StatefulWidget {
 }
 
 List<String> item = [
-  'ຫ້ອງອາຫານຊັ້ນ01',
-  'ຫ້ອງອາຫານຊັ້ນ02',
-  'ຫ້ອງອາຫານຊັ້ນ03',
+  'ຊັ້ນ 1',
+  'ຊັ້ນ 2',
+  'ຊັ້ນ 3',
 ];
 
 int selectIndex = 0;
@@ -42,7 +42,7 @@ class _ListViewTableState extends State<ListViewTable> {
           ),
         ),
         const SizedBox(
-          width: 5,
+          width: 8,
         ),
         Expanded(
           child: Container(
@@ -59,17 +59,18 @@ class _ListViewTableState extends State<ListViewTable> {
                       });
                     },
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      padding: EdgeInsets.symmetric(horizontal: 14),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             item[index],
                             style: TextStyle(
-                              fontSize: 18.sp,
-
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w900,
+                                fontFamily: "Phetsarath-OT",
                                 color: selectIndex == index
-                                    ? ERPTheme.BLACK_COLOR
+                                    ? ERPTheme.BASE_COLOR
                                     : ERPTheme.GREY_COLOR),
                           ),
                           Container(

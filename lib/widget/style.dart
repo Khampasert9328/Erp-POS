@@ -179,11 +179,17 @@ class Mystyle {
               children: [
                 Row(
                   children: [
-                    Mystyle().subtiTle1("ໂຊນ:"),
-                    Mystyle().subtiTle1("ຫ້ອງອາຫານຊັ້ນ 01"),
+                    Mystyle().subtiTle1("ໂຊນ : "),
+                    Mystyle().subtiTle1("ຊັ້ນ 1"),
                   ],
                 ),
+                SizedBox(
+                  height: 10.h,
+                ),
                 Mystyle().tiTle1("ເລກໂຕະ"),
+                SizedBox(
+                  height: 10.h,
+                ),
                 TextContainer(hintext: "ປ້ອນຂໍ້ມູນ", suffixIcon: ""),
               ],
             ),
@@ -199,10 +205,7 @@ class Mystyle {
   showdialogsuccess(context) {
     // ignore: avoid_single_cascade_in_expression_statements
     AwesomeDialog(
-      titleTextStyle: TextStyle(
-        fontFamily: 'Phetsarath-OT',
-        fontSize: 20.sp
-      ),
+      titleTextStyle: TextStyle(fontFamily: 'Phetsarath-OT', fontSize: 20.sp),
       context: context,
       dialogType: DialogType.SUCCES,
       animType: AnimType.BOTTOMSLIDE,

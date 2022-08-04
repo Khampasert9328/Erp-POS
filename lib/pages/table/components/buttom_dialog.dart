@@ -25,6 +25,7 @@ class _ButtomDialogState extends State<ButtomDialog> {
             child: Text(
               "ຍົກເລີກ",
               style: TextStyle(
+                fontFamily: 'Phetsarath-OT',
                 color: ERPTheme.GREY_COLOR,
                 fontWeight: FontWeight.bold,
               ),
@@ -42,6 +43,7 @@ class _ButtomDialogState extends State<ButtomDialog> {
               child: Text(
                 "ຕົກລົງ",
                 style: TextStyle(
+                  fontFamily: 'Phetsarath-OT',
                   color: ERPTheme.WHITE_COLOR,
                   fontWeight: FontWeight.bold,
                 ),

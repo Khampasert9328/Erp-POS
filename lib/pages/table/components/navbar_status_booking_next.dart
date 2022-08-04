@@ -23,19 +23,20 @@ class _NavBarStatusBookingState extends State<NavBarStatusBooking> {
             children: [
               CircleAvatar(
                 backgroundColor: ERPTheme.GREEN_COLOR,
-                radius: 15,
+                radius: 17,
                 child: Image.asset(
                   POSImages.tableStatus,
-                  height: 15.h,
-                  width: 15.w,
+                  height: 17.h,
+                  width: 17.w,
                 ),
               ),
               SizedBox(
-                width: 5.w,
+                width: 10.w,
               ),
               Text(
                 "00 ວ່າງ",
                 style: TextStyle(
+                  fontFamily: "Phetsarath-OT",
                   fontSize: 13.sp,
                 ),
               ),
@@ -43,26 +44,27 @@ class _NavBarStatusBookingState extends State<NavBarStatusBooking> {
           ),
         ),
         SizedBox(
-          width: 10.w,
+          width: 20.w,
         ),
         Container(
           child: Row(
             children: [
               CircleAvatar(
-                backgroundColor: ERPTheme.PINK_COLOR,
-                radius: 15,
+                backgroundColor: ERPTheme.BLUE_COLOR,
+                radius: 17,
                 child: Image.asset(
                   POSImages.tableStatus,
-                  height: 15.h,
-                  width: 15.w,
+                  height: 17.h,
+                  width: 17.w,
                 ),
               ),
               SizedBox(
-                width: 5.w,
+                width: 8.w,
               ),
               Text(
                 "00 ຈອງແລ້ວ",
                 style: TextStyle(
+                  fontFamily: "Phetsarath-OT",
                   fontSize: 13.sp,
                 ),
               ),

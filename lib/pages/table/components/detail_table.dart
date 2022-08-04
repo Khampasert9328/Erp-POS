@@ -36,7 +36,7 @@ class _DetailTableState extends State<DetailTable> {
         backgroundColor: ERPTheme.WHITE_COLOR,
         centerTitle: true,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
               widget.title,
@@ -142,32 +142,36 @@ class _DetailTableState extends State<DetailTable> {
                             ),
                           ),
                         ),
+                        SizedBox(
+                          height: 25.h,
+                        ),
                         Row(
                           children: [
                             CircleAvatar(
                               backgroundColor: widget.color,
-                              radius: 15.h,
+                              radius: 17.h,
                               child: Image.asset(
                                 POSImages.tableStatus,
-                                height: 15.h,
-                                width: 15.w,
+                                height: 20.h,
+                                width: 20.w,
                               ),
                             ),
                             SizedBox(
-                              width: 5.w,
+                              width: 10.w,
                             ),
                             Text(
                               checkStatus(
                                 widget.color,
                               ),
                               style: TextStyle(
-                                fontSize: 13.sp,
+                                fontFamily: 'Phetsarath-OT',
+                                fontSize: 15.sp,
                               ),
                             ),
                           ],
                         ),
                         SizedBox(
-                          height: 15.h,
+                          height: 25.h,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -181,15 +185,18 @@ class _DetailTableState extends State<DetailTable> {
                             )
                           ],
                         ),
+                        SizedBox(
+                          height: 15.h,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Mystyle().subtiTle1("ຊື່ໂຊນ ຫຼື ພື້ນທີ່"),
-                            Mystyle().tiTle1("ຫ້ອງອາຫານຊັ້ນ 01")
+                            Mystyle().tiTle1("ຊັ້ນ 1")
                           ],
                         ),
                         SizedBox(
-                          height: 10.h,
+                          height: 25.h,
                         ),
                         widget.color == Color(0xFFFCE00D2)
                             ? Column(
@@ -201,13 +208,25 @@ class _DetailTableState extends State<DetailTable> {
                                       Mystyle().tiTle1("ຂໍ້ມູນການຈອງ")
                                     ],
                                   ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Mystyle().subtiTle1("ຊື່ ແລະ ນາມສະກຸນ"),
-                                      Text("Mr. Jay"),
+                                      Text(
+                                        "Mr. Jay",
+                                        style: TextStyle(
+                                          fontFamily: 'Phetsarath-OT',
+                                          fontSize: 15.sp,
+                                        ),
+                                      ),
                                     ],
+                                  ),
+                                  SizedBox(
+                                    height: 8.h,
                                   ),
                                   Row(
                                     mainAxisAlignment:
@@ -217,6 +236,9 @@ class _DetailTableState extends State<DetailTable> {
                                       Text("02093286912"),
                                     ],
                                   ),
+                                  SizedBox(
+                                    height: 8.h,
+                                  ),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -224,6 +246,9 @@ class _DetailTableState extends State<DetailTable> {
                                       Mystyle().subtiTle1("ຈຳນວນລູກຄ້າ"),
                                       Text("12"),
                                     ],
+                                  ),
+                                  SizedBox(
+                                    height: 8.h,
                                   ),
                                   Row(
                                     mainAxisAlignment:

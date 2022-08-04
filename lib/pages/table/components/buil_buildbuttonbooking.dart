@@ -22,7 +22,10 @@ class BuidlButtonBooking extends StatelessWidget {
       },
       label: const Text(
         "ຈອງໂຕະ",
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        style: TextStyle(
+            fontFamily: 'Phetsarath-OT',
+            fontWeight: FontWeight.bold,
+            fontSize: 18),
       ),
     );
   }

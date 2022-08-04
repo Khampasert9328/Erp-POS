@@ -28,7 +28,7 @@ class TableBody extends StatefulWidget {
 }
 
 DateTime nowTime = DateTime.now();
-String formatDate = DateFormat('yyy-MM-dd').format(nowTime);
+String formatDate = DateFormat('yyy-MM-dd HH:mm:ss').format(nowTime);
 
 class _TableBodyState extends State<TableBody> {
   bool isWitch = false;
@@ -62,7 +62,7 @@ class _TableBodyState extends State<TableBody> {
                           ? ERPTheme.GREY_COLOR
                           : ERPTheme.BASE_COLOR,
                       fontWeight: FontWeight.bold,
-                      fontSize: 19.sp,
+                      fontSize: 18.sp,
                     ),
                   ),
                 ),
@@ -80,7 +80,7 @@ class _TableBodyState extends State<TableBody> {
                           ? ERPTheme.BASE_COLOR
                           : ERPTheme.GREY_COLOR,
                       fontWeight: FontWeight.bold,
-                      fontSize: 19.sp,
+                      fontSize: 18.sp,
                     ),
                   ),
                 ),
@@ -89,7 +89,7 @@ class _TableBodyState extends State<TableBody> {
             Column(
               children: [
                 SizedBox(
-                  height: 15.h,
+                  height: 20.h,
                 ),
                 changScreen == false
                     ? Row(
@@ -98,12 +98,12 @@ class _TableBodyState extends State<TableBody> {
                             "ເລືອກວັນ",
                             style: TextStyle(
                               fontFamily: "Phetsarath-OT",
-                              fontSize: 15.sp,
+                              fontSize: 14.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           SizedBox(
-                            width: 7.h,
+                            width: 12.h,
                           ),
                           ERPdate()
                         ],
@@ -116,7 +116,7 @@ class _TableBodyState extends State<TableBody> {
                                   "ປິດຮ້ານ",
                                   style: TextStyle(
                                     fontFamily: "Phetsarath-OT",
-                                    fontSize: 20.sp,
+                                    fontSize: 17.sp,
                                     color: ERPTheme.GREEN_COLOR,
                                   ),
                                 )
@@ -124,7 +124,7 @@ class _TableBodyState extends State<TableBody> {
                                   "ເປີດຮ້ານດຳເນີນການ",
                                   style: TextStyle(
                                     fontFamily: "Phetsarath-OT",
-                                    fontSize: 20.sp,
+                                    fontSize: 17.sp,
                                     color: ERPTheme.GREEN_COLOR,
                                   ),
                                 ),
@@ -150,18 +150,21 @@ class _TableBodyState extends State<TableBody> {
                 changScreen == false
                     ? Text("")
                     : Padding(
-                        padding: EdgeInsets.only(right: 60.sp),
+                        padding: EdgeInsets.only(right: 9.sp),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text(
-                              formatDate,
-                            ),
+                            Text("ອັບເດັດລ່າສຸດ : " + formatDate,
+                                style: TextStyle(
+                                    fontFamily: "Phetsarath-OT",
+                                    fontSize: 11.sp,
+                                    color: ERPTheme.BASE_COLOR,
+                                    fontWeight: FontWeight.bold)),
                           ],
                         ),
                       ),
                 SizedBox(
-                  height: 7.h,
+                  height: 11.h,
                 ),
                 Row(
                   children: [
@@ -173,8 +176,8 @@ class _TableBodyState extends State<TableBody> {
                       },
                       icon: Image.asset(
                         POSImages.area,
-                        width: 21.w,
-                        height: 21.h,
+                        width: 19.w,
+                        height: 19.h,
                       ),
                     ),
                     IconButton(
@@ -183,28 +186,25 @@ class _TableBodyState extends State<TableBody> {
                       },
                       icon: Image.asset(
                         POSImages.search,
-                        width: 21.w,
-                        height: 21.h,
+                        width: 19.w,
+                        height: 19.h,
                       ),
                     )
                   ],
                 ),
                 SizedBox(
-                  height: 10.h,
+                  height: 20.h,
                 ),
                 Container(
                   child: ListViewTable(),
                 ),
                 SizedBox(
-                  height: 10.h,
+                  height: 18.h,
                 ),
                 changScreen == false
                     ? const NavBarStatusBooking()
                     : NavBarStatus(),
               ],
-            ),
-            SizedBox(
-              height: 10.h,
             ),
             GridView.count(
               childAspectRatio: (1 / .4),
@@ -216,7 +216,7 @@ class _TableBodyState extends State<TableBody> {
                 (CardModels) => CardItem(
                   title: CardModels.title,
                   color: changScreen == false
-                      ? ERPTheme.PINK_COLOR
+                      ? ERPTheme.BLUE_COLOR
                       : CardModels.color,
                   id: CardModels.id,
                 ),

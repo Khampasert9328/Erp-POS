@@ -24,11 +24,11 @@ class _NavBarStatusState extends State<NavBarStatus> {
             children: [
               CircleAvatar(
                 backgroundColor: ERPTheme.GREEN_COLOR,
-                radius: 15,
+                radius: 17,
                 child: Image.asset(
                   POSImages.tableStatus,
-                  height: 15.h,
-                  width: 15.w,
+                  height: 17.h,
+                  width: 17.w,
                 ),
               ),
               SizedBox(
@@ -37,6 +37,7 @@ class _NavBarStatusState extends State<NavBarStatus> {
               Text(
                 "00 ວ່າງ",
                 style: TextStyle(
+                  fontFamily: "Phetsarath-OT",
                   fontSize: 13.sp,
                 ),
               ),
@@ -48,11 +49,11 @@ class _NavBarStatusState extends State<NavBarStatus> {
             children: [
               CircleAvatar(
                 backgroundColor: ERPTheme.RED_COLOR,
-                radius: 15,
+                radius: 17,
                 child: Image.asset(
                   POSImages.tableStatus,
-                  height: 15.h,
-                  width: 15.w,
+                  height: 17.h,
+                  width: 17.w,
                 ),
               ),
               SizedBox(
@@ -71,12 +72,12 @@ class _NavBarStatusState extends State<NavBarStatus> {
           child: Row(
             children: [
               CircleAvatar(
-                backgroundColor: ERPTheme.PINK_COLOR,
-                radius: 15,
+                backgroundColor: ERPTheme.BLUE_COLOR,
+                radius: 17,
                 child: Image.asset(
                   POSImages.tableStatus,
-                  height: 15.h,
-                  width: 15.w,
+                  height: 17.h,
+                  width: 17.w,
                 ),
               ),
               SizedBox(
@@ -85,6 +86,7 @@ class _NavBarStatusState extends State<NavBarStatus> {
               Text(
                 "00 ຈອງແລ້ວ",
                 style: TextStyle(
+                  fontFamily: "Phetsarath-OT",
                   fontSize: 13.sp,
                 ),
               ),
