@@ -32,16 +32,17 @@ class CardItem extends StatelessWidget {
         );
       },
       child: Container(
-        padding: EdgeInsets.only(left: 12.0),
+        padding: const EdgeInsets.only(left: 12.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           color: color,
         ),
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-                topRight: const Radius.circular(5),
-                bottomRight: Radius.circular(5)),
+            borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(5),
+              bottomRight: Radius.circular(5),
+            ),
             color: ERPTheme.GREY_COLOR,
           ),
           child: Center(
