@@ -172,7 +172,7 @@ class _TableBodyState extends State<TableBody> {
                         Mystyle().dialogbuttom(context);
                       },
                       icon: Image.asset(
-                        POSImages.area,
+                        ERPImages.area,
                         width: 21.w,
                         height: 21.h,
                       ),
@@ -182,7 +182,7 @@ class _TableBodyState extends State<TableBody> {
                         //todo
                       },
                       icon: Image.asset(
-                        POSImages.search,
+                        ERPImages.search,
                         width: 21.w,
                         height: 21.h,
                       ),

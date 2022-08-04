@@ -15,7 +15,7 @@ class BuildFloatingActionButton extends StatelessWidget {
         Mystyle().dialogAddTable(context);
       },
       icon: Image.asset(
-        POSImages.tableStatus,
+        ERPImages.tableStatus,
         height: 30,
         width: 30,
       ),

@@ -28,7 +28,7 @@ class _ERPDropdownStatusState extends State<ERPDropdownStatus> {
           icon: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Image.asset(
-              POSImages.ic_dropdown,
+              ERPImages.ic_dropdown,
               color: ERPTheme.BLACK_COLOR,
               height: 18,
               width: 9,

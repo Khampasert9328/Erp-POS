@@ -3,7 +3,9 @@ import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/widget/add_food_type_dialog.dart';
 import 'package:erp_pos/widget/erp_textfield.dart';
 import 'package:erp_pos/widget/food_menu_card.dart';
+import 'package:erp_pos/widget/place_to_eat_card.dart';
 import 'package:erp_pos/widget/selected_menu_card.dart';
+import 'package:erp_pos/widget/selected_menu_card_expand.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -29,6 +31,7 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
   double _fabHeight = 0;
   double _panelHeightOpen = 0;
   double _panelHeightClosed = 95.0;
+  bool isSelectedMenuCard = true;
 
   @override
   void initState() {
@@ -212,95 +215,15 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
     return MediaQuery.removePadding(
         context: context,
         removeTop: true,
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                controller: sc,
-                children: <Widget>[
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 30.h, vertical: 15.h),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(15.r),
-                            topLeft: Radius.circular(15.r),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'ລາຍການອາຫານ',
-                                  style: TextStyle(
-                                      fontSize: 16.sp,
-                                      color: ERPTheme.BASE_COLOR),
-                                ),
-                                SizedBox(
-                                  height: 5.h,
-                                ),
-                                Text.rich(TextSpan(
-                                    style: TextStyle(
-                                        fontSize: 16.sp,
-                                        color: ERPTheme.BASE_COLOR),
-                                    text: 'ລວມລາຄາ: ',
-                                    children: <InlineSpan>[
-                                      TextSpan(
-                                        text: ' 70.000 ກີບ',
-                                        style: TextStyle(
-                                            fontSize: 16.sp,
-                                            color: ERPTheme.BASE_COLOR,
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                    ]))
-                              ],
-                            ),
-                            Icon(
-                              Icons.shopping_cart,
-                              size: 55,
-                            )
-                          ],
-                        ),
-                      ),
-                      SelectedMenuCard()
-                    ],
-                  )
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
-              decoration: BoxDecoration(color: Color(0xFFF4F5F6)),
-              child: Row(
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.shopping_cart,
-                            size: (30.w + 30.h) / 2,
-                          )),
-                      SizedBox(
-                        width: 20.w,
-                      ),
-                      Text(
-                        'ລວມລາຄາ:',
-                        style: TextStyle(
-                            fontSize: 15.sp, color: ERPTheme.BASE_COLOR),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
-        ));
+        child: isSelectedMenuCard
+            ? SelectedMenuCardExpand(
+                onNext: () {
+                  setState(() {
+                    isSelectedMenuCard = !isSelectedMenuCard;
+                  });
+                },
+                scrollController: sc,
+              )
+            : PlaceToEatCard(scrollController: sc,));
   }
 }
