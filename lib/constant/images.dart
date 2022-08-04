@@ -17,4 +17,12 @@ class ERPImages {
   static const cocacola = 'images/cocacola.png';
   static const icPizza = 'images/ic_pizza.png';
   static const icSoup = 'images/ic_soup.png';
+  static const area = 'images/ic-zone.png';
+  static const search = 'images/search.png';
+  static const ic_dropdown = 'images/ic-dropdown.png';
+  static const plus = 'images/plus.png';
+  static const tableStatus = 'images/newtable.png';
+  static const datetime = 'images/datetime.png';
+  static const clock = 'images/ic-clock.png';
+  static const offtable = 'images/off_table.png';
 }

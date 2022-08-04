@@ -1,3 +1,5 @@
+import 'package:erp_pos/constant/images.dart';
+import 'package:erp_pos/pages/table/components/floatingActionButton.dart';
 import 'package:erp_pos/pages/table/components/table_body.dart';
 import 'package:flutter/material.dart';
 
@@ -12,10 +14,8 @@ class _POSTableState extends State<POSTable> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Table'),
-      ),
       body: TableBody(),
+      floatingActionButton: BuildFloatingActionButton(),
     );
   }
 }
