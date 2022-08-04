@@ -6,12 +6,14 @@ class ERPTextfield extends StatelessWidget {
   TextEditingController controller;
   int? maxlines;
 
-  ERPTextfield({required this.controller, required this.hintText, this.maxlines});
+  ERPTextfield(
+      {required this.controller, required this.hintText, this.maxlines});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       maxLines: maxlines ?? 1,
+      style: TextStyle(fontSize: 16.sp),
       decoration: InputDecoration(
         isDense: true,
         hintText: hintText,

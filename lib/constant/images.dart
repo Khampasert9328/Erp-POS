@@ -15,4 +15,6 @@ class ERPImages {
   static const tiger = 'images/Ellipse 71.png';
   static const staregg = 'images/star_agg.png';
   static const cocacola = 'images/cocacola.png';
+  static const icPizza = 'images/ic_pizza.png';
+  static const icSoup = 'images/ic_soup.png';
 }
