@@ -93,26 +93,28 @@ class Mystyle {
       context: context,
       builder: (context) {
         return Container(
-          child: AlertDialog(
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Mystyle().tiTle1("ເປີດກະ"),
-                Mystyle().subtiTle1("ຜູ້ເປີດກະ"),
-                TextContainer(hintext: "Telbiz@gmail.com", suffixIcon: ""),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Mystyle().subtiTle1("ວັນທີ ແລະ ເວລາ"),
-                ERPdateTime(),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Mystyle().subtiTle1("ເງິນເລີ່ມຕົ້ນ"),
-                TextContainer(hintext: "ເງິນເລີ່ມຕົ້ນ", suffixIcon: "ກີບ"),
-              ],
+          child: SingleChildScrollView(
+            child: AlertDialog(
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Mystyle().tiTle1("ເປີດກະ"),
+                  Mystyle().subtiTle1("ຜູ້ເປີດກະ"),
+                  TextContainer(hintext: "Telbiz@gmail.com", suffixIcon: ""),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Mystyle().subtiTle1("ວັນທີ ແລະ ເວລາ"),
+                  ERPdateTime(),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Mystyle().subtiTle1("ເງິນເລີ່ມຕົ້ນ"),
+                  TextContainer(hintext: "ເງິນເລີ່ມຕົ້ນ", suffixIcon: "ກີບ"),
+                ],
+              ),
+              actions: [ButtomDialog()],
             ),
-            actions: [ButtomDialog()],
           ),
         );
       },
@@ -125,42 +127,44 @@ class Mystyle {
       context: context,
       builder: (context) {
         return Container(
-          child: AlertDialog(
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Mystyle().tiTle1("ປີດກະ"),
-                Mystyle().subtiTle1("ຜູ້ປີດກະ"),
-                TextContainer(hintext: "Telbiz@gmail.com", suffixIcon: ""),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Mystyle().subtiTle1("ວັນທີ ແລະ ເວລາ"),
-                ERPdateTime(),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Mystyle().subtiTle1("ເງິນເລີ່ມຕົ້ນ"),
-                TextContainer(hintext: "ເງິນເລີ່ມຕົ້ນ", suffixIcon: "ກີບ"),
-                Mystyle().subtiTle1("ຍອດຂາຍ"),
-                TextContainer(hintext: "ຍອດຂາຍ", suffixIcon: "ກີບ"),
-                Mystyle().subtiTle1("ເງິນທີ່ນັບໄດ້"),
-                TextContainer(hintext: "ເງິນທີ່ນັບໄດ້", suffixIcon: "ກີບ"),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Mystyle().tiTle1("ຜິດດ່ຽງ"),
-                    Mystyle().texttitle(
-                      "30,000 ກີບ",
-                    ),
-                  ],
-                )
-              ],
+          child: SingleChildScrollView(
+            child: AlertDialog(
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Mystyle().tiTle1("ປີດກະ"),
+                  Mystyle().subtiTle1("ຜູ້ປີດກະ"),
+                  TextContainer(hintext: "Telbiz@gmail.com", suffixIcon: ""),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Mystyle().subtiTle1("ວັນທີ ແລະ ເວລາ"),
+                  ERPdateTime(),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Mystyle().subtiTle1("ເງິນເລີ່ມຕົ້ນ"),
+                  TextContainer(hintext: "ເງິນເລີ່ມຕົ້ນ", suffixIcon: "ກີບ"),
+                  Mystyle().subtiTle1("ຍອດຂາຍ"),
+                  TextContainer(hintext: "ຍອດຂາຍ", suffixIcon: "ກີບ"),
+                  Mystyle().subtiTle1("ເງິນທີ່ນັບໄດ້"),
+                  TextContainer(hintext: "ເງິນທີ່ນັບໄດ້", suffixIcon: "ກີບ"),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Mystyle().tiTle1("ຜິດດ່ຽງ"),
+                      Mystyle().texttitle(
+                        "30,000 ກີບ",
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              actions: [ButtomDialog()],
             ),
-            actions: [ButtomDialog()],
           ),
         );
       },

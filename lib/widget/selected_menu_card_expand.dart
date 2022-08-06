@@ -1,4 +1,4 @@
-import 'package:erp_pos/widget/selected_menu_card.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -68,7 +68,7 @@ class SelectedMenuCardExpand extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SelectedMenuCard()
+                      //SelectedMenuCardExpand(onNext: onNext, scrollController: scrollController)
                     ],
                   )
                 ],
