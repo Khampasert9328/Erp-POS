@@ -12,6 +12,8 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: OnboardBody());
+    return Scaffold(
+      body: OnboardBody(),
+    );
   }
 }

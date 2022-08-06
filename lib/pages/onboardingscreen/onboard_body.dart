@@ -12,7 +12,7 @@ class OnboardBody extends StatefulWidget {
 }
 
 class _OnboardBodyState extends State<OnboardBody> {
-   int currenIndex = 0;
+  int currenIndex = 0;
   PageController? pagecontroller;
 
   @override
@@ -26,85 +26,91 @@ class _OnboardBodyState extends State<OnboardBody> {
     pagecontroller!.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
-        children: [
-          Expanded(
-            child: PageView.builder(
-                controller: pagecontroller,
-                onPageChanged: (int index) {
-                  setState(() {
-                    currenIndex = index;
-                  });
-                },
-                itemCount: content.length,
-                itemBuilder: (_, i) {
-                  return Padding(
-                    padding: const EdgeInsets.all(40),
-                    child: Column(
-                      children: [
-                        Image.asset(
-                          content[i].image,
-                          height: 300.h,
-                        ),
-                        Text(
-                          content[i].title,
-                          style: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Phetsarath-OT'),
-                        ),
-                        Text(
-                          content[i].subtitle,
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontFamily: 'Phetsarath-OT',
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }),
-          ),
-          builddot(context),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: ERPTheme.BLUE_COLOR,
-            ),
-            height: 60.h,
-            width: double.infinity,
-            margin: EdgeInsets.all(40),
-            child: FlatButton(
-              color: ERPTheme.BLUE_COLOR,
-              textColor: ERPTheme.WHITE_COLOR,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              onPressed: () {
-                if (currenIndex == content.length - 1) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => HomePage(),
-                    ),
-                  );
-                }
-                pagecontroller!.nextPage(
-                  duration: Duration(milliseconds: 100),
-                  curve: Curves.bounceIn,
-                );
+      children: [
+        Expanded(
+          child: PageView.builder(
+              controller: pagecontroller,
+              onPageChanged: (int index) {
+                setState(() {
+                  currenIndex = index;
+                });
               },
-              child: Text(
-                currenIndex == content.length - 1 ? "ເຂົ້າສູ່ລະບົບ" : "ຕໍ່ໄປ",
-                style: TextStyle(fontFamily: 'Phetsarath-OT', fontSize: 20.sp),
+              itemCount: content.length,
+              itemBuilder: (_, i) {
+                return Padding(
+                  padding: const EdgeInsets.all(40),
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        content[i].image,
+                        height: 300.h,
+                      ),
+                      Text(
+                        content[i].title,
+                        style: TextStyle(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Phetsarath-OT'),
+                      ),
+                      Text(
+                        content[i].subtitle,
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontFamily: 'Phetsarath-OT',
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+        ),
+        builddot(context),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: ERPTheme.BLUE_COLOR,
+          ),
+          height: 60.h,
+          width: double.infinity,
+          margin: EdgeInsets.all(40),
+          child: FlatButton(
+            color: ERPTheme.BASE_COLOR,
+            textColor: ERPTheme.WHITE_COLOR,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            onPressed: () {
+              if (currenIndex == content.length - 1) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => HomePage(),
+                  ),
+                );
+              }
+              pagecontroller!.nextPage(
+                duration: Duration(milliseconds: 100),
+                curve: Curves.bounceIn,
+              );
+            },
+            child: Text(
+              currenIndex == content.length - 1 ? "ເຂົ້າສູ່ລະບົບ" : "ຕໍ່ໄປ",
+              style: TextStyle(
+                fontFamily: 'Phetsarath-OT',
+                fontSize: 20.sp,
+          
               ),
             ),
-          )
-        ],
-      );
+          ),
+        )
+      ],
+    );
   }
+
   Container builddot(BuildContext context) {
     return Container(
       child: Row(
@@ -116,8 +122,9 @@ class _OnboardBodyState extends State<OnboardBody> {
             height: 10.h,
             width: currenIndex == index ? 20.w : 10.w,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: ERPTheme.BLUE_COLOR),
+              borderRadius: BorderRadius.circular(20),
+              color: ERPTheme.BASE_COLOR,
+            ),
           ),
         ),
       ),
