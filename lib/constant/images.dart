@@ -23,4 +23,7 @@ class POSImages {
   static const datetime = 'images/datetime.png';
   static const clock = 'images/ic-clock.png';
   static const offtable = 'images/off_table.png';
+  static const onboarding = 'images/onboard1.png';
+  static const onboard = 'images/onboard2.png';
+  static const onboardScreen = 'images/onboard3.png';
 }
