@@ -1,5 +1,6 @@
 import 'package:erp_pos/constant/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TextContainer extends StatefulWidget {
   String hintext;
@@ -27,6 +28,10 @@ class _TextContainerState extends State<TextContainer> {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 widget.suffixIcon,
+                style: TextStyle(
+                  fontFamily: 'Phetsarath-OT',
+                  fontSize: 16.sp,
+                ),
               ),
             ),
             border: InputBorder.none,

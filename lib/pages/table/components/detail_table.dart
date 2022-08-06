@@ -103,7 +103,7 @@ class _DetailTableState extends State<DetailTable> {
               ),
               isWitch == false
                   ? Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(60.0),
                       child: Center(child: Image.asset(POSImages.offtable)),
                     )
                   : Column(
