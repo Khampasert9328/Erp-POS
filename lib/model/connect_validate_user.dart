@@ -1,11 +1,12 @@
+
 import 'dart:convert';
 
-ConnectValidate connectValidateFromJson(String str) => ConnectValidate.fromJson(json.decode(str));
+ConnectValidateModels connectValidateModelsFromJson(String str) => ConnectValidateModels.fromJson(json.decode(str));
 
-String connectValidateToJson(ConnectValidate data) => json.encode(data.toJson());
+String connectValidateModelsToJson(ConnectValidateModels data) => json.encode(data.toJson());
 
-class ConnectValidate {
-    ConnectValidate({
+class ConnectValidateModels {
+    ConnectValidateModels({
         this.email,
         this.logon,
         this.name,
@@ -21,7 +22,7 @@ class ConnectValidate {
     String? postype;
     String? roleType;
 
-    factory ConnectValidate.fromJson(Map<String, dynamic> json) => ConnectValidate(
+    factory ConnectValidateModels.fromJson(Map<String, dynamic> json) => ConnectValidateModels(
         email: json["email"],
         logon: json["logon"],
         name: json["name"],
