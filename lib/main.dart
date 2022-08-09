@@ -1,9 +1,11 @@
+import 'package:erp_pos/bussiness%20logic/bussiness_logic.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/pages/Dasboard/dasboard.dart';
 import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/pages/onboardingscreen/onboardingscreen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'constant/routes.dart' as custom_route;
 import 'package:flutter/material.dart';
 
@@ -21,17 +23,22 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, _) {
-        return MaterialApp(
-          theme: ThemeData(
-            primaryColor: Colors.blue,
-            fontFamily: 'Phetsarath',
-            appBarTheme: AppBarTheme(
-              iconTheme: IconThemeData(color: ERPTheme.BLACK_COLOR)
-            )
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (context)=>AuthenticationProvider())
+          ],
+          child: MaterialApp(
+            theme: ThemeData(
+              primaryColor: Colors.blue,
+              fontFamily: 'Phetsarath',
+              appBarTheme: AppBarTheme(
+                iconTheme: IconThemeData(color: ERPTheme.BLACK_COLOR)
+              )
+            ),
+            debugShowCheckedModeBanner: false,
+            routes: custom_route.Route.getAll(),
+            home: OnboardingScreen(),
           ),
-          debugShowCheckedModeBanner: false,
-          routes: custom_route.Route.getAll(),
-          home: OnboardingScreen(),
         );
       },
     );
