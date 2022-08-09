@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_declarations
 
+import 'package:erp_pos/bussiness%20logic/bussiness_logic.dart';
 import 'package:flutter/material.dart';
 
 class LogIn extends StatefulWidget {
@@ -14,6 +15,14 @@ class _LogInState extends State<LogIn> {
   bool openPassword = true;
   final fromkey = GlobalKey<FormState>();
   final _scaffoldkey = GlobalKey<ScaffoldState>();
+  TextEditingController erpemail = TextEditingController();
+  TextEditingController erpusername = TextEditingController();
+  TextEditingController erppassword = TextEditingController();
+
+  TextEditingController erpsemail = TextEditingController();
+   TextEditingController erpsname = TextEditingController();
+    TextEditingController erpslastname = TextEditingController();
+     TextEditingController erpsnamecompany = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,6 +149,7 @@ class _LogInState extends State<LogIn> {
           horizontal: 5.0,
         ),
         child: TextFormField(
+          controller: erpemail,
           keyboardType: TextInputType.emailAddress,
           validator: ((value) {
             if (value!.isEmpty ||
@@ -173,6 +183,7 @@ class _LogInState extends State<LogIn> {
           horizontal: 5.0,
         ),
         child: TextFormField(
+          controller: erppassword,
           keyboardType: TextInputType.text,
           validator: ((value) {
             if (value!.trim().isEmpty) {
@@ -240,17 +251,8 @@ class _LogInState extends State<LogIn> {
       child: GestureDetector(
         onTap: () {
           if (fromkey.currentState!.validate()) {
-            final snackbar = const SnackBar(
-              backgroundColor: Color(0xff538eed),
-              content: Text(
-                "ລັອກອິນສຳເລັດ",
-                style: TextStyle(
-                    fontFamily: 'NotoSansLao-Regular',
-                    color: Colors.white,
-                    fontSize: 20),
-              ),
-            );
-            _scaffoldkey.currentState!.showSnackBar(snackbar);
+          print("email == $erpemail, password==$erppassword");
+          AuthenticationProvider().login(erpemail.text,erppassword.text, erpusername.text,context);  
           }
         },
         child: Container(
@@ -317,6 +319,7 @@ class _LogInState extends State<LogIn> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: TextFormField(
+        controller: erpsemail,
         validator: ((value) {
           if (value!.isEmpty ||
               !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$').hasMatch(value)) {
@@ -353,6 +356,7 @@ class _LogInState extends State<LogIn> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: TextFormField(
+        controller: erpsnamecompany,
         validator: ((value) {
           if (value!.isEmpty) {
             return "ກາລຸນາໃສ່ຊື່ຮ້ານ/ບໍລິສັດໃຫ້ຖືກຕ້ອງ";
@@ -388,6 +392,7 @@ class _LogInState extends State<LogIn> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: TextFormField(
+        controller: erpsname,
         validator: ((value) {
           if (value!.isEmpty) {
             return "ກາລຸນາໃສ່ຊື່ໃຫ້ຖືກຕ້ອງ";
@@ -423,6 +428,7 @@ class _LogInState extends State<LogIn> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: TextFormField(
+        controller: erpslastname,
         validator: ((value) {
           if (value!.isEmpty ) {
             return "ກາລຸນາໃສ່ນາມສະກຸນໃຫ້ຖືກຕ້ອງ";
@@ -447,18 +453,9 @@ class _LogInState extends State<LogIn> {
       child: GestureDetector(
         onTap: () {
           if (fromkey.currentState!.validate()) {
-            final snackbar = const SnackBar(
-              backgroundColor: Color(0xff538eed),
-              content: Text(
-                "ລົງທະບຽນສຳເລັດແລ້ວ",
-                style: TextStyle(
-                  fontFamily: 'NotoSansLao-Regular',
-                  fontSize: 20,
-                  color: Colors.white
-                ),
-              ),
-            );
-            _scaffoldkey.currentState!.showSnackBar(snackbar);
+            AuthenticationProvider().register(erpsemail.text, erpsname.text, context, erpslastname.text,).then((value) {
+             // print("register success");
+            });
           }
         },
         child: Container(

@@ -215,4 +215,19 @@ class Mystyle {
       btnOkOnPress: () {},
     )..show();
   }
+  showdialogError(context) {
+    // ignore: avoid_single_cascade_in_expression_statements
+    AwesomeDialog(
+      titleTextStyle: TextStyle(
+        fontFamily: 'Phetsarath-OT',
+        fontSize: 20.sp
+      ),
+      context: context,
+      dialogType: DialogType.ERROR,
+      animType: AnimType.BOTTOMSLIDE,
+      title: 'ແຈ້ງເຕືອນ',
+      desc: 'ກາລຸນາລອງໃໝ່ອີກຄັ້ງ!...',
+      btnOkOnPress: () {},
+    )..show();
+  }
 }

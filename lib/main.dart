@@ -25,16 +25,16 @@ class MyApp extends StatelessWidget {
       builder: (context, _) {
         return MultiProvider(
           providers: [
-            ChangeNotifierProvider(create: (context)=>AuthenticationProvider())
+            ChangeNotifierProvider(
+              create: (context) => AuthenticationProvider(),
+            ),
           ],
           child: MaterialApp(
             theme: ThemeData(
-              primaryColor: Colors.blue,
-              fontFamily: 'Phetsarath',
-              appBarTheme: AppBarTheme(
-                iconTheme: IconThemeData(color: ERPTheme.BLACK_COLOR)
-              )
-            ),
+                primaryColor: Colors.blue,
+                fontFamily: 'Phetsarath',
+                appBarTheme: AppBarTheme(
+                    iconTheme: IconThemeData(color: ERPTheme.BLACK_COLOR))),
             debugShowCheckedModeBanner: false,
             routes: custom_route.Route.getAll(),
             home: OnboardingScreen(),

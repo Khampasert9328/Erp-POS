@@ -1,5 +1,6 @@
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/pages/homepage/homepage.dart';
+import 'package:erp_pos/pages/login/login.dart';
 import 'package:erp_pos/pages/onboardingscreen/models/content_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -88,7 +89,7 @@ class _OnboardBodyState extends State<OnboardBody> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => HomePage(),
+                    builder: (_) => LogIn(),
                   ),
                 );
               }
