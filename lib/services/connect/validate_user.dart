@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:erp_pos/constant/api_path.dart';
 import 'package:erp_pos/model/connect_validate_user.dart';
 
-Future<ConnectValidateModels?> connectvalidateuse(String email) async {
+Future<ConnectValidateModels?> connectvalidateuser(String email) async {
   try {
     Dio dio = Dio();
 
