@@ -7,6 +7,7 @@ import 'package:erp_pos/model/connect_validate_user.dart';
 Future<ConnectValidateModels?> connectvalidateuse(String email) async {
   try {
     Dio dio = Dio();
+
     String url = APIPath.CONNECT_VALIDATE_USER;
     String data = jsonEncode({
       "email": email,
@@ -21,9 +22,11 @@ Future<ConnectValidateModels?> connectvalidateuse(String email) async {
     if (respones.statusCode == 200) {
       return connectValidateModelsFromJson(respones.data);
     } else {
+      /// pop
+      /// show dialog err
       return null;
     }
   } catch (e) {
-    print(e);
+     return null;
   }
 }
