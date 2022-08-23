@@ -309,7 +309,7 @@ class _Dasboard1State extends State<Dasboard1> {
                             height: 42,
                             width: 42,
                             child: Image.asset(
-                              POSImages.staregg,
+                              ERPImages.staregg,
                             ),
                           ),
                           const SizedBox(
@@ -335,7 +335,7 @@ class _Dasboard1State extends State<Dasboard1> {
                                         width: 8,
                                         height: 8,
                                         child: Image.asset(
-                                          POSImages.tiger,
+                                          ERPImages.tiger,
                                         ),
                                       ),
                                       const SizedBox(
@@ -387,7 +387,7 @@ class _Dasboard1State extends State<Dasboard1> {
                             height: 42,
                             width: 42,
                             child: Image.asset(
-                              POSImages.tiger,
+                              ERPImages.tiger,
                             ),
                           ),
                           const SizedBox(
@@ -413,7 +413,7 @@ class _Dasboard1State extends State<Dasboard1> {
                                         width: 8,
                                         height: 8,
                                         child: Image.asset(
-                                          POSImages.tiger,
+                                          ERPImages.tiger,
                                         ),
                                       ),
                                       const SizedBox(
@@ -464,7 +464,7 @@ class _Dasboard1State extends State<Dasboard1> {
                           Image.asset(
                             height: 42,
                             width: 42,
-                            POSImages.cocacola,
+                            ERPImages.cocacola,
                           ),
                           const SizedBox(
                             width: 10,
@@ -489,7 +489,7 @@ class _Dasboard1State extends State<Dasboard1> {
                                         width: 8,
                                         height: 8,
                                         child: Image.asset(
-                                          POSImages.yellow,
+                                          ERPImages.yellow,
                                         ),
                                       ),
                                       const SizedBox(
@@ -571,7 +571,7 @@ class _Dasboard1State extends State<Dasboard1> {
                               height: 65,
                               width: 65,
                               child: Image.asset(
-                                POSImages.bcelone,
+                                ERPImages.bcelone,
                               ),
                             ),
                             const Padding(
@@ -645,7 +645,7 @@ class _Dasboard1State extends State<Dasboard1> {
                               height: 65,
                               width: 65,
                               child: Image.asset(
-                                POSImages.bcelone,
+                                ERPImages.bcelone,
                               ),
                             ),
                             const Padding(
@@ -719,7 +719,7 @@ class _Dasboard1State extends State<Dasboard1> {
                               height: 65,
                               width: 65,
                               child: Image.asset(
-                                POSImages.mmoney,
+                                ERPImages.mmoney,
                               ),
                             ),
                             const Padding(
@@ -793,7 +793,7 @@ class _Dasboard1State extends State<Dasboard1> {
                               height: 65,
                               width: 65,
                               child: Image.asset(
-                                POSImages.umoney,
+                                ERPImages.umoney,
                               ),
                             ),
                             const Padding(

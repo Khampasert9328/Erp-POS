@@ -81,7 +81,7 @@ class _ERPdateState extends State<ERPdate> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Image.asset(
-                      POSImages.datetime,
+                    ERPImages.datetime,
                       width: 30.w,
                       height: 30.h,
                     ),

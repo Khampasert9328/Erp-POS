@@ -104,7 +104,7 @@ class _DetailTableState extends State<DetailTable> {
               isWitch == false
                   ? Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: Center(child: Image.asset(POSImages.offtable)),
+                      child: Center(child: Image.asset(ERPImages.offtable)),
                     )
                   : Column(
                       children: [
@@ -148,7 +148,7 @@ class _DetailTableState extends State<DetailTable> {
                               backgroundColor: widget.color,
                               radius: 15.h,
                               child: Image.asset(
-                                POSImages.tableStatus,
+                                ERPImages.tableStatus,
                                 height: 15.h,
                                 width: 15.w,
                               ),

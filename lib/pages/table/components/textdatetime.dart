@@ -79,7 +79,7 @@ class _ERPdateTimeState extends State<ERPdateTime> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Image.asset(
-                  POSImages.datetime,
+                  ERPImages.datetime,
                   width: 30.w,
                   height: 30.h,
                 ),
@@ -138,7 +138,7 @@ class _ERPdateTimeState extends State<ERPdateTime> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Image.asset(
-                  POSImages.clock,
+                  ERPImages.clock,
                   width: 30.w,
                   height: 30.h,
                 ),
