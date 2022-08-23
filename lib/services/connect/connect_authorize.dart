@@ -16,27 +16,29 @@ Future<ConnectAuthorizeModels?> connectAuthorizeModels(
     var signature = md5.convert(bytes).toString();
     Dio dio = Dio();
     String url = APIPath.CONNECT_ATHORIZE;
+
     String data = jsonEncode({
       "email": email,
-      "logon": signature,
+      "logon": _logon,
       "name": "",
       "tennantId": "",
       "postype": '',
       "roleType": ''
     });
+
     var respones = await dio.post(
       url,
       data: data,
       options: Options(
         headers: {
-          "application/json": signature,
+          "accept": "text/plain",
+          "signature": signature,
+          "Content-Type": "application/json",
         },
       ),
     );
     if (respones.statusCode == 200) {
       return connectAuthorizeModelsFromJson(respones.data);
     }
-  } catch (e) {
-    print(e);
-  }
+  } catch (e) {}
 }

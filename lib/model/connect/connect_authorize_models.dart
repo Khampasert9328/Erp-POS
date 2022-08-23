@@ -10,36 +10,40 @@ String connectAuthorizeModelsToJson(ConnectAuthorizeModels data) => json.encode(
 
 class ConnectAuthorizeModels {
     ConnectAuthorizeModels({
-        this.email,
-        this.logon,
-        this.name,
-        this.tennantId,
-        this.postype,
-        this.roleType,
+        this.code,
+        this.message,
+        this.success,
+        this.detail,
+        this.id,
+        this.claims,
+        this.token,
     });
 
-    String? email;
-    String? logon;
-    String? name;
-    String? tennantId;
-    String? postype;
-    String? roleType;
+    String? code;
+    String? message;
+    bool? success;
+    String? detail;
+    String? id;
+    List<dynamic>? claims;
+    String? token;
 
     factory ConnectAuthorizeModels.fromJson(Map<String, dynamic> json) => ConnectAuthorizeModels(
-        email: json["email"],
-        logon: json["logon"],
-        name: json["name"],
-        tennantId: json["tennantId"],
-        postype: json["postype"],
-        roleType: json["roleType"],
+        code: json["code"],
+        message: json["message"],
+        success: json["success"],
+        detail: json["detail"],
+        id: json["id"],
+        claims: List<dynamic>.from(json["claims"].map((x) => x)),
+        token: json["token"],
     );
 
     Map<String, dynamic> toJson() => {
-        "email": email,
-        "logon": logon,
-        "name": name,
-        "tennantId": tennantId,
-        "postype": postype,
-        "roleType": roleType,
+        "code": code,
+        "message": message,
+        "success": success,
+        "detail": detail,
+        "id": id,
+        "claims": List<dynamic>.from(claims!.map((x) => x)),
+        "token": token,
     };
 }

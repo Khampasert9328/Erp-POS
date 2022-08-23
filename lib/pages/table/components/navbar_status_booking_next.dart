@@ -17,6 +17,7 @@ class _NavBarStatusBookingState extends State<NavBarStatusBooking> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
           child: Row(
@@ -44,6 +45,30 @@ class _NavBarStatusBookingState extends State<NavBarStatusBooking> {
         ),
         SizedBox(
           width: 10.w,
+        ),
+        Container(
+          child: Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: ERPTheme.RED_COLOR,
+                radius: 15,
+                child: Image.asset(
+                  POSImages.tableStatus,
+                  height: 15.h,
+                  width: 15.w,
+                ),
+              ),
+              SizedBox(
+                width: 5.w,
+              ),
+              Text(
+                "00 ບໍ່ວ່າງ",
+                style: TextStyle(
+                  fontSize: 13.sp,
+                ),
+              ),
+            ],
+          ),
         ),
         Container(
           child: Row(

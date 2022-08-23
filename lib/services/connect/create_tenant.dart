@@ -1,18 +1,15 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:erp_pos/constant/api_path.dart';
 import 'package:erp_pos/model/connect/connect_create_tenant.dart';
+import 'package:http/http.dart' as http;
 
 Future<ConnectCreateTenantModels?> connectCreateTenantModel(
-  String name,
-  String lastname,
-) async {
+    String name, String lastname, String? id, String? accessToken) async {
   try {
-    Dio dio = Dio();
     String url = APIPath.CONNECT_CREATE_TENANT;
     String data = jsonEncode({
-      "id": '',
+      "id": id,
       "name": name,
       "firstname": '',
       "lastname": lastname,
@@ -24,9 +21,14 @@ Future<ConnectCreateTenantModels?> connectCreateTenantModel(
       "contact": '',
       "status": ''
     });
-    var respones = await dio.post(url, data: data);
-    if (respones.statusCode == 200) {
-      return connectCreateTenantModelsFromJson(respones.data);
+    var response = await http.post(Uri.parse(url), body: data, headers: {
+      'Content-Type': 'application/json',
+      'accept': 'text/plain',
+      'Authorization': 'Bearer $accessToken'
+    });
+   
+    if (response.statusCode == 200) {
+      return connectCreateTenantModelsFromJson(response.body);
     }
     return null;
   } catch (e) {

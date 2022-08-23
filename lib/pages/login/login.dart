@@ -1,7 +1,10 @@
-// ignore_for_file: prefer_const_declarations
-
-import 'package:erp_pos/bussiness%20logic/bussiness_logic.dart';
+import 'dart:ui';
+import 'package:cool_alert/cool_alert.dart';
+import 'package:erp_pos/bussiness%20logic/authentication.dart';
+import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
@@ -13,16 +16,19 @@ class LogIn extends StatefulWidget {
 class _LogInState extends State<LogIn> {
   bool isSignUpscreen = true;
   bool openPassword = true;
+
   final fromkey = GlobalKey<FormState>();
   final _scaffoldkey = GlobalKey<ScaffoldState>();
+  //controller for login
   TextEditingController erpemail = TextEditingController();
   TextEditingController erpusername = TextEditingController();
   TextEditingController erppassword = TextEditingController();
-
+//controller for register
   TextEditingController erpsemail = TextEditingController();
-   TextEditingController erpsname = TextEditingController();
-    TextEditingController erpslastname = TextEditingController();
-     TextEditingController erpsnamecompany = TextEditingController();
+  TextEditingController erpsname = TextEditingController();
+  TextEditingController erpslastname = TextEditingController();
+  TextEditingController erpsnamecompany = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -249,10 +255,10 @@ class _LogInState extends State<LogIn> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: GestureDetector(
-        onTap: () {
+        onTap: () async {
           if (fromkey.currentState!.validate()) {
-          print("email == $erpemail, password==$erppassword");
-          AuthenticationProvider().login(erpemail.text,erppassword.text, erpusername.text,context);  
+            AuthenticationProvider().login(erpemail.text, erpusername.text,
+                erppassword.text, context, "", "");
           }
         },
         child: Container(
@@ -430,7 +436,7 @@ class _LogInState extends State<LogIn> {
       child: TextFormField(
         controller: erpslastname,
         validator: ((value) {
-          if (value!.isEmpty ) {
+          if (value!.isEmpty) {
             return "ກາລຸນາໃສ່ນາມສະກຸນໃຫ້ຖືກຕ້ອງ";
           } else {
             return null;
@@ -451,12 +457,13 @@ class _LogInState extends State<LogIn> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: GestureDetector(
-        onTap: () {
-          if (fromkey.currentState!.validate()) {
-            AuthenticationProvider().register(erpsemail.text, erpsname.text, context, erpslastname.text,).then((value) {
-             // print("register success");
-            });
-          }
+        onTap: () async {
+          try {
+            if (fromkey.currentState!.validate()) {
+              AuthenticationProvider().validateUser(
+                  erpsemail.text, erpsname.text, context, erpslastname.text);
+            }
+          } catch (e) {}
         },
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 10),

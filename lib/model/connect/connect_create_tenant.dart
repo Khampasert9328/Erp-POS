@@ -10,56 +10,28 @@ String connectCreateTenantModelsToJson(ConnectCreateTenantModels data) => json.e
 
 class ConnectCreateTenantModels {
     ConnectCreateTenantModels({
+        this.issucess,
+        this.error,
         this.id,
-        this.name,
-        this.firstname,
-        this.lastname,
-        this.country,
-        this.province,
-        this.district,
-        this.village,
-        this.address,
-        this.contact,
-        this.status,
+        this.code,
     });
 
+    bool? issucess;
+    String? error;
     String? id;
-    String? name;
-    String? firstname;
-    String? lastname;
-    String? country;
-    String? province;
-    String? district;
-    String? village;
-    String? address;
-    String? contact;
-    String? status;
+    String? code;
 
     factory ConnectCreateTenantModels.fromJson(Map<String, dynamic> json) => ConnectCreateTenantModels(
+        issucess: json["issucess"],
+        error: json["error"],
         id: json["id"],
-        name: json["name"],
-        firstname: json["firstname"],
-        lastname: json["lastname"],
-        country: json["country"],
-        province: json["province"],
-        district: json["district"],
-        village: json["village"],
-        address: json["address"],
-        contact: json["contact"],
-        status: json["status"],
+        code: json["code"],
     );
 
     Map<String, dynamic> toJson() => {
+        "issucess": issucess,
+        "error": error,
         "id": id,
-        "name": name,
-        "firstname": firstname,
-        "lastname": lastname,
-        "country": country,
-        "province": province,
-        "district": district,
-        "village": village,
-        "address": address,
-        "contact": contact,
-        "status": status,
+        "code": code,
     };
 }

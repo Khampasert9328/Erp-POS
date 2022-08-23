@@ -160,7 +160,7 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                   GestureDetector(
                     onTap: (){
                       if (fromkey.currentState!.validate()) {
-                        Mystyle().showdialogsuccess(context);
+                        Mystyle().showdialogsuccess(context, "ແຈ້ງເຕືອນ", "ທ່ານໄດ້ຈອງໂຕະສຳເລັດແລ້ວ");
                       }
                     },
                     child: Container(

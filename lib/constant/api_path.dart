@@ -3,5 +3,11 @@ class APIPath {
   static const String CONNECT_VALIDATE_USER = BASE_URL + 'Connect/validateuser';
   static const String CONNECT_TOKEN = BASE_URL + 'Connect/token';
   static const String CONNECT_ATHORIZE = BASE_URL + 'Connect/authorize';
-  static const String CONNECT_CREATE_TENANT = BASE_URL + 'TenantService/CreateTenant';
+  static const String CONNECT_CREATE_TENANT =
+      BASE_URL + 'TenantService/CreateTenant';
+  static const String GET_AREA = BASE_URL + 'TableService/GetArea';
+  static const String GET_TABLE_BY_AREAID =
+      BASE_URL + 'TableService/GetTable_byArea';
+
+  static const String INSERT_AREA = BASE_URL + 'TableService/CreateArea';
 }

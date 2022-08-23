@@ -9,6 +9,8 @@ class ERPTheme {
   static Color RED_COLOR = Color(0xFFFF0000);
   static Color PINK_COLOR = Color(0xFFFCE00D2);
   static Color BLUE_COLOR = Colors.blue;
+  static Color CARD_COLOR = Color(0xFFF4F5F6);
+
 }
 
-//C7C9CF
+//F4F5F6

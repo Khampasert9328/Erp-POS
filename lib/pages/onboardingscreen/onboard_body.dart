@@ -44,27 +44,29 @@ class _OnboardBodyState extends State<OnboardBody> {
               itemBuilder: (_, i) {
                 return Padding(
                   padding: const EdgeInsets.all(40),
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        content[i].image,
-                        height: 300.h,
-                      ),
-                      Text(
-                        content[i].title,
-                        style: TextStyle(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Phetsarath-OT'),
-                      ),
-                      Text(
-                        content[i].subtitle,
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontFamily: 'Phetsarath-OT',
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          content[i].image,
+                          height: 300.h,
                         ),
-                      ),
-                    ],
+                        Text(
+                          content[i].title,
+                          style: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Phetsarath-OT'),
+                        ),
+                        Text(
+                          content[i].subtitle,
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontFamily: 'Phetsarath-OT',
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               }),

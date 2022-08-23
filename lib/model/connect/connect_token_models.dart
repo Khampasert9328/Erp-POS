@@ -10,40 +10,64 @@ String connectTokenModelsToJson(ConnectTokenModels data) => json.encode(data.toJ
 
 class ConnectTokenModels {
     ConnectTokenModels({
-        this.clientId,
-        this.secret,
-        this.grantType,
-        this.scope,
-        this.username,
-        this.password,
-        this.redirectUri,
+        this.code,
+        this.message,
+        this.isSuccess,
+        this.content,
     });
 
-    String? clientId;
-    String? secret;
-    String? grantType;
-    String? scope;
-    String? username;
-    String? password;
-    String? redirectUri;
+    String? code;
+    String? message;
+    bool? isSuccess;
+    Content? content;
 
     factory ConnectTokenModels.fromJson(Map<String, dynamic> json) => ConnectTokenModels(
-        clientId: json["clientID"],
-        secret: json["secret"],
-        grantType: json["grantType"],
-        scope: json["scope"],
-        username: json["username"],
-        password: json["password"],
-        redirectUri: json["redirectUri"],
+        code: json["code"],
+        message: json["message"],
+        isSuccess: json["isSuccess"],
+        content: Content.fromJson(json["content"]),
     );
 
     Map<String, dynamic> toJson() => {
-        "clientID": clientId,
-        "secret": secret,
-        "grantType": grantType,
-        "scope": scope,
-        "username": username,
-        "password": password,
-        "redirectUri": redirectUri,
+        "code": code,
+        "message": message,
+        "isSuccess": isSuccess,
+        "content": content!.toJson(),
+    };
+}
+
+class Content {
+    Content({
+        this.accessToken,
+        this.expire,
+        this.refreshToken,
+        this.success,
+        this.code,
+        this.message,
+    });
+
+    String? accessToken;
+    int? expire;
+    String? refreshToken;
+    bool? success;
+    String? code;
+    String? message;
+
+    factory Content.fromJson(Map<String, dynamic> json) => Content(
+        accessToken: json["accessToken"],
+        expire: json["expire"],
+        refreshToken: json["refreshToken"],
+        success: json["success"],
+        code: json["code"],
+        message: json["message"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "accessToken": accessToken,
+        "expire": expire,
+        "refreshToken": refreshToken,
+        "success": success,
+        "code": code,
+        "message": message,
     };
 }
