@@ -2,6 +2,7 @@
 
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/pages/table/components/buttom_dialog.dart';
 import 'package:erp_pos/pages/table/components/card_item.dart';
 import 'package:erp_pos/pages/table/components/dropdown.dart';
@@ -15,10 +16,13 @@ import 'package:erp_pos/pages/table/components/search_table.dart';
 import 'package:erp_pos/pages/table/components/textContainer.dart';
 import 'package:erp_pos/pages/table/components/textdate.dart';
 import 'package:erp_pos/pages/table/components/textdatetime.dart';
+import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TableBody extends StatefulWidget {
   const TableBody({Key? key}) : super(key: key);
@@ -41,6 +45,7 @@ class _TableBodyState extends State<TableBody> {
       child: Padding(
         padding: EdgeInsets.only(top: 30.h, left: 25.w, right: 21),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               height: 15.h,
@@ -54,36 +59,57 @@ class _TableBodyState extends State<TableBody> {
                       changScreen = true;
                     });
                   },
-                  child: Text(
-                    "ສະຖານະປັດຈຸບັນ",
-                    style: TextStyle(
-                      fontFamily: "Phetsarath-OT",
-                      color: !changScreen
-                          ? ERPTheme.GREY_COLOR
-                          : ERPTheme.BASE_COLOR,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.sp,
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "ສະຖານະປັດຈຸບັນ",
+                        style: TextStyle(
+                          fontFamily: "Phetsarath-OT",
+                          color: ERPTheme.BASE_COLOR,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25.sp,
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: ERPTheme.BLACK_COLOR,
+                            borderRadius: BorderRadius.circular(5)),
+                        height: 5.h,
+                        width: 20.w,
+                      ),
+                      //
+                    ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      changScreen = false;
-                    });
-                  },
-                  child: Text(
-                    "ການຈອງລ່ວງໜ້າ",
-                    style: TextStyle(
-                      fontFamily: "Phetsarath-OT",
-                      color: !changScreen
-                          ? ERPTheme.BASE_COLOR
-                          : ERPTheme.GREY_COLOR,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.sp,
-                    ),
-                  ),
-                ),
+                // GestureDetector(
+                //     onTap: () {
+                //       setState(() {
+                //         changScreen = false;
+                //       });
+                //     },
+                //     child: Column(
+                //       children: [
+                //         Text(
+                //           "ການຈອງລ່ວງໜ້າ",
+                //           style: TextStyle(
+                //             fontFamily: "Phetsarath-OT",
+                //             color: !changScreen
+                //                 ? ERPTheme.BASE_COLOR
+                //                 : ERPTheme.GREY_COLOR,
+                //             fontWeight: FontWeight.bold,
+                //             fontSize: 20.sp,
+                //           ),
+                //         ),
+                //         Container(
+                //           color: changScreen == false
+                //               ? ERPTheme.BLACK_COLOR
+                //               : ERPTheme.GREY_COLOR,
+                //           height: 2.h,
+                //           width: 120.w,
+                //         ),
+                //       ],
+                //     )),
               ],
             ),
             Column(
@@ -91,78 +117,95 @@ class _TableBodyState extends State<TableBody> {
                 SizedBox(
                   height: 20.h,
                 ),
-                changScreen == false
-                    ? Row(
-                        children: [
-                          Text(
-                            "ເລືອກວັນ",
-                            style: TextStyle(
-                              fontFamily: "Phetsarath-OT",
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 12.h,
-                          ),
-                          ERPdate()
-                        ],
-                      )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          isWitch == false
-                              ? Text(
-                                  "ປິດຮ້ານ",
-                                  style: TextStyle(
-                                    fontFamily: "Phetsarath-OT",
-                                    fontSize: 17.sp,
-                                    color: ERPTheme.GREEN_COLOR,
-                                  ),
-                                )
-                              : Text(
-                                  "ເປີດຮ້ານດຳເນີນການ",
-                                  style: TextStyle(
-                                    fontFamily: "Phetsarath-OT",
-                                    fontSize: 17.sp,
-                                    color: ERPTheme.GREEN_COLOR,
-                                  ),
-                                ),
-                          Switch(
-                            activeColor: ERPTheme.GREEN_COLOR,
-                            value: isWitch,
-                            onChanged: (vale) {
-                              if (isWitch == false) {
-                                setState(() {
-                                  isWitch = vale;
-                                  Mystyle().dialogOpen(context);
-                                });
-                              } else {
-                                setState(() {
-                                  isWitch = vale;
-                                  Mystyle().dialogOff(context);
-                                });
-                              }
-                            },
-                          ),
-                        ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      "ເປີດຮ້ານດຳເນີນການ",
+                      style: TextStyle(
+                        fontFamily: "Phetsarath-OT",
+                        fontSize: 20.sp,
+                        color: ERPTheme.GREEN_COLOR,
                       ),
-                changScreen == false
-                    ? Text("")
-                    : Padding(
-                        padding: EdgeInsets.only(right: 9.sp),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text("ອັບເດັດລ່າສຸດ : " + formatDate,
-                                style: TextStyle(
-                                    fontFamily: "Phetsarath-OT",
-                                    fontSize: 11.sp,
-                                    color: ERPTheme.BASE_COLOR,
-                                    fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                   mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(formatDate)
+                  ],
+                ),
+                // changScreen == false
+                //     ? Row(
+                //         mainAxisAlignment: MainAxisAlignment.end,
+                //         children: [
+                //           Text(
+                //             "ເລືອກວັນ",
+                //             style: TextStyle(
+                //               fontFamily: "Phetsarath-OT",
+                //               fontSize: 15.sp,
+                //               fontWeight: FontWeight.bold,
+                //             ),
+                //           ),
+                //           SizedBox(
+                //             width: 7.h,
+                //           ),
+                //           ERPdate()
+                //         ],
+                //       )
+                //     : Row(
+                //         mainAxisAlignment: MainAxisAlignment.end,
+                //         children: [
+                //           isWitch == false
+                //               ? Text(
+                //                   "ປິດຮ້ານ",
+                //                   style: TextStyle(
+                //                     fontFamily: "Phetsarath-OT",
+                //                     fontSize: 20.sp,
+                //                     color: ERPTheme.GREEN_COLOR,
+                //                   ),
+                //                 )
+                //               : Text(
+                //                   "ເປີດຮ້ານດຳເນີນການ",
+                //                   style: TextStyle(
+                //                     fontFamily: "Phetsarath-OT",
+                //                     fontSize: 20.sp,
+                //                     color: ERPTheme.GREEN_COLOR,
+                //                   ),
+                //                 ),
+                // Switch(
+                //   activeColor: ERPTheme.GREEN_COLOR,
+                //   value: isWitch,
+                //   onChanged: (vale) {
+                //     if (isWitch == false) {
+                //       setState(() {
+                //         isWitch = vale;
+                //         Mystyle().dialogOpen(context);
+                //       });
+                //     } else {
+                //       setState(() {
+                //         isWitch = vale;
+                //         Mystyle().dialogOff(context);
+                //       });
+                //     }
+                //   },
+                // ),
+                //   ],
+                // ),
+                //changScreen == false
+                // ? Text("")
+                // : Padding(
+                //     padding: EdgeInsets.only(right: 60.sp),
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.end,
+                //       children: [
+                //         Text(
+                //           formatDate,
+                //         ),
+                //       ],
+                //     ),
+                //   ),
                 SizedBox(
                   height: 11.h,
                 ),
@@ -192,36 +235,15 @@ class _TableBodyState extends State<TableBody> {
                     )
                   ],
                 ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Container(
-                  child: ListViewTable(),
-                ),
-                SizedBox(
-                  height: 18.h,
-                ),
-                changScreen == false
-                    ? const NavBarStatusBooking()
-                    : NavBarStatus(),
               ],
             ),
-            GridView.count(
-              childAspectRatio: (1 / .4),
-              crossAxisCount: 3,
-              crossAxisSpacing: 10,
-              shrinkWrap: true,
-              mainAxisSpacing: 10,
-              children: DummyData.map(
-                (CardModels) => CardItem(
-                  title: CardModels.title,
-                  color: changScreen == false
-                      ? ERPTheme.BLUE_COLOR
-                      : CardModels.color,
-                  id: CardModels.id,
-                ),
-              ).toList(),
+            SizedBox(
+              height: 10.h,
             ),
+            SizedBox(
+              height: 300,
+              child: ListViewTable(),
+            )
           ],
         ),
       ),

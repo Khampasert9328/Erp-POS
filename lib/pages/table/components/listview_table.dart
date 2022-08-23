@@ -1,137 +1,285 @@
-// ignore_for_file: avoid_unnecessary_containers
+// ignore_for_file: avoid_unnecessary_containers, sort_child_properties_last
 
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
+import 'package:erp_pos/bussiness%20logic/authentication.dart';
+import 'package:erp_pos/constant/api_path.dart';
+import 'package:erp_pos/constant/images.dart';
+import 'package:erp_pos/model/area/area_models.dart';
+import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/pages/table/components/buttom_dialog.dart';
 import 'package:erp_pos/pages/table/components/dropdown.dart';
 import 'package:erp_pos/pages/table/components/dropdown_status.dart';
+import 'package:erp_pos/pages/table/components/navbar_status_booking_next.dart';
+import 'package:erp_pos/provider/areaprovider/area_provider.dart';
+import 'package:erp_pos/provider/areaprovider/insert_area_provider.dart';
+import 'package:erp_pos/provider/tableprovider/table_provider.dart';
+import 'package:erp_pos/services/getArea/get_area.dart';
+import 'package:erp_pos/utils/check_status.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constant/theme.dart';
 
 class ListViewTable extends StatefulWidget {
-  const ListViewTable({Key? key}) : super(key: key);
+  const ListViewTable({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ListViewTable> createState() => _ListViewTableState();
 }
 
-List<String> item = [
-  'ຊັ້ນ 1',
-  'ຊັ້ນ 2',
-  'ຊັ້ນ 3',
-];
-
-int selectIndex = 0;
+int? selectIndex;
+String? idtable;
 
 class _ListViewTableState extends State<ListViewTable> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        GestureDetector(
-          onTap: () {
-            dialogbuttom();
-          },
-          child: CircleAvatar(
-            backgroundColor: Colors.grey[300],
-            child: const Icon(
-              Icons.add,
-              color: Color(0xFFF2B9348),
-            ),
-          ),
-        ),
-        const SizedBox(
-          width: 8,
-        ),
-        Expanded(
-          child: Container(
-            height: 30.h,
-            child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: item.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectIndex = index;
-                      });
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 14),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            item[index],
-                            style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w900,
-                                fontFamily: "Phetsarath-OT",
-                                color: selectIndex == index
-                                    ? ERPTheme.BASE_COLOR
-                                    : ERPTheme.GREY_COLOR),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 2),
-                            width: 30,
-                            height: 2,
-                            color: selectIndex == index
-                                ? ERPTheme.BLACK_COLOR
-                                : Colors.transparent,
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                }),
-          ),
-        )
-      ],
-    );
-  }
-
-  Future dialogbuttom() {
-    return showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context) {
-        return Container(
-          child: AlertDialog(
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
               children: [
-                Mystyle().tiTle1("ຊື່ໂຊນ ຫຼື ພື້ນທີ່"),
                 SizedBox(
-                  height: 10.h,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: ERPTheme.GREY_COLOR,
-                    border: Border.all(color: ERPTheme.WHITE_COLOR),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.only(
-                      left: 20.0,
-                    ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'ປ້ອນຂໍ້ມູນ',
-                      ),
-                    ),
+                  height: 50.h,
+                  width: 200.w,
+                  child: FutureBuilder<List<Area>>(
+                    future: AreaProvider().getZone(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Consumer<AreaProvider>(
+                          builder: ((context, model, _) {
+                            return ListView.builder(
+                                physics: ScrollPhysics(),
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (context, index) {
+                                  String? id = snapshot.data![index].id ?? "";
+                                
+                                  return Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  selectIndex = index;
+                                                  idtable = id;
+                                                });
+                                              },
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 8),
+                                                    child: Container(
+                                                      height: 40.h,
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                        horizontal: 15.w,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                          color: selectIndex ==
+                                                                  index
+                                                              ? ERPTheme
+                                                                  .BASE_COLOR
+                                                              : ERPTheme
+                                                                  .WHITE_COLOR,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5),
+                                                          border: Border.all(
+                                                              color: ERPTheme
+                                                                  .BASE_COLOR)),
+                                                      child: Center(
+                                                        child: Text(
+                                                          snapshot
+                                                              .data![index].area!,
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 18.sp,
+                                                            color: selectIndex ==
+                                                                    index
+                                                                ? ERPTheme
+                                                                    .WHITE_COLOR
+                                                                : ERPTheme
+                                                                    .GREY_COLOR,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10.h,
+                                      ),
+                                    ],
+                                  );
+                                });
+                          }),
+                        );
+                      }
+                      return SizedBox();
+                    },
                   ),
                 ),
               ],
             ),
-            actions: const [
-              ButtomDialog(),
-            ],
-          ),
-        );
-      },
+            NavBarStatusBooking(),
+            SingleChildScrollView(
+              child: SizedBox(
+                height: 600.h,
+                width: 600.w,
+                child: Container(
+                  height: 300.h,
+                  child: FutureBuilder<List<GetTable>>(
+                    future: GetTableProvider().gettablebyid(context, idtable),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Consumer<GetTableProvider>(
+                          builder: ((context, model, _) {
+                            return GridView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 15,
+                                crossAxisSpacing: 20,
+                                childAspectRatio: 1 / .5,
+                              ),
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (_, index) {
+                                return  GestureDetector(
+                                  onTap: (){
+                                    print("on click");
+                                  },
+                                  child: Container(
+                                    height: 300.h,
+                                    width:30,
+                                    child: Column(
+                                        children: [
+                                          Expanded(
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(right: 35),
+                                              child: Container(
+                                                // height: 14.h,
+                                                width: 90.w,
+                                                decoration: BoxDecoration(
+                                                   color: ERPTheme.CARD_COLOR,
+                                                    borderRadius: BorderRadius.circular(5)),
+                                              ),
+                                            ),
+                                          ),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                height: 60.h,
+                                                width: 10.w,
+                                                decoration: BoxDecoration(
+                                                  color: ERPTheme.CARD_COLOR,
+                                                    borderRadius:
+                                                        BorderRadius.circular(5)),
+                                              ),
+                                              SizedBox(
+                                                height: 70.h,
+                                                width: 100.w,
+                                                child: Card(
+                                                  color: ERPTheme.CARD_COLOR,
+                                                  child: ClipPath(
+                                                    child: Container(
+                                                      padding: const EdgeInsets.all(16),
+                                                      decoration:  BoxDecoration(
+                                                        border: Border(
+                                                          left: BorderSide(
+                                                            color: ERPTheme.GREEN_COLOR,
+                                                            width: 15,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      child: Center(
+                                                        child: Text(
+                                                          snapshot.data![index].name!,
+                                                          style: const TextStyle(
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                                  FontWeight.bold),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    clipper: ShapeBorderClipper(
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                          3,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                height: 60.h,
+                                                width: 10.w,
+                                                decoration: BoxDecoration(
+                                                    color: ERPTheme.CARD_COLOR,
+                                                    borderRadius:
+                                                        BorderRadius.circular(5)),
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              )
+                                            ],
+                                          ),
+                                          Expanded(
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(right: 35),
+                                              child: Container(
+                                                // height: 14.h,
+                                                width: 90.w,
+                                                decoration: BoxDecoration(
+                                                   color: ERPTheme.CARD_COLOR,
+                                                    borderRadius: BorderRadius.circular(5)),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                  ),
+                                );
+                                
+                              },
+                            );
+                          }),
+                        );
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(color: ERPTheme.BASE_COLOR,),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

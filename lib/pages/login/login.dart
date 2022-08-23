@@ -1,6 +1,10 @@
-// ignore_for_file: prefer_const_declarations
-
+import 'dart:ui';
+import 'package:cool_alert/cool_alert.dart';
+import 'package:erp_pos/bussiness%20logic/authentication.dart';
+import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
@@ -12,8 +16,19 @@ class LogIn extends StatefulWidget {
 class _LogInState extends State<LogIn> {
   bool isSignUpscreen = true;
   bool openPassword = true;
+
   final fromkey = GlobalKey<FormState>();
   final _scaffoldkey = GlobalKey<ScaffoldState>();
+  //controller for login
+  TextEditingController erpemail = TextEditingController();
+  TextEditingController erpusername = TextEditingController();
+  TextEditingController erppassword = TextEditingController();
+//controller for register
+  TextEditingController erpsemail = TextEditingController();
+  TextEditingController erpsname = TextEditingController();
+  TextEditingController erpslastname = TextEditingController();
+  TextEditingController erpsnamecompany = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,6 +155,7 @@ class _LogInState extends State<LogIn> {
           horizontal: 5.0,
         ),
         child: TextFormField(
+          controller: erpemail,
           keyboardType: TextInputType.emailAddress,
           validator: ((value) {
             if (value!.isEmpty ||
@@ -173,6 +189,7 @@ class _LogInState extends State<LogIn> {
           horizontal: 5.0,
         ),
         child: TextFormField(
+          controller: erppassword,
           keyboardType: TextInputType.text,
           validator: ((value) {
             if (value!.trim().isEmpty) {
@@ -238,19 +255,10 @@ class _LogInState extends State<LogIn> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: GestureDetector(
-        onTap: () {
+        onTap: () async {
           if (fromkey.currentState!.validate()) {
-            final snackbar = const SnackBar(
-              backgroundColor: Color(0xff538eed),
-              content: Text(
-                "ລັອກອິນສຳເລັດ",
-                style: TextStyle(
-                    fontFamily: 'NotoSansLao-Regular',
-                    color: Colors.white,
-                    fontSize: 20),
-              ),
-            );
-            // _scaffoldkey.currentState!.showSnackBar(snackbar);
+            AuthenticationProvider().login(erpemail.text, erpusername.text,
+                erppassword.text, context, "", "");
           }
         },
         child: Container(
@@ -317,6 +325,7 @@ class _LogInState extends State<LogIn> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: TextFormField(
+        controller: erpsemail,
         validator: ((value) {
           if (value!.isEmpty ||
               !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$').hasMatch(value)) {
@@ -353,6 +362,7 @@ class _LogInState extends State<LogIn> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: TextFormField(
+        controller: erpsnamecompany,
         validator: ((value) {
           if (value!.isEmpty) {
             return "ກາລຸນາໃສ່ຊື່ຮ້ານ/ບໍລິສັດໃຫ້ຖືກຕ້ອງ";
@@ -388,6 +398,7 @@ class _LogInState extends State<LogIn> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: TextFormField(
+        controller: erpsname,
         validator: ((value) {
           if (value!.isEmpty) {
             return "ກາລຸນາໃສ່ຊື່ໃຫ້ຖືກຕ້ອງ";
@@ -423,6 +434,7 @@ class _LogInState extends State<LogIn> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: TextFormField(
+        controller: erpslastname,
         validator: ((value) {
           if (value!.isEmpty) {
             return "ກາລຸນາໃສ່ນາມສະກຸນໃຫ້ຖືກຕ້ອງ";
@@ -445,20 +457,13 @@ class _LogInState extends State<LogIn> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: GestureDetector(
-        onTap: () {
-          if (fromkey.currentState!.validate()) {
-            final snackbar = const SnackBar(
-              backgroundColor: Color(0xff538eed),
-              content: Text(
-                "ລົງທະບຽນສຳເລັດແລ້ວ",
-                style: TextStyle(
-                    fontFamily: 'NotoSansLao-Regular',
-                    fontSize: 20,
-                    color: Colors.white),
-              ),
-            );
-            // _scaffoldkey.currentState!.showSnackBar(snackbar);
-          }
+        onTap: () async {
+          try {
+            if (fromkey.currentState!.validate()) {
+              AuthenticationProvider().validateUser(
+                  erpsemail.text, erpsname.text, context, erpslastname.text);
+            }
+          } catch (e) {}
         },
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 10),
