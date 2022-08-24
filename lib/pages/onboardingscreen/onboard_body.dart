@@ -80,12 +80,7 @@ class _OnboardBodyState extends State<OnboardBody> {
           height: 60.h,
           width: double.infinity,
           margin: EdgeInsets.all(40),
-          child: FlatButton(
-            color: ERPTheme.BASE_COLOR,
-            textColor: ERPTheme.WHITE_COLOR,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
+          child: TextButton(
             onPressed: () {
               if (currenIndex == content.length - 1) {
                 Navigator.push(
@@ -105,7 +100,6 @@ class _OnboardBodyState extends State<OnboardBody> {
               style: TextStyle(
                 fontFamily: 'Phetsarath-OT',
                 fontSize: 20.sp,
-          
               ),
             ),
           ),
