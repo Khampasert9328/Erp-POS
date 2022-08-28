@@ -12,6 +12,7 @@ import 'package:erp_pos/pages/table/components/buttom_dialog.dart';
 import 'package:erp_pos/pages/table/components/dropdown.dart';
 import 'package:erp_pos/pages/table/components/dropdown_status.dart';
 import 'package:erp_pos/pages/table/components/navbar_status_booking_next.dart';
+import 'package:erp_pos/pages/table_detail/components/table_detail_body.dart';
 import 'package:erp_pos/provider/areaprovider/area_provider.dart';
 import 'package:erp_pos/provider/areaprovider/insert_area_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
@@ -21,6 +22,7 @@ import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:erp_pos/constant/routes.dart' as custom_route;
 
 import '../../../constant/theme.dart';
 
@@ -62,9 +64,10 @@ class _ListViewTableState extends State<ListViewTable> {
                                 itemCount: snapshot.data!.length,
                                 itemBuilder: (context, index) {
                                   String? id = snapshot.data![index].id ?? "";
-                                
+
                                   return Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Expanded(
                                         child: Column(
@@ -81,7 +84,8 @@ class _ListViewTableState extends State<ListViewTable> {
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            right: 8),
+                                                      right: 8,
+                                                    ),
                                                     child: Container(
                                                       height: 40.h,
                                                       padding:
@@ -103,14 +107,13 @@ class _ListViewTableState extends State<ListViewTable> {
                                                                   .BASE_COLOR)),
                                                       child: Center(
                                                         child: Text(
-                                                          snapshot
-                                                              .data![index].area!,
+                                                          snapshot.data![index]
+                                                              .area!,
                                                           style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             fontSize: 18.sp,
-                                                            color: selectIndex ==
-                                                                    index
+                                                            color: selectIndex == index
                                                                 ? ERPTheme
                                                                     .WHITE_COLOR
                                                                 : ERPTheme
@@ -166,111 +169,128 @@ class _ListViewTableState extends State<ListViewTable> {
                               ),
                               itemCount: snapshot.data!.length,
                               itemBuilder: (_, index) {
-                                return  GestureDetector(
-                                  onTap: (){
-                                    print("on click");
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            TableDetail(data: snapshot.data![index]),
+                                      ),
+                                    );
                                   },
                                   child: Container(
                                     height: 300.h,
-                                    width:30,
+                                    width: 30,
                                     child: Column(
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(right: 35),
-                                              child: Container(
-                                                // height: 14.h,
-                                                width: 90.w,
-                                                decoration: BoxDecoration(
-                                                   color: ERPTheme.CARD_COLOR,
-                                                    borderRadius: BorderRadius.circular(5)),
-                                              ),
+                                      children: [
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 35),
+                                            child: Container(
+                                              // height: 14.h,
+                                              width: 90.w,
+                                              decoration: BoxDecoration(
+                                                  color: ERPTheme.CARD_COLOR,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
                                             ),
                                           ),
-                                          Row(
-                                            children: [
-                                              Container(
-                                                height: 60.h,
-                                                width: 10.w,
-                                                decoration: BoxDecoration(
+                                        ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              height: 60.h,
+                                              width: 10.w,
+                                              decoration: BoxDecoration(
                                                   color: ERPTheme.CARD_COLOR,
-                                                    borderRadius:
-                                                        BorderRadius.circular(5)),
-                                              ),
-                                              SizedBox(
-                                                height: 70.h,
-                                                width: 100.w,
-                                                child: Card(
-                                                  color: ERPTheme.CARD_COLOR,
-                                                  child: ClipPath(
-                                                    child: Container(
-                                                      padding: const EdgeInsets.all(16),
-                                                      decoration:  BoxDecoration(
-                                                        border: Border(
-                                                          left: BorderSide(
-                                                            color: ERPTheme.GREEN_COLOR,
-                                                            width: 15,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          snapshot.data![index].name!,
-                                                          style: const TextStyle(
-                                                              fontSize: 18,
-                                                              fontWeight:
-                                                                  FontWeight.bold),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                            ),
+                                            SizedBox(
+                                              height: 70.h,
+                                              width: 100.w,
+                                              child: Card(
+                                                color: ERPTheme.CARD_COLOR,
+                                                child: ClipPath(
+                                                  child: Container(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            16),
+                                                    decoration: BoxDecoration(
+                                                      border: Border(
+                                                        left: BorderSide(
+                                                          color: ERPTheme
+                                                              .GREEN_COLOR,
+                                                          width: 15,
                                                         ),
                                                       ),
                                                     ),
-                                                    clipper: ShapeBorderClipper(
-                                                      shape: RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                          3,
-                                                        ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        snapshot
+                                                            .data![index].name!,
+                                                        style: const TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  clipper: ShapeBorderClipper(
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                        3,
                                                       ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                              Container(
-                                                height: 60.h,
-                                                width: 10.w,
-                                                decoration: BoxDecoration(
-                                                    color: ERPTheme.CARD_COLOR,
-                                                    borderRadius:
-                                                        BorderRadius.circular(5)),
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              )
-                                            ],
-                                          ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(right: 35),
-                                              child: Container(
-                                                // height: 14.h,
-                                                width: 90.w,
-                                                decoration: BoxDecoration(
-                                                   color: ERPTheme.CARD_COLOR,
-                                                    borderRadius: BorderRadius.circular(5)),
-                                              ),
+                                            ),
+                                            Container(
+                                              height: 60.h,
+                                              width: 10.w,
+                                              decoration: BoxDecoration(
+                                                  color: ERPTheme.CARD_COLOR,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            )
+                                          ],
+                                        ),
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 35),
+                                            child: Container(
+                                              // height: 14.h,
+                                              width: 90.w,
+                                              decoration: BoxDecoration(
+                                                  color: ERPTheme.CARD_COLOR,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
-                                
                               },
                             );
                           }),
                         );
                       }
                       return Center(
-                        child: CircularProgressIndicator(color: ERPTheme.BASE_COLOR,),
+                        child: CircularProgressIndicator(
+                          color: ERPTheme.BASE_COLOR,
+                        ),
                       );
                     },
                   ),

@@ -1,6 +1,7 @@
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/pages/food_menu/components/food_menu_body.dart';
+import 'package:erp_pos/pages/food_menu_detail/components/food_menu_detail_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:erp_pos/constant/routes.dart' as custom_route;
@@ -78,7 +79,7 @@ class _FoodMenuState extends State<FoodMenu> {
       //     )
       //   ),
       //   onPressed: () {
-      //     Navigator.pushNamed(context, custom_route.Route.addFoodMenu);
+      //     Navigator.pushNamed(context, custom_route.Route.addfoodmenu);
       //   },
       //   child: Row(
       //     mainAxisSize: MainAxisSize.min,

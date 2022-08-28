@@ -10,4 +10,6 @@ class APIPath {
       BASE_URL + 'TableService/GetTable_byArea';
 
   static const String INSERT_AREA = BASE_URL + 'TableService/CreateArea';
+  static const String GET_FOOD_MENU = BASE_URL + 'ProductService/GetProduct';
+  static const String GET_FOOD_MENU_POSTTYE = BASE_URL + 'ProductService/GetProductPostype';
 }

@@ -13,7 +13,7 @@ class SelectedMenuCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 20.w),
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, custom_route.Route.foodMenuDetail);
+          Navigator.pushNamed(context, custom_route.Route.foodmenudetail);
         },
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 9.h, horizontal: 5.w),
