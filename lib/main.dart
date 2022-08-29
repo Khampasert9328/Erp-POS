@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (context)=>AreaProvider()),
             ChangeNotifierProvider(create: (context)=>GetTableProvider()),
             ChangeNotifierProvider(create: (context)=>FoodMenuProvider()),
-           ChangeNotifierProvider(create: (context)=>FoodSlite()),
+          ChangeNotifierProvider(create: (context)=>FoodSlite()),
            
           ],
           child: MaterialApp(

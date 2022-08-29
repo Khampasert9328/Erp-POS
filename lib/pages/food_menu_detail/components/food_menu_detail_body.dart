@@ -87,7 +87,7 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    AddAmount(number: number,),
+                    AddAmount( number: number,),
                     Row(
                       children: [
                         buildSize('S', ERPFoodSize.Small),
@@ -187,7 +187,7 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           AddAmount(
-            number: number,
+           number: number,
             title: 'Cheese',
           ),
           Text(

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:erp_pos/constant/enum.dart';
 import 'package:erp_pos/constant/images.dart';
@@ -7,11 +9,13 @@ import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/services/getfoodmenu/get_food_menu_services.dart';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/add_amount.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../constant/theme.dart';
 import 'package:erp_pos/constant/routes.dart' as custom_route;
 
@@ -21,11 +25,12 @@ class FoodMenuCard extends StatefulWidget {
 }
 
 class _FoodMenuCardState extends State<FoodMenuCard> {
+
   int? number;
   Product data = Product();
   ERPFoodSize erpFoodSize = ERPFoodSize.Small;
   List<Product> listdata = [];
-  String? name;
+  
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Product>?>(
@@ -120,66 +125,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                             FontWeight.bold),
                                                   )
                                                 ])),
-                                            AddAmount(number: number,)
-                                            // StatefulBuilder(
-                                            //   builder: (context, setState) {
-                                            //    return Row(
-                                            //     children: [
-                                            //       Text('ຈຳນວນ',
-                                            //           style: TextStyle(
-                                            //               fontSize: 14.sp,
-                                            //               color: ERPTheme
-                                            //                   .BASE_COLOR)),
-                                            //       SizedBox(
-                                            //         width: 10.w,
-                                            //       ),
-                                            //       GestureDetector(
-                                            //         onTap: () {
-                                            //           setNumber(true);
-                                                    
-                                            //         },
-                                            //         child: buildButton(
-                                            //             Icons.add, "+"),
-                                            //       ),
-                                            //       Padding(
-                                            //         padding: EdgeInsets.symmetric(
-                                            //             horizontal: 5.w),
-                                            //         child: Column(
-                                            //           children: [
-                                            //             Text(
-                                            //               number < 10
-                                            //                   ? '0$number'
-                                            //                   : '$number',
-                                            //               style: TextStyle(
-                                            //                   color: ERPTheme
-                                            //                       .BASE_COLOR,
-                                            //                   fontSize: 14.sp),
-                                            //             ),
-                                            //             Container(
-                                            //               width: 20.w,
-                                            //               height: 2.h,
-                                            //               decoration:
-                                            //                   BoxDecoration(
-                                            //                       color: Color(
-                                            //                           0xFFD9D9D9)),
-                                            //             )
-                                            //           ],
-                                            //         ),
-                                            //       ),
-                                            //       Expanded(
-                                            //         child: GestureDetector(
-                                            //           onTap: () {
-                                            //             setNumber(false);
-                                            //           },
-                                            //           child: buildButton(
-                                            //               Icons.add, "-"),
-                                            //         ),
-                                            //       ),
-                                            //     ],
-                                            //   );
-                                            //   },
-                                            // )
-                                           
+                                            AddAmount(number: number)
                                           ],
                                         ),
                                       ),
@@ -272,18 +218,28 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
   }
 
   Future<List<Product>?> addOrder(int index) async {
+    String? name;
+  String? price;
+  String? image;
+  int? pricesale = int.parse(price.toString());
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? count = preferences.getString(CountPre().namkey)??"";
     GetFoodMenuModels? modelsProduct = await getfoodmenu();
     if (modelsProduct != null) {
       listdata = modelsProduct.product!;
       name = listdata[index].name;
-     
+      price = listdata[index].pricesale.toString();
+      image = listdata[index].thumbnails!.first.uri!;
     }
     print("addorder:$name");
-     print("number:$number");
+    print("count:$count");
+    print("count:$price");
+    print("count:$image");
 
     return listdata;
   }
 
+  int count = 0;
   Container buildButton(IconData iconData, String title) {
     return Container(
       height: 30.h,
@@ -293,5 +249,19 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
           shape: BoxShape.circle),
       child: Center(child: Text(title)),
     );
+  }
+
+  void setNumber(bool isAdd, int index){
+    if (isAdd) {
+      setState(() {
+        count += 1;
+      });
+    } else {
+      if (count > 0) {
+        setState(() {
+          count -= 1;
+        });
+      }
+    }
   }
 }
