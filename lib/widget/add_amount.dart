@@ -4,7 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AddAmount extends StatefulWidget {
   String? title;
-  AddAmount({this.title});
+  int? number;
+  AddAmount({this.title, required this.number});
 
   @override
   State<AddAmount> createState() => _AddAmountState();
@@ -36,9 +37,12 @@ class _AddAmountState extends State<AddAmount> {
         SizedBox(
           width: 10.w,
         ),
-        buildButton(Icons.add, () {
-          setNumber(true);
-        }),
+        GestureDetector(
+          onTap: () {
+            setNumber(true);
+          },
+          child: buildButton(Icons.add, "+"),
+        ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.w),
           child: Column(
@@ -55,18 +59,26 @@ class _AddAmountState extends State<AddAmount> {
             ],
           ),
         ),
-        buildButton(Icons.minimize, () {
-          setNumber(false);
-        }),
+        Expanded(
+          child: GestureDetector(
+            onTap: () {
+              setNumber(false);
+            },
+            child: buildButton(Icons.add, "-"),
+          ),
+        ),
       ],
     );
   }
 
-  Container buildButton(IconData iconData, VoidCallback onPressed) {
+  Container buildButton(IconData iconData, String title) {
     return Container(
-        decoration: BoxDecoration(
-            border: Border.all(color: ERPTheme.BASE_COLOR),
-            shape: BoxShape.circle),
-        child: IconButton(onPressed: onPressed, icon: Icon(iconData)));
+      height: 30.h,
+      width: 20.w,
+      decoration: BoxDecoration(
+          border: Border.all(color: ERPTheme.BASE_COLOR),
+          shape: BoxShape.circle),
+      child: Center(child: Text(title)),
+    );
   }
 }

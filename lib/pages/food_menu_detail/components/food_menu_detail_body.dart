@@ -22,6 +22,7 @@ class FoodMenuDetailBody extends StatefulWidget {
 class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
   ERPFoodSize erpFoodSize = ERPFoodSize.Small;
   TextEditingController detail = TextEditingController();
+  int number = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +87,7 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    AddAmount(),
+                    AddAmount(number: number,),
                     Row(
                       children: [
                         buildSize('S', ERPFoodSize.Small),
@@ -186,6 +187,7 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           AddAmount(
+            number: number,
             title: 'Cheese',
           ),
           Text(

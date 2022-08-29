@@ -4,7 +4,10 @@ import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/model/foodmenu/food_menu_models.dart';
 import 'package:erp_pos/pages/food_menu_detail/components/food_menu_detail_body.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
+import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
+import 'package:erp_pos/services/getfoodmenu/get_food_menu_services.dart';
+import 'package:erp_pos/widget/add_amount.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -18,11 +21,11 @@ class FoodMenuCard extends StatefulWidget {
 }
 
 class _FoodMenuCardState extends State<FoodMenuCard> {
-  int number = 0;
+  int? number;
   Product data = Product();
-
   ERPFoodSize erpFoodSize = ERPFoodSize.Small;
-
+  List<Product> listdata = [];
+  String? name;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Product>?>(
@@ -37,6 +40,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                   child: ListView.builder(
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
+                        final index1 = snapshot.data![index];
                         return Padding(
                           padding: EdgeInsets.symmetric(vertical: 5.h),
                           child: Column(
@@ -116,97 +120,66 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                             FontWeight.bold),
                                                   )
                                                 ])),
-                                            Row(
-                                              children: [
-                                                Text('ຈຳນວນ',
-                                                    style: TextStyle(
-                                                        fontSize: 14.sp,
-                                                        color: ERPTheme
-                                                            .BASE_COLOR)),
-                                                SizedBox(
-                                                  width: 2.w,
-                                                ),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      number++;
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                    height: 30.h,
-                                                    width: 30.w,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: ERPTheme
-                                                                .BASE_COLOR),
-                                                        shape: BoxShape.circle),
-                                                    child: Center(
-                                                      child: Text(
-                                                        "+",
-                                                        style: TextStyle(
-                                                            fontSize: 20.sp),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 2.w),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        '0' + number.toString(),
-                                                        style: TextStyle(
-                                                            color: ERPTheme
-                                                                .BASE_COLOR,
-                                                            fontSize: 14.sp),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 2.h,
-                                                      ),
-                                                      Container(
-                                                        width: 20.w,
-                                                        height: 2.h,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                                color: Color(
-                                                                    0xFFD9D9D9)),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: GestureDetector(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          if (number > 0) {
-                                                            number--;
-                                                          }
-                                                        });
-                                                      },
-                                                      child: Container(
-                                                          height: 40.h,
-                                                          width: 40.w,
-                                                          decoration: BoxDecoration(
-                                                              border: Border.all(
-                                                                  color: ERPTheme
-                                                                      .BASE_COLOR),
-                                                              shape: BoxShape
-                                                                  .circle),
-                                                          child: Center(
-                                                              child: Text(
-                                                            "-",
-                                                            style: TextStyle(
-                                                                fontSize: 20.sp),
-                                                          ))),
+                                            AddAmount(number: number,)
+                                            // StatefulBuilder(
+                                            //   builder: (context, setState) {
+                                            //    return Row(
+                                            //     children: [
+                                            //       Text('ຈຳນວນ',
+                                            //           style: TextStyle(
+                                            //               fontSize: 14.sp,
+                                            //               color: ERPTheme
+                                            //                   .BASE_COLOR)),
+                                            //       SizedBox(
+                                            //         width: 10.w,
+                                            //       ),
+                                            //       GestureDetector(
+                                            //         onTap: () {
+                                            //           setNumber(true);
                                                     
-                                                  ),
-                                                ),
-                                              ],
-                                            )
+                                            //         },
+                                            //         child: buildButton(
+                                            //             Icons.add, "+"),
+                                            //       ),
+                                            //       Padding(
+                                            //         padding: EdgeInsets.symmetric(
+                                            //             horizontal: 5.w),
+                                            //         child: Column(
+                                            //           children: [
+                                            //             Text(
+                                            //               number < 10
+                                            //                   ? '0$number'
+                                            //                   : '$number',
+                                            //               style: TextStyle(
+                                            //                   color: ERPTheme
+                                            //                       .BASE_COLOR,
+                                            //                   fontSize: 14.sp),
+                                            //             ),
+                                            //             Container(
+                                            //               width: 20.w,
+                                            //               height: 2.h,
+                                            //               decoration:
+                                            //                   BoxDecoration(
+                                            //                       color: Color(
+                                            //                           0xFFD9D9D9)),
+                                            //             )
+                                            //           ],
+                                            //         ),
+                                            //       ),
+                                            //       Expanded(
+                                            //         child: GestureDetector(
+                                            //           onTap: () {
+                                            //             setNumber(false);
+                                            //           },
+                                            //           child: buildButton(
+                                            //               Icons.add, "-"),
+                                            //         ),
+                                            //       ),
+                                            //     ],
+                                            //   );
+                                            //   },
+                                            // )
+                                           
                                           ],
                                         ),
                                       ),
@@ -214,22 +187,21 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                         padding:
                                             const EdgeInsets.only(left: 20),
                                         child: Container(
-                                            decoration: BoxDecoration(
-                                                color: ERPTheme.BASE_COLOR,
-                                                shape: BoxShape.circle),
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 3.w, vertical: 3.h),
-                                            child: IconButton(
-                                              onPressed: () {
-                                                addToCategory();
-                                              },
-                                              icon: const Icon(
-                                                Icons.add_shopping_cart_sharp,
-                                                color: Colors.white,
-                                                size: 35,
-                                              ),
+                                          decoration: BoxDecoration(
+                                              color: ERPTheme.BASE_COLOR,
+                                              shape: BoxShape.circle),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 3.w, vertical: 3.h),
+                                          child: IconButton(
+                                            onPressed: () {
+                                              addOrder(index);
+                                            },
+                                            icon: const Icon(
+                                              Icons.add_shopping_cart_sharp,
+                                              color: Colors.white,
+                                              size: 35,
                                             ),
-                                          
+                                          ),
                                         ),
                                       )
                                     ],
@@ -240,7 +212,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                 height: 5.h,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   buildSize('S', ERPFoodSize.Small),
                                   SizedBox(
@@ -298,13 +270,28 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
       ),
     );
   }
-}
 
-addToCategory() async {
-List<Product>? models = [];
-  // Product? data = Product();
-  // String? dataname = data.name!;
-  print("data:$models");
+  Future<List<Product>?> addOrder(int index) async {
+    GetFoodMenuModels? modelsProduct = await getfoodmenu();
+    if (modelsProduct != null) {
+      listdata = modelsProduct.product!;
+      name = listdata[index].name;
+     
+    }
+    print("addorder:$name");
+     print("number:$number");
 
+    return listdata;
+  }
 
+  Container buildButton(IconData iconData, String title) {
+    return Container(
+      height: 30.h,
+      width: 20.w,
+      decoration: BoxDecoration(
+          border: Border.all(color: ERPTheme.BASE_COLOR),
+          shape: BoxShape.circle),
+      child: Center(child: Text(title)),
+    );
+  }
 }

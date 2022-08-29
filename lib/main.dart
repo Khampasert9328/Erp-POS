@@ -9,6 +9,7 @@ import 'package:erp_pos/pages/onboardingscreen/onboardingscreen.dart';
 import 'package:erp_pos/provider/areaprovider/area_provider.dart';
 import 'package:erp_pos/provider/areaprovider/insert_area_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
+import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (context)=>AreaProvider()),
             ChangeNotifierProvider(create: (context)=>GetTableProvider()),
             ChangeNotifierProvider(create: (context)=>FoodMenuProvider()),
+           ChangeNotifierProvider(create: (context)=>FoodSlite()),
            
           ],
           child: MaterialApp(

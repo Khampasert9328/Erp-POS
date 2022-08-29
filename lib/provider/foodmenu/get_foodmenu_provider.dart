@@ -16,7 +16,6 @@ class FoodMenuProvider extends ChangeNotifier {
       listProduct = modelsProduct.product!;
       GetFoodMenuPostTypeModels? models= await getfoodmenutype();
       if (models !=null) {
-        print("modesl;${models}");
       }
       notifyListeners();
     }
