@@ -1,5 +1,5 @@
 import 'package:erp_pos/constant/images.dart';
-import 'package:erp_pos/pages/food_menu/menu.dart';
+import 'package:erp_pos/pages/food_menu/food_menu.dart';
 import 'package:erp_pos/pages/homepage/models/homepage_bottom_bar.dart';
 import 'package:erp_pos/pages/table/table.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,10 +24,10 @@ class HomePageData{
   ];
 
   static  List<HomePageBottomBarModel> homePageBottomBar = [
-    HomePageBottomBarModel(title: 'ພາບລວມ', icon: POSImages.dashboard),
-    HomePageBottomBarModel(title: 'ໂຕະ', icon: POSImages.table),
-    HomePageBottomBarModel(title: 'ເມນູອາຫານ', icon: POSImages.menu),
-    HomePageBottomBarModel(title: 'ອໍເດີ', icon: POSImages.order),
-    HomePageBottomBarModel(title: 'ໃບບິນ', icon: POSImages.bill),
+    HomePageBottomBarModel(title: 'ພາບລວມ', icon: ERPImages.dashboard),
+    HomePageBottomBarModel(title: 'ໂຕະ', icon: ERPImages.table),
+    HomePageBottomBarModel(title: 'ເມນູອາຫານ', icon: ERPImages.menu),
+    HomePageBottomBarModel(title: 'ອໍເດີ', icon: ERPImages.order),
+    HomePageBottomBarModel(title: 'ໃບບິນ', icon: ERPImages.bill),
   ];
 }

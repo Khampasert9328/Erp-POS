@@ -26,9 +26,9 @@ class _NavBarStatusState extends State<NavBarStatus> {
                 backgroundColor: ERPTheme.GREEN_COLOR,
                 radius: 17,
                 child: Image.asset(
-                  POSImages.tableStatus,
-                  height: 17.h,
-                  width: 17.w,
+                  ERPImages.tableStatus,
+                  height: 15.h,
+                  width: 15.w,
                 ),
               ),
               SizedBox(
@@ -51,9 +51,9 @@ class _NavBarStatusState extends State<NavBarStatus> {
                 backgroundColor: ERPTheme.RED_COLOR,
                 radius: 17,
                 child: Image.asset(
-                  POSImages.tableStatus,
-                  height: 17.h,
-                  width: 17.w,
+                  ERPImages.tableStatus,
+                  height: 15.h,
+                  width: 15.w,
                 ),
               ),
               SizedBox(
@@ -75,9 +75,9 @@ class _NavBarStatusState extends State<NavBarStatus> {
                 backgroundColor: ERPTheme.BLUE_COLOR,
                 radius: 17,
                 child: Image.asset(
-                  POSImages.tableStatus,
-                  height: 17.h,
-                  width: 17.w,
+                  ERPImages.tableStatus,
+                  height: 15.h,
+                  width: 15.w,
                 ),
               ),
               SizedBox(

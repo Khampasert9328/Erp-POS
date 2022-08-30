@@ -26,9 +26,9 @@ class _NavBarStatusBookingState extends State<NavBarStatusBooking> {
                 backgroundColor: ERPTheme.GREEN_COLOR,
                 radius: 17,
                 child: Image.asset(
-                  POSImages.tableStatus,
-                  height: 17.h,
-                  width: 17.w,
+                  ERPImages.tableStatus,
+                  height: 15.h,
+                  width: 15.w,
                 ),
               ),
               SizedBox(
@@ -54,7 +54,7 @@ class _NavBarStatusBookingState extends State<NavBarStatusBooking> {
                 backgroundColor: ERPTheme.RED_COLOR,
                 radius: 15,
                 child: Image.asset(
-                  POSImages.tableStatus,
+                  ERPImages.tableStatus,
                   height: 15.h,
                   width: 15.w,
                 ),
@@ -78,9 +78,9 @@ class _NavBarStatusBookingState extends State<NavBarStatusBooking> {
                 backgroundColor: ERPTheme.PINK_COLOR,
                 radius: 15,
                 child: Image.asset(
-                  POSImages.tableStatus,
-                  height: 17.h,
-                  width: 17.w,
+                  ERPImages.tableStatus,
+                  height: 15.h,
+                  width: 15.w,
                 ),
               ),
               SizedBox(

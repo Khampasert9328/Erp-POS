@@ -14,9 +14,6 @@ import 'package:provider/provider.dart';
 Future<GetTableModels?> getTable(BuildContext context, String? id) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   String? idToken = preferences.getString("content");
-
-
-print('id333:$id');
   try {
     String url = "${APIPath.GET_TABLE_BY_AREAID}/$id";
 

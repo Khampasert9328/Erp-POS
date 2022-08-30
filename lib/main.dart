@@ -1,10 +1,15 @@
+import 'dart:io';
+
 import 'package:erp_pos/bussiness%20logic/authentication.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/pages/Dasboard/dasboard.dart';
 import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/pages/onboardingscreen/onboardingscreen.dart';
 import 'package:erp_pos/provider/areaprovider/area_provider.dart';
 import 'package:erp_pos/provider/areaprovider/insert_area_provider.dart';
+import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
+import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -13,6 +18,7 @@ import 'constant/routes.dart' as custom_route;
 import 'package:flutter/material.dart';
 
 void main() {
+  HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
 
@@ -28,19 +34,20 @@ class MyApp extends StatelessWidget {
       builder: (context, _) {
         return MultiProvider(
           providers: [
-            ChangeNotifierProvider(
-              create: (context) => AuthenticationProvider(),
-            ),
-            ChangeNotifierProvider(create: (context) => AreaProvider()),
-            ChangeNotifierProvider(create: ((context) => GetTableProvider())),
-            ChangeNotifierProvider(create: (context)=>InsertAreaProvider())
+            ChangeNotifierProvider(create: ((context) => AuthenticationProvider())),
+            ChangeNotifierProvider(create: (context)=>AreaProvider()),
+            ChangeNotifierProvider(create: (context)=>GetTableProvider()),
+            ChangeNotifierProvider(create: (context)=>FoodMenuProvider()),
+           ChangeNotifierProvider(create: (context)=>FoodSlite()),
+           
           ],
           child: MaterialApp(
             theme: ThemeData(
-                primaryColor: Colors.blue,
-                fontFamily: 'Phetsarath',
-                appBarTheme: AppBarTheme(
-                    iconTheme: IconThemeData(color: ERPTheme.BLACK_COLOR))),
+              fontFamily: 'Phetsarath',
+              appBarTheme: AppBarTheme(
+                iconTheme: IconThemeData(color: ERPTheme.BLACK_COLOR)
+              )
+            ),
             debugShowCheckedModeBanner: false,
             routes: custom_route.Route.getAll(),
             home: OnboardingScreen(),
@@ -48,5 +55,13 @@ class MyApp extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+ class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }

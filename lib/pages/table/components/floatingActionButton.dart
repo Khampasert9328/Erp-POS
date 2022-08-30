@@ -15,9 +15,9 @@ class BuildFloatingActionButton extends StatelessWidget {
         Mystyle().dialogAddTable(context);
       },
       icon: Image.asset(
-        POSImages.tableStatus,
-        height: 18,
-        width: 18,
+        ERPImages.tableStatus,
+        height: 30,
+        width: 30,
       ),
       label: const Text(
         " ເພີ່ມໂຕ໊ະ",

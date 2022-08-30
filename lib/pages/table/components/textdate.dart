@@ -16,7 +16,6 @@ String date = '';
 String day = '';
 String clock = '';
 TimeOfDay? time = TimeOfDay(hour: 10, minute: 30);
-bool datetime = true;
 
 class _ERPdateState extends State<ERPdate> {
   @override
@@ -66,7 +65,10 @@ class _ERPdateState extends State<ERPdate> {
             }
           },
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 7.h),
+            padding: EdgeInsets.symmetric(
+              horizontal: 10.w,
+              vertical: 5.h,
+            ),
             decoration: BoxDecoration(
               color: ERPTheme.GREY_COLOR,
               borderRadius: BorderRadius.circular(
@@ -74,34 +76,48 @@ class _ERPdateState extends State<ERPdate> {
               ),
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Image.asset(
-                      POSImages.datetime,
-                      width: 25.w,
-                      height: 25.h,
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  width: 5.w,
+                Image.asset(
+                  ERPImages.datetime,
+                  width: 30.w,
+                  height: 30.h,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Center(
-                      child: Text(
-                        date,
-                        style: TextStyle(
-                            fontSize: 12.sp, fontWeight: FontWeight.w700),
-                      ),
+                      child: date == ''
+                          ? Text(
+                              "ຈອງໂຕະ",
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            )
+                          : Text(
+                              date,
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
                     ),
-                    Text(
-                      day,
-                      style: TextStyle(fontSize: 10.sp, color: Colors.grey),
-                    )
+                    day == ''
+                        ? Text(
+                            "ມື້",
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          )
+                        : Text(
+                            day,
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              color: Colors.grey,
+                            ),
+                          )
                   ],
                 )
               ],
