@@ -40,14 +40,16 @@ class _AddAmountState extends State<AddAmount> {
         SizedBox(
           width: 10.w,
         ),
-        GestureDetector(
-          onTap: () async {
-            setNumber(true);
-            context.read<FoodMenuProvider>().increment(count);
-            SharedPreferences preferences = await SharedPreferences.getInstance();
-            preferences.setInt(CountPre().namkey, count);
-          },
-          child: buildButton(Icons.add, "+"),
+        Expanded(
+          child: GestureDetector(
+            onTap: () async {
+              setNumber(true);
+              context.read<FoodMenuProvider>().increment(count);
+              SharedPreferences preferences = await SharedPreferences.getInstance();
+              preferences.setInt(CountPre().namkey, count);
+            },
+            child: buildButton(Icons.add, "+"),
+          ),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.w),
@@ -66,6 +68,7 @@ class _AddAmountState extends State<AddAmount> {
           ),
         ),
         Expanded(
+       
           child: GestureDetector(
             onTap: () async{
               setNumber(false);

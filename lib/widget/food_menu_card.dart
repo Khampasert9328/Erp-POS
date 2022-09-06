@@ -55,6 +55,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                         return Padding(
                           padding: EdgeInsets.symmetric(vertical: 5.h),
                           child: Column(
+                         
                             children: [
                               GestureDetector(
                                 onTap: () {
@@ -143,7 +144,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                               color: ERPTheme.BASE_COLOR,
                                               shape: BoxShape.circle),
                                           padding: EdgeInsets.symmetric(
-                                              horizontal: 3.w, vertical: 3.h),
+                                              horizontal: 2.w, vertical: 2.h),
                                           child: IconButton(
                                             onPressed: () async {
                                               SharedPreferences preferences =
