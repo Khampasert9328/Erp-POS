@@ -1,5 +1,6 @@
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/add_food_type_dialog.dart';
 import 'package:erp_pos/widget/erp_textfield.dart';
 import 'package:erp_pos/widget/food_menu_card.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:erp_pos/constant/routes.dart' as custom_route;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class FoodMenuBody extends StatefulWidget {
@@ -33,10 +35,11 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
   double _panelHeightOpen = 0;
   double _panelHeightClosed = 95.0;
   bool isSelectedMenuCard = true;
+  
+
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setState(() {
       selectedFoodType = foodType.first;
@@ -75,38 +78,6 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
     );
   }
 
-  // ElevatedButton buildFloatingButton(BuildContext context) {
-  //   return ElevatedButton(
-  //     style: ElevatedButton.styleFrom(
-  //         padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
-  //         primary: ERPTheme.BASE_COLOR,
-  //         shape: RoundedRectangleBorder(
-  //             borderRadius: BorderRadius.circular(10.r))),
-  //     onPressed: () {
-  //       Navigator.pushNamed(context, custom_route.Route.addfoodmenu);
-  //     },
-  //     child: Row(
-  //       mainAxisSize: MainAxisSize.min,
-  //       children: [
-  //         Image.asset(
-  //           ERPImages.icSoup,
-  //           width: 25.w,
-  //           height: 25.h,
-  //         ),
-  //         SizedBox(
-  //           width: 10.w,
-  //         ),
-  //         Text(
-  //           'ເພີ່ມລາຍການ',
-  //           style: TextStyle(
-  //               fontSize: 14.sp,
-  //               fontWeight: FontWeight.w600,
-  //               color: Colors.white),
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
 
   Padding buildBody(BuildContext context) {
     return Padding(
@@ -197,9 +168,7 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
           SizedBox(
             height: 10.h,
           ),
-          Expanded(
-            child: FoodMenuCard()
-          ),
+          Expanded(child: FoodMenuCard()),
         ],
       ),
     );
@@ -211,12 +180,13 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
         removeTop: true,
         child: isSelectedMenuCard
             ? SelectedMenuCardExpand(
-                onNext: () {
+                onNext: () async {
                   setState(() {
                     isSelectedMenuCard = !isSelectedMenuCard;
                   });
                 },
                 scrollController: sc,
+                selectMenu: isSelectedMenuCard,
               )
             : PlaceToEatCard(
                 scrollController: sc,

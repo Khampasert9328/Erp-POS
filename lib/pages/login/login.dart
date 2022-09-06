@@ -54,7 +54,7 @@ class _LogInState extends State<LogIn> {
                   GestureDetector(
                     onTap: (() {
                       setState(() {
-                        isSignUpscreen = false;
+                        isSignUpscreen = true;
                       });
                     }),
                     child: Column(
@@ -62,18 +62,18 @@ class _LogInState extends State<LogIn> {
                         Text(
                           "ເຂົ້າສູ່ລະບົບ",
                           style: TextStyle(
-                            color: !isSignUpscreen
+                            color: isSignUpscreen
                                 ? Colors.blue
                                 : Colors.grey[500],
                             fontSize: 20,
                             fontFamily: "NotoSansLao-Regular",
                           ),
                         ),
-                        if (!isSignUpscreen)
+                    
                           Container(
-                            width: 120,
-                            height: 3,
-                            color: Colors.blue,
+                            width: 150.w,
+                            height: 3.h,
+                            color:!isSignUpscreen? Colors.grey:Colors.blue,
                           ),
                       ],
                     ),
@@ -81,7 +81,7 @@ class _LogInState extends State<LogIn> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                        isSignUpscreen = true;
+                        isSignUpscreen = false;
                       });
                     },
                     child: Column(
@@ -90,25 +90,25 @@ class _LogInState extends State<LogIn> {
                           "ລົງທະບຽນ",
                           style: TextStyle(
                             color: !isSignUpscreen
-                                ? Colors.grey[500]
-                                : Colors.blue,
+                                ? Colors.blue
+                                : Colors.grey[500],
                             fontSize: 20,
                             fontFamily: "NotoSansLao-Regular",
                           ),
                         ),
-                        if (isSignUpscreen)
+                    
                           Container(
-                            width: 120,
-                            height: 3,
-                            color: Colors.blue,
+                            width: 150.w,
+                            height: 3.h,
+                            color:!isSignUpscreen? Colors.blue:Colors.grey,
                           ),
                       ],
                     ),
                   )
                 ],
               ),
-              if (isSignUpscreen) signUp(),
-              if (!isSignUpscreen) sigIn()
+              if (isSignUpscreen) sigIn(),
+              if (!isSignUpscreen) signUp()
             ],
           ),
         ),

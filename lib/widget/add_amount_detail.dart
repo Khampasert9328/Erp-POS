@@ -6,26 +6,26 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
-class AddAmount extends StatefulWidget {
+class AddAmountDetait extends StatefulWidget {
   String? title;
-  AddAmount({this.title});
+  AddAmountDetait({this.title});
 
   @override
-  State<AddAmount> createState() => _AddAmountState();
+  State<AddAmountDetait> createState() => _AddAmountDetaitState();
 }
 
-class _AddAmountState extends State<AddAmount> {
+class _AddAmountDetaitState extends State<AddAmountDetait> {
   int count = 0;
 
   void setNumber(bool isAdd) {
     if (isAdd) {
       setState(() {
-        count += 1;
+        count ++;
       });
     } else {
       if (count > 0) {
         setState(() {
-          count -= 1;
+          count --;
         });
       }
     }
@@ -35,17 +35,19 @@ class _AddAmountState extends State<AddAmount> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(widget.title ?? 'ຈຳນວນ',
-            style: TextStyle(fontSize: 14.sp, color: ERPTheme.BASE_COLOR)),
+        Text(
+          widget.title ?? 'ຈຳນວນ',
+          style: TextStyle(
+            fontSize: 14.sp,
+            color: ERPTheme.BASE_COLOR,
+          ),
+        ),
         SizedBox(
           width: 10.w,
         ),
         GestureDetector(
           onTap: () async {
             setNumber(true);
-            context.read<FoodMenuProvider>().increment(count);
-            SharedPreferences preferences = await SharedPreferences.getInstance();
-            preferences.setInt(CountPre().namkey, count);
           },
           child: buildButton(Icons.add, "+"),
         ),
@@ -53,28 +55,34 @@ class _AddAmountState extends State<AddAmount> {
           padding: EdgeInsets.symmetric(horizontal: 5.w),
           child: Column(
             children: [
-              Text(
-                count < 10 ? '0$count' : '$count',
-                style: TextStyle(color: ERPTheme.BASE_COLOR, fontSize: 14.sp),
-              ),
-              Container(
-                width: 20.w,
-                height: 2.h,
-                decoration: BoxDecoration(color: Color(0xFFD9D9D9)),
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Column(
+                  children: [
+                    Text(
+                      count < 10 ? '0$count' : '$count',
+                      style: TextStyle(
+                          color: ERPTheme.BASE_COLOR, fontSize: 14.sp),
+                    ),
+                    Container(
+                      width: 20.w,
+                      height: 2.h,
+                      decoration: BoxDecoration(color: Color(0xFFD9D9D9)),
+                    )
+                  ],
+                ),
               )
             ],
           ),
         ),
-        Expanded(
-          child: GestureDetector(
-            onTap: () async{
-              setNumber(false);
-             context.read<FoodMenuProvider>().remove(count);
-             SharedPreferences preferences = await SharedPreferences.getInstance();
-            preferences.setInt(CountPre().namkey, count);
-            },
-            child: buildButton(Icons.add, "-"),
-          ),
+        GestureDetector(
+          onTap: () {
+            setNumber(
+              false,
+            );
+            context.read<FoodMenuProvider>().remove(count);
+          },
+          child: buildButton(Icons.add, "-"),
         ),
       ],
     );

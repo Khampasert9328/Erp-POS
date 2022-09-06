@@ -38,6 +38,7 @@ class ListViewTable extends StatefulWidget {
 int? selectIndex;
 String? idtable;
 
+
 class _ListViewTableState extends State<ListViewTable> {
   @override
   Widget build(BuildContext context) {
@@ -164,7 +165,7 @@ class _ListViewTableState extends State<ListViewTable> {
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
                                 mainAxisSpacing: 15,
-                                crossAxisSpacing: 20,
+                                crossAxisSpacing: 65,
                                 childAspectRatio: 1 / .5,
                               ),
                               itemCount: snapshot.data!.length,
@@ -270,7 +271,7 @@ class _ListViewTableState extends State<ListViewTable> {
                                                 right: 35),
                                             child: Container(
                                               // height: 14.h,
-                                              width: 90.w,
+                                              width: 95.w,
                                               decoration: BoxDecoration(
                                                   color: ERPTheme.CARD_COLOR,
                                                   borderRadius:

@@ -20,7 +20,6 @@ Future<AreaModels?> getArea() async {
     );
    
     if (respones.statusCode == 200) {
-      print("data:${respones.body}");
       AreaModels areaModels = AreaModels.fromJson(json.decode(respones.body));
       return areaModels;
     }

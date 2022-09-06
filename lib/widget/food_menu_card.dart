@@ -1,8 +1,11 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:erp_pos/constant/enum.dart';
 import 'package:erp_pos/constant/images.dart';
+import 'package:erp_pos/model/category/category_models.dart';
 import 'package:erp_pos/model/foodmenu/food_menu_models.dart';
 import 'package:erp_pos/pages/food_menu_detail/components/food_menu_detail_body.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
@@ -10,12 +13,14 @@ import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/services/getfoodmenu/get_food_menu_services.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
+import 'package:erp_pos/utils/sqliteERP/sqlite_erp_pos.dart';
 import 'package:erp_pos/widget/add_amount.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sqflite/sqflite.dart';
 import '../constant/theme.dart';
 import 'package:erp_pos/constant/routes.dart' as custom_route;
 
@@ -25,16 +30,17 @@ class FoodMenuCard extends StatefulWidget {
 }
 
 class _FoodMenuCardState extends State<FoodMenuCard> {
-
   int? number;
   Product data = Product();
   ERPFoodSize erpFoodSize = ERPFoodSize.Small;
   List<Product> listdata = [];
-  
+
+  int add = 0;
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Product>?>(
-      future: FoodMenuProvider().getProduct(),
+      future: GETFoodMenuProvider().getProduct(),
       builder: ((context, snapshot) {
         if (snapshot.hasData) {
           return Consumer<FoodMenuProvider>(
@@ -125,7 +131,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                             FontWeight.bold),
                                                   )
                                                 ])),
-                                            AddAmount(number: number)
+                                            AddAmount()
                                           ],
                                         ),
                                       ),
@@ -139,8 +145,21 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 3.w, vertical: 3.h),
                                           child: IconButton(
-                                            onPressed: () {
-                                              addOrder(index);
+                                            onPressed: () async {
+                                              SharedPreferences preferences =
+                                                  await SharedPreferences
+                                                      .getInstance();
+                                              int? amount = preferences
+                                                  .getInt(CountPre().namkey);
+                                              int totalAmount = snapshot.data![index].pricesale! * amount!;
+                                              //addOrder(index);
+                                              context.read<GETFoodMenuProvider>().setFoodMenuData(snapshot.data![index], amount, totalAmount);
+                                              context
+                                                  .read<FoodMenuProvider>()
+                                                  .increment(add);
+
+                                                 context.read<GETFoodMenuProvider>().addTotalAmount(totalAmount);
+                                                 print("amount:$totalAmount");
                                             },
                                             icon: const Icon(
                                               Icons.add_shopping_cart_sharp,
@@ -218,28 +237,63 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
   }
 
   Future<List<Product>?> addOrder(int index) async {
-    String? name;
-  String? price;
-  String? image;
-  int? pricesale = int.parse(price.toString());
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    String? count = preferences.getString(CountPre().namkey)??"";
+    int? amount = preferences.getInt(CountPre().namkey);
+    int? price;
+    String? name,
+        image,
+        categoryid,
+        size,
+        priceimport,
+        status,
+        uuid,
+        id,
+        postype,
+        selected;
+
     GetFoodMenuModels? modelsProduct = await getfoodmenu();
     if (modelsProduct != null) {
       listdata = modelsProduct.product!;
       name = listdata[index].name;
-      price = listdata[index].pricesale.toString();
+      price = listdata[index].pricesale;
       image = listdata[index].thumbnails!.first.uri!;
+      categoryid = listdata[index].categoryid.toString();
+      size = listdata[index].size!.first.size!.toString();
+      priceimport = listdata[index].priceimport.toString();
+      status = listdata[index].status!.toString();
+      uuid = listdata[index].uuid.toString();
+      id = listdata[index].id.toString();
+      postype = listdata[index].postype.toString();
+      selected = listdata[index].selected.toString();
     }
-    print("addorder:$name");
-    print("count:$count");
-    print("count:$price");
-    print("count:$image");
+    int sum = int.parse(price.toString()) * amount!;
 
-    return listdata;
+    //ເກັບລາຄາລວມໄປ provider
+    context.read<FoodMenuProvider>().addTotalamount(sum);
+
+    Map<String, dynamic> map = Map();
+    map['id'] = id.toString();
+    map['uuid'] = uuid.toString();
+    map['name'] = name.toString();
+    map['categoryid'] = categoryid.toString();
+    map['image'] = image.toString();
+    map['size'] = size.toString();
+    map['pricesale'] = price;
+    map['priceimport'] = priceimport.toString();
+    map['status'] = status.toString();
+    map['postype'] = postype.toString();
+    map['selected'] = selected.toString();
+    map['sum'] = sum.toString();
+    Category? model = Category.fromJson(map);
+    try {
+      await SQLiteERPPOS().insertData(model).then((value) {
+        // FoodSlite().addCount();
+      });
+    } catch (e) {
+      print("error:$e");
+    }
   }
 
-  int count = 0;
   Container buildButton(IconData iconData, String title) {
     return Container(
       height: 30.h,
@@ -249,19 +303,5 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
           shape: BoxShape.circle),
       child: Center(child: Text(title)),
     );
-  }
-
-  void setNumber(bool isAdd, int index){
-    if (isAdd) {
-      setState(() {
-        count += 1;
-      });
-    } else {
-      if (count > 0) {
-        setState(() {
-          count -= 1;
-        });
-      }
-    }
   }
 }

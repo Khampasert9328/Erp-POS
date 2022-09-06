@@ -28,5 +28,6 @@ class ERPImages {
   static const onboarding = 'images/coffee-shop-rafiki.png';
   static const onboard = 'images/eating-togeter-rafiki.png';
   static const onboardScreen = 'images/waiter-rafiki.png';
+  static const icondelete = 'images/iconDelete.png';
   
 }

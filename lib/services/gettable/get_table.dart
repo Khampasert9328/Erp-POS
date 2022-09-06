@@ -25,7 +25,6 @@ Future<GetTableModels?> getTable(BuildContext context, String? id) async {
       },
     );
     if (respones.statusCode == 200) {
-      print("res:${respones.body}");
       return getTableModelsFromJson(respones.body);
     }
   } catch (e) {}
