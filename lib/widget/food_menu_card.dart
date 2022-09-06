@@ -72,7 +72,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                       vertical: 10.h, horizontal: 10.w),
                                   decoration: BoxDecoration(
                                       color: Color(0xFFF4F5F6),
-                                      borderRadius: BorderRadius.circular(7.r)),
+                                      borderRadius: BorderRadius.circular(10.r)),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -234,64 +234,6 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
         ),
       ),
     );
-  }
-
-  Future<List<Product>?> addOrder(int index) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    int? amount = preferences.getInt(CountPre().namkey);
-    int? price;
-    String? name,
-        image,
-        categoryid,
-        size,
-        priceimport,
-        status,
-        uuid,
-        id,
-        postype,
-        selected;
-
-    GetFoodMenuModels? modelsProduct = await getfoodmenu();
-    if (modelsProduct != null) {
-      listdata = modelsProduct.product!;
-      name = listdata[index].name;
-      price = listdata[index].pricesale;
-      image = listdata[index].thumbnails!.first.uri!;
-      categoryid = listdata[index].categoryid.toString();
-      size = listdata[index].size!.first.size!.toString();
-      priceimport = listdata[index].priceimport.toString();
-      status = listdata[index].status!.toString();
-      uuid = listdata[index].uuid.toString();
-      id = listdata[index].id.toString();
-      postype = listdata[index].postype.toString();
-      selected = listdata[index].selected.toString();
-    }
-    int sum = int.parse(price.toString()) * amount!;
-
-    //ເກັບລາຄາລວມໄປ provider
-    context.read<FoodMenuProvider>().addTotalamount(sum);
-
-    Map<String, dynamic> map = Map();
-    map['id'] = id.toString();
-    map['uuid'] = uuid.toString();
-    map['name'] = name.toString();
-    map['categoryid'] = categoryid.toString();
-    map['image'] = image.toString();
-    map['size'] = size.toString();
-    map['pricesale'] = price;
-    map['priceimport'] = priceimport.toString();
-    map['status'] = status.toString();
-    map['postype'] = postype.toString();
-    map['selected'] = selected.toString();
-    map['sum'] = sum.toString();
-    Category? model = Category.fromJson(map);
-    try {
-      await SQLiteERPPOS().insertData(model).then((value) {
-        // FoodSlite().addCount();
-      });
-    } catch (e) {
-      print("error:$e");
-    }
   }
 
   Container buildButton(IconData iconData, String title) {

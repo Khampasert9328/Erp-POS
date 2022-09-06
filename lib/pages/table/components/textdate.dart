@@ -66,13 +66,13 @@ class _ERPdateState extends State<ERPdate> {
           },
           child: Container(
             padding: EdgeInsets.symmetric(
-              horizontal: 10.w,
+              horizontal: 15.w,
               vertical: 5.h,
             ),
             decoration: BoxDecoration(
               color: ERPTheme.GREY_COLOR,
               borderRadius: BorderRadius.circular(
-                5.r,
+                10.r,
               ),
             ),
             child: Row(
@@ -83,6 +83,7 @@ class _ERPdateState extends State<ERPdate> {
                   width: 30.w,
                   height: 30.h,
                 ),
+                SizedBox(width: 10.w,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

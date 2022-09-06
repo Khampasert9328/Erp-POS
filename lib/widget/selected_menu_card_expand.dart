@@ -21,7 +21,7 @@ class SelectedMenuCardExpand extends StatefulWidget {
   VoidCallback onNext;
 
   ScrollController scrollController;
-  bool selectMenu = true;
+  bool selectMenu = false;
 
   SelectedMenuCardExpand(
       {required this.onNext,
@@ -75,6 +75,17 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                   Column(
                     // mainAxisSize: MainAxisSize.min,
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Container(
+                          width: 50.w,
+                          height: 7.h,
+                          decoration: BoxDecoration(
+                            color: ERPTheme.GREY_COLOR,
+                            borderRadius: BorderRadius.circular(10)
+                          ),
+                        ),
+                      ),
                       Container(
                         padding: EdgeInsets.symmetric(
                             horizontal: 30.h, vertical: 15.h),

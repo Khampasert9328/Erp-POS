@@ -49,7 +49,7 @@ class _TableDetailState extends State<TableDetail> {
                 width: double.infinity,
                 child: FloatingActionButton.extended(
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5)),
+                      borderRadius: BorderRadius.circular(10)),
                   onPressed: () {
                     Navigator.push(
                         context, MaterialPageRoute(builder: (_) => HomePage()));
