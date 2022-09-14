@@ -123,7 +123,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                         children: <InlineSpan>[
                                           TextSpan(
                                             text:
-                                                '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GETFoodMenuProvider>().totalamont)} ກີບ',
+                                                '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ',
                                             style: TextStyle(
                                                 fontSize: 16.sp,
                                                 color: ERPTheme.BASE_COLOR,
@@ -140,7 +140,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                               child: Badge(
                                 badgeContent: Text(
                                   context
-                                      .watch<GETFoodMenuProvider>()
+                                      .watch<GetFoodMenuProvider>()
                                       .getFoodMenuModel
                                       .length
                                       .toString(),
@@ -164,7 +164,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
               ),
             ),
             Expanded(
-              child: Consumer<GETFoodMenuProvider>(
+              child: Consumer<GetFoodMenuProvider>(
                 builder: (context, value, child) {
                   return ListView.builder(
                       itemCount: value.getFoodMenuModel.length,
@@ -245,8 +245,8 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                               ),
                                               IconButton(
                                                   onPressed: () async {
-                                                    context.read<GETFoodMenuProvider>().deleteTotalAmount(value.getFoodMenuModel[index].totalAmount);
-                                                  context.read<GETFoodMenuProvider>().deleteData(index);
+                                                    context.read<GetFoodMenuProvider>().deleteTotalAmount(value.getFoodMenuModel[index].totalAmount);
+                                                  context.read<GetFoodMenuProvider>().deleteData(index);
                                                   
                                                   },
                                                   icon: Image.asset(
@@ -337,7 +337,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                         width: 20.w,
                       ),
                       Text(
-                        'ລວມລາຄາ: ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GETFoodMenuProvider>().totalamont)} ',
+                        'ລວມລາຄາ: ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ',
                         style: TextStyle(
                           fontSize: 15.sp,
                           color: ERPTheme.BASE_COLOR,

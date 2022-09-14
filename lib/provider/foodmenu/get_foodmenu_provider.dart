@@ -6,14 +6,14 @@ import 'package:erp_pos/services/getfoodmenu/get_food_menu_postype.dart';
 import 'package:erp_pos/services/getfoodmenu/get_food_menu_services.dart';
 import 'package:flutter/cupertino.dart';
 
-class GETFoodMenuProvider extends ChangeNotifier {
+class GetFoodMenuProvider extends ChangeNotifier {
   List<Product> listProduct = [];
   List<Product> get getlistProduct => listProduct;
-  List<FoodMenuModel> _foodMenuModel = [];
+  List<FoodMenuModel> foodMenuModel = [];
   int _totalamount = 0;
 
   int get totalamont => _totalamount;
-  List<FoodMenuModel> get getFoodMenuModel => _foodMenuModel;
+  List<FoodMenuModel> get getFoodMenuModel => foodMenuModel;
 
   Future<List<Product>?> getProduct() async {
     GetFoodMenuModels? modelsProduct = await getfoodmenu();
@@ -30,18 +30,20 @@ class GETFoodMenuProvider extends ChangeNotifier {
   // ໃຊ້ຕອນເພີ່ມເມນູ
   void setFoodMenuData(Product data, int number, int totalAmount) {
     List<FoodMenuModel> foodData =
-        _foodMenuModel.where((element) => element.data.id == data.id).toList();
+        foodMenuModel.where((element) => element.data.id == data.id).toList();
+    
 
     ///  ຖ້າຍັງບໍ່ມີເມນູດັ່ງກ່າວ
     if (foodData.isEmpty) {
-      _foodMenuModel.add(
+      foodMenuModel.add(
           FoodMenuModel(data: data, number: number, totalAmount: totalAmount));
     } else {
-      for (var i in _foodMenuModel) {
+      for (var i in foodMenuModel) {
         if (i.data.id == data.id) {
           i.data = data;
           i.number = number;
           i.totalAmount = totalAmount;
+        
         }
       }
     }
@@ -62,7 +64,7 @@ class GETFoodMenuProvider extends ChangeNotifier {
   }
   //ລົບຂໍ້ມູນອອກຈາກ provider
    void deleteData(int index) {
-    _foodMenuModel.removeAt(index);
+    foodMenuModel.removeAt(index);
     notifyListeners();
   }
 }

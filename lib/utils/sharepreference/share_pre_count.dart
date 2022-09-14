@@ -5,7 +5,13 @@ class CountPre {
   late SharedPreferences preferences;
   String namkey = 'namekey';
   String sumall = 'sum';
-
+  String tableid = 'id';
+   String tablename = 'tablename';
+  String packageId ='packageId';
+  String dateExpired = 'dateExpired';
+  String dateSubscribe="dateSubscribe";
+  String idzone = "zone";
+  String billNo = "billNo";
 
   Future<void> setsumall(int sum)async{
     preferences = await SharedPreferences.getInstance();

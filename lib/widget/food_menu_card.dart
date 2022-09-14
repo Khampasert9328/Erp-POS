@@ -40,7 +40,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Product>?>(
-      future: GETFoodMenuProvider().getProduct(),
+      future: GetFoodMenuProvider().getProduct(),
       builder: ((context, snapshot) {
         if (snapshot.hasData) {
           return Consumer<FoodMenuProvider>(
@@ -154,12 +154,12 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                   .getInt(CountPre().namkey);
                                               int totalAmount = snapshot.data![index].pricesale! * amount!;
                                               //addOrder(index);
-                                              context.read<GETFoodMenuProvider>().setFoodMenuData(snapshot.data![index], amount, totalAmount);
+                                              context.read<GetFoodMenuProvider>().setFoodMenuData(snapshot.data![index], amount, totalAmount);
                                               context
                                                   .read<FoodMenuProvider>()
                                                   .increment(add);
 
-                                                 context.read<GETFoodMenuProvider>().addTotalAmount(totalAmount);
+                                                 context.read<GetFoodMenuProvider>().addTotalAmount(totalAmount);
                                                  print("amount:$totalAmount");
                                             },
                                             icon: const Icon(

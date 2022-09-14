@@ -29,5 +29,6 @@ class ERPImages {
   static const onboard = 'images/eating-togeter-rafiki.png';
   static const onboardScreen = 'images/waiter-rafiki.png';
   static const icondelete = 'images/iconDelete.png';
-  
+  static const animation = 'images/logo-animation.gif';
+  static const categcory = 'images/categcory.png';  
 }

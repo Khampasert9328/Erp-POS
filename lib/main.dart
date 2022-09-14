@@ -8,20 +8,24 @@ import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/pages/onboardingscreen/onboardingscreen.dart';
 import 'package:erp_pos/provider/areaprovider/area_provider.dart';
 import 'package:erp_pos/provider/areaprovider/insert_area_provider.dart';
+import 'package:erp_pos/provider/bill/print_bill_provider.dart';
+import 'package:erp_pos/provider/checkexpiredpackage/check_exp_package_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'constant/routes.dart' as custom_route;
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
   HttpOverrides.global = MyHttpOverrides();
+ 
+  
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -39,7 +43,9 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (context) => AreaProvider()),
             ChangeNotifierProvider(create: (context) => GetTableProvider()),
             ChangeNotifierProvider(create: (context) => FoodMenuProvider()),
-            ChangeNotifierProvider(create: (context) => GETFoodMenuProvider()),
+            ChangeNotifierProvider(create: (context) => GetFoodMenuProvider()),
+            ChangeNotifierProvider(create: ((context) => CheckExpiredPackage())),
+            ChangeNotifierProvider(create: (context)=>PrintBillKitchenProvider())
           ],
           child: MaterialApp(
             theme: ThemeData(
@@ -47,7 +53,7 @@ class MyApp extends StatelessWidget {
                 appBarTheme: AppBarTheme(
                     iconTheme: IconThemeData(color: ERPTheme.BLACK_COLOR))),
             debugShowCheckedModeBanner: false,
-            routes: custom_route.Route.getAll(),
+            // routes: custom_route.Route.getAll(),
             home: OnboardingScreen(),
           ),
         );

@@ -38,7 +38,6 @@ class ListViewTable extends StatefulWidget {
 int? selectIndex;
 String? idtable;
 
-
 class _ListViewTableState extends State<ListViewTable> {
   @override
   Widget build(BuildContext context) {
@@ -175,25 +174,25 @@ class _ListViewTableState extends State<ListViewTable> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            TableDetail(data: snapshot.data![index]),
+                                        builder: (context) => TableDetail(
+                                            data: snapshot.data![index]),
                                       ),
                                     );
                                   },
                                   child: Container(
-                                    height: 300.h,
-                                    width: 30,
+                                    // height: 300.h,
+                                    // width: 30.w,
                                     child: Column(
                                       children: [
                                         Expanded(
                                           child: Padding(
                                             padding: const EdgeInsets.only(
-                                                right: 35),
+                                                right: 20),
                                             child: Container(
-                                              // height: 14.h,
-                                              width: 90.w,
+                                              height: 15.h,
+                                              width: 80.w,
                                               decoration: BoxDecoration(
-                                                  color: ERPTheme.CARD_COLOR,
+                                                  color: ERPTheme.GREY_COLOR,
                                                   borderRadius:
                                                       BorderRadius.circular(5)),
                                             ),
@@ -202,63 +201,67 @@ class _ListViewTableState extends State<ListViewTable> {
                                         Row(
                                           children: [
                                             Container(
-                                              height: 60.h,
+                                              height: 50.h,
                                               width: 10.w,
                                               decoration: BoxDecoration(
-                                                  color: ERPTheme.CARD_COLOR,
+                                                  color: ERPTheme.GREY_COLOR,
                                                   borderRadius:
                                                       BorderRadius.circular(5)),
                                             ),
-                                            SizedBox(
-                                              height: 70.h,
-                                              width: 100.w,
-                                              child: Card(
-                                                color: ERPTheme.CARD_COLOR,
-                                                child: ClipPath(
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            16),
-                                                    decoration: BoxDecoration(
-                                                      border: Border(
-                                                        left: BorderSide(
-                                                          color: ERPTheme
-                                                              .GREEN_COLOR,
-                                                          width: 15,
+                                            Stack(
+                                              alignment: Alignment.topRight,
+                                              children: [
+                                                Card(
+                                                  color: ERPTheme.CARD_COLOR,
+                                                  child: ClipPath(
+                                                    // ignore: sort_child_properties_last
+                                                    child: Container(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              16),
+                                                      decoration: BoxDecoration(
+                                                        border: Border(
+                                                          left: BorderSide(
+                                                            color: ERPTheme
+                                                                .GREEN_COLOR,
+                                                            width: 15,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      child: Center(
+                                                        child: Text(
+                                                          snapshot.data![index]
+                                                              .name!,
+                                                          style: const TextStyle(
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
                                                         ),
                                                       ),
                                                     ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        snapshot
-                                                            .data![index].name!,
-                                                        style: const TextStyle(
-                                                            fontSize: 18,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  clipper: ShapeBorderClipper(
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                        3,
+                                                    clipper: ShapeBorderClipper(
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                          3,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
+                                              ],
                                             ),
                                             Container(
-                                              height: 60.h,
+                                              height: 50.h,
                                               width: 10.w,
                                               decoration: BoxDecoration(
-                                                  color: ERPTheme.CARD_COLOR,
-                                                  borderRadius:
-                                                      BorderRadius.circular(5)),
+                                                color: ERPTheme.GREY_COLOR,
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                              ),
                                             ),
                                             const SizedBox(
                                               width: 10,
@@ -268,12 +271,12 @@ class _ListViewTableState extends State<ListViewTable> {
                                         Expanded(
                                           child: Padding(
                                             padding: const EdgeInsets.only(
-                                                right: 35),
+                                                right: 20),
                                             child: Container(
-                                              // height: 14.h,
-                                              width: 95.w,
+                                              height: 15.h,
+                                              width: 80.w,
                                               decoration: BoxDecoration(
-                                                  color: ERPTheme.CARD_COLOR,
+                                                  color: ERPTheme.GREY_COLOR,
                                                   borderRadius:
                                                       BorderRadius.circular(5)),
                                             ),
