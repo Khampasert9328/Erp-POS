@@ -1,5 +1,4 @@
 import 'package:erp_pos/constant/theme.dart';
-import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/pages/login/login.dart';
 import 'package:erp_pos/pages/onboardingscreen/models/content_models.dart';
 import 'package:flutter/material.dart';
@@ -80,11 +79,12 @@ class _OnboardBodyState extends State<OnboardBody> {
           height: 60.h,
           width: double.infinity,
           margin: EdgeInsets.all(40),
-          child: FlatButton(
-            color: ERPTheme.BASE_COLOR,
-            textColor: ERPTheme.WHITE_COLOR,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: ERPTheme.BASE_COLOR,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
             onPressed: () {
               if (currenIndex == content.length - 1) {
@@ -105,7 +105,6 @@ class _OnboardBodyState extends State<OnboardBody> {
               style: TextStyle(
                 fontFamily: 'Phetsarath-OT',
                 fontSize: 20.sp,
-          
               ),
             ),
           ),

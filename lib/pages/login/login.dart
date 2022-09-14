@@ -6,14 +6,7 @@ import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class LogIn extends StatefulWidget {
-  const LogIn({Key? key}) : super(key: key);
-
-  @override
-  State<LogIn> createState() => _LogInState();
-}
-
-class _LogInState extends State<LogIn> {
+class Login extends StatelessWidget {
   bool isSignUpscreen = true;
   bool openPassword = true;
 
@@ -31,85 +24,94 @@ class _LogInState extends State<LogIn> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldkey,
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 100,
-                  right: 15,
-                  left: 15,
-                ),
-                child: Image.asset("images/narharn.png"),
-              ),
-              const SizedBox(
-                height: 70,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  GestureDetector(
-                    onTap: (() {
-                      setState(() {
-                        isSignUpscreen = true;
-                      });
-                    }),
-                    child: Column(
-                      children: [
-                        Text(
-                          "ເຂົ້າສູ່ລະບົບ",
-                          style: TextStyle(
-                            color: isSignUpscreen
-                                ? Colors.blue
-                                : Colors.grey[500],
-                            fontSize: 20,
-                            fontFamily: "NotoSansLao-Regular",
-                          ),
-                        ),
-                    
-                          Container(
-                            width: 150.w,
-                            height: 3.h,
-                            color:!isSignUpscreen? Colors.grey:Colors.blue,
-                          ),
-                      ],
-                    ),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        key: _scaffoldkey,
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 100,
+                    right: 15,
+                    left: 15,
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        isSignUpscreen = false;
-                      });
-                    },
-                    child: Column(
-                      children: [
-                        Text(
-                          "ລົງທະບຽນ",
-                          style: TextStyle(
-                            color: !isSignUpscreen
-                                ? Colors.blue
-                                : Colors.grey[500],
-                            fontSize: 20,
-                            fontFamily: "NotoSansLao-Regular",
-                          ),
-                        ),
-                    
-                          Container(
-                            width: 150.w,
-                            height: 3.h,
-                            color:!isSignUpscreen? Colors.blue:Colors.grey,
-                          ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              if (isSignUpscreen) sigIn(),
-              if (!isSignUpscreen) signUp()
-            ],
+                  child: Image.asset("images/narharn.png"),
+                ),
+                const SizedBox(
+                  height: 70,
+                ),
+                TabBar(
+                  tabs: [
+                    Tab(text: 'ເຂົ້າສູ່ລະບົບ',),
+                    Tab(text: 'ລົງທະບຽນ',),
+                  ],
+                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //   children: [
+                //     GestureDetector(
+                //       onTap: (() {
+                //         setState(() {
+                //           isSignUpscreen = true;
+                //         });
+                //       }),
+                //       child: Column(
+                //         children: [
+                //           Text(
+                //             "ເຂົ້າສູ່ລະບົບ",
+                //             style: TextStyle(
+                //               color: isSignUpscreen
+                //                   ? Colors.blue
+                //                   : Colors.grey[500],
+                //               fontSize: 20,
+                //               fontFamily: "NotoSansLao-Regular",
+                //             ),
+                //           ),
+                //
+                //           Container(
+                //             width: 150.w,
+                //             height: 3.h,
+                //             color:!isSignUpscreen? Colors.grey:Colors.blue,
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //     GestureDetector(
+                //       onTap: () {
+                //         setState(() {
+                //           isSignUpscreen = false;
+                //         });
+                //       },
+                //       child: Column(
+                //         children: [
+                //           Text(
+                //             "ລົງທະບຽນ",
+                //             style: TextStyle(
+                //               color: !isSignUpscreen
+                //                   ? Colors.blue
+                //                   : Colors.grey[500],
+                //               fontSize: 20,
+                //               fontFamily: "NotoSansLao-Regular",
+                //             ),
+                //           ),
+                //
+                //           Container(
+                //             width: 150.w,
+                //             height: 3.h,
+                //             color:!isSignUpscreen? Colors.blue:Colors.grey,
+                //           ),
+                //         ],
+                //       ),
+                //     )
+                //   ],
+                // ),
+                if (isSignUpscreen) sigIn(),
+                if (!isSignUpscreen) signUp()
+              ],
+            ),
           ),
         ),
       ),
@@ -217,13 +219,13 @@ class _LogInState extends State<LogIn> {
                 },
                 icon: openPassword
                     ? const Icon(
-                        Icons.visibility_off,
-                        color: Colors.blue,
-                      )
+                  Icons.visibility_off,
+                  color: Colors.blue,
+                )
                     : const Icon(
-                        Icons.remove_red_eye,
-                        color: Colors.blue,
-                      ),
+                  Icons.remove_red_eye,
+                  color: Colors.blue,
+                ),
               )),
         ),
       ),
@@ -487,3 +489,4 @@ class _LogInState extends State<LogIn> {
     );
   }
 }
+
