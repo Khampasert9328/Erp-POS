@@ -211,21 +211,18 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
 
 //                     for (var data in context.read<GetFoodMenuProvider>().getFoodMenuModel) {
 
-// // await Navigator.push(
-// //                   context,
-// //                   MaterialPageRoute(
-// //                     builder: (_) => CalculateMoney(
-// //                       tablename: getidtable,
-// //                       name: data.data.name,
-// //                       size: data.data.size,
-// //                       number: data.number,
-// //                       amount: data.totalAmount,
-// //                     ),
-// //                   ),
-// //                 );
+await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => CalculateMoney(
+                      tablename: getidtable,
+                     
+                    ),
+                  ),
+                );
 
                       
-                   // }
+                  
 
                 Navigator.pop(context);
               },

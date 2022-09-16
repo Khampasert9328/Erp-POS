@@ -27,7 +27,16 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
     SharedPreferences tableid = await SharedPreferences.getInstance();
     String? tableid1 = tableid.getString(CountPre().tableid);
 
-    print("tableid1:$tableid1");
+    var str = "$dateexpired";
+    var parts = str.split('-');
+    var prefix = parts[0].trim(); // prefix: "date"
+    var dateExp = parts.sublist(0).join('').trim();
+
+    var strsup = "$datesup";
+    var partsup = str.split('-');
+    var prefixsup = partsup[0].trim(); // prefix: "date"
+    var dateSup = partsup.sublist(0).join('').trim();
+
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? idtoken = preferences.getString("content");
@@ -38,46 +47,39 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
     String userid = decodedToken['sub'];
     String domain = decodedToken['domain'];
 ////////////////////////////////////////////////////////////////////////////
-DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-String ip = androidInfo.device!;  // e.g. "Moto G (4)"
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    String ip = androidInfo.device!; // e.g. "Moto G (4)"
 
-IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-print('Running on ${iosInfo.utsname.machine}');
+    IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+
     SharedPreferences pri = await SharedPreferences.getInstance();
     String? billNo = pri.getString(CountPre().billNo);
     List<Map<String, dynamic>> products = [];
 
     for (var item in context.read<GetFoodMenuProvider>().getFoodMenuModel) {
-      products.add(  {
-            "productId":
-                "${item.data.id}",
-            "name":
-                "${item.data.name}",
-            "size": 0,
-            "amount": item
-                .totalAmount,
-            "priceSale": context
-                .read<GetFoodMenuProvider>()
-                .getFoodMenuModel
-                .first
-                .data
-                .pricesale,
-            "priceImport": item
-                .data
-                .priceimport,
-            "discount": 0,
-            "freeamount": 0,
-            "description": "string",
-            "cooked": true,
-            "timeCooked": "string",
-            "categoryOrder": {
-              "categoryId":
-                  "${item.data.categoryid}",
-              "categoryName": "string",
-            }
-          });
-      
+      products.add({
+        "productId": "${item.data.id}",
+        "name": "${item.data.name}",
+        "size": 0,
+        "amount": item.totalAmount,
+        "priceSale": context
+            .read<GetFoodMenuProvider>()
+            .getFoodMenuModel
+            .first
+            .data
+            .pricesale,
+        "priceImport": item.data.priceimport,
+        "discount": 0,
+        "freeamount": 0,
+        "description": "string",
+        "cooked": true,
+        "timeCooked": "string",
+        "categoryOrder": {
+          "categoryId": "${item.data.categoryid}",
+          "categoryName": "string",
+        }
+      });
     }
 
     var url = "${APIPath.CREATE_ORDER}";
@@ -134,8 +136,8 @@ print('Running on ${iosInfo.utsname.machine}');
           "note": "Order Food"
         }
       },
-      "packageDateStart": "${datesup}",
-      "packageDateEnd": "${datesup}",
+      "packageDateStart": "${dateSup}",
+      "packageDateEnd": "${dateExp}",
     });
     var respones = await http.post(Uri.parse(url),
         headers: {
@@ -147,10 +149,7 @@ print('Running on ${iosInfo.utsname.machine}');
 
     if (respones.statusCode == 200) {
       CreateOrderModels data = createOrderModelsFromJson(respones.body);
-      if (data == 'billNo') {
-
-        
-      }
+      if (data == 'billNo') {}
       return createOrderModelsFromJson(respones.body);
     }
   } catch (e) {

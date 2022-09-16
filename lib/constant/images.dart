@@ -30,5 +30,8 @@ class ERPImages {
   static const onboardScreen = 'images/waiter-rafiki.png';
   static const icondelete = 'images/iconDelete.png';
   static const animation = 'images/logo-animation.gif';
-  static const categcory = 'images/categcory.png';  
+  static const categcory = 'images/categcory.png';
+  static const printbill = 'images/printbill.png';
+  static const cart = 'images/Cart.png';  
+  static const meney = 'images/money 1.png';
 }
