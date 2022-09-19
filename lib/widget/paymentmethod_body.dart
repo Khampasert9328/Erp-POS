@@ -1,6 +1,8 @@
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/widget/paycash_detail.dart';
+import 'package:erp_pos/widget/paymentbybcel.dart';
+import 'package:erp_pos/widget/paymentbymoney.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -24,7 +26,9 @@ class _PaymentBodyState extends State<PaymentBody> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (_) => paycash(tablename: widget.tablename)));
+                      builder: (_) => paycash(
+                            tablename: widget.tablename,
+                          )));
             },
             child: Container(
               height: 81.h,
@@ -53,53 +57,75 @@ class _PaymentBodyState extends State<PaymentBody> {
           SizedBox(
             height: 15.h,
           ),
-          Container(
-            height: 81.h,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: ERPTheme.GREY_COLOR,
-                borderRadius: BorderRadius.circular(10)),
-            child: Row(
-              children: [
-                Image.asset(
-                  ERPImages.bcelone,
-                  height: 63.h,
-                  width: 69.w,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => PaymentBcelone(tablename: widget.tablename),
                 ),
-                Text(
-                  "ຈ່າຍດ້ວຍ BCEL One",
-                  style: TextStyle(
-                      fontSize: 18.sp,
-                      color: ERPTheme.BASE_COLOR,
-                      fontWeight: FontWeight.bold),
-                )
-              ],
+              );
+            },
+            child: Container(
+              height: 81.h,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: ERPTheme.GREY_COLOR,
+                  borderRadius: BorderRadius.circular(10)),
+              child: Row(
+                children: [
+                  Image.asset(
+                    ERPImages.bcelone,
+                    height: 63.h,
+                    width: 69.w,
+                  ),
+                  Text(
+                    "ຈ່າຍດ້ວຍ BCEL One",
+                    style: TextStyle(
+                        fontSize: 18.sp,
+                        color: ERPTheme.BASE_COLOR,
+                        fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
             ),
           ),
           SizedBox(
             height: 15.h,
           ),
-          Container(
-            height: 81.h,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: ERPTheme.GREY_COLOR,
-                borderRadius: BorderRadius.circular(10)),
-            child: Row(
-              children: [
-                Image.asset(
-                  ERPImages.mmoney,
-                  height: 63.h,
-                  width: 69.w,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => PaymentMmoney(
+                    tablename: widget.tablename,
+                  ),
                 ),
-                Text(
-                  "ຈ່າຍດ້ວຍ M-money",
-                  style: TextStyle(
-                      fontSize: 18.sp,
-                      color: ERPTheme.BASE_COLOR,
-                      fontWeight: FontWeight.bold),
-                )
-              ],
+              );
+            },
+            child: Container(
+              height: 81.h,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: ERPTheme.GREY_COLOR,
+                  borderRadius: BorderRadius.circular(10)),
+              child: Row(
+                children: [
+                  Image.asset(
+                    ERPImages.mmoney,
+                    height: 63.h,
+                    width: 69.w,
+                  ),
+                  Text(
+                    "ຈ່າຍດ້ວຍ M-money",
+                    style: TextStyle(
+                        fontSize: 18.sp,
+                        color: ERPTheme.BASE_COLOR,
+                        fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
             ),
           ),
         ],

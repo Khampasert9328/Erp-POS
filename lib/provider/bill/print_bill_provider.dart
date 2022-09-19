@@ -1,6 +1,7 @@
+import 'package:devla_sunmi/flutter_sunmi_printer.dart';
 import 'package:erp_pos/services/bill/print_bill_kitchen.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:sunmi_printer_plus/sunmi_printer_plus.dart';
+
 
 class PrintBillKitchenProvider extends ChangeNotifier {
   bool printBinded = false;

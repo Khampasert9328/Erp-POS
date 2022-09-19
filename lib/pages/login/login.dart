@@ -1,7 +1,9 @@
+
 import 'dart:ui';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:erp_pos/bussiness%20logic/authentication.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/pages/onboardingscreen/models/content_models.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -108,8 +110,8 @@ class Login extends StatelessWidget {
                 //     )
                 //   ],
                 // ),
-                if (isSignUpscreen) sigIn(),
-                if (!isSignUpscreen) signUp()
+                if (isSignUpscreen) sigIn(context),
+                if (!isSignUpscreen) signUp(context)
               ],
             ),
           ),
@@ -118,7 +120,7 @@ class Login extends StatelessWidget {
     );
   }
 
-  Widget sigIn() {
+  Widget sigIn(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(
         top: 20,
@@ -142,7 +144,7 @@ class Login extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            submitlogin()
+            submitlogin(context)
           ],
         ),
       ),
@@ -213,9 +215,7 @@ class Login extends StatelessWidget {
               ),
               suffixIcon: IconButton(
                 onPressed: () {
-                  setState(() {
-                    openPassword = !openPassword;
-                  });
+                 
                 },
                 icon: openPassword
                     ? const Icon(
@@ -253,7 +253,7 @@ class Login extends StatelessWidget {
     );
   }
 
-  Widget submitlogin() {
+  Widget submitlogin(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: GestureDetector(
@@ -284,7 +284,7 @@ class Login extends StatelessWidget {
     );
   }
 
-  Widget signUp() {
+  Widget signUp(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: 20),
       child: Form(
@@ -300,7 +300,7 @@ class Login extends StatelessWidget {
             singInName(),
             surname(),
             singInSurname(),
-            builsubmit(),
+            builsubmit(context),
             const SizedBox(
               height: 20,
             ),
@@ -455,7 +455,7 @@ class Login extends StatelessWidget {
     );
   }
 
-  Widget builsubmit() {
+  Widget builsubmit(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: GestureDetector(

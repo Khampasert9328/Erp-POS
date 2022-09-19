@@ -51,8 +51,8 @@ dependencies:
   cached_network_image: ^3.2.1
   sqflite: ^2.0.3+1
   badges: ^2.0.3
-  sunmi_printer_plus: ^2.1.1
   device_info_plus: ^4.1.2
+  devla_sunmi:
 
 dev_dependencies:
   flutter_test:

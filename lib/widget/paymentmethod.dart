@@ -17,11 +17,13 @@ class PayMentMethod extends StatelessWidget {
           tablename,
           style: TextStyle(
             color: ERPTheme.BASE_COLOR,
-            fontWeight: FontWeight.bold
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
-      body: PaymentBody(tablename: tablename),
+      body: PaymentBody(
+        tablename: tablename,
+      ),
     );
   }
 }

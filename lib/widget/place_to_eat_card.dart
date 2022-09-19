@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:devla_sunmi/flutter_sunmi_printer.dart';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/area/area_models.dart';
@@ -23,10 +24,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sunmi_printer_plus/column_maker.dart';
-import 'package:sunmi_printer_plus/enums.dart';
-import 'package:sunmi_printer_plus/sunmi_printer_plus.dart';
-import 'package:sunmi_printer_plus/sunmi_style.dart';
 
 class PlaceToEatCard extends StatefulWidget {
   ScrollController scrollController;
@@ -104,82 +101,30 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                   SharedPreferences pri = await SharedPreferences.getInstance();
                   String? billNo = pri.getString(CountPre().billNo);
 
-                  await SunmiPrinter.initPrinter();
-                  await SunmiPrinter.startTransactionPrint(true);
-                  await SunmiPrinter.printText('ໃບບິນຫ້ອງຄົວ',
+                  await SunmiPrinter.startTransactionPrint();
+                  await SunmiPrinter.printText(
+                    'ບິນຫ້ອງຄົວ',
+                    style: SunmiStyle(
+                      align: SunmiPrintAlign.CENTER,
+                      bold: true,
+                      fontSize: SunmiFontSize.LG,
+                    ),
+                  );
+                  await SunmiPrinter.printText('ເວລາ ແລະ ວັນທີ $',
                       style: SunmiStyle(
                           align: SunmiPrintAlign.CENTER,
                           bold: true,
-                          fontSize: SunmiFontSize.LG));
-                  // await SunmiPrinter.printText(
-                  //     '$address ${data.address!.village} $district${data.address!.district}',
-                  //     style: SunmiStyle(
-                  //         align: SunmiPrintAlign.CENTER,
-                  //         bold: true,
-                  //         fontSize: SunmiFontSize.LG));
-                  // await SunmiPrinter.printText(
-                  //     '$phonenumber ${data.phonenumber}',
-                  //     style: SunmiStyle(
-                  //         align: SunmiPrintAlign.CENTER,
-                  //         bold: true,
-                  //
-                  //     fontSize: SunmiFontSize.LG));
-                  await SunmiPrinter.printText(
-                      'ວັນທີ: ${DateFormat("dd-MM-yyyy HH:mm").format(DateTime.now())}',
+                          fontSize: SunmiFontSize.MD));
+                  await SunmiPrinter.printText('ໂຕະ $getidtable',
                       style: SunmiStyle(
-                          align: SunmiPrintAlign.LEFT,
+                          align: SunmiPrintAlign.CENTER,
                           bold: true,
                           fontSize: SunmiFontSize.MD));
-
-                  await SunmiPrinter.printText('ໃບບິນເລກທີ: ${billNo}',
+                          await SunmiPrinter.printText('ໂຊນ ຫຼື ພື້ນທີ່ $getzone',
                       style: SunmiStyle(
-                          align: SunmiPrintAlign.LEFT,
+                          align: SunmiPrintAlign.CENTER,
                           bold: true,
                           fontSize: SunmiFontSize.MD));
-                  await SunmiPrinter.printText('ໂຕະ: $getidtable',
-                      style: SunmiStyle(
-                          align: SunmiPrintAlign.LEFT,
-                          bold: true,
-                          fontSize: SunmiFontSize.MD));
-                  await SunmiPrinter.printText('ໂຊນ ຫຼື ພື້ນທີ່: $getzone',
-                      style: SunmiStyle(
-                          align: SunmiPrintAlign.LEFT,
-                          bold: true,
-                          fontSize: SunmiFontSize.MD));
-                  await SunmiPrinter.line();
-                  /////////////////////////////////////////
-
-                  await SunmiPrinter.printRow(cols: [
-                    ColumnMaker(
-                        text: 'ລາຍການ', width: 12, align: SunmiPrintAlign.LEFT),
-                    ColumnMaker(
-                        text: 'ຂະໜາດ', width: 6, align: SunmiPrintAlign.CENTER),
-                    ColumnMaker(
-                        text: 'ຈຳນວນ', width: 6, align: SunmiPrintAlign.RIGHT),
-                         ColumnMaker(
-                        text: 'ລາຄາ', width: 6, align: SunmiPrintAlign.RIGHT),
-                  ]);
-                  for (var item in context.read<GetFoodMenuProvider>().getFoodMenuModel) {
-                    
-                      await SunmiPrinter.printRow(cols: [
-                    ColumnMaker(
-                        text: '${item.data.name}', width: 12, align: SunmiPrintAlign.LEFT),
-                        ColumnMaker(
-                        text: '${item.data.size}', width: 12, align: SunmiPrintAlign.LEFT),
-                    ColumnMaker(
-                        text: '${item.number}', width: 6, align: SunmiPrintAlign.CENTER),
-                    ColumnMaker(
-                        text: '${item.totalAmount}', width: 6, align: SunmiPrintAlign.RIGHT),
-                  ]);
-                  }
-
-                
-
-                  await SunmiPrinter.lineWrap(2);
-                  await SunmiPrinter.exitTransactionPrint(true);
-
-                  await SunmiPrinter.line();
-
                 });
                 showDialog(
                     context: context,
@@ -210,21 +155,6 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                     });
 
 //                     for (var data in context.read<GetFoodMenuProvider>().getFoodMenuModel) {
-
-await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => CalculateMoney(
-                      tablename: getidtable,
-                     
-                    ),
-                  ),
-                );
-
-                      
-                  
-
-                Navigator.pop(context);
               },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10.h),
@@ -413,24 +343,22 @@ await Navigator.push(
                                               child: Column(
                                                 children: [
                                                   GestureDetector(
-                                                    onTap: () async{
-                                                      setState(()  {
+                                                    onTap: () async {
+                                                      setState(() {
                                                         isselect = index;
                                                         idtable = id;
-                                                       
                                                       });
-                                                       SharedPreferences
-                                                            preferences =
-                                                            await SharedPreferences
-                                                                .getInstance();
-                                                        preferences.setString(
-                                                            CountPre().idzone,
-                                                            snapshot
-                                                                .data![index]
-                                                                .area!);
-                                                        preferences.setString(
-                                                            CountPre().tableid,
-                                                            idtable.toString());
+                                                      SharedPreferences
+                                                          preferences =
+                                                          await SharedPreferences
+                                                              .getInstance();
+                                                      preferences.setString(
+                                                          CountPre().idzone,
+                                                          snapshot.data![index]
+                                                              .area!);
+                                                      preferences.setString(
+                                                          CountPre().tableid,
+                                                          idtable.toString());
                                                     },
                                                     child: Column(
                                                       children: [

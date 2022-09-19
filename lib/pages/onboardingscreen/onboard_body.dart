@@ -81,7 +81,6 @@ class _OnboardBodyState extends State<OnboardBody> {
           margin: EdgeInsets.all(40),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: ERPTheme.BASE_COLOR,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -91,7 +90,7 @@ class _OnboardBodyState extends State<OnboardBody> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => LogIn(),
+                    builder: (_) => Login(),
                   ),
                 );
               }
