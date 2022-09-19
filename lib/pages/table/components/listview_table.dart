@@ -157,137 +157,40 @@ class _ListViewTableState extends State<ListViewTable> {
                       if (snapshot.hasData) {
                         return Consumer<GetTableProvider>(
                           builder: ((context, model, _) {
-                            return GridView.builder(
+                            return SingleChildScrollView(
+                                child: GridView.count(
+                              crossAxisCount: 2,
+                              childAspectRatio: (1 / .4),
                               shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                mainAxisSpacing: 15,
-                                crossAxisSpacing: 65,
-                                childAspectRatio: 1 / .5,
-                              ),
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (_, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => TableDetail(
-                                            data: snapshot.data![index]),
-                                      ),
-                                    );
-                                  },
+                              children:
+                                  List.generate(snapshot.data!.length, (index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(10.0),
                                   child: Container(
-                                    // height: 300.h,
-                                    // width: 30.w,
-                                    child: Column(
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 20),
-                                            child: Container(
-                                              height: 15.h,
-                                              width: 80.w,
-                                              decoration: BoxDecoration(
-                                                  color: AppTheme.GREY_COLOR,
-                                                  borderRadius:
-                                                      BorderRadius.circular(5)),
-                                            ),
+                                    color: AppTheme.GREY_COLOR,
+                                    child: Container(
+                                      padding: const EdgeInsets.all(16),
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          left: BorderSide(
+                                            color: AppTheme.GREEN_COLOR,
+                                            width: 15,
                                           ),
                                         ),
-                                        Row(
-                                          children: [
-                                            Container(
-                                              height: 50.h,
-                                              width: 10.w,
-                                              decoration: BoxDecoration(
-                                                  color: AppTheme.GREY_COLOR,
-                                                  borderRadius:
-                                                      BorderRadius.circular(5)),
-                                            ),
-                                            Stack(
-                                              alignment: Alignment.topRight,
-                                              children: [
-                                                Card(
-                                                  color: AppTheme.CARD_COLOR,
-                                                  child: ClipPath(
-                                                    // ignore: sort_child_properties_last
-                                                    child: Container(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              16),
-                                                      decoration: BoxDecoration(
-                                                        border: Border(
-                                                          left: BorderSide(
-                                                            color: AppTheme
-                                                                .GREEN_COLOR,
-                                                            width: 15,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          snapshot.data![index]
-                                                              .name!,
-                                                          style: const TextStyle(
-                                                              fontSize: 18,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    clipper: ShapeBorderClipper(
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                          3,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Container(
-                                              height: 50.h,
-                                              width: 10.w,
-                                              decoration: BoxDecoration(
-                                                color: AppTheme.GREY_COLOR,
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              width: 10,
-                                            )
-                                          ],
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          snapshot.data![index].name!,
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 20),
-                                            child: Container(
-                                              height: 15.h,
-                                              width: 80.w,
-                                              decoration: BoxDecoration(
-                                                  color: AppTheme.GREY_COLOR,
-                                                  borderRadius:
-                                                      BorderRadius.circular(5)),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                      ),
                                     ),
                                   ),
                                 );
-                              },
-                            );
+                              }),
+                            ));
                           }),
                         );
                       }

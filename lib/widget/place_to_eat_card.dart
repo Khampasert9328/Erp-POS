@@ -95,58 +95,58 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                 //     .then((value) async {
                 //   PrintBillKitchenProvider().getprint();
 
-                  SharedPreferences preferences =
-                      await SharedPreferences.getInstance();
-                  String? getzone = preferences.getString(CountPre().idzone);
-                  SharedPreferences pri = await SharedPreferences.getInstance();
-                  String? billNo = pri.getString(CountPre().billNo);
+                SharedPreferences preferences =
+                    await SharedPreferences.getInstance();
+                String? getzone = preferences.getString(CountPre().idzone);
+                SharedPreferences pri = await SharedPreferences.getInstance();
+                String? billNo = pri.getString(CountPre().billNo);
 
-                  // await SunmiPrinter.startTransactionPrint();
-                  // await SunmiPrinter.printText(
-                  //   'ບິນຫ້ອງຄົວ',
-                  //   style: SunmiStyle(
-                  //     align: SunmiPrintAlign.CENTER,
-                  //     bold: true,
-                  //     fontSize: SunmiFontSize.LG,
-                  //   ),
-                  // );
-                  // await SunmiPrinter.printText('ໂຕະ $getidtable',
-                  //     style: SunmiStyle(
-                  //         align: SunmiPrintAlign.CENTER,
-                  //         bold: true,
-                  //         fontSize: SunmiFontSize.MD));
-                  // await SunmiPrinter.printText('ໂຊນ ຫຼື ພື້ນທີ່ $getzone',
-                  //     style: SunmiStyle(
-                  //         align: SunmiPrintAlign.CENTER,
-                  //         bold: true,
-                  //         fontSize: SunmiFontSize.MD));
+                // await SunmiPrinter.startTransactionPrint();
+                // await SunmiPrinter.printText(
+                //   'ບິນຫ້ອງຄົວ',
+                //   style: SunmiStyle(
+                //     align: SunmiPrintAlign.CENTER,
+                //     bold: true,
+                //     fontSize: SunmiFontSize.LG,
+                //   ),
+                // );
+                // await SunmiPrinter.printText('ໂຕະ $getidtable',
+                //     style: SunmiStyle(
+                //         align: SunmiPrintAlign.CENTER,
+                //         bold: true,
+                //         fontSize: SunmiFontSize.MD));
+                // await SunmiPrinter.printText('ໂຊນ ຫຼື ພື້ນທີ່ $getzone',
+                //     style: SunmiStyle(
+                //         align: SunmiPrintAlign.CENTER,
+                //         bold: true,
+                //         fontSize: SunmiFontSize.MD));
 
-                  // await SunmiPrinter.printRow(cols: [
-                  //   ColumnMaker(
-                  //     text: 'ລາຍການ',
-                  //     width: 6,
-                  //     align: SunmiPrintAlign.LEFT,
-                  //   ),
-                  //   ColumnMaker(
-                  //     text: 'ຂະໜາດ',
-                  //     width: 6,
-                  //     align: SunmiPrintAlign.CENTER,
-                  //   ),
-                  //   ColumnMaker(
-                  //     text: 'ຈຳນວນ',
-                  //     width: 6,
-                  //     align: SunmiPrintAlign.CENTER,
-                  //   ),
-                  //   ColumnMaker(
-                  //     text: 'ລາຄາ',
-                  //     width: 6,
-                  //     align: SunmiPrintAlign.RIGHT,
-                  //   ),
-                  // ]);
+                // await SunmiPrinter.printRow(cols: [
+                //   ColumnMaker(
+                //     text: 'ລາຍການ',
+                //     width: 6,
+                //     align: SunmiPrintAlign.LEFT,
+                //   ),
+                //   ColumnMaker(
+                //     text: 'ຂະໜາດ',
+                //     width: 6,
+                //     align: SunmiPrintAlign.CENTER,
+                //   ),
+                //   ColumnMaker(
+                //     text: 'ຈຳນວນ',
+                //     width: 6,
+                //     align: SunmiPrintAlign.CENTER,
+                //   ),
+                //   ColumnMaker(
+                //     text: 'ລາຄາ',
+                //     width: 6,
+                //     align: SunmiPrintAlign.RIGHT,
+                //   ),
+                // ]);
 
-                  // await SunmiPrinter.lineWrap(3);
-                  // await SunmiPrinter.submitTransactionPrint();
-                  // await SunmiPrinter.exitTransactionPrint();
+                // await SunmiPrinter.lineWrap(3);
+                // await SunmiPrinter.submitTransactionPrint();
+                // await SunmiPrinter.exitTransactionPrint();
                 // });
                 showDialog(
                     context: context,
@@ -475,115 +475,39 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                           return Consumer<GetTableProvider>(
                             builder: ((context, model, _) {
                               return SingleChildScrollView(
-                                child: GridView.builder(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    mainAxisSpacing: 15,
-                                    crossAxisSpacing: 65,
-                                    childAspectRatio: 1 / .5,
-                                  ),
-                                  itemCount: snapshot.data!.length,
-                                  itemBuilder: (_, index) {
-                                    return Container(
-                                      
-                                      child: GestureDetector(
-                                          onTap: () async {
-                                            setState(() {
-                                              selectTable = index;
-                                            });
-                                            SharedPreferences preferences =
-                                                await SharedPreferences
-                                                    .getInstance();
-                                            preferences.setString(
-                                                CountPre().tableid,
-                                                snapshot.data![index].id!);
-                                            SharedPreferences pref =
-                                                await SharedPreferences
-                                                    .getInstance();
-                                            preferences.setString(
-                                                CountPre().tablename,
-                                                snapshot.data![index].name!);
-                                          },
-                                          child: Container(
-                                            // height: 300.h,
-                                            // width: 30.w,
-                                            child: Column(
-                                              children: [
-                                              
-                                                Row(
-                                                  children: [
-                                                   
-                                                    Stack(
-                                                      alignment:
-                                                          Alignment.topRight,
-                                                      children: [
-                                                        Card(
-                                                          color: AppTheme
-                                                              .CARD_COLOR,
-                                                          child: ClipPath(
-                                                            // ignore: sort_child_properties_last
-                                                            child: Container(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(16),
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                border: Border(
-                                                                  left:
-                                                                      BorderSide(
-                                                                    color: AppTheme
-                                                                        .GREEN_COLOR,
-                                                                    width: 15,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              child: Center(
-                                                                child: Text(
-                                                                  snapshot
-                                                                      .data![
-                                                                          index]
-                                                                      .name!,
-                                                                  style: const TextStyle(
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            clipper:
-                                                                ShapeBorderClipper(
-                                                              shape:
-                                                                  RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                  3,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    
-                                                    const SizedBox(
-                                                      width: 10,
-                                                    )
-                                                  ],
-                                                ),
-                                              
-                                              ],
+                                  child: GridView.count(
+                                crossAxisCount: 2,
+                                childAspectRatio: (1 / .4),
+                                shrinkWrap: true,
+                                children: List.generate(snapshot.data!.length,
+                                    (index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Container(
+                                      color: AppTheme.GREY_COLOR,
+                                      child: Container(
+                                        padding: const EdgeInsets.all(16),
+                                        decoration: BoxDecoration(
+                                          border: Border(
+                                            left: BorderSide(
+                                              color: AppTheme.GREEN_COLOR,
+                                              width: 15,
                                             ),
-                                          )),
-                                    );
-                                  },
-                                ),
-                              );
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            snapshot.data![index].name!,
+                                            style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }),
+                              ));
                             }),
                           );
                         }
@@ -617,4 +541,17 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
       ),
     );
   }
+  // SharedPreferences preferences =
+  //                                               await SharedPreferences
+  //                                                   .getInstance();
+  //                                           preferences.setString(
+  //                                               CountPre().tableid,
+  //                                               snapshot.data![index].id!);
+  //                                           SharedPreferences pref =
+  //                                               await SharedPreferences
+  //                                                   .getInstance();
+  //                                           preferences.setString(
+  //                                               CountPre().tablename,
+  //                                               snapshot.data![index].name!);
+
 }
