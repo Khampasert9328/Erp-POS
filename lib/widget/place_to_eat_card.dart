@@ -483,24 +483,40 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                     (index) {
                                   return Padding(
                                     padding: const EdgeInsets.all(10.0),
-                                    child: Container(
-                                      color: AppTheme.GREY_COLOR,
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        SharedPreferences preferences =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        preferences.setString(
+                                            CountPre().tableid,
+                                            snapshot.data![index].id!);
+                                        SharedPreferences pref =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        preferences.setString(
+                                            CountPre().tablename,
+                                            snapshot.data![index].name!);
+                                      },
                                       child: Container(
-                                        padding: const EdgeInsets.all(16),
-                                        decoration: BoxDecoration(
-                                          border: Border(
-                                            left: BorderSide(
-                                              color: AppTheme.GREEN_COLOR,
-                                              width: 15,
+                                        color: AppTheme.GREY_COLOR,
+                                        child: Container(
+                                          padding: const EdgeInsets.all(16),
+                                          decoration: BoxDecoration(
+                                            border: Border(
+                                              left: BorderSide(
+                                                color: AppTheme.GREEN_COLOR,
+                                                width: 15,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            snapshot.data![index].name!,
-                                            style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold),
+                                          child: Center(
+                                            child: Text(
+                                              snapshot.data![index].name!,
+                                              style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -541,17 +557,4 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
       ),
     );
   }
-  // SharedPreferences preferences =
-  //                                               await SharedPreferences
-  //                                                   .getInstance();
-  //                                           preferences.setString(
-  //                                               CountPre().tableid,
-  //                                               snapshot.data![index].id!);
-  //                                           SharedPreferences pref =
-  //                                               await SharedPreferences
-  //                                                   .getInstance();
-  //                                           preferences.setString(
-  //                                               CountPre().tablename,
-  //                                               snapshot.data![index].name!);
-
 }
