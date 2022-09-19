@@ -36,7 +36,7 @@ class _ERPdateState extends State<ERPdate> {
                 return Theme(
                   data: Theme.of(context).copyWith(
                     colorScheme: ColorScheme.light(
-                      primary: ERPTheme.BASE_COLOR, // header background color
+                      primary: AppTheme.BASE_COLOR, // header background color
                       // onPrimary: Colors.black, // header text color
                       // onSurface: Colors.green, // body text color
                     ),
@@ -70,7 +70,7 @@ class _ERPdateState extends State<ERPdate> {
               vertical: 5.h,
             ),
             decoration: BoxDecoration(
-              color: ERPTheme.GREY_COLOR,
+              color: AppTheme.GREY_COLOR,
               borderRadius: BorderRadius.circular(
                 10.r,
               ),

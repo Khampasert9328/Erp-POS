@@ -63,9 +63,9 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                 padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10.h),
                 decoration: BoxDecoration(
                     color: selecbutton == true
-                        ? ERPTheme.BASE_COLOR
-                        : ERPTheme.WHITE_COLOR,
-                    border: Border.all(color: ERPTheme.BASE_COLOR),
+                        ? AppTheme.BASE_COLOR
+                        : AppTheme.WHITE_COLOR,
+                    border: Border.all(color: AppTheme.BASE_COLOR),
                     borderRadius: BorderRadius.circular(5)),
                 child: Row(
                   children: [
@@ -75,8 +75,8 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                           fontSize: 16.sp,
                           fontWeight: FontWeight.bold,
                           color: selecbutton == true
-                              ? ERPTheme.WHITE_COLOR
-                              : ERPTheme.BASE_COLOR),
+                              ? AppTheme.WHITE_COLOR
+                              : AppTheme.BASE_COLOR),
                     )
                   ],
                 ),
@@ -160,9 +160,9 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                 padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10.h),
                 decoration: BoxDecoration(
                   color: selecbutton == false
-                      ? ERPTheme.BASE_COLOR
-                      : ERPTheme.WHITE_COLOR,
-                  border: Border.all(color: ERPTheme.BASE_COLOR),
+                      ? AppTheme.BASE_COLOR
+                      : AppTheme.WHITE_COLOR,
+                  border: Border.all(color: AppTheme.BASE_COLOR),
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Row(
@@ -173,8 +173,8 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
                         color: selecbutton == false
-                            ? ERPTheme.WHITE_COLOR
-                            : ERPTheme.BASE_COLOR,
+                            ? AppTheme.WHITE_COLOR
+                            : AppTheme.BASE_COLOR,
                       ),
                     ),
                   ],
@@ -204,9 +204,9 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                           EdgeInsets.symmetric(horizontal: 45.w, vertical: 5.h),
                       decoration: BoxDecoration(
                           color: selectindex == true
-                              ? ERPTheme.BASE_COLOR
-                              : ERPTheme.WHITE_COLOR,
-                          border: Border.all(color: ERPTheme.BASE_COLOR),
+                              ? AppTheme.BASE_COLOR
+                              : AppTheme.WHITE_COLOR,
+                          border: Border.all(color: AppTheme.BASE_COLOR),
                           borderRadius: BorderRadius.circular(5)),
                       child: Row(
                         children: [
@@ -216,8 +216,8 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.bold,
                                 color: selectindex == true
-                                    ? ERPTheme.WHITE_COLOR
-                                    : ERPTheme.BASE_COLOR),
+                                    ? AppTheme.WHITE_COLOR
+                                    : AppTheme.BASE_COLOR),
                           )
                         ],
                       ),
@@ -236,9 +236,9 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                           EdgeInsets.symmetric(horizontal: 45.w, vertical: 5.h),
                       decoration: BoxDecoration(
                           color: selectindex == false
-                              ? ERPTheme.BASE_COLOR
-                              : ERPTheme.WHITE_COLOR,
-                          border: Border.all(color: ERPTheme.BASE_COLOR),
+                              ? AppTheme.BASE_COLOR
+                              : AppTheme.WHITE_COLOR,
+                          border: Border.all(color: AppTheme.BASE_COLOR),
                           borderRadius: BorderRadius.circular(5)),
                       child: Row(
                         children: [
@@ -248,8 +248,8 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.bold,
                                 color: selectindex == false
-                                    ? ERPTheme.WHITE_COLOR
-                                    : ERPTheme.BASE_COLOR),
+                                    ? AppTheme.WHITE_COLOR
+                                    : AppTheme.BASE_COLOR),
                           ),
                         ],
                       ),
@@ -274,7 +274,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                 .toString(),
                         style: TextStyle(
                           fontSize: 16.sp,
-                          color: ERPTheme.BASE_COLOR,
+                          color: AppTheme.BASE_COLOR,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -285,8 +285,8 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                       Expanded(
                         child: Container(
                           decoration: BoxDecoration(
-                            color: ERPTheme.GREY_COLOR,
-                            border: Border.all(color: ERPTheme.WHITE_COLOR),
+                            color: AppTheme.GREY_COLOR,
+                            border: Border.all(color: AppTheme.WHITE_COLOR),
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: Padding(
@@ -376,16 +376,16 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                                             ),
                                                             decoration: BoxDecoration(
                                                                 color: isselect == index
-                                                                    ? ERPTheme
+                                                                    ? AppTheme
                                                                         .BASE_COLOR
-                                                                    : ERPTheme
+                                                                    : AppTheme
                                                                         .WHITE_COLOR,
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
                                                                             5),
                                                                 border: Border.all(
-                                                                    color: ERPTheme
+                                                                    color: AppTheme
                                                                         .BASE_COLOR)),
                                                             child: Center(
                                                               child: Text(
@@ -401,9 +401,9 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                                                   fontSize:
                                                                       18.sp,
                                                                   color: isselect == index
-                                                                      ? ERPTheme
+                                                                      ? AppTheme
                                                                           .WHITE_COLOR
-                                                                      : ERPTheme
+                                                                      : AppTheme
                                                                           .GREY_COLOR,
                                                                 ),
                                                               ),
@@ -492,7 +492,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                                       height: 15.h,
                                                       width: 80.w,
                                                       decoration: BoxDecoration(
-                                                          color: ERPTheme
+                                                          color: AppTheme
                                                               .GREY_COLOR,
                                                           borderRadius:
                                                               BorderRadius
@@ -506,7 +506,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                                       height: 50.h,
                                                       width: 10.w,
                                                       decoration: BoxDecoration(
-                                                          color: ERPTheme
+                                                          color: AppTheme
                                                               .GREY_COLOR,
                                                           borderRadius:
                                                               BorderRadius
@@ -517,7 +517,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                                           Alignment.topRight,
                                                       children: [
                                                         Card(
-                                                          color: ERPTheme
+                                                          color: AppTheme
                                                               .CARD_COLOR,
                                                           child: ClipPath(
                                                             // ignore: sort_child_properties_last
@@ -530,7 +530,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                                                 border: Border(
                                                                   left:
                                                                       BorderSide(
-                                                                    color: ERPTheme
+                                                                    color: AppTheme
                                                                         .GREEN_COLOR,
                                                                     width: 15,
                                                                   ),
@@ -570,7 +570,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                                       height: 50.h,
                                                       width: 10.w,
                                                       decoration: BoxDecoration(
-                                                          color: ERPTheme
+                                                          color: AppTheme
                                                               .GREY_COLOR,
                                                           borderRadius:
                                                               BorderRadius
@@ -590,7 +590,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                                       height: 15.h,
                                                       width: 80.w,
                                                       decoration: BoxDecoration(
-                                                          color: ERPTheme
+                                                          color: AppTheme
                                                               .GREY_COLOR,
                                                           borderRadius:
                                                               BorderRadius
@@ -610,7 +610,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                         }
                         return Center(
                           child: CircularProgressIndicator(
-                            color: ERPTheme.BASE_COLOR,
+                            color: AppTheme.BASE_COLOR,
                           ),
                         );
                       },
@@ -626,7 +626,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                   child: Text(
                     "ອາຫານໄດ້ຖືກສັ່ງກັບບ້ານ",
                     style: TextStyle(
-                      color: ERPTheme.GREY_COLOR,
+                      color: AppTheme.GREY_COLOR,
                       fontSize: 20.sp,
                       fontWeight: FontWeight.bold,
                     ),

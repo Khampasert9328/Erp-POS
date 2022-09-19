@@ -27,7 +27,7 @@ class AddFoodMenuBody extends StatelessWidget {
           ),
           Text.rich(TextSpan(
               text: 'ປະເພດອາຫານ: ',
-              style: TextStyle(fontSize: 15.sp, color: ERPTheme.BASE_COLOR),
+              style: TextStyle(fontSize: 15.sp, color: AppTheme.BASE_COLOR),
               children: <InlineSpan>[
                 TextSpan(
                   text: 'ປະເພດອາຫານຝຣັ່ງ',
@@ -39,7 +39,7 @@ class AddFoodMenuBody extends StatelessWidget {
           ),
           Text(
             'ລະຫັດ',
-            style: TextStyle(fontSize: 15.sp, color: ERPTheme.BASE_COLOR),
+            style: TextStyle(fontSize: 15.sp, color: AppTheme.BASE_COLOR),
           ),
           buildTextField(foodID, 1, false),
           SizedBox(
@@ -47,7 +47,7 @@ class AddFoodMenuBody extends StatelessWidget {
           ),
           Text(
             'ຊື່ອາຫານ',
-            style: TextStyle(fontSize: 15.sp, color: ERPTheme.BASE_COLOR),
+            style: TextStyle(fontSize: 15.sp, color: AppTheme.BASE_COLOR),
           ),
           buildTextField(restaurantName, 1, false),
           SizedBox(
@@ -55,7 +55,7 @@ class AddFoodMenuBody extends StatelessWidget {
           ),
           Text(
             'ລາຍລະອຽດອາຫານ',
-            style: TextStyle(fontSize: 15.sp, color: ERPTheme.BASE_COLOR),
+            style: TextStyle(fontSize: 15.sp, color: AppTheme.BASE_COLOR),
           ),
           buildTextField(foodDetail, 5, false),
           SizedBox(
@@ -63,7 +63,7 @@ class AddFoodMenuBody extends StatelessWidget {
           ),
           Text(
             'ລາຄາຂາຍ',
-            style: TextStyle(fontSize: 15.sp, color: ERPTheme.BASE_COLOR),
+            style: TextStyle(fontSize: 15.sp, color: AppTheme.BASE_COLOR),
           ),
           buildTextField(sellingPrice, 1, true),
           SizedBox(
@@ -71,7 +71,7 @@ class AddFoodMenuBody extends StatelessWidget {
           ),
           Text(
             'ລາຄາຊື້',
-            style: TextStyle(fontSize: 15.sp, color: ERPTheme.BASE_COLOR),
+            style: TextStyle(fontSize: 15.sp, color: AppTheme.BASE_COLOR),
           ),
           buildTextField(purchasePrice, 1, true),
           SizedBox(
@@ -79,7 +79,7 @@ class AddFoodMenuBody extends StatelessWidget {
           ),
           Text(
             'ລະດັບລາຄາຕາມຂະໜາດ (Optional)',
-            style: TextStyle(fontSize: 15.sp, color: ERPTheme.BASE_COLOR),
+            style: TextStyle(fontSize: 15.sp, color: AppTheme.BASE_COLOR),
           ),
           SizedBox(
             height: 7.h,
@@ -102,7 +102,7 @@ class AddFoodMenuBody extends StatelessWidget {
               SizedBox(
                 width: 20.w,
               ),
-              buildButton('ເພີ່ມ', ERPTheme.BASE_COLOR, Color(0xFFFFFFFF)),
+              buildButton('ເພີ່ມ', AppTheme.BASE_COLOR, Color(0xFFFFFFFF)),
             ],
           ),
           SizedBox(
@@ -138,7 +138,7 @@ class AddFoodMenuBody extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Text(
             title,
-            style: TextStyle(fontSize: 12.sp, color: ERPTheme.BASE_COLOR),
+            style: TextStyle(fontSize: 12.sp, color: AppTheme.BASE_COLOR),
           ),
         ),
         Expanded(child: buildTextField(controller, 1, true)),

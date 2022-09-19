@@ -8,7 +8,7 @@ class BuidlButtonBooking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
-      backgroundColor: ERPTheme.BASE_COLOR,
+      backgroundColor: AppTheme.BASE_COLOR,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
       ),

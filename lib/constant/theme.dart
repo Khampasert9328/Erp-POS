@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ERPTheme {
+class AppTheme {
   static Color BASE_COLOR = Color(0xFF283150);
   static Color GREEN_COLOR = Color(0xFF3CB95F);
   static Color GREY_COLOR = Color(0xFFCDCDCD);

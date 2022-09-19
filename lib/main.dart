@@ -21,10 +21,10 @@ import 'package:flutter/material.dart';
 
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
- 
-  
+
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -43,14 +43,16 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (context) => GetTableProvider()),
             ChangeNotifierProvider(create: (context) => FoodMenuProvider()),
             ChangeNotifierProvider(create: (context) => GetFoodMenuProvider()),
-            ChangeNotifierProvider(create: ((context) => CheckExpiredPackage())),
-            ChangeNotifierProvider(create: (context)=>PrintBillKitchenProvider())
+            ChangeNotifierProvider(
+                create: ((context) => CheckExpiredPackage())),
+            ChangeNotifierProvider(
+                create: (context) => PrintBillKitchenProvider())
           ],
           child: MaterialApp(
             theme: ThemeData(
                 fontFamily: 'Phetsarath',
                 appBarTheme: AppBarTheme(
-                    iconTheme: IconThemeData(color: ERPTheme.BLACK_COLOR))),
+                    iconTheme: IconThemeData(color: AppTheme.BLACK_COLOR))),
             debugShowCheckedModeBanner: false,
             // routes: custom_route.Route.getAll(),
             home: OnboardingScreen(),

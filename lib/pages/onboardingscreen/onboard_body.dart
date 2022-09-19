@@ -74,25 +74,30 @@ class _OnboardBodyState extends State<OnboardBody> {
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: ERPTheme.BLUE_COLOR,
+            color: AppTheme.BLUE_COLOR,
           ),
           height: 60.h,
           width: double.infinity,
           margin: EdgeInsets.all(40),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
+              backgroundColor: AppTheme.BASE_COLOR,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
             onPressed: () {
               if (currenIndex == content.length - 1) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => Login(),
-                  ),
-                );
+                Navigator.pushAndRemoveUntil(context,
+                    MaterialPageRoute(builder: (_) {
+                  return Login();
+                }), (route) => false);
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (_) => Login(),
+                //   ),
+                // );
               }
               pagecontroller!.nextPage(
                 duration: Duration(milliseconds: 100),
@@ -124,7 +129,7 @@ class _OnboardBodyState extends State<OnboardBody> {
             width: currenIndex == index ? 20.w : 10.w,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: ERPTheme.BASE_COLOR,
+              color: AppTheme.BASE_COLOR,
             ),
           ),
         ),

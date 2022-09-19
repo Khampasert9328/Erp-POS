@@ -33,11 +33,11 @@ class _TableDetailState extends State<TableDetail> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: ERPTheme.WHITE_COLOR,
+        backgroundColor: AppTheme.WHITE_COLOR,
         elevation: 0,
         title: Text(
           "${widget.data!.name}",
-          style: TextStyle(color: ERPTheme.BLACK_COLOR),
+          style: TextStyle(color: AppTheme.BLACK_COLOR),
         ),
       ),
       floatingActionButton: Padding(
@@ -59,7 +59,7 @@ class _TableDetailState extends State<TableDetail> {
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
                   ),
-                  backgroundColor: ERPTheme.BASE_COLOR,
+                  backgroundColor: AppTheme.BASE_COLOR,
                   elevation: 5,
                   splashColor: Colors.grey,
                 ),
@@ -92,7 +92,7 @@ class _TableDetailState extends State<TableDetail> {
                         ),
                       ),
                 Switch(
-                  activeColor: ERPTheme.GREEN_COLOR,
+                  activeColor: AppTheme.GREEN_COLOR,
                   value: isWitch,
                   onChanged: (vale) {
                     if (isWitch == true) {
@@ -123,10 +123,10 @@ class _TableDetailState extends State<TableDetail> {
                                 height: 14.h,
                                 width: 80.w,
                                 decoration: BoxDecoration(
-                                  color: ERPTheme.GREY_COLOR,
+                                  color: AppTheme.GREY_COLOR,
                                   borderRadius: BorderRadius.circular(5),
                                   border: Border.all(
-                                    color: ERPTheme.BASE_COLOR,
+                                    color: AppTheme.BASE_COLOR,
                                     width: 2,
                                   ),
                                 ),
@@ -138,10 +138,10 @@ class _TableDetailState extends State<TableDetail> {
                                     height: 50.h,
                                     width: 14.w,
                                     decoration: BoxDecoration(
-                                      color: ERPTheme.GREY_COLOR,
+                                      color: AppTheme.GREY_COLOR,
                                       borderRadius: BorderRadius.circular(5),
                                       border: Border.all(
-                                        color: ERPTheme.BASE_COLOR,
+                                        color: AppTheme.BASE_COLOR,
                                         width: 2,
                                       ),
                                     ),
@@ -152,10 +152,10 @@ class _TableDetailState extends State<TableDetail> {
                                     child: Card(
                                       shape: RoundedRectangleBorder(
                                         side: BorderSide(
-                                            color: ERPTheme.BASE_COLOR,
+                                            color: AppTheme.BASE_COLOR,
                                             width: 2),
                                       ),
-                                      color: ERPTheme.CARD_COLOR,
+                                      color: AppTheme.CARD_COLOR,
                                       child: ClipPath(
                                         child: Container(
                                           padding: const EdgeInsets.all(16),
@@ -163,7 +163,7 @@ class _TableDetailState extends State<TableDetail> {
                                             //  borderRadius: BorderRadius.only(topRight: Radius.circular(10)),
                                             border: Border(
                                               left: BorderSide(
-                                                color: ERPTheme.GREEN_COLOR,
+                                                color: AppTheme.GREEN_COLOR,
                                                 width: 15,
                                               ),
                                             ),
@@ -191,10 +191,10 @@ class _TableDetailState extends State<TableDetail> {
                                     height: 50.h,
                                     width: 14.w,
                                     decoration: BoxDecoration(
-                                      color: ERPTheme.GREY_COLOR,
+                                      color: AppTheme.GREY_COLOR,
                                       borderRadius: BorderRadius.circular(5),
                                       border: Border.all(
-                                        color: ERPTheme.BASE_COLOR,
+                                        color: AppTheme.BASE_COLOR,
                                         width: 2,
                                       ),
                                     ),
@@ -205,10 +205,10 @@ class _TableDetailState extends State<TableDetail> {
                                 height: 14.h,
                                 width: 80.w,
                                 decoration: BoxDecoration(
-                                  color: ERPTheme.GREY_COLOR,
+                                  color: AppTheme.GREY_COLOR,
                                   borderRadius: BorderRadius.circular(5),
                                   border: Border.all(
-                                    color: ERPTheme.BASE_COLOR,
+                                    color: AppTheme.BASE_COLOR,
                                     width: 2,
                                   ),
                                 ),

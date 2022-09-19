@@ -39,7 +39,7 @@ class _AddAmountDetaitState extends State<AddAmountDetait> {
           widget.title ?? 'ຈຳນວນ',
           style: TextStyle(
             fontSize: 14.sp,
-            color: ERPTheme.BASE_COLOR,
+            color: AppTheme.BASE_COLOR,
           ),
         ),
         SizedBox(
@@ -62,7 +62,7 @@ class _AddAmountDetaitState extends State<AddAmountDetait> {
                     Text(
                       count < 10 ? '0$count' : '$count',
                       style: TextStyle(
-                          color: ERPTheme.BASE_COLOR, fontSize: 14.sp),
+                          color: AppTheme.BASE_COLOR, fontSize: 14.sp),
                     ),
                     Container(
                       width: 20.w,
@@ -93,7 +93,7 @@ class _AddAmountDetaitState extends State<AddAmountDetait> {
       height: 30.h,
       width: 20.w,
       decoration: BoxDecoration(
-          border: Border.all(color: ERPTheme.BASE_COLOR),
+          border: Border.all(color: AppTheme.BASE_COLOR),
           shape: BoxShape.circle),
       child: Center(child: Text(title)),
     );

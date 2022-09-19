@@ -23,7 +23,7 @@ class _NavBarStatusState extends State<NavBarStatus> {
           child: Row(
             children: [
               CircleAvatar(
-                backgroundColor: ERPTheme.GREEN_COLOR,
+                backgroundColor: AppTheme.GREEN_COLOR,
                 radius: 15,
                 child: Image.asset(
                   ERPImages.tableStatus,
@@ -47,7 +47,7 @@ class _NavBarStatusState extends State<NavBarStatus> {
           child: Row(
             children: [
               CircleAvatar(
-                backgroundColor: ERPTheme.RED_COLOR,
+                backgroundColor: AppTheme.RED_COLOR,
                 radius: 15,
                 child: Image.asset(
                   ERPImages.tableStatus,
@@ -71,7 +71,7 @@ class _NavBarStatusState extends State<NavBarStatus> {
           child: Row(
             children: [
               CircleAvatar(
-                backgroundColor: ERPTheme.PINK_COLOR,
+                backgroundColor: AppTheme.PINK_COLOR,
                 radius: 15,
                 child: Image.asset(
                   ERPImages.tableStatus,

@@ -20,7 +20,7 @@ class _ERPDropdownStatusState extends State<ERPDropdownStatus> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: ERPTheme.GREY_COLOR,
+        color: AppTheme.GREY_COLOR,
         borderRadius: BorderRadius.circular(5),
       ),
       child: DropdownButton<String>(
@@ -29,7 +29,7 @@ class _ERPDropdownStatusState extends State<ERPDropdownStatus> {
             padding: const EdgeInsets.all(8.0),
             child: Image.asset(
               ERPImages.ic_dropdown,
-              color: ERPTheme.BLACK_COLOR,
+              color: AppTheme.BLACK_COLOR,
               height: 18,
               width: 9,
             ),

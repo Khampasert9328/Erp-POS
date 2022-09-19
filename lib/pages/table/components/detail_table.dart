@@ -33,7 +33,7 @@ class _DetailTableState extends State<DetailTable> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: ERPTheme.WHITE_COLOR,
+        backgroundColor: AppTheme.WHITE_COLOR,
         centerTitle: true,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -42,14 +42,14 @@ class _DetailTableState extends State<DetailTable> {
               widget.title,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: ERPTheme.BLACK_COLOR,
+                color: AppTheme.BLACK_COLOR,
               ),
             ),
             Text(
               widget.id,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: ERPTheme.BLACK_COLOR,
+                color: AppTheme.BLACK_COLOR,
               ),
             ),
           ],
@@ -85,7 +85,7 @@ class _DetailTableState extends State<DetailTable> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Switch(
-                    activeColor: ERPTheme.GREEN_COLOR,
+                    activeColor: AppTheme.GREEN_COLOR,
                     value: isWitch,
                     onChanged: (vale) {
                       if (isWitch == true) {
@@ -122,7 +122,7 @@ class _DetailTableState extends State<DetailTable> {
                                 borderRadius: const BorderRadius.only(
                                     topRight: Radius.circular(5),
                                     bottomRight: Radius.circular(5)),
-                                color: ERPTheme.GREY_COLOR,
+                                color: AppTheme.GREY_COLOR,
                               ),
                               child: Center(
                                 child: Row(
