@@ -81,7 +81,7 @@ class _OnboardBodyState extends State<OnboardBody> {
           margin: EdgeInsets.all(40),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppTheme.BASE_COLOR,
+              primary: AppTheme.BASE_COLOR,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),

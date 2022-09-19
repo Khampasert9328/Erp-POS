@@ -90,10 +90,10 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                   selecbutton = false;
                 });
 
-                CheckExpiredPackage()
-                    .getCheckExpiredPackage(context)
-                    .then((value) async {
-                  PrintBillKitchenProvider().getprint();
+                // CheckExpiredPackage()
+                //     .getCheckExpiredPackage(context)
+                //     .then((value) async {
+                //   PrintBillKitchenProvider().getprint();
 
                   SharedPreferences preferences =
                       await SharedPreferences.getInstance();
@@ -147,7 +147,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                   // await SunmiPrinter.lineWrap(3);
                   // await SunmiPrinter.submitTransactionPrint();
                   // await SunmiPrinter.exitTransactionPrint();
-                });
+                // });
                 showDialog(
                     context: context,
                     builder: (_) {
@@ -488,6 +488,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                   itemCount: snapshot.data!.length,
                                   itemBuilder: (_, index) {
                                     return Container(
+                                      
                                       child: GestureDetector(
                                           onTap: () async {
                                             setState(() {
@@ -511,35 +512,10 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                             // width: 30.w,
                                             child: Column(
                                               children: [
-                                                Expanded(
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            right: 20),
-                                                    child: Container(
-                                                      height: 15.h,
-                                                      width: 80.w,
-                                                      decoration: BoxDecoration(
-                                                          color: AppTheme
-                                                              .GREY_COLOR,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5)),
-                                                    ),
-                                                  ),
-                                                ),
+                                              
                                                 Row(
                                                   children: [
-                                                    Container(
-                                                      height: 50.h,
-                                                      width: 10.w,
-                                                      decoration: BoxDecoration(
-                                                          color: AppTheme
-                                                              .GREY_COLOR,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5)),
-                                                    ),
+                                                   
                                                     Stack(
                                                       alignment:
                                                           Alignment.topRight,
@@ -594,38 +570,13 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                                         ),
                                                       ],
                                                     ),
-                                                    Container(
-                                                      height: 50.h,
-                                                      width: 10.w,
-                                                      decoration: BoxDecoration(
-                                                          color: AppTheme
-                                                              .GREY_COLOR,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5)),
-                                                    ),
+                                                    
                                                     const SizedBox(
                                                       width: 10,
                                                     )
                                                   ],
                                                 ),
-                                                Expanded(
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            right: 20),
-                                                    child: Container(
-                                                      height: 15.h,
-                                                      width: 80.w,
-                                                      decoration: BoxDecoration(
-                                                          color: AppTheme
-                                                              .GREY_COLOR,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5)),
-                                                    ),
-                                                  ),
-                                                ),
+                                              
                                               ],
                                             ),
                                           )),
