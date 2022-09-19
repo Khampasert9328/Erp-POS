@@ -54,7 +54,7 @@ class paycash extends StatelessWidget {
                     color: AppTheme.GREY_COLOR,
                     borderRadius: BorderRadius.circular(10)),
                 child: const TextField(
-                  obscureText: true,
+                 keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -81,7 +81,7 @@ class paycash extends StatelessWidget {
                     color: AppTheme.GREY_COLOR,
                     borderRadius: BorderRadius.circular(10)),
                 child: const TextField(
-                  obscureText: true,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10))),

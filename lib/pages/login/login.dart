@@ -10,13 +10,7 @@ class Login extends StatelessWidget {
 
   final fromkey = GlobalKey<FormState>();
   final _scaffoldkey = GlobalKey<ScaffoldState>();
-  TextEditingController erpemail = TextEditingController();
-  TextEditingController erpusername = TextEditingController();
-  TextEditingController erppassword = TextEditingController();
-  TextEditingController erpsemail = TextEditingController();
-  TextEditingController erpsname = TextEditingController();
-  TextEditingController erpslastname = TextEditingController();
-  TextEditingController erpsnamecompany = TextEditingController();
+ 
 
   @override
   Widget build(BuildContext context) {
