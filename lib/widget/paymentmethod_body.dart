@@ -34,7 +34,7 @@ class _PaymentBodyState extends State<PaymentBody> {
               height: 81.h,
               width: double.infinity,
               decoration: BoxDecoration(
-                  color: ERPTheme.GREY_COLOR,
+                  color: AppTheme.GREY_COLOR,
                   borderRadius: BorderRadius.circular(10)),
               child: Row(
                 children: [
@@ -47,7 +47,7 @@ class _PaymentBodyState extends State<PaymentBody> {
                     "ຈ່າຍດ້ວຍສົດ",
                     style: TextStyle(
                         fontSize: 18.sp,
-                        color: ERPTheme.BASE_COLOR,
+                        color: AppTheme.BASE_COLOR,
                         fontWeight: FontWeight.bold),
                   )
                 ],
@@ -70,7 +70,7 @@ class _PaymentBodyState extends State<PaymentBody> {
               height: 81.h,
               width: double.infinity,
               decoration: BoxDecoration(
-                  color: ERPTheme.GREY_COLOR,
+                  color: AppTheme.GREY_COLOR,
                   borderRadius: BorderRadius.circular(10)),
               child: Row(
                 children: [
@@ -83,7 +83,7 @@ class _PaymentBodyState extends State<PaymentBody> {
                     "ຈ່າຍດ້ວຍ BCEL One",
                     style: TextStyle(
                         fontSize: 18.sp,
-                        color: ERPTheme.BASE_COLOR,
+                        color: AppTheme.BASE_COLOR,
                         fontWeight: FontWeight.bold),
                   )
                 ],
@@ -108,7 +108,7 @@ class _PaymentBodyState extends State<PaymentBody> {
               height: 81.h,
               width: double.infinity,
               decoration: BoxDecoration(
-                  color: ERPTheme.GREY_COLOR,
+                  color: AppTheme.GREY_COLOR,
                   borderRadius: BorderRadius.circular(10)),
               child: Row(
                 children: [
@@ -121,7 +121,7 @@ class _PaymentBodyState extends State<PaymentBody> {
                     "ຈ່າຍດ້ວຍ M-money",
                     style: TextStyle(
                         fontSize: 18.sp,
-                        color: ERPTheme.BASE_COLOR,
+                        color: AppTheme.BASE_COLOR,
                         fontWeight: FontWeight.bold),
                   )
                 ],

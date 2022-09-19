@@ -110,7 +110,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                       fontSize: SunmiFontSize.LG,
                     ),
                   );
-                  await SunmiPrinter.printText('ເວລາ ແລະ ວັນທີ $',
+                  await SunmiPrinter.printText('ເວລາ ແລະ ວັນທີ ',
                       style: SunmiStyle(
                           align: SunmiPrintAlign.CENTER,
                           bold: true,

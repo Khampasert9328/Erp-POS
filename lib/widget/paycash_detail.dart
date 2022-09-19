@@ -12,11 +12,11 @@ class paycash extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: ERPTheme.WHITE_COLOR,
+        backgroundColor: AppTheme.WHITE_COLOR,
         elevation: 0,
         title: Text(
           tablename,
-          style: TextStyle(color: ERPTheme.BASE_COLOR),
+          style: TextStyle(color: AppTheme.BASE_COLOR),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -25,7 +25,7 @@ class paycash extends StatelessWidget {
         child: Container(
           width: double.infinity,
           child: FloatingActionButton(
-            backgroundColor: ERPTheme.BASE_COLOR,
+            backgroundColor: AppTheme.BASE_COLOR,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -51,7 +51,7 @@ class paycash extends StatelessWidget {
                 width: double.infinity,
                 height: 60.h,
                 decoration: BoxDecoration(
-                    color: ERPTheme.GREY_COLOR,
+                    color: AppTheme.GREY_COLOR,
                     borderRadius: BorderRadius.circular(10)),
                 child: const TextField(
                   obscureText: true,
@@ -78,7 +78,7 @@ class paycash extends StatelessWidget {
                 width: double.infinity,
                 height: 60.h,
                 decoration: BoxDecoration(
-                    color: ERPTheme.GREY_COLOR,
+                    color: AppTheme.GREY_COLOR,
                     borderRadius: BorderRadius.circular(10)),
                 child: const TextField(
                   obscureText: true,

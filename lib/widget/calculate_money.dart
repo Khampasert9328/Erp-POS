@@ -22,11 +22,11 @@ class CalculateMoney extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: ERPTheme.WHITE_COLOR,
+        backgroundColor: AppTheme.WHITE_COLOR,
         elevation: 0,
         title: Text(
           tablename,
-          style: TextStyle(color: ERPTheme.BASE_COLOR),
+          style: TextStyle(color: AppTheme.BASE_COLOR),
         ),
       ),
       bottomNavigationBar: Container(
@@ -42,7 +42,7 @@ class CalculateMoney extends StatelessWidget {
                   height: 60.h,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: ERPTheme.GREY_COLOR,
+                    color: AppTheme.GREY_COLOR,
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Row(
@@ -55,7 +55,7 @@ class CalculateMoney extends StatelessWidget {
                               .length
                               .toString(),
                           style: TextStyle(
-                            color: ERPTheme.WHITE_COLOR,
+                            color: AppTheme.WHITE_COLOR,
                           ),
                         ),
                         child: Image.asset(
@@ -75,7 +75,7 @@ class CalculateMoney extends StatelessWidget {
                             "ລາຄາລວມ:",
                             style: TextStyle(
                               fontSize: 18.sp,
-                              color: ERPTheme.BASE_COLOR,
+                              color: AppTheme.BASE_COLOR,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -87,7 +87,7 @@ class CalculateMoney extends StatelessWidget {
                             "700000",
                             style: TextStyle(
                               fontSize: 18.sp,
-                              color: ERPTheme.BASE_COLOR,
+                              color: AppTheme.BASE_COLOR,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -106,7 +106,7 @@ class CalculateMoney extends StatelessWidget {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                            color: ERPTheme.BASE_COLOR,
+                            color: AppTheme.BASE_COLOR,
                           )),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -120,7 +120,7 @@ class CalculateMoney extends StatelessWidget {
                               "ພິມໃບບິນ",
                               style: TextStyle(
                                 fontSize: 18.sp,
-                                color: ERPTheme.BASE_COLOR,
+                                color: AppTheme.BASE_COLOR,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -133,9 +133,9 @@ class CalculateMoney extends StatelessWidget {
                       width: 150.w,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: ERPTheme.BASE_COLOR,
+                          color: AppTheme.BASE_COLOR,
                           border: Border.all(
-                            color: ERPTheme.BASE_COLOR,
+                            color: AppTheme.BASE_COLOR,
                           )),
                       child: Center(
                         child: TextButton(
@@ -153,7 +153,7 @@ class CalculateMoney extends StatelessWidget {
                             "ຄິດໄລ່ເງິນ",
                             style: TextStyle(
                               fontSize: 18.sp,
-                              color: ERPTheme.WHITE_COLOR,
+                              color: AppTheme.WHITE_COLOR,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
