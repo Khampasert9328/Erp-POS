@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:ui';
 
 import 'package:devla_sunmi/flutter_sunmi_printer.dart';
@@ -110,21 +112,44 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                       fontSize: SunmiFontSize.LG,
                     ),
                   );
-                  await SunmiPrinter.printText('ເວລາ ແລະ ວັນທີ $',
-                      style: SunmiStyle(
-                          align: SunmiPrintAlign.CENTER,
-                          bold: true,
-                          fontSize: SunmiFontSize.MD));
+
                   await SunmiPrinter.printText('ໂຕະ $getidtable',
                       style: SunmiStyle(
                           align: SunmiPrintAlign.CENTER,
                           bold: true,
                           fontSize: SunmiFontSize.MD));
-                          await SunmiPrinter.printText('ໂຊນ ຫຼື ພື້ນທີ່ $getzone',
+                  await SunmiPrinter.printText('ໂຊນ ຫຼື ພື້ນທີ່ $getzone',
                       style: SunmiStyle(
                           align: SunmiPrintAlign.CENTER,
                           bold: true,
                           fontSize: SunmiFontSize.MD));
+
+                  await SunmiPrinter.printRow(cols: [
+                    ColumnMaker(
+                      text: 'ລາຍການ',
+                      width: 6,
+                      align: SunmiPrintAlign.LEFT,
+                    ),
+                    ColumnMaker(
+                      text: 'ຂະໜາດ',
+                      width: 6,
+                      align: SunmiPrintAlign.CENTER,
+                    ),
+                    ColumnMaker(
+                      text: 'ຈຳນວນ',
+                      width: 6,
+                      align: SunmiPrintAlign.CENTER,
+                    ),
+                    ColumnMaker(
+                      text: 'ລາຄາ',
+                      width: 6,
+                      align: SunmiPrintAlign.RIGHT,
+                    ),
+                  ]);
+
+                  await SunmiPrinter.lineWrap(3);
+                  await SunmiPrinter.submitTransactionPrint();
+                  await SunmiPrinter.exitTransactionPrint();
                 });
                 showDialog(
                     context: context,

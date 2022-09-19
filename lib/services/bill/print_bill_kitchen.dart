@@ -1,4 +1,5 @@
-import 'package:sunmi_printer_plus/sunmi_printer_plus.dart';
+import 'package:devla_sunmi/flutter_sunmi_printer.dart';
+
 
 
 
