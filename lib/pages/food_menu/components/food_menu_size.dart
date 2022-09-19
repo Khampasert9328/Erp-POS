@@ -16,7 +16,9 @@ class FoodMenuSize extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<GetFoodMenuProvider>(builder: (context, model, _) {
       return GestureDetector(
-        onTap: () {},
+        onTap: () {
+          
+        },
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
           decoration: BoxDecoration(

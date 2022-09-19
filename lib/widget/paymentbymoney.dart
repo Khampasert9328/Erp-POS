@@ -1,8 +1,10 @@
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class PaymentMmoney extends StatefulWidget {
   final tablename;
@@ -11,10 +13,8 @@ class PaymentMmoney extends StatefulWidget {
   @override
   State<PaymentMmoney> createState() => _PaymentMmoneyState();
 }
-
 DateTime time = DateTime.now();
 final timenow = DateFormat('HH:mm').format(time);
-
 class _PaymentMmoneyState extends State<PaymentMmoney> {
   @override
   Widget build(BuildContext context) {
@@ -106,7 +106,7 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
-                      "70,000 ກີບ",
+                      "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ",
                       style: TextStyle(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.bold,

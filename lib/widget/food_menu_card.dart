@@ -6,6 +6,7 @@ import 'package:erp_pos/pages/food_menu_detail/components/food_menu_detail_body.
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
+import 'package:erp_pos/widget/add_amount.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -101,7 +102,7 @@ class FoodMenuCard extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         )
                                       ])),
-                                  // AddAmount()
+                                  AddAmount()
                                 ],
                               ),
                             ),

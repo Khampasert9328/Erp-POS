@@ -499,6 +499,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                             snapshot.data![index].name!);
                                       },
                                       child: Container(
+                                        height: 50.h,
                                         color: AppTheme.GREY_COLOR,
                                         child: Container(
                                           padding: const EdgeInsets.all(16),
