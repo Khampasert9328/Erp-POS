@@ -8,6 +8,7 @@ import 'package:erp_pos/model/connect/connect_token_models.dart';
 import 'package:erp_pos/widget/style.dart';
 
 import 'package:flutter/cupertino.dart';
+
 Future<ConnectTokenModels?> connectToken(
     String email, String password, BuildContext context) async {
   try {
@@ -18,7 +19,7 @@ Future<ConnectTokenModels?> connectToken(
       "grantType": ContstantData.grantType,
       "scope": ContstantData.scope,
       "username": email,
-      "password": password + '@8Erp',
+      "password": '$password@8Erp',
       "redirectUri": ContstantData.redirectUri
     });
 
@@ -32,8 +33,9 @@ Future<ConnectTokenModels?> connectToken(
     );
     //print('body: ${respones.body}');
     if (respones.statusCode == 200) {
-     
       return connectTokenModelsFromJson(respones.body);
-    } else {}
+    } else {
+      Navigator.pop(context);
+    }
   } catch (e) {}
 }

@@ -16,9 +16,9 @@ void addOnDialog(BuildContext context){
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('ເພີ່ມຕື່ມ', style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w700, color: ERPTheme.BASE_COLOR),),
+              Text('ເພີ່ມຕື່ມ', style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w700, color: AppTheme.BASE_COLOR),),
               SizedBox(height: 7.h,),
-              Text('ຊື່',style: TextStyle(fontSize: 18.sp,color: ERPTheme.BASE_COLOR)),
+              Text('ຊື່',style: TextStyle(fontSize: 18.sp,color: AppTheme.BASE_COLOR)),
               SizedBox(height: 5.h,),
               Container(
                 decoration: BoxDecoration(
@@ -27,7 +27,7 @@ void addOnDialog(BuildContext context){
                 child: ERPTextfield(controller: name, hintText: ''),
               ),
               SizedBox(height: 20.h,),
-              Text('ລາຄາ',style: TextStyle(fontSize: 18.sp,color: ERPTheme.BASE_COLOR)),
+              Text('ລາຄາ',style: TextStyle(fontSize: 18.sp,color: AppTheme.BASE_COLOR)),
               SizedBox(height: 5.h,),
               Container(
                 decoration: BoxDecoration(
@@ -44,7 +44,7 @@ void addOnDialog(BuildContext context){
                   SizedBox(
                     width: 20.w,
                   ),
-                  buildButton('ເພີ່ມ', ERPTheme.BASE_COLOR, Color(0xFFFFFFFF), (){}),
+                  buildButton('ເພີ່ມ', AppTheme.BASE_COLOR, Color(0xFFFFFFFF), (){}),
                 ],
               ),
               SizedBox(height: 50.h,)

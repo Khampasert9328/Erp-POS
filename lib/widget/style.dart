@@ -291,7 +291,7 @@ class Mystyle {
                     width: double.infinity,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: ERPTheme.BASE_COLOR,
+                          primary: AppTheme.BASE_COLOR,
                         ),
                         onPressed: () {
                           Navigator.pop(context);
@@ -303,7 +303,7 @@ class Mystyle {
                           child: Text(
                             'ປິດ',
                             style: TextStyle(
-                              color: ERPTheme.WHITE_COLOR,
+                              color: AppTheme.WHITE_COLOR,
                               fontSize: isLandscape == false
                                   ? screenWidth < 600
                                       ? 14.sp

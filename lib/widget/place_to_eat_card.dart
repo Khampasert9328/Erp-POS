@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:ui';
 
 import 'package:devla_sunmi/flutter_sunmi_printer.dart';
@@ -65,9 +63,9 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                 padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10.h),
                 decoration: BoxDecoration(
                     color: selecbutton == true
-                        ? ERPTheme.BASE_COLOR
-                        : ERPTheme.WHITE_COLOR,
-                    border: Border.all(color: ERPTheme.BASE_COLOR),
+                        ? AppTheme.BASE_COLOR
+                        : AppTheme.WHITE_COLOR,
+                    border: Border.all(color: AppTheme.BASE_COLOR),
                     borderRadius: BorderRadius.circular(5)),
                 child: Row(
                   children: [
@@ -77,8 +75,8 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                           fontSize: 16.sp,
                           fontWeight: FontWeight.bold,
                           color: selecbutton == true
-                              ? ERPTheme.WHITE_COLOR
-                              : ERPTheme.BASE_COLOR),
+                              ? AppTheme.WHITE_COLOR
+                              : AppTheme.BASE_COLOR),
                     )
                   ],
                 ),
@@ -103,53 +101,52 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                   SharedPreferences pri = await SharedPreferences.getInstance();
                   String? billNo = pri.getString(CountPre().billNo);
 
-                  await SunmiPrinter.startTransactionPrint();
-                  await SunmiPrinter.printText(
-                    'ບິນຫ້ອງຄົວ',
-                    style: SunmiStyle(
-                      align: SunmiPrintAlign.CENTER,
-                      bold: true,
-                      fontSize: SunmiFontSize.LG,
-                    ),
-                  );
+                  // await SunmiPrinter.startTransactionPrint();
+                  // await SunmiPrinter.printText(
+                  //   'ບິນຫ້ອງຄົວ',
+                  //   style: SunmiStyle(
+                  //     align: SunmiPrintAlign.CENTER,
+                  //     bold: true,
+                  //     fontSize: SunmiFontSize.LG,
+                  //   ),
+                  // );
+                  // await SunmiPrinter.printText('ໂຕະ $getidtable',
+                  //     style: SunmiStyle(
+                  //         align: SunmiPrintAlign.CENTER,
+                  //         bold: true,
+                  //         fontSize: SunmiFontSize.MD));
+                  // await SunmiPrinter.printText('ໂຊນ ຫຼື ພື້ນທີ່ $getzone',
+                  //     style: SunmiStyle(
+                  //         align: SunmiPrintAlign.CENTER,
+                  //         bold: true,
+                  //         fontSize: SunmiFontSize.MD));
 
-                  await SunmiPrinter.printText('ໂຕະ $getidtable',
-                      style: SunmiStyle(
-                          align: SunmiPrintAlign.CENTER,
-                          bold: true,
-                          fontSize: SunmiFontSize.MD));
-                  await SunmiPrinter.printText('ໂຊນ ຫຼື ພື້ນທີ່ $getzone',
-                      style: SunmiStyle(
-                          align: SunmiPrintAlign.CENTER,
-                          bold: true,
-                          fontSize: SunmiFontSize.MD));
+                  // await SunmiPrinter.printRow(cols: [
+                  //   ColumnMaker(
+                  //     text: 'ລາຍການ',
+                  //     width: 6,
+                  //     align: SunmiPrintAlign.LEFT,
+                  //   ),
+                  //   ColumnMaker(
+                  //     text: 'ຂະໜາດ',
+                  //     width: 6,
+                  //     align: SunmiPrintAlign.CENTER,
+                  //   ),
+                  //   ColumnMaker(
+                  //     text: 'ຈຳນວນ',
+                  //     width: 6,
+                  //     align: SunmiPrintAlign.CENTER,
+                  //   ),
+                  //   ColumnMaker(
+                  //     text: 'ລາຄາ',
+                  //     width: 6,
+                  //     align: SunmiPrintAlign.RIGHT,
+                  //   ),
+                  // ]);
 
-                  await SunmiPrinter.printRow(cols: [
-                    ColumnMaker(
-                      text: 'ລາຍການ',
-                      width: 6,
-                      align: SunmiPrintAlign.LEFT,
-                    ),
-                    ColumnMaker(
-                      text: 'ຂະໜາດ',
-                      width: 6,
-                      align: SunmiPrintAlign.CENTER,
-                    ),
-                    ColumnMaker(
-                      text: 'ຈຳນວນ',
-                      width: 6,
-                      align: SunmiPrintAlign.CENTER,
-                    ),
-                    ColumnMaker(
-                      text: 'ລາຄາ',
-                      width: 6,
-                      align: SunmiPrintAlign.RIGHT,
-                    ),
-                  ]);
-
-                  await SunmiPrinter.lineWrap(3);
-                  await SunmiPrinter.submitTransactionPrint();
-                  await SunmiPrinter.exitTransactionPrint();
+                  // await SunmiPrinter.lineWrap(3);
+                  // await SunmiPrinter.submitTransactionPrint();
+                  // await SunmiPrinter.exitTransactionPrint();
                 });
                 showDialog(
                     context: context,
@@ -178,16 +175,22 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                         ),
                       );
                     });
-
-//                     for (var data in context.read<GetFoodMenuProvider>().getFoodMenuModel) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => CalculateMoney(
+                      tablename: getidtable,
+                    ),
+                  ),
+                );
               },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10.h),
                 decoration: BoxDecoration(
                   color: selecbutton == false
-                      ? ERPTheme.BASE_COLOR
-                      : ERPTheme.WHITE_COLOR,
-                  border: Border.all(color: ERPTheme.BASE_COLOR),
+                      ? AppTheme.BASE_COLOR
+                      : AppTheme.WHITE_COLOR,
+                  border: Border.all(color: AppTheme.BASE_COLOR),
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Row(
@@ -198,8 +201,8 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
                         color: selecbutton == false
-                            ? ERPTheme.WHITE_COLOR
-                            : ERPTheme.BASE_COLOR,
+                            ? AppTheme.WHITE_COLOR
+                            : AppTheme.BASE_COLOR,
                       ),
                     ),
                   ],
@@ -229,9 +232,9 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                           EdgeInsets.symmetric(horizontal: 45.w, vertical: 5.h),
                       decoration: BoxDecoration(
                           color: selectindex == true
-                              ? ERPTheme.BASE_COLOR
-                              : ERPTheme.WHITE_COLOR,
-                          border: Border.all(color: ERPTheme.BASE_COLOR),
+                              ? AppTheme.BASE_COLOR
+                              : AppTheme.WHITE_COLOR,
+                          border: Border.all(color: AppTheme.BASE_COLOR),
                           borderRadius: BorderRadius.circular(5)),
                       child: Row(
                         children: [
@@ -241,8 +244,8 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.bold,
                                 color: selectindex == true
-                                    ? ERPTheme.WHITE_COLOR
-                                    : ERPTheme.BASE_COLOR),
+                                    ? AppTheme.WHITE_COLOR
+                                    : AppTheme.BASE_COLOR),
                           )
                         ],
                       ),
@@ -261,9 +264,9 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                           EdgeInsets.symmetric(horizontal: 45.w, vertical: 5.h),
                       decoration: BoxDecoration(
                           color: selectindex == false
-                              ? ERPTheme.BASE_COLOR
-                              : ERPTheme.WHITE_COLOR,
-                          border: Border.all(color: ERPTheme.BASE_COLOR),
+                              ? AppTheme.BASE_COLOR
+                              : AppTheme.WHITE_COLOR,
+                          border: Border.all(color: AppTheme.BASE_COLOR),
                           borderRadius: BorderRadius.circular(5)),
                       child: Row(
                         children: [
@@ -273,8 +276,8 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.bold,
                                 color: selectindex == false
-                                    ? ERPTheme.WHITE_COLOR
-                                    : ERPTheme.BASE_COLOR),
+                                    ? AppTheme.WHITE_COLOR
+                                    : AppTheme.BASE_COLOR),
                           ),
                         ],
                       ),
@@ -299,7 +302,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                 .toString(),
                         style: TextStyle(
                           fontSize: 16.sp,
-                          color: ERPTheme.BASE_COLOR,
+                          color: AppTheme.BASE_COLOR,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -310,8 +313,8 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                       Expanded(
                         child: Container(
                           decoration: BoxDecoration(
-                            color: ERPTheme.GREY_COLOR,
-                            border: Border.all(color: ERPTheme.WHITE_COLOR),
+                            color: AppTheme.GREY_COLOR,
+                            border: Border.all(color: AppTheme.WHITE_COLOR),
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: Padding(
@@ -401,16 +404,16 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                                             ),
                                                             decoration: BoxDecoration(
                                                                 color: isselect == index
-                                                                    ? ERPTheme
+                                                                    ? AppTheme
                                                                         .BASE_COLOR
-                                                                    : ERPTheme
+                                                                    : AppTheme
                                                                         .WHITE_COLOR,
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
                                                                             5),
                                                                 border: Border.all(
-                                                                    color: ERPTheme
+                                                                    color: AppTheme
                                                                         .BASE_COLOR)),
                                                             child: Center(
                                                               child: Text(
@@ -426,9 +429,9 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                                                   fontSize:
                                                                       18.sp,
                                                                   color: isselect == index
-                                                                      ? ERPTheme
+                                                                      ? AppTheme
                                                                           .WHITE_COLOR
-                                                                      : ERPTheme
+                                                                      : AppTheme
                                                                           .GREY_COLOR,
                                                                 ),
                                                               ),
@@ -517,7 +520,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                                       height: 15.h,
                                                       width: 80.w,
                                                       decoration: BoxDecoration(
-                                                          color: ERPTheme
+                                                          color: AppTheme
                                                               .GREY_COLOR,
                                                           borderRadius:
                                                               BorderRadius
@@ -531,7 +534,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                                       height: 50.h,
                                                       width: 10.w,
                                                       decoration: BoxDecoration(
-                                                          color: ERPTheme
+                                                          color: AppTheme
                                                               .GREY_COLOR,
                                                           borderRadius:
                                                               BorderRadius
@@ -542,7 +545,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                                           Alignment.topRight,
                                                       children: [
                                                         Card(
-                                                          color: ERPTheme
+                                                          color: AppTheme
                                                               .CARD_COLOR,
                                                           child: ClipPath(
                                                             // ignore: sort_child_properties_last
@@ -555,7 +558,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                                                 border: Border(
                                                                   left:
                                                                       BorderSide(
-                                                                    color: ERPTheme
+                                                                    color: AppTheme
                                                                         .GREEN_COLOR,
                                                                     width: 15,
                                                                   ),
@@ -595,7 +598,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                                       height: 50.h,
                                                       width: 10.w,
                                                       decoration: BoxDecoration(
-                                                          color: ERPTheme
+                                                          color: AppTheme
                                                               .GREY_COLOR,
                                                           borderRadius:
                                                               BorderRadius
@@ -615,7 +618,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                                       height: 15.h,
                                                       width: 80.w,
                                                       decoration: BoxDecoration(
-                                                          color: ERPTheme
+                                                          color: AppTheme
                                                               .GREY_COLOR,
                                                           borderRadius:
                                                               BorderRadius
@@ -635,7 +638,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                         }
                         return Center(
                           child: CircularProgressIndicator(
-                            color: ERPTheme.BASE_COLOR,
+                            color: AppTheme.BASE_COLOR,
                           ),
                         );
                       },
@@ -651,7 +654,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                   child: Text(
                     "ອາຫານໄດ້ຖືກສັ່ງກັບບ້ານ",
                     style: TextStyle(
-                      color: ERPTheme.GREY_COLOR,
+                      color: AppTheme.GREY_COLOR,
                       fontSize: 20.sp,
                       fontWeight: FontWeight.bold,
                     ),

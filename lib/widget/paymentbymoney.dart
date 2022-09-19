@@ -21,11 +21,11 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: ERPTheme.WHITE_COLOR,
+        backgroundColor: AppTheme.WHITE_COLOR,
         elevation: 0,
         title: Text(
           widget.tablename,
-          style: TextStyle(color: ERPTheme.BASE_COLOR),
+          style: TextStyle(color: AppTheme.BASE_COLOR),
         ),
       ),
       body: Padding(
@@ -48,7 +48,7 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
                 "ສະແກນເພື່ອຊຳລະ",
                 style: TextStyle(
                   fontSize: 20.sp,
-                  color: ERPTheme.BASE_COLOR,
+                  color: AppTheme.BASE_COLOR,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -65,7 +65,7 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
                         height: 63.h,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: ERPTheme.RED_COLOR,
+                          color: AppTheme.RED_COLOR,
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -80,7 +80,7 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
                                       style: TextStyle(
                                         fontSize: 15.sp,
                                         fontWeight: FontWeight.bold,
-                                        color: ERPTheme.WHITE_COLOR,
+                                        color: AppTheme.WHITE_COLOR,
                                       ),
                                     ),
                                     SizedBox(
@@ -91,7 +91,7 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
                                       style: TextStyle(
                                         fontSize: 15.sp,
                                         fontWeight: FontWeight.bold,
-                                        color: ERPTheme.WHITE_COLOR,
+                                        color: AppTheme.WHITE_COLOR,
                                       ),
                                     )
                                   ],
@@ -110,7 +110,7 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
                       style: TextStyle(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.bold,
-                          color: ERPTheme.RED_COLOR),
+                          color: AppTheme.RED_COLOR),
                     ),
                   ),
                   //ສຳລັບ generate code
@@ -119,7 +119,7 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
                     width: 228.w,
                     decoration: BoxDecoration(
                         border: Border.all(
-                      color: ERPTheme.BASE_COLOR,
+                      color: AppTheme.BASE_COLOR,
                     )),
                     child: Image.asset(
                       ERPImages.mmoney,

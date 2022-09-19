@@ -81,7 +81,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                           width: 50.w,
                           height: 7.h,
                           decoration: BoxDecoration(
-                            color: ERPTheme.GREY_COLOR,
+                            color: AppTheme.GREY_COLOR,
                             borderRadius: BorderRadius.circular(10)
                           ),
                         ),
@@ -105,7 +105,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                   'ລາຍການອາຫານ',
                                   style: TextStyle(
                                       fontSize: 16.sp,
-                                      color: ERPTheme.BASE_COLOR),
+                                      color: AppTheme.BASE_COLOR),
                                 ),
                                 SizedBox(
                                   height: 5.h,
@@ -118,7 +118,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                       TextSpan(
                                         style: TextStyle(
                                             fontSize: 16.sp,
-                                            color: ERPTheme.BASE_COLOR),
+                                            color: AppTheme.BASE_COLOR),
                                         text: 'ລວມລາຄາ: ',
                                         children: <InlineSpan>[
                                           TextSpan(
@@ -126,7 +126,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                                 '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ',
                                             style: TextStyle(
                                                 fontSize: 16.sp,
-                                                color: ERPTheme.BASE_COLOR,
+                                                color: AppTheme.BASE_COLOR,
                                                 fontWeight: FontWeight.bold),
                                           )
                                         ],
@@ -145,7 +145,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                       .length
                                       .toString(),
                                   style: TextStyle(
-                                    color: ERPTheme.WHITE_COLOR,
+                                    color: AppTheme.WHITE_COLOR,
                                   ),
                                 ),
                                 child: Icon(
@@ -207,7 +207,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                                       Icons.image_outlined,
                                                       size: 70,
                                                       color:
-                                                          ERPTheme.GREY_COLOR),
+                                                          AppTheme.GREY_COLOR),
                                               imageUrl: value
                                                   .getFoodMenuModel[index]
                                                   .data
@@ -218,7 +218,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                                   Center(
                                                 child:
                                                     CircularProgressIndicator(
-                                                  color: ERPTheme.BASE_COLOR,
+                                                  color: AppTheme.BASE_COLOR,
                                                 ),
                                               ),
                                             ),
@@ -241,7 +241,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                                 style: TextStyle(
                                                     fontSize: 16.sp,
                                                     fontWeight: FontWeight.w700,
-                                                    color: ERPTheme.BASE_COLOR),
+                                                    color: AppTheme.BASE_COLOR),
                                               ),
                                               IconButton(
                                                   onPressed: () async {
@@ -270,7 +270,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                                 height: 22.h,
                                                 width: 22.w,
                                                 decoration: BoxDecoration(
-                                                    color: ERPTheme.BASE_COLOR,
+                                                    color: AppTheme.BASE_COLOR,
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             2)),
@@ -278,7 +278,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                                   child: Text(
                                                     "S",
                                                     style: TextStyle(
-                                                        color: ERPTheme
+                                                        color: AppTheme
                                                             .WHITE_COLOR,
                                                         fontWeight:
                                                             FontWeight.bold),
@@ -290,7 +290,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                                   style: TextStyle(
                                                       fontSize: 14.sp,
                                                       color:
-                                                          ERPTheme.BASE_COLOR),
+                                                          AppTheme.BASE_COLOR),
                                                   children: <InlineSpan>[
                                                     TextSpan(
                                                       text:
@@ -340,7 +340,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                         'ລວມລາຄາ: ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ',
                         style: TextStyle(
                           fontSize: 15.sp,
-                          color: ERPTheme.BASE_COLOR,
+                          color: AppTheme.BASE_COLOR,
                         ),
                       )
                     ],
@@ -361,7 +361,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(horizontal: 30.w),
-                        primary: ERPTheme.BASE_COLOR),
+                        primary: AppTheme.BASE_COLOR),
                     onPressed: widget.onNext,
                     child: Text(
                       'ຕໍ່ໄປ',

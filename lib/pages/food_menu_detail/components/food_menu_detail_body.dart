@@ -35,7 +35,7 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
                 errorWidget: (context, url, error) => Icon(
                   Icons.image_outlined,
                   size: 70,
-                  color: ERPTheme.GREY_COLOR,
+                  color: AppTheme.GREY_COLOR,
                 ),
                 fit: BoxFit.cover,
                 width: double.infinity,
@@ -43,7 +43,7 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
                 imageUrl: widget.data!.thumbnails!.first.uri!,
                 placeholder: (context, url) => Center(
                   child: CircularProgressIndicator(
-                    color: ERPTheme.BASE_COLOR,
+                    color: AppTheme.BASE_COLOR,
                   ),
                 ),
               ),
@@ -114,7 +114,7 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
                 Text(
                   widget.data!.name!,
                   style: TextStyle(
-                      color: ERPTheme.BASE_COLOR,
+                      color: AppTheme.BASE_COLOR,
                       fontSize: 24.sp,
                       fontWeight: FontWeight.w600),
                 ),
@@ -123,7 +123,7 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
                 ),
                 Text(
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Non adipiscing diam volutpat cursus. A gravida at urna, sollicitudin aliquam arcu. ',
-                  style: TextStyle(color: ERPTheme.BASE_COLOR, fontSize: 14.sp),
+                  style: TextStyle(color: AppTheme.BASE_COLOR, fontSize: 14.sp),
                 ),
                 SizedBox(
                   height: 7.h,
@@ -161,7 +161,7 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
                 ),
                 Text(
                   'ລາຍລະອຽດອື່ນໆ',
-                  style: TextStyle(fontSize: 15.sp, color: ERPTheme.BASE_COLOR),
+                  style: TextStyle(fontSize: 15.sp, color: AppTheme.BASE_COLOR),
                 ),
                 SizedBox(
                   height: 6.h,
@@ -196,7 +196,7 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
             ),
             Text(
               '15,000 Kip',
-              style: TextStyle(fontSize: 15.sp, color: ERPTheme.BASE_COLOR),
+              style: TextStyle(fontSize: 15.sp, color: AppTheme.BASE_COLOR),
             )
           ],
         ),
@@ -215,10 +215,10 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
         padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(3.r),
-            color: erpFoodSize == size ? ERPTheme.BASE_COLOR : Colors.white,
+            color: erpFoodSize == size ? AppTheme.BASE_COLOR : Colors.white,
             border: Border.all(
                 color: erpFoodSize == size
-                    ? ERPTheme.BASE_COLOR
+                    ? AppTheme.BASE_COLOR
                     : Color(0xFFD9D9D9))),
         child: Text(
           title,

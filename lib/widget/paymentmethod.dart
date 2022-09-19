@@ -10,13 +10,13 @@ class PayMentMethod extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: ERPTheme.WHITE_COLOR,
+        backgroundColor: AppTheme.WHITE_COLOR,
         elevation: 0,
         centerTitle: true,
         title: Text(
           tablename,
           style: TextStyle(
-            color: ERPTheme.BASE_COLOR,
+            color: AppTheme.BASE_COLOR,
             fontWeight: FontWeight.bold,
           ),
         ),
