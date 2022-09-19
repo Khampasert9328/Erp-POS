@@ -15,8 +15,8 @@ class _SearchTableState extends State<SearchTable> {
     return Expanded(
       child: Container(
         decoration: BoxDecoration(
-          color: ERPTheme.GREY_COLOR,
-          border: Border.all(color: ERPTheme.WHITE_COLOR),
+          color: AppTheme.GREY_COLOR,
+          border: Border.all(color: AppTheme.WHITE_COLOR),
           borderRadius: BorderRadius.circular(5),
         ),
         child: Padding(

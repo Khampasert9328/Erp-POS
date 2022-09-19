@@ -10,7 +10,7 @@ class GetTableProvider extends ChangeNotifier {
   Future<List<GetTable>> gettablebyid(BuildContext context, String? id) async {
     
     GetTableModels? models = await getTable(context, id);
-   print("models:$models");
+    print("models:$models");
    
     if (models != null) {
       _tablelist = models.table!;

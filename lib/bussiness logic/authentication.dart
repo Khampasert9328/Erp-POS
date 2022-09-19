@@ -38,7 +38,7 @@ class AuthenticationProvider extends ChangeNotifier {
                 width: 100.w,
                 child: Center(
                   child: CircularProgressIndicator(
-                    color: ERPTheme.BASE_COLOR,
+                    color: AppTheme.BASE_COLOR,
                   ),
                 ),
               ),
@@ -48,21 +48,22 @@ class AuthenticationProvider extends ChangeNotifier {
           await connectvalidateuser(email, context, name, lastname);
       // ວິທີການເຊັກເງື່ອນໄຂກວດ User
       if (connectValidateModels != null) {
-        
         //ຖ້າວ່າ connectValidateModels ບໍ່ເທົ່າກັບຄ່າວ່າງ ໃຫ້ມັນ Access ຂໍ Token
         ConnectTokenModels? connectTokenModels =
             await connectToken(email, password, context);
         if (connectTokenModels != null) {
           //Mystyle().showAlertloadingsuccess(context, "ແຈ້ງເຕືອນ", "ກຳລັງເຂົ້າສູ່ລະບົບ");
           SharedPreferences preferences = await SharedPreferences.getInstance();
-          preferences.setString("content", connectTokenModels.content!.accessToken!);
+          preferences.setString(
+              "content", connectTokenModels.content!.accessToken!);
           await Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (_) => HomePage()), (route) => false);
         }
       }
     } catch (e) {
       Navigator.pop(context);
-      Mystyle().dialogError(context, "ເເຈ້ງເຕືອນ", "ກາລຸນາກວດສອບອິນເຕີເນັດຂອງທ່ານ");
+      Mystyle()
+          .dialogError(context, "ເເຈ້ງເຕືອນ", "ກາລຸນາກວດສອບອິນເຕີເນັດຂອງທ່ານ");
     }
   }
 

@@ -8,7 +8,4 @@ class ContstantData {
   static const String scope =
       'ERP_STACK_API_SCOPE ERPAdminClient_api profile openid roles offline_access';
   static const String secret = 'c30b6ff6-7566-92fa-0440-061154e783c8';
-
-  ///////////////////////////////
-  
 }

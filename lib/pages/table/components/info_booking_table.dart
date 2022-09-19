@@ -22,12 +22,12 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: ERPTheme.WHITE_COLOR,
+        backgroundColor: AppTheme.WHITE_COLOR,
         centerTitle: true,
         title: Text(
           "ປ້ອນຂໍ້ມູນການຈອງ",
           style: TextStyle(
-              color: ERPTheme.BLACK_COLOR,
+              color: AppTheme.BLACK_COLOR,
               fontWeight: FontWeight.bold,
               fontSize: 18.sp),
         ),
@@ -167,7 +167,7 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                       width: double.infinity,
                       padding: EdgeInsets.symmetric(vertical: 15.h),
                       decoration: BoxDecoration(
-                        color: ERPTheme.BASE_COLOR,
+                        color: AppTheme.BASE_COLOR,
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Center(
@@ -175,7 +175,7 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                           "ຈອງໂຕະ",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: ERPTheme.WHITE_COLOR,
+                              color: AppTheme.WHITE_COLOR,
                               fontSize: 16.sp),
                         ),
                       ),

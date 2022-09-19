@@ -95,15 +95,15 @@ class _ListViewTableState extends State<ListViewTable> {
                                                       decoration: BoxDecoration(
                                                           color: selectIndex ==
                                                                   index
-                                                              ? ERPTheme
+                                                              ? AppTheme
                                                                   .BASE_COLOR
-                                                              : ERPTheme
+                                                              : AppTheme
                                                                   .WHITE_COLOR,
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(5),
                                                           border: Border.all(
-                                                              color: ERPTheme
+                                                              color: AppTheme
                                                                   .BASE_COLOR)),
                                                       child: Center(
                                                         child: Text(
@@ -114,9 +114,9 @@ class _ListViewTableState extends State<ListViewTable> {
                                                                 FontWeight.bold,
                                                             fontSize: 18.sp,
                                                             color: selectIndex == index
-                                                                ? ERPTheme
+                                                                ? AppTheme
                                                                     .WHITE_COLOR
-                                                                : ERPTheme
+                                                                : AppTheme
                                                                     .GREY_COLOR,
                                                           ),
                                                         ),
@@ -192,7 +192,7 @@ class _ListViewTableState extends State<ListViewTable> {
                                               height: 15.h,
                                               width: 80.w,
                                               decoration: BoxDecoration(
-                                                  color: ERPTheme.GREY_COLOR,
+                                                  color: AppTheme.GREY_COLOR,
                                                   borderRadius:
                                                       BorderRadius.circular(5)),
                                             ),
@@ -204,7 +204,7 @@ class _ListViewTableState extends State<ListViewTable> {
                                               height: 50.h,
                                               width: 10.w,
                                               decoration: BoxDecoration(
-                                                  color: ERPTheme.GREY_COLOR,
+                                                  color: AppTheme.GREY_COLOR,
                                                   borderRadius:
                                                       BorderRadius.circular(5)),
                                             ),
@@ -212,7 +212,7 @@ class _ListViewTableState extends State<ListViewTable> {
                                               alignment: Alignment.topRight,
                                               children: [
                                                 Card(
-                                                  color: ERPTheme.CARD_COLOR,
+                                                  color: AppTheme.CARD_COLOR,
                                                   child: ClipPath(
                                                     // ignore: sort_child_properties_last
                                                     child: Container(
@@ -222,7 +222,7 @@ class _ListViewTableState extends State<ListViewTable> {
                                                       decoration: BoxDecoration(
                                                         border: Border(
                                                           left: BorderSide(
-                                                            color: ERPTheme
+                                                            color: AppTheme
                                                                 .GREEN_COLOR,
                                                             width: 15,
                                                           ),
@@ -258,7 +258,7 @@ class _ListViewTableState extends State<ListViewTable> {
                                               height: 50.h,
                                               width: 10.w,
                                               decoration: BoxDecoration(
-                                                color: ERPTheme.GREY_COLOR,
+                                                color: AppTheme.GREY_COLOR,
                                                 borderRadius:
                                                     BorderRadius.circular(5),
                                               ),
@@ -276,7 +276,7 @@ class _ListViewTableState extends State<ListViewTable> {
                                               height: 15.h,
                                               width: 80.w,
                                               decoration: BoxDecoration(
-                                                  color: ERPTheme.GREY_COLOR,
+                                                  color: AppTheme.GREY_COLOR,
                                                   borderRadius:
                                                       BorderRadius.circular(5)),
                                             ),
@@ -293,7 +293,7 @@ class _ListViewTableState extends State<ListViewTable> {
                       }
                       return Center(
                         child: CircularProgressIndicator(
-                          color: ERPTheme.BASE_COLOR,
+                          color: AppTheme.BASE_COLOR,
                         ),
                       );
                     },
