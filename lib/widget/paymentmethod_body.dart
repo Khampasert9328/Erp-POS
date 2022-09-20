@@ -18,7 +18,7 @@ class _PaymentBodyState extends State<PaymentBody> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(15.0),
       child: Column(
         children: [
           GestureDetector(
@@ -34,7 +34,7 @@ class _PaymentBodyState extends State<PaymentBody> {
               height: 81.h,
               width: double.infinity,
               decoration: BoxDecoration(
-                  color: AppTheme.GREY_COLOR,
+                 color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(10)),
               child: Row(
                 children: [
@@ -70,7 +70,7 @@ class _PaymentBodyState extends State<PaymentBody> {
               height: 81.h,
               width: double.infinity,
               decoration: BoxDecoration(
-                  color: AppTheme.GREY_COLOR,
+                 color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(10)),
               child: Row(
                 children: [
@@ -108,7 +108,7 @@ class _PaymentBodyState extends State<PaymentBody> {
               height: 81.h,
               width: double.infinity,
               decoration: BoxDecoration(
-                  color: AppTheme.GREY_COLOR,
+                  color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(10)),
               child: Row(
                 children: [

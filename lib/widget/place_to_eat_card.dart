@@ -1,3 +1,4 @@
+// ignore_for_file: unused_import, must_be_immutable, use_key_in_widget_constructors
 import 'dart:ui';
 
 import 'package:devla_sunmi/flutter_sunmi_printer.dart';
@@ -17,6 +18,7 @@ import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/calculate_money.dart';
+import 'package:erp_pos/widget/order_to_take_home.dart';
 import 'package:erp_pos/widget/selected_menu_card.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
@@ -84,11 +86,10 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
             ),
             GestureDetector(
               onTap: () async {
+
                 SharedPreferences pre = await SharedPreferences.getInstance();
                 String? getidtable = pre.getString(CountPre().tablename);
-                setState(() {
-                  selecbutton = false;
-                });
+            
 
                 // CheckExpiredPackage()
                 //     .getCheckExpiredPackage(context)
@@ -101,53 +102,128 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                 SharedPreferences pri = await SharedPreferences.getInstance();
                 String? billNo = pri.getString(CountPre().billNo);
 
-                // await SunmiPrinter.startTransactionPrint();
-                // await SunmiPrinter.printText(
-                //   'ບິນຫ້ອງຄົວ',
-                //   style: SunmiStyle(
-                //     align: SunmiPrintAlign.CENTER,
-                //     bold: true,
-                //     fontSize: SunmiFontSize.LG,
-                //   ),
-                // );
-                // await SunmiPrinter.printText('ໂຕະ $getidtable',
-                //     style: SunmiStyle(
-                //         align: SunmiPrintAlign.CENTER,
-                //         bold: true,
-                //         fontSize: SunmiFontSize.MD));
-                // await SunmiPrinter.printText('ໂຊນ ຫຼື ພື້ນທີ່ $getzone',
-                //     style: SunmiStyle(
-                //         align: SunmiPrintAlign.CENTER,
-                //         bold: true,
-                //         fontSize: SunmiFontSize.MD));
+                try {
+                  
+                await SunmiPrinter.startTransactionPrint();
+                await SunmiPrinter.printText('ໃບບິນ',
+                    style: SunmiStyle(
+                        align: SunmiPrintAlign.CENTER,
+                        bold: true,
+                        fontSize: SunmiFontSize.LG));
+                await SunmiPrinter.printText('Paymart payrich ສາຂາ ໜອງພະຍາ',
+                    style: SunmiStyle(
+                        align: SunmiPrintAlign.CENTER,
+                        bold: true,
+                        fontSize: SunmiFontSize.MD));
+                await SunmiPrinter.printText(
+                    '( Vientiane, Xaisetthar, Meuang noy )',
+                    style: SunmiStyle(
+                      align: SunmiPrintAlign.CENTER,
+                    ));
+                await SunmiPrinter.printText('+85620 99935756',
+                    style: SunmiStyle(
+                      align: SunmiPrintAlign.CENTER,
+                    ));
+                await SunmiPrinter.line();
 
-                // await SunmiPrinter.printRow(cols: [
-                //   ColumnMaker(
-                //     text: 'ລາຍການ',
-                //     width: 6,
-                //     align: SunmiPrintAlign.LEFT,
-                //   ),
-                //   ColumnMaker(
-                //     text: 'ຂະໜາດ',
-                //     width: 6,
-                //     align: SunmiPrintAlign.CENTER,
-                //   ),
-                //   ColumnMaker(
-                //     text: 'ຈຳນວນ',
-                //     width: 6,
-                //     align: SunmiPrintAlign.CENTER,
-                //   ),
-                //   ColumnMaker(
-                //     text: 'ລາຄາ',
-                //     width: 6,
-                //     align: SunmiPrintAlign.RIGHT,
-                //   ),
-                // ]);
+                await SunmiPrinter.printRow(cols: [
+                  ColumnMaker(text: 'ເລກບິນ', width: 6),
+                  ColumnMaker(
+                      text: '1234567890',
+                      width: 6,
+                      align: SunmiPrintAlign.RIGHT),
+                ]);
 
-                // await SunmiPrinter.lineWrap(3);
-                // await SunmiPrinter.submitTransactionPrint();
-                // await SunmiPrinter.exitTransactionPrint();
-                // });
+                await SunmiPrinter.printRow(cols: [
+                  ColumnMaker(text: 'ວັນເວລາ', width: 6),
+                  ColumnMaker(
+                      text: '01/01/2022',
+                      width: 6,
+                      align: SunmiPrintAlign.RIGHT),
+                ]);
+
+                await SunmiPrinter.printRow(cols: [
+                  ColumnMaker(text: 'ຊຳລະໂດຍ', width: 6),
+                  ColumnMaker(
+                      text: 'ເງິນສົດ', width: 6, align: SunmiPrintAlign.RIGHT),
+                ]);
+
+                await SunmiPrinter.line();
+                await SunmiPrinter.printText('ລາຍການສິນຄ້າ',
+                    style: SunmiStyle(
+                        align: SunmiPrintAlign.CENTER,
+                        bold: true,
+                        fontSize: SunmiFontSize.MD));
+
+                await SunmiPrinter.printRow(cols: [
+                  ColumnMaker(text: '1. ເບຍລາວໃຫຍ່', width: 6),
+                  ColumnMaker(
+                      text: '2 x 120,000',
+                      width: 6,
+                      align: SunmiPrintAlign.RIGHT),
+                ]);
+                await SunmiPrinter.printRow(cols: [
+                  ColumnMaker(text: '1. ເບຍລາວໃຫຍ່', width: 6),
+                  ColumnMaker(
+                      text: '2 x 120,000',
+                      width: 6,
+                      align: SunmiPrintAlign.RIGHT),
+                ]);
+                await SunmiPrinter.printRow(cols: [
+                  ColumnMaker(text: '1. ເບຍລາວໃຫຍ່', width: 6),
+                  ColumnMaker(
+                      text: '2 x 120,000',
+                      width: 6,
+                      align: SunmiPrintAlign.RIGHT),
+                ]);
+                await SunmiPrinter.printRow(cols: [
+                  ColumnMaker(text: '1. ເບຍລາວໃຫຍ່', width: 6),
+                  ColumnMaker(
+                      text: '2 x 120,000',
+                      width: 6,
+                      align: SunmiPrintAlign.RIGHT),
+                ]);
+
+                await SunmiPrinter.line();
+                await SunmiPrinter.printText('ສະມາຊິກ',
+                    style: SunmiStyle(
+                        align: SunmiPrintAlign.CENTER,
+                        bold: true,
+                        fontSize: SunmiFontSize.MD));
+
+                await SunmiPrinter.printRow(cols: [
+                  ColumnMaker(text: 'ຊື່', width: 6),
+                  ColumnMaker(
+                      text: 'ພີນ', width: 6, align: SunmiPrintAlign.RIGHT),
+                ]);
+                await SunmiPrinter.printRow(cols: [
+                  ColumnMaker(text: 'ເບີໂທ', width: 6),
+                  ColumnMaker(
+                      text: '99999999', width: 6, align: SunmiPrintAlign.RIGHT),
+                ]);
+
+                await SunmiPrinter.printRow(cols: [
+                  ColumnMaker(text: 'ຄະແນນກັບຄືນ', width: 6),
+                  ColumnMaker(
+                      text: '2,000 ຄະແນນ',
+                      width: 6,
+                      align: SunmiPrintAlign.RIGHT),
+                ]);
+
+                await SunmiPrinter.printText('ຂໍຂອບໃຈ',
+                    style: SunmiStyle(
+                        align: SunmiPrintAlign.CENTER,
+                        bold: true,
+                        fontSize: SunmiFontSize.MD));
+                await SunmiPrinter.lineWrap(3);
+                await SunmiPrinter.submitTransactionPrint();
+                await SunmiPrinter.exitTransactionPrint();
+                } catch (e) {
+
+                  print("error:$e");
+                  
+                }
+             // });
                 showDialog(
                     context: context,
                     builder: (_) {
@@ -538,21 +614,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                   ),
                 ],
               ),
-            if (!selectindex)
-              Center(
-                child: Container(
-                  margin: EdgeInsets.only(top: 200.h),
-                  alignment: Alignment.center,
-                  child: Text(
-                    "ອາຫານໄດ້ຖືກສັ່ງກັບບ້ານ",
-                    style: TextStyle(
-                      color: AppTheme.GREY_COLOR,
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
+            if (!selectindex) OrderToTakeHome()
           ],
         ),
       ),

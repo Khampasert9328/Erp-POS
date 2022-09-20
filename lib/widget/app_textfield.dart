@@ -1,3 +1,4 @@
+import 'package:erp_pos/constant/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -20,6 +21,7 @@ class AppTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorColor: AppTheme.BASE_COLOR,
       obscureText: obscureText ?? false,
       controller: controller,
       keyboardType: keyboardType ?? TextInputType.name,

@@ -8,6 +8,7 @@ import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/utils/sqliteERP/sqlite_erp_pos.dart';
+import 'package:erp_pos/widget/add_amount.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -81,9 +82,8 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                           width: 50.w,
                           height: 7.h,
                           decoration: BoxDecoration(
-                            color: AppTheme.GREY_COLOR,
-                            borderRadius: BorderRadius.circular(10)
-                          ),
+                              color: AppTheme.GREY_COLOR,
+                              borderRadius: BorderRadius.circular(10)),
                         ),
                       ),
                       Container(
@@ -245,20 +245,40 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                               ),
                                               IconButton(
                                                   onPressed: () async {
-                                                    context.read<GetFoodMenuProvider>().deleteTotalAmount(value.getFoodMenuModel[index].totalAmount);
-                                                  context.read<GetFoodMenuProvider>().deleteData(index);
-                                                  
+                                                    context
+                                                        .read<
+                                                            GetFoodMenuProvider>()
+                                                        .deleteTotalAmount(value
+                                                            .getFoodMenuModel[
+                                                                index]
+                                                            .totalAmount);
+                                                    context
+                                                        .read<
+                                                            GetFoodMenuProvider>()
+                                                        .deleteData(index);
                                                   },
                                                   icon: Image.asset(
                                                       ERPImages.icondelete)),
                                             ],
                                           ),
-                                          Text(
-                                            'ຈຳນວນ ${value.getFoodMenuModel[index].number}',
-                                            style: TextStyle(
-                                              fontSize: 15.sp,
-                                            ),
+                                          Text.rich(
+                                            TextSpan(
+                                                text: 'ລາຄາ ',
+                                                style: TextStyle(
+                                                    fontSize: 14.sp,
+                                                    color: AppTheme.BASE_COLOR),
+                                                children: <InlineSpan>[
+                                                  TextSpan(
+                                                    text:
+                                                        '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(value.getFoodMenuModel[index].totalAmount)} ກີບ',
+                                                    style: TextStyle(
+                                                        fontSize: 14.sp,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )
+                                                ]),
                                           ),
+                                          AddAmount(),
                                           SizedBox(
                                             height: 5.h,
                                           ),
@@ -285,22 +305,6 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                                   ),
                                                 ),
                                               ),
-                                              Text.rich(TextSpan(
-                                                  text: 'ລາຄາ ',
-                                                  style: TextStyle(
-                                                      fontSize: 14.sp,
-                                                      color:
-                                                          AppTheme.BASE_COLOR),
-                                                  children: <InlineSpan>[
-                                                    TextSpan(
-                                                      text:
-                                                          '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(value.getFoodMenuModel[index].totalAmount)} ກີບ',
-                                                      style: TextStyle(
-                                                          fontSize: 14.sp,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    )
-                                                  ])),
                                             ],
                                           ),
                                         ],

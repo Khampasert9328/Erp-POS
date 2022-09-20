@@ -1,3 +1,4 @@
+import 'package:erp_pos/constant/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -10,7 +11,6 @@ class Login extends StatelessWidget {
 
   final fromkey = GlobalKey<FormState>();
   final _scaffoldkey = GlobalKey<ScaffoldState>();
- 
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +31,14 @@ class Login extends StatelessWidget {
               SizedBox(
                 height: 50.h,
               ),
-              const TabBar(
+              TabBar(
+                indicatorPadding: EdgeInsets.only(left: 20.0, right: 20.0),
+                indicatorWeight: 3.0,
+                indicatorColor: AppTheme.BASE_COLOR,
                 labelColor: Colors.black,
+                labelStyle: TextStyle(
+                  fontSize: 18.sp,
+                ),
                 tabs: [
                   Tab(
                     text: 'ເຂົ້າສູ່ລະບົບ',

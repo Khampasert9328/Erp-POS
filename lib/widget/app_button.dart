@@ -14,6 +14,7 @@ class AppButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          primary: AppTheme.BASE_COLOR,
             padding: EdgeInsets.symmetric(vertical: 9.h),
             ),
         onPressed:onPressed,

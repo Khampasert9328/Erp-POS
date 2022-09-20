@@ -28,6 +28,7 @@ class SignIn extends StatelessWidget {
                 hintText: 'ອີເມວ',
                 prefixIcon: Icon(
                   Icons.person,
+                  color: AppTheme.BASE_COLOR,
                   size: (25.w + 25.h) / 2,
                 ),
                 validator:
@@ -42,6 +43,7 @@ class SignIn extends StatelessWidget {
                   controller: password,
                   prefixIcon: Icon(
                     Icons.key,
+                     color: AppTheme.BASE_COLOR,
                     size: (25.w + 25.h) / 2,
                   ),
                   validator: MultiValidator([

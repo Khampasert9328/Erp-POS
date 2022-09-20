@@ -47,7 +47,7 @@ class CalculateMoney extends StatelessWidget {
                     height: 60.h,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: AppTheme.GREY_COLOR,
+                      color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Row(
@@ -67,7 +67,7 @@ class CalculateMoney extends StatelessWidget {
                             ERPImages.cart,
                             height: 45.h,
                             width: 45.w,
-                            color: Colors.grey[200],
+                            color: AppTheme.GREY_COLOR,
                           ),
                         ),
                         SizedBox(
