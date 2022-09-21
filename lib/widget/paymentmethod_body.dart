@@ -34,23 +34,29 @@ class _PaymentBodyState extends State<PaymentBody> {
               height: 81.h,
               width: double.infinity,
               decoration: BoxDecoration(
-                 color: Colors.grey[200],
+                  color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(10)),
-              child: Row(
-                children: [
-                  Image.asset(
-                    ERPImages.meney,
-                    height: 63.h,
-                    width: 69.w,
-                  ),
-                  Text(
-                    "ຈ່າຍດ້ວຍສົດ",
-                    style: TextStyle(
-                        fontSize: 18.sp,
-                        color: AppTheme.BASE_COLOR,
-                        fontWeight: FontWeight.bold),
-                  )
-                ],
+              child: Padding(
+                padding: const EdgeInsets.only(left: 22),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      ERPImages.meney,
+                      height: 63.h,
+                      width: 63.w,
+                    ),
+                    SizedBox(
+                      width: 15.w,
+                    ),
+                    Text(
+                      "ຈ່າຍດ້ວຍສົດ",
+                      style: TextStyle(
+                          fontSize: 18.sp,
+                          color: AppTheme.BASE_COLOR,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -70,23 +76,29 @@ class _PaymentBodyState extends State<PaymentBody> {
               height: 81.h,
               width: double.infinity,
               decoration: BoxDecoration(
-                 color: Colors.grey[200],
+                  color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(10)),
-              child: Row(
-                children: [
-                  Image.asset(
-                    ERPImages.bcelone,
-                    height: 63.h,
-                    width: 69.w,
-                  ),
-                  Text(
-                    "ຈ່າຍດ້ວຍ BCEL One",
-                    style: TextStyle(
-                        fontSize: 18.sp,
-                        color: AppTheme.BASE_COLOR,
-                        fontWeight: FontWeight.bold),
-                  )
-                ],
+              child: Padding(
+                padding: const EdgeInsets.only(left: 22),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      ERPImages.bcelone,
+                      height: 63.h,
+                      width: 63.w,
+                    ),
+                    SizedBox(
+                      width: 15.w,
+                    ),
+                    Text(
+                      "ຈ່າຍດ້ວຍ BCEL One",
+                      style: TextStyle(
+                          fontSize: 18.sp,
+                          color: AppTheme.BASE_COLOR,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -110,21 +122,25 @@ class _PaymentBodyState extends State<PaymentBody> {
               decoration: BoxDecoration(
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(10)),
-              child: Row(
-                children: [
-                  Image.asset(
-                    ERPImages.mmoney,
-                    height: 63.h,
-                    width: 69.w,
-                  ),
-                  Text(
-                    "ຈ່າຍດ້ວຍ M-money",
-                    style: TextStyle(
-                        fontSize: 18.sp,
-                        color: AppTheme.BASE_COLOR,
-                        fontWeight: FontWeight.bold),
-                  )
-                ],
+              child: Padding(
+                padding: const EdgeInsets.only(left: 22),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      ERPImages.mmoney,
+                      height: 63.h,
+                      width: 63.w,
+                    ),
+                     SizedBox(width: 15.w,),
+                    Text(
+                      "ຈ່າຍດ້ວຍ M-money",
+                      style: TextStyle(
+                          fontSize: 18.sp,
+                          color: AppTheme.BASE_COLOR,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
               ),
             ),
           ),

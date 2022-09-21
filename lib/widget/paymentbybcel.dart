@@ -1,10 +1,13 @@
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
+import 'package:erp_pos/provider/generateQR/generate_qr_bcelone_provider.dart';
+import 'package:erp_pos/services/generateqrBCEL/generate_qr_bcelone.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class PaymentBcelone extends StatefulWidget {
   final tablename;
@@ -16,6 +19,7 @@ class PaymentBcelone extends StatefulWidget {
 
 DateTime time = DateTime.now();
 final timenow = DateFormat('HH:mm').format(time);
+
 
 class _PaymentBceloneState extends State<PaymentBcelone> {
   @override
@@ -116,15 +120,24 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                     ),
                   ),
                   Container(
-                    height: 226.h,
+                    height: 228.h,
                     width: 228.w,
                     decoration: BoxDecoration(
                         border: Border.all(
-                      color: AppTheme.BASE_COLOR,
+                      color: AppTheme.RED_COLOR,
                     )),
-                    child: Image.asset(
-                      ERPImages.bcelone,
-                    ),
+                    child:Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              QrImage(
+                                data: qrData,
+                                version: QrVersions.auto,
+                                size: 200.0,
+                              ),
+                             
+                             
+                            ],
+                          ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(

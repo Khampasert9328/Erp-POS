@@ -116,9 +116,9 @@ class FoodMenuCard extends StatelessWidget {
                                     horizontal: 2.w, vertical: 2.h),
                                 child: IconButton(
                                   onPressed: () async {
-                                    SharedPreferences preferences =
+                                    SharedPreferences? preferences =
                                         await SharedPreferences.getInstance();
-                                    int? amount =
+                                    int? amount =await 
                                         preferences.getInt(CountPre().namkey);
                                     int totalAmount =
                                         data.data.pricesale! * amount!;
@@ -128,7 +128,7 @@ class FoodMenuCard extends StatelessWidget {
                                     foodModel.increment(add);
 
                                     getFoodModel.addTotalAmount(totalAmount);
-                                    print("amount:$totalAmount");
+                                
                                   },
                                   icon: const Icon(
                                     Icons.add_shopping_cart_sharp,

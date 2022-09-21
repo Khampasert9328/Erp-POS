@@ -1,9 +1,13 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:badges/badges.dart';
+import 'package:devla_sunmi/flutter_sunmi_printer.dart';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/pages/food_menu/food_menu.dart';
+import 'package:erp_pos/provider/bill/print_bill_customers_provider.dart';
+import 'package:erp_pos/provider/bill/print_bill_provider.dart';
+import 'package:erp_pos/provider/checkexpiredpackage/check_exp_package_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/paymentmethod.dart';
@@ -11,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CalculateMoney extends StatelessWidget {
   final tablename;
@@ -29,9 +34,7 @@ class CalculateMoney extends StatelessWidget {
           title: Text(
             tablename,
             style: TextStyle(
-              color: AppTheme.BASE_COLOR,
-              fontWeight: FontWeight.bold
-            ),
+                color: AppTheme.BASE_COLOR, fontWeight: FontWeight.bold),
           ),
         ),
         bottomNavigationBar: Container(
@@ -108,32 +111,138 @@ class CalculateMoney extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        height: 60.h,
-                        width: 150.w,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              color: AppTheme.BASE_COLOR,
-                            )),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(ERPImages.printbill),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            Center(
-                              child: Text(
-                                "ພິມໃບບິນ",
-                                style: TextStyle(
-                                  fontSize: 18.sp,
-                                  color: AppTheme.BASE_COLOR,
-                                  fontWeight: FontWeight.bold,
+                      GestureDetector(
+                        onTap: () async {
+                          SharedPreferences pre =
+                              await SharedPreferences.getInstance();
+                          String? getidtable =
+                              pre.getString(CountPre().tablename);
+
+                          CheckExpiredPackage()
+                              .getCheckExpiredPackage(context)
+                              .then((value) async {
+                            PrintBillCustomers().getbillCustomers();
+
+                            SharedPreferences preferences =
+                                await SharedPreferences.getInstance();
+                            String? getzone =
+                                preferences.getString(CountPre().idzone);
+                            SharedPreferences pri =
+                                await SharedPreferences.getInstance();
+                            String? billNo = pri.getString(CountPre().billNo);
+
+                            try {
+                              await SunmiPrinter.startTransactionPrint();
+                              await SunmiPrinter.printText('ໃບຈ່າຍເງິນ',
+                                  style: SunmiStyle(
+                                      align: SunmiPrintAlign.CENTER,
+                                      bold: true,
+                                      fontSize: SunmiFontSize.LG));
+                              await SunmiPrinter.line();
+
+                              await SunmiPrinter.printRow(cols: [
+                                ColumnMaker(text: 'ໃບບິນເລກທີ', width: 6),
+                                ColumnMaker(
+                                    text: '$billNo',
+                                    width: 6,
+                                    align: SunmiPrintAlign.RIGHT),
+                              ]);
+
+                              await SunmiPrinter.printRow(cols: [
+                                ColumnMaker(text: 'ວັນເວລາ', width: 6),
+                                ColumnMaker(
+                                    text:
+                                        '${DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now())}',
+                                    width: 6,
+                                    align: SunmiPrintAlign.RIGHT),
+                              ]);
+                              await SunmiPrinter.printRow(cols: [
+                                ColumnMaker(text: 'ໂຊນ ຫຼື ພື້ນທີ່', width: 6),
+                                ColumnMaker(
+                                    text: '$getzone',
+                                    width: 6,
+                                    align: SunmiPrintAlign.RIGHT),
+                              ]);
+                              await SunmiPrinter.printRow(cols: [
+                                ColumnMaker(text: 'ເລກໂຕະ', width: 6),
+                                ColumnMaker(
+                                    text: '$getidtable',
+                                    width: 6,
+                                    align: SunmiPrintAlign.RIGHT),
+                              ]);
+
+                              await SunmiPrinter.line();
+                              await SunmiPrinter.printText('ລາຍການອາຫານ',
+                                  style: SunmiStyle(
+                                      align: SunmiPrintAlign.CENTER,
+                                      bold: true,
+                                      fontSize: SunmiFontSize.MD));
+
+                              for (var data in context
+                                  .read<GetFoodMenuProvider>()
+                                  .getFoodMenuModel) {
+                                /////////////////////////
+                                await SunmiPrinter.printRow(cols: [
+                                  ColumnMaker(
+                                      text: '${data.data.name}', width: 6),
+                                  ColumnMaker(
+                                      text:
+                                          '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.number)} x ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.totalAmount)}',
+                                      width: 6,
+                                      align: SunmiPrintAlign.RIGHT),
+                                ]);
+                              }
+                              await SunmiPrinter.line();
+                              await SunmiPrinter.printRow(cols: [
+                                ColumnMaker(text: 'ລາຄາລວມ:', width: 6),
+                                ColumnMaker(
+                                    text:
+                                        '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ',
+                                    width: 6,
+                                    align: SunmiPrintAlign.RIGHT),
+                              ]);
+
+                              await SunmiPrinter.line();
+                              await SunmiPrinter.printText('ຂໍຂອບໃຈ',
+                                  style: SunmiStyle(
+                                      align: SunmiPrintAlign.CENTER,
+                                      bold: true,
+                                      fontSize: SunmiFontSize.MD));
+                              await SunmiPrinter.lineWrap(3);
+                              await SunmiPrinter.submitTransactionPrint();
+                              await SunmiPrinter.exitTransactionPrint();
+                            } catch (e) {
+                              print("error:$e");
+                            }
+                          });
+                        },
+                        child: Container(
+                          height: 60.h,
+                          width: 150.w,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: AppTheme.BASE_COLOR,
+                              )),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(ERPImages.printbill),
+                              SizedBox(
+                                width: 10.w,
+                              ),
+                              Center(
+                                child: Text(
+                                  "ພິມໃບບິນ",
+                                  style: TextStyle(
+                                    fontSize: 18.sp,
+                                    color: AppTheme.BASE_COLOR,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       Container(

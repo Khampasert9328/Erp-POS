@@ -1,6 +1,7 @@
 // ignore_for_file: unused_import, must_be_immutable, use_key_in_widget_constructors
 import 'dart:ui';
 
+
 import 'package:devla_sunmi/flutter_sunmi_printer.dart';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
@@ -91,10 +92,10 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                 String? getidtable = pre.getString(CountPre().tablename);
             
 
-                // CheckExpiredPackage()
-                //     .getCheckExpiredPackage(context)
-                //     .then((value) async {
-                //   PrintBillKitchenProvider().getprint();
+                CheckExpiredPackage()
+                    .getCheckExpiredPackage(context)
+                    .then((value) async {
+                  PrintBillKitchenProvider().getprint();
 
                 SharedPreferences preferences =
                     await SharedPreferences.getInstance();
@@ -105,31 +106,17 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                 try {
                   
                 await SunmiPrinter.startTransactionPrint();
-                await SunmiPrinter.printText('ໃບບິນ',
+                await SunmiPrinter.printText('ໃບບິນຫ້ອງຄົວ',
                     style: SunmiStyle(
                         align: SunmiPrintAlign.CENTER,
                         bold: true,
                         fontSize: SunmiFontSize.LG));
-                await SunmiPrinter.printText('Paymart payrich ສາຂາ ໜອງພະຍາ',
-                    style: SunmiStyle(
-                        align: SunmiPrintAlign.CENTER,
-                        bold: true,
-                        fontSize: SunmiFontSize.MD));
-                await SunmiPrinter.printText(
-                    '( Vientiane, Xaisetthar, Meuang noy )',
-                    style: SunmiStyle(
-                      align: SunmiPrintAlign.CENTER,
-                    ));
-                await SunmiPrinter.printText('+85620 99935756',
-                    style: SunmiStyle(
-                      align: SunmiPrintAlign.CENTER,
-                    ));
                 await SunmiPrinter.line();
 
                 await SunmiPrinter.printRow(cols: [
-                  ColumnMaker(text: 'ເລກບິນ', width: 6),
+                  ColumnMaker(text: 'ໃບບິນເລກທີ', width: 6),
                   ColumnMaker(
-                      text: '1234567890',
+                      text: '$billNo',
                       width: 6,
                       align: SunmiPrintAlign.RIGHT),
                 ]);
@@ -137,78 +124,49 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                 await SunmiPrinter.printRow(cols: [
                   ColumnMaker(text: 'ວັນເວລາ', width: 6),
                   ColumnMaker(
-                      text: '01/01/2022',
+                      text: '${DateFormat("yyy-MM-dd HH:mm").format(DateTime.now())}',
                       width: 6,
                       align: SunmiPrintAlign.RIGHT),
+                      
+                ]);
+                await SunmiPrinter.printRow(cols: [
+                  ColumnMaker(text: 'ໂຊນ ຫຼື ພື້ນທີ່', width: 6),
+                  ColumnMaker(
+                      text: '$getzone',
+                      width: 6,
+                      align: SunmiPrintAlign.RIGHT),
+                      
+                ]);
+                await SunmiPrinter.printRow(cols: [
+                  ColumnMaker(text: 'ເລກໂຕະ', width: 6),
+                  ColumnMaker(
+                      text: '$getidtable',
+                      width: 6,
+                      align: SunmiPrintAlign.RIGHT),
+                      
                 ]);
 
-                await SunmiPrinter.printRow(cols: [
-                  ColumnMaker(text: 'ຊຳລະໂດຍ', width: 6),
-                  ColumnMaker(
-                      text: 'ເງິນສົດ', width: 6, align: SunmiPrintAlign.RIGHT),
-                ]);
 
                 await SunmiPrinter.line();
-                await SunmiPrinter.printText('ລາຍການສິນຄ້າ',
+                await SunmiPrinter.printText('ລາຍການອາຫານ',
                     style: SunmiStyle(
                         align: SunmiPrintAlign.CENTER,
                         bold: true,
                         fontSize: SunmiFontSize.MD));
 
-                await SunmiPrinter.printRow(cols: [
-                  ColumnMaker(text: '1. ເບຍລາວໃຫຍ່', width: 6),
-                  ColumnMaker(
-                      text: '2 x 120,000',
-                      width: 6,
-                      align: SunmiPrintAlign.RIGHT),
-                ]);
-                await SunmiPrinter.printRow(cols: [
-                  ColumnMaker(text: '1. ເບຍລາວໃຫຍ່', width: 6),
-                  ColumnMaker(
-                      text: '2 x 120,000',
-                      width: 6,
-                      align: SunmiPrintAlign.RIGHT),
-                ]);
-                await SunmiPrinter.printRow(cols: [
-                  ColumnMaker(text: '1. ເບຍລາວໃຫຍ່', width: 6),
-                  ColumnMaker(
-                      text: '2 x 120,000',
-                      width: 6,
-                      align: SunmiPrintAlign.RIGHT),
-                ]);
-                await SunmiPrinter.printRow(cols: [
-                  ColumnMaker(text: '1. ເບຍລາວໃຫຍ່', width: 6),
-                  ColumnMaker(
-                      text: '2 x 120,000',
-                      width: 6,
-                      align: SunmiPrintAlign.RIGHT),
-                ]);
+                  for (var data in context.read<GetFoodMenuProvider>().getFoodMenuModel) {
 
+                    await SunmiPrinter.printRow(cols: [
+                  ColumnMaker(text: '${data.data.name}', width: 6),
+                  ColumnMaker(
+                      text: '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.number)} x ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.totalAmount)}',
+                      width: 6,
+                      align: SunmiPrintAlign.RIGHT),
+                ]);
+                    
+                  }
                 await SunmiPrinter.line();
-                await SunmiPrinter.printText('ສະມາຊິກ',
-                    style: SunmiStyle(
-                        align: SunmiPrintAlign.CENTER,
-                        bold: true,
-                        fontSize: SunmiFontSize.MD));
-
-                await SunmiPrinter.printRow(cols: [
-                  ColumnMaker(text: 'ຊື່', width: 6),
-                  ColumnMaker(
-                      text: 'ພີນ', width: 6, align: SunmiPrintAlign.RIGHT),
-                ]);
-                await SunmiPrinter.printRow(cols: [
-                  ColumnMaker(text: 'ເບີໂທ', width: 6),
-                  ColumnMaker(
-                      text: '99999999', width: 6, align: SunmiPrintAlign.RIGHT),
-                ]);
-
-                await SunmiPrinter.printRow(cols: [
-                  ColumnMaker(text: 'ຄະແນນກັບຄືນ', width: 6),
-                  ColumnMaker(
-                      text: '2,000 ຄະແນນ',
-                      width: 6,
-                      align: SunmiPrintAlign.RIGHT),
-                ]);
+                
 
                 await SunmiPrinter.printText('ຂໍຂອບໃຈ',
                     style: SunmiStyle(
@@ -223,7 +181,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                   print("error:$e");
                   
                 }
-             // });
+             });
                 showDialog(
                     context: context,
                     builder: (_) {
@@ -371,11 +329,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                   Row(
                     children: [
                       Text(
-                        "ເລືອກໂຕະ" +
-                            context
-                                .read<PrintBillKitchenProvider>()
-                                .printBinded
-                                .toString(),
+                        "ເລືອກໂຕະ",
                         style: TextStyle(
                           fontSize: 16.sp,
                           color: AppTheme.BASE_COLOR,

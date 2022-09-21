@@ -63,13 +63,14 @@ class paycash extends StatelessWidget {
                       height: 7.h,
                     ),
                     TextFormField(
-                        controller: payment,
+                       
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: const Color(0xffedebeb),
                           border: InputBorder.none,
                           hintText: 'ລາຄາລວມ',
+                          suffixIcon: Text(payment.text),
                           
                           hintStyle: TextStyle(
                               fontFamily: "NotoSansLao-Regular",

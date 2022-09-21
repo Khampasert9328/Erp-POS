@@ -7,10 +7,12 @@ import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/pages/onboardingscreen/onboardingscreen.dart';
 import 'package:erp_pos/provider/areaprovider/area_provider.dart';
 import 'package:erp_pos/provider/areaprovider/insert_area_provider.dart';
+import 'package:erp_pos/provider/bill/print_bill_customers_provider.dart';
 import 'package:erp_pos/provider/bill/print_bill_provider.dart';
 import 'package:erp_pos/provider/checkexpiredpackage/check_exp_package_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
+import 'package:erp_pos/provider/generateQR/generate_qr_bcelone_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -46,7 +48,9 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(
                 create: ((context) => CheckExpiredPackage())),
             ChangeNotifierProvider(
-                create: (context) => PrintBillKitchenProvider())
+                create: (context) => PrintBillKitchenProvider()),
+                ChangeNotifierProvider(create: (_)=>PrintBillCustomers()),
+                ChangeNotifierProvider(create: (_)=>GenerateQRBCELONEProvider())
           ],
           child: MaterialApp(
             theme: ThemeData(
