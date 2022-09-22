@@ -35,4 +35,6 @@ class ERPImages {
   static const cart = 'images/Cart.png';  
   static const meney = 'images/money 1.png';
   static const addcart = 'images/addcart.png';
+  static const success = 'images/success.gif';
+  static const iconforbill = 'images/iconforbill.png';
 }

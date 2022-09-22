@@ -138,7 +138,11 @@ class _ListViewTableState extends State<ListViewTable> {
                           }),
                         );
                       }
-                      return SizedBox();
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: AppTheme.BASE_COLOR,
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -160,7 +164,7 @@ class _ListViewTableState extends State<ListViewTable> {
                             return SingleChildScrollView(
                                 child: GridView.count(
                               crossAxisCount: 2,
-                              childAspectRatio: (1 / .4),
+                              childAspectRatio: (0.8 / .4),
                               shrinkWrap: true,
                               children:
                                   List.generate(snapshot.data!.length, (index) {

@@ -156,7 +156,9 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
           SizedBox(
             height: 10.h,
           ),
-          Expanded(child: FoodMenuCard()),
+          Expanded(
+            child: FoodMenuCard(),
+          ),
         ],
       ),
     );

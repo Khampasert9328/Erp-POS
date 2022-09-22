@@ -39,7 +39,7 @@ class Login extends StatelessWidget {
                 labelStyle: TextStyle(
                   fontSize: 18.sp,
                 ),
-                tabs: [
+                tabs: const [
                   Tab(
                     text: 'ເຂົ້າສູ່ລະບົບ',
                   ),

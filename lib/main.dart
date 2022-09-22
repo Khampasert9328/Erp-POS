@@ -13,6 +13,7 @@ import 'package:erp_pos/provider/checkexpiredpackage/check_exp_package_provider.
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/provider/generateQR/generate_qr_bcelone_provider.dart';
+import 'package:erp_pos/provider/getorderbyissuedate/get_order_by_issuedate_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -50,7 +51,8 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(
                 create: (context) => PrintBillKitchenProvider()),
                 ChangeNotifierProvider(create: (_)=>PrintBillCustomers()),
-                ChangeNotifierProvider(create: (_)=>GenerateQRBCELONE())
+                ChangeNotifierProvider(create: (_)=>GenerateQRBCELONE()),
+                ChangeNotifierProvider(create: (_)=>GetOrderByIssueDateProvider())
           ],
           child: MaterialApp(
             theme: ThemeData(

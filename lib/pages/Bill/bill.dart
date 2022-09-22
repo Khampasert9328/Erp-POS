@@ -1,19 +1,34 @@
+import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/pages/bill/tabbarview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class Bill extends StatefulWidget {
+class Bill extends StatelessWidget {
   const Bill({Key? key}) : super(key: key);
 
   @override
-  State<Bill> createState() => _BillState();
-}
-
-class _BillState extends State<Bill> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text("Hiii bill")),
-      );
-    
+      backgroundColor: AppTheme.WHITE_COLOR,
+      appBar: AppBar(
+        backgroundColor: AppTheme.WHITE_COLOR,
+        elevation: 0,
+        title: Text(
+          "ໃບບິນ",
+          style: TextStyle(
+              fontSize: 25.sp,
+              color: AppTheme.BASE_COLOR,
+              fontWeight: FontWeight.bold),
+        ),
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.search,
+              ))
+        ],
+      ),
+      body: BillBody(),
+    );
   }
 }
