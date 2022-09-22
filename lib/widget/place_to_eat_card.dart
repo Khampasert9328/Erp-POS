@@ -507,7 +507,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                               return SingleChildScrollView(
                                   child: GridView.count(
                                 crossAxisCount: 2,
-                                childAspectRatio: (1 / .4),
+                                childAspectRatio: (0.7 / .4),
                                 shrinkWrap: true,
                                 children: List.generate(snapshot.data!.length,
                                     (index) {

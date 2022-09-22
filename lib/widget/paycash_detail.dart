@@ -70,7 +70,10 @@ class paycash extends StatelessWidget {
                           fillColor: const Color(0xffedebeb),
                           border: InputBorder.none,
                           hintText: 'ລາຄາລວມ',
-                          suffixIcon: Text(payment.text),
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.only(top: 15,right: 5),
+                            child: Text(payment.text+" ກີບ",style: TextStyle(color: AppTheme.RED_COLOR),),
+                          ),
                           
                           hintStyle: TextStyle(
                               fontFamily: "NotoSansLao-Regular",

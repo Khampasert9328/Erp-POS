@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(
                 create: (context) => PrintBillKitchenProvider()),
                 ChangeNotifierProvider(create: (_)=>PrintBillCustomers()),
-                ChangeNotifierProvider(create: (_)=>GenerateQRBCELONEProvider())
+                ChangeNotifierProvider(create: (_)=>GenerateQRBCELONE())
           ],
           child: MaterialApp(
             theme: ThemeData(

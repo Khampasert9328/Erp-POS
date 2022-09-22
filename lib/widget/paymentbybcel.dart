@@ -17,11 +17,18 @@ class PaymentBcelone extends StatefulWidget {
   State<PaymentBcelone> createState() => _PaymentBceloneState();
 }
 
-DateTime time = DateTime.now();
-final timenow = DateFormat('HH:mm').format(time);
-
-
 class _PaymentBceloneState extends State<PaymentBcelone> {
+  String qrData = '';
+  @override
+  void initState() {
+    super.initState();
+    GenerateQRBCELONE().getGenerateQR(context).then((value) {
+      setState(() {
+        qrData = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +100,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                                       width: 15.w,
                                     ),
                                     Text(
-                                      "Xaiy",
+                                      "${context.read<GenerateQRBCELONE>().getShopecode}",
                                       style: TextStyle(
                                         fontSize: 15.sp,
                                         fontWeight: FontWeight.bold,
@@ -126,30 +133,36 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                         border: Border.all(
                       color: AppTheme.RED_COLOR,
                     )),
-                    child:Column(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              QrImage(
+                      children: [
+                        qrData.isEmpty
+                            ? Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : QrImage(
                                 data: qrData,
                                 version: QrVersions.auto,
                                 size: 200.0,
                               ),
-                             
-                             
-                            ],
-                          ),
+                      ],
+                    ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 15,
-                      bottom: 15,
-                    ),
-                    child: Text(
-                      timenow,
-                      style: TextStyle(
-                          fontSize: 20.sp, fontWeight: FontWeight.bold),
-                    ),
-                  )
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      await GenerateQRBCELONE()
+                          .getGenerateQR(context)
+                          .then((value) {
+                        setState(() {
+                          qrData = value;
+                        });
+                      });
+                    },
+                    child: Text("refetch"),
+                  ),
                 ],
               ),
             )
