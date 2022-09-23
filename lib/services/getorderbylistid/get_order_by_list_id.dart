@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:erp_pos/constant/api_path.dart';
 import 'package:erp_pos/model/getorderbylistid/get_order_by_list_id_models.dart';
 import 'package:intl/intl.dart';
@@ -26,14 +25,14 @@ Future<GetOrderByListId?> getorderbylistid(String? id) async {
     });
 
     var respones = await http.post(Uri.parse(url), body: payload, headers: {
-      "accept":"text/plain",
-      "Authorization":"Bearer $idToken",
-      "Content-Type":"application/json"
+      "accept": "text/plain",
+      "Authorization": "Bearer $idToken",
+      "Content-Type": "application/json"
     });
 
-    if (respones.statusCode==200) {
+    if (respones.statusCode == 200) {
+      print("respon:${respones.body}");
       return getOrderByListIdFromJson(respones.body);
-      
     }
   } catch (e) {
     print("error:$e");
