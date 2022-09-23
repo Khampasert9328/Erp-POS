@@ -19,7 +19,7 @@ void addFoodTypeDialog(BuildContext context) {
                   Text(
                     'ຊື່ປະເພດອາຫານ',
                     style: TextStyle(
-                        color: ERPTheme.BASE_COLOR,
+                        color: AppTheme.BASE_COLOR,
                         fontWeight: FontWeight.w600,
                         fontSize: 16.sp),
                   ),
@@ -65,7 +65,7 @@ void addFoodTypeDialog(BuildContext context) {
                       ),
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              primary: ERPTheme.BASE_COLOR,
+                              primary: AppTheme.BASE_COLOR,
                               padding: EdgeInsets.symmetric(
                                   horizontal: 25.w, vertical: 5.h)),
                           onPressed: () {},

@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<GetFoodMenuModels?> getfoodmenu()async{
-  int limit = 20;
-  int page = 1;
+  int limit = -1;
+  int page = 0;
   bool removecahcs= true;
   SharedPreferences preferences = await SharedPreferences.getInstance();
   String? idToken = preferences.getString("content");

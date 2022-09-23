@@ -1,14 +1,10 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:erp_pos/constant/enum.dart';
-import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/model/foodmenu/food_menu_models.dart';
+import 'package:erp_pos/pages/food_menu/components/food_menu_size.dart';
 import 'package:erp_pos/pages/food_menu_detail/components/food_menu_detail_body.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
-import 'package:erp_pos/provider/tableprovider/table_provider.dart';
-import 'package:erp_pos/services/getfoodmenu/get_food_menu_services.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/add_amount.dart';
 import 'package:flutter/material.dart';
@@ -17,251 +13,158 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constant/theme.dart';
-import 'package:erp_pos/constant/routes.dart' as custom_route;
 
-class FoodMenuCard extends StatefulWidget {
-  @override
-  State<FoodMenuCard> createState() => _FoodMenuCardState();
-}
-
-class _FoodMenuCardState extends State<FoodMenuCard> {
-
+class FoodMenuCard extends StatelessWidget {
   int? number;
   Product data = Product();
   ERPFoodSize erpFoodSize = ERPFoodSize.Small;
   List<Product> listdata = [];
-  
+
+  int add = 0;
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Product>?>(
-      future: FoodMenuProvider().getProduct(),
-      builder: ((context, snapshot) {
-        if (snapshot.hasData) {
-          return Consumer<FoodMenuProvider>(
-            builder: ((context, models, child) {
-              return SizedBox(
-                height: 350.h,
-                child: Scrollbar(
-                  child: ListView.builder(
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        final index1 = snapshot.data![index];
-                        return Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5.h),
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => FoodMenuDetailBody(
-                                        data: snapshot.data![index],
+    return Consumer2<FoodMenuProvider, GetFoodMenuProvider>(
+        builder: (context, foodModel, getFoodModel, child) {
+      return Scrollbar(
+        child: ListView.builder(
+            itemCount: getFoodModel.listProduct.length,
+            itemBuilder: (context, index) {
+              final data = getFoodModel.listProduct[index];
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: 5.h),
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => FoodMenuDetailBody(
+                              data: data.data,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 10.h, horizontal: 10.w),
+                        decoration: BoxDecoration(
+                            color: Color(0xFFF4F5F6),
+                            borderRadius: BorderRadius.circular(10.r)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 30),
+                                child: Container(
+                                  child: CachedNetworkImage(
+                                    errorWidget: (context, url, error) => Icon(
+                                        Icons.image_outlined,
+                                        size: 70,
+                                        color: AppTheme.GREY_COLOR),
+                                    imageUrl: data.data.thumbnails!.first.uri!,
+                                    placeholder: (context, url) => Center(
+                                      child: CircularProgressIndicator(
+                                        color: AppTheme.BASE_COLOR,
                                       ),
                                     ),
-                                  );
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 10.h, horizontal: 10.w),
-                                  decoration: BoxDecoration(
-                                      color: Color(0xFFF4F5F6),
-                                      borderRadius: BorderRadius.circular(7.r)),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 30),
-                                          child: Container(
-                                            child: CachedNetworkImage(
-                                              errorWidget:
-                                                  (context, url, error) => Icon(
-                                                      Icons.image_outlined,
-                                                      size: 70,
-                                                      color:
-                                                          ERPTheme.GREY_COLOR),
-                                              imageUrl: snapshot.data![index]
-                                                  .thumbnails!.first.uri!,
-                                              placeholder: (context, url) =>
-                                                  Center(
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  color: ERPTheme.BASE_COLOR,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              snapshot.data![index].name!,
-                                              style: TextStyle(
-                                                  fontSize: 16.sp,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: ERPTheme.BASE_COLOR),
-                                            ),
-                                            SizedBox(
-                                              height: 5.h,
-                                            ),
-                                            Text.rich(TextSpan(
-                                                text: 'ລາຄາ ',
-                                                style: TextStyle(
-                                                    fontSize: 14.sp,
-                                                    color: ERPTheme.BASE_COLOR),
-                                                children: <InlineSpan>[
-                                                  TextSpan(
-                                                    text:
-                                                        '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(snapshot.data![index].pricesale)} ກີບ',
-                                                    style: TextStyle(
-                                                        fontSize: 14.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )
-                                                ])),
-                                            AddAmount(number: number)
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 20),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              color: ERPTheme.BASE_COLOR,
-                                              shape: BoxShape.circle),
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 3.w, vertical: 3.h),
-                                          child: IconButton(
-                                            onPressed: () {
-                                              addOrder(index);
-                                            },
-                                            icon: const Icon(
-                                              Icons.add_shopping_cart_sharp,
-                                              color: Colors.white,
-                                              size: 35,
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                height: 5.h,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                            ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  buildSize('S', ERPFoodSize.Small),
-                                  SizedBox(
-                                    width: 7.w,
+                                  Text(
+                                    data.data.name!,
+                                    style: TextStyle(
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w700,
+                                        color: AppTheme.BASE_COLOR),
                                   ),
-                                  buildSize('M', ERPFoodSize.Medium),
                                   SizedBox(
-                                    width: 7.w,
+                                    height: 5.h,
                                   ),
-                                  buildSize('L', ERPFoodSize.Large),
+                                  Text.rich(TextSpan(
+                                      text: 'ລາຄາ ',
+                                      style: TextStyle(
+                                          fontSize: 14.sp,
+                                          color: AppTheme.BASE_COLOR),
+                                      children: <InlineSpan>[
+                                        TextSpan(
+                                          text:
+                                              '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.data.pricesale)} ກີບ',
+                                          style: TextStyle(
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.bold),
+                                        )
+                                      ])),
+                                  AddAmount()
                                 ],
-                              )
-                            ],
-                          ),
-                        );
-                      }),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 20.w),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: AppTheme.BASE_COLOR,
+                                    shape: BoxShape.circle),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 2.w, vertical: 2.h),
+                                child: IconButton(
+                                  onPressed: () async {
+                                    SharedPreferences? preferences =
+                                        await SharedPreferences.getInstance();
+                                    int? amount =await 
+                                        preferences.getInt(CountPre().namkey);
+                                    int totalAmount =
+                                        data.data.pricesale! * amount!;
+                                    //addOrder(index);
+                                    getFoodModel.setFoodMenuData(
+                                        data.data, amount, totalAmount);
+                                    foodModel.increment(add);
+
+                                    getFoodModel.addTotalAmount(totalAmount);
+                                
+                                  },
+                                  icon: const Icon(
+                                    Icons.add_shopping_cart_sharp,
+                                    color: Colors.white,
+                                    size: 35,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        FoodMenuSize(size: 0, title: 'S', index: index),
+                        SizedBox(
+                          width: 7.w,
+                        ),
+                        FoodMenuSize(size: 1, title: 'M', index: index),
+                        SizedBox(
+                          width: 7.w,
+                        ),
+                        FoodMenuSize(size: 2, title: 'L', index: index),
+                      ],
+                    )
+                  ],
                 ),
               );
             }),
-          );
-        } else {
-          return Center(
-            child: CircularProgressIndicator(
-              color: ERPTheme.BASE_COLOR,
-            ),
-          );
-        }
-      }),
+      );
+    },
     );
-  }
-
-  GestureDetector buildSize(String title, ERPFoodSize size) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          erpFoodSize = size;
-        });
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(3.r),
-            color: erpFoodSize == size ? ERPTheme.BASE_COLOR : Colors.white,
-            border: Border.all(
-                color: erpFoodSize == size
-                    ? ERPTheme.BASE_COLOR
-                    : Color(0xFFD9D9D9))),
-        child: Text(
-          title,
-          style: TextStyle(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w700,
-              color: erpFoodSize == size ? Colors.white : Color(0xFFD9D9D9)),
-        ),
-      ),
-    );
-  }
-
-  Future<List<Product>?> addOrder(int index) async {
-    String? name;
-  String? price;
-  String? image;
-  int? pricesale = int.parse(price.toString());
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String? count = preferences.getString(CountPre().namkey)??"";
-    GetFoodMenuModels? modelsProduct = await getfoodmenu();
-    if (modelsProduct != null) {
-      listdata = modelsProduct.product!;
-      name = listdata[index].name;
-      price = listdata[index].pricesale.toString();
-      image = listdata[index].thumbnails!.first.uri!;
-    }
-    print("addorder:$name");
-    print("count:$count");
-    print("count:$price");
-    print("count:$image");
-
-    return listdata;
-  }
-
-  int count = 0;
-  Container buildButton(IconData iconData, String title) {
-    return Container(
-      height: 30.h,
-      width: 20.w,
-      decoration: BoxDecoration(
-          border: Border.all(color: ERPTheme.BASE_COLOR),
-          shape: BoxShape.circle),
-      child: Center(child: Text(title)),
-    );
-  }
-
-  void setNumber(bool isAdd, int index){
-    if (isAdd) {
-      setState(() {
-        count += 1;
-      });
-    } else {
-      if (count > 0) {
-        setState(() {
-          count -= 1;
-        });
-      }
-    }
   }
 }

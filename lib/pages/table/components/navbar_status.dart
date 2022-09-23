@@ -23,8 +23,8 @@ class _NavBarStatusState extends State<NavBarStatus> {
           child: Row(
             children: [
               CircleAvatar(
-                backgroundColor: ERPTheme.GREEN_COLOR,
-                radius: 17,
+                backgroundColor: AppTheme.GREEN_COLOR,
+                radius: 15,
                 child: Image.asset(
                   ERPImages.tableStatus,
                   height: 15.h,
@@ -37,7 +37,6 @@ class _NavBarStatusState extends State<NavBarStatus> {
               Text(
                 "00 ວ່າງ",
                 style: TextStyle(
-                  fontFamily: "Phetsarath-OT",
                   fontSize: 13.sp,
                 ),
               ),
@@ -48,8 +47,8 @@ class _NavBarStatusState extends State<NavBarStatus> {
           child: Row(
             children: [
               CircleAvatar(
-                backgroundColor: ERPTheme.RED_COLOR,
-                radius: 17,
+                backgroundColor: AppTheme.RED_COLOR,
+                radius: 15,
                 child: Image.asset(
                   ERPImages.tableStatus,
                   height: 15.h,
@@ -72,8 +71,8 @@ class _NavBarStatusState extends State<NavBarStatus> {
           child: Row(
             children: [
               CircleAvatar(
-                backgroundColor: ERPTheme.BLUE_COLOR,
-                radius: 17,
+                backgroundColor: AppTheme.PINK_COLOR,
+                radius: 15,
                 child: Image.asset(
                   ERPImages.tableStatus,
                   height: 15.h,
@@ -86,7 +85,6 @@ class _NavBarStatusState extends State<NavBarStatus> {
               Text(
                 "00 ຈອງແລ້ວ",
                 style: TextStyle(
-                  fontFamily: "Phetsarath-OT",
                   fontSize: 13.sp,
                 ),
               ),

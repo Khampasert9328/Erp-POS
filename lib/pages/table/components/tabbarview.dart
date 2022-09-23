@@ -41,15 +41,15 @@ class _ERPTabbarViewState extends State<ERPTabbarView> {
                     style: TextStyle(
                         fontSize: 18.sp,
                         color: selectIndex == index
-                            ? ERPTheme.BLACK_COLOR
-                            : ERPTheme.GREY_COLOR),
+                            ? AppTheme.BLACK_COLOR
+                            : AppTheme.GREY_COLOR),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 2),
                     width: 100.w,
                     height: 5.h,
                     color: selectIndex == index
-                        ? ERPTheme.BLACK_COLOR
+                        ? AppTheme.BLACK_COLOR
                         : Colors.transparent,
                   )
                 ],

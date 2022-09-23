@@ -95,15 +95,15 @@ class _ListViewTableState extends State<ListViewTable> {
                                                       decoration: BoxDecoration(
                                                           color: selectIndex ==
                                                                   index
-                                                              ? ERPTheme
+                                                              ? AppTheme
                                                                   .BASE_COLOR
-                                                              : ERPTheme
+                                                              : AppTheme
                                                                   .WHITE_COLOR,
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(5),
                                                           border: Border.all(
-                                                              color: ERPTheme
+                                                              color: AppTheme
                                                                   .BASE_COLOR)),
                                                       child: Center(
                                                         child: Text(
@@ -114,9 +114,9 @@ class _ListViewTableState extends State<ListViewTable> {
                                                                 FontWeight.bold,
                                                             fontSize: 18.sp,
                                                             color: selectIndex == index
-                                                                ? ERPTheme
+                                                                ? AppTheme
                                                                     .WHITE_COLOR
-                                                                : ERPTheme
+                                                                : AppTheme
                                                                     .GREY_COLOR,
                                                           ),
                                                         ),
@@ -138,7 +138,11 @@ class _ListViewTableState extends State<ListViewTable> {
                           }),
                         );
                       }
-                      return SizedBox();
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: AppTheme.BASE_COLOR,
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -157,139 +161,46 @@ class _ListViewTableState extends State<ListViewTable> {
                       if (snapshot.hasData) {
                         return Consumer<GetTableProvider>(
                           builder: ((context, model, _) {
-                            return GridView.builder(
+                            return SingleChildScrollView(
+                                child: GridView.count(
+                              crossAxisCount: 2,
+                              childAspectRatio: (0.8 / .4),
                               shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                mainAxisSpacing: 15,
-                                crossAxisSpacing: 20,
-                                childAspectRatio: 1 / .5,
-                              ),
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (_, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            TableDetail(data: snapshot.data![index]),
-                                      ),
-                                    );
-                                  },
+                              children:
+                                  List.generate(snapshot.data!.length, (index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(10.0),
                                   child: Container(
-                                    height: 300.h,
-                                    width: 30,
-                                    child: Column(
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 35),
-                                            child: Container(
-                                              // height: 14.h,
-                                              width: 90.w,
-                                              decoration: BoxDecoration(
-                                                  color: ERPTheme.CARD_COLOR,
-                                                  borderRadius:
-                                                      BorderRadius.circular(5)),
-                                            ),
+                                    color: AppTheme.GREY_COLOR,
+                                    child: Container(
+                                      padding: const EdgeInsets.all(16),
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          left: BorderSide(
+                                            color: AppTheme.GREEN_COLOR,
+                                            width: 15,
                                           ),
                                         ),
-                                        Row(
-                                          children: [
-                                            Container(
-                                              height: 60.h,
-                                              width: 10.w,
-                                              decoration: BoxDecoration(
-                                                  color: ERPTheme.CARD_COLOR,
-                                                  borderRadius:
-                                                      BorderRadius.circular(5)),
-                                            ),
-                                            SizedBox(
-                                              height: 70.h,
-                                              width: 100.w,
-                                              child: Card(
-                                                color: ERPTheme.CARD_COLOR,
-                                                child: ClipPath(
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            16),
-                                                    decoration: BoxDecoration(
-                                                      border: Border(
-                                                        left: BorderSide(
-                                                          color: ERPTheme
-                                                              .GREEN_COLOR,
-                                                          width: 15,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        snapshot
-                                                            .data![index].name!,
-                                                        style: const TextStyle(
-                                                            fontSize: 18,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  clipper: ShapeBorderClipper(
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                        3,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              height: 60.h,
-                                              width: 10.w,
-                                              decoration: BoxDecoration(
-                                                  color: ERPTheme.CARD_COLOR,
-                                                  borderRadius:
-                                                      BorderRadius.circular(5)),
-                                            ),
-                                            const SizedBox(
-                                              width: 10,
-                                            )
-                                          ],
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          snapshot.data![index].name!,
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 35),
-                                            child: Container(
-                                              // height: 14.h,
-                                              width: 90.w,
-                                              decoration: BoxDecoration(
-                                                  color: ERPTheme.CARD_COLOR,
-                                                  borderRadius:
-                                                      BorderRadius.circular(5)),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                      ),
                                     ),
                                   ),
                                 );
-                              },
-                            );
+                              }),
+                            ));
                           }),
                         );
                       }
                       return Center(
                         child: CircularProgressIndicator(
-                          color: ERPTheme.BASE_COLOR,
+                          color: AppTheme.BASE_COLOR,
                         ),
                       );
                     },

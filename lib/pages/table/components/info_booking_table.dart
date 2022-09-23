@@ -22,17 +22,17 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: ERPTheme.WHITE_COLOR,
+        backgroundColor: AppTheme.WHITE_COLOR,
         centerTitle: true,
         title: Text(
           "ປ້ອນຂໍ້ມູນການຈອງ",
           style: TextStyle(
-              fontFamily: 'Phetsarath-OT',
-              color: ERPTheme.BLACK_COLOR,
+              color: AppTheme.BLACK_COLOR,
               fontWeight: FontWeight.bold,
               fontSize: 18.sp),
         ),
       ),
+      
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
@@ -45,7 +45,6 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                   Text(
                     "ຊື່ ແລະ ນາມສະກຸນ *",
                     style: TextStyle(
-                      fontFamily: 'Phetsarath-OT',
                       fontSize: 15.sp,
                     ),
                   ),
@@ -64,7 +63,7 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                       border: InputBorder.none,
                       hintText: "ປ້ອນຂໍ້ມູນ",
                       hintStyle: TextStyle(
-                        fontFamily: 'Phetsarath-OT',
+                        fontFamily: "NotoSansLao-Regular",
                         fontSize: 15.sp,
                       ),
                     ),
@@ -75,7 +74,6 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                   Text(
                     "ເບີໂທຕິດຕໍ່ *",
                     style: TextStyle(
-                      fontFamily: 'Phetsarath-OT',
                       fontSize: 15.sp,
                     ),
                   ),
@@ -94,7 +92,7 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                       border: InputBorder.none,
                       hintText: "ປ້ອນຂໍ້ມູນ",
                       hintStyle: TextStyle(
-                        fontFamily: 'Phetsarath-OT',
+                        fontFamily: "NotoSansLao-Regular",
                         fontSize: 15.sp,
                       ),
                     ),
@@ -105,7 +103,6 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                   Text(
                     "ຈຳນວນລູກຄ້າ *",
                     style: TextStyle(
-                      fontFamily: 'Phetsarath-OT',
                       fontSize: 15.sp,
                     ),
                   ),
@@ -124,7 +121,7 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                       border: InputBorder.none,
                       hintText: "ປ້ອນຂໍ້ມູນ",
                       hintStyle: TextStyle(
-                        fontFamily: 'Phetsarath-OT',
+                        fontFamily: "NotoSansLao-Regular",
                         fontSize: 15.sp,
                       ),
                     ),
@@ -135,7 +132,6 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                   Text(
                     "ວັນທີ ແລະ ເວລາ *",
                     style: TextStyle(
-                      fontFamily: 'Phetsarath-OT',
                       fontSize: 15.sp,
                     ),
                   ),
@@ -151,12 +147,8 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                   Text(
                     "ລາຍລະອຽດ ແລະອື່ນໆ *",
                     style: TextStyle(
-                      fontFamily: 'Phetsarath-OT',
                       fontSize: 15.sp,
                     ),
-                  ),
-                  SizedBox(
-                    height: 10.h,
                   ),
                   InputDetail(
                     hintext: "",
@@ -166,7 +158,7 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                     height: 10.h,
                   ),
                   GestureDetector(
-                    onTap: () {
+                    onTap: (){
                       if (fromkey.currentState!.validate()) {
                         Mystyle().showdialogsuccess(context, "ແຈ້ງເຕືອນ", "ທ່ານໄດ້ຈອງໂຕະສຳເລັດແລ້ວ");
                       }
@@ -175,16 +167,15 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                       width: double.infinity,
                       padding: EdgeInsets.symmetric(vertical: 15.h),
                       decoration: BoxDecoration(
-                        color: ERPTheme.BASE_COLOR,
+                        color: AppTheme.BASE_COLOR,
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Center(
                         child: Text(
                           "ຈອງໂຕະ",
                           style: TextStyle(
-                              fontFamily: 'Phetsarath-OT',
                               fontWeight: FontWeight.bold,
-                              color: ERPTheme.WHITE_COLOR,
+                              color: AppTheme.WHITE_COLOR,
                               fontSize: 16.sp),
                         ),
                       ),

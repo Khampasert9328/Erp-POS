@@ -1,12 +1,11 @@
 import 'package:erp_pos/constant/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TextContainer extends StatefulWidget {
   String hintext;
-  String suffixIcon;
-  TextContainer({required this.hintext, required this.suffixIcon});
-
+  String suffixIcon; 
+  TextContainer({required this.hintext,required this.suffixIcon});
+  
   @override
   State<TextContainer> createState() => _TextContainerState();
 }
@@ -15,33 +14,26 @@ class _TextContainerState extends State<TextContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: ERPTheme.GREY_COLOR,
-        border: Border.all(color: ERPTheme.WHITE_COLOR),
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-        child: TextField(
-          decoration: InputDecoration(
-            suffixIcon: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                widget.suffixIcon,
-                style: TextStyle(
-                  fontFamily: 'Phetsarath-OT',
-                  fontSize: 16.sp,
-                ),
-              ),
-            ),
-            border: InputBorder.none,
-            hintText: widget.hintext,
-            hintStyle: TextStyle(
-              fontFamily: 'Phetsarath-OT',
+        decoration: BoxDecoration(
+          color: AppTheme.GREY_COLOR,
+          border: Border.all(color: AppTheme.WHITE_COLOR),
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 20.0,
+          ),
+          child: TextField(
+            decoration: InputDecoration(
+         suffixIcon: Padding(
+           padding: const EdgeInsets.all(8.0),
+           child: Text(widget.suffixIcon),
+         ),
+              border: InputBorder.none,
+              hintText: widget.hintext,
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }

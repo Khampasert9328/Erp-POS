@@ -66,14 +66,14 @@ class _TableBodyState extends State<TableBody> {
                         "ສະຖານະປັດຈຸບັນ",
                         style: TextStyle(
                           fontFamily: "Phetsarath-OT",
-                          color: ERPTheme.BASE_COLOR,
+                          color: AppTheme.BASE_COLOR,
                           fontWeight: FontWeight.bold,
                           fontSize: 25.sp,
                         ),
                       ),
                       Container(
                         decoration: BoxDecoration(
-                            color: ERPTheme.BLACK_COLOR,
+                            color: AppTheme.BLACK_COLOR,
                             borderRadius: BorderRadius.circular(5)),
                         height: 5.h,
                         width: 20.w,
@@ -125,7 +125,7 @@ class _TableBodyState extends State<TableBody> {
                       style: TextStyle(
                         fontFamily: "Phetsarath-OT",
                         fontSize: 20.sp,
-                        color: ERPTheme.GREEN_COLOR,
+                        color: AppTheme.GREEN_COLOR,
                       ),
                     ),
                   ],

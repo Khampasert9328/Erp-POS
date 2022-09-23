@@ -15,21 +15,20 @@ class _SearchTableState extends State<SearchTable> {
     return Expanded(
       child: Container(
         decoration: BoxDecoration(
-          color: ERPTheme.GREY_COLOR,
-          border: Border.all(color: ERPTheme.WHITE_COLOR),
-          borderRadius: BorderRadius.circular(15),
+          color: AppTheme.GREY_COLOR,
+          border: Border.all(color: AppTheme.WHITE_COLOR),
+          borderRadius: BorderRadius.circular(5),
         ),
         child: Padding(
           padding: const EdgeInsets.only(
-            left: 15.0,
+            left: 20.0,
           ),
           child: TextField(
             decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: 'ຄົ້ນຫາໂຕະ',
                 hintStyle: TextStyle(
-                  fontFamily: "Phetsarath-OT",
-                  fontSize: 14.sp,
+                  fontSize: 15.sp,
                 )),
           ),
         ),

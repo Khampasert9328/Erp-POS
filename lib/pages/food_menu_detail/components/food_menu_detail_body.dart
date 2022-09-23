@@ -5,6 +5,7 @@ import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/foodmenu/food_menu_models.dart';
 import 'package:erp_pos/pages/food_menu/food_menu.dart';
 import 'package:erp_pos/widget/add_amount.dart';
+import 'package:erp_pos/widget/add_amount_detail.dart';
 import 'package:erp_pos/widget/add_on_dialog.dart';
 import 'package:erp_pos/widget/erp_textfield.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,6 @@ class FoodMenuDetailBody extends StatefulWidget {
 class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
   ERPFoodSize erpFoodSize = ERPFoodSize.Small;
   TextEditingController detail = TextEditingController();
-  int number = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -32,19 +32,26 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
           Stack(
             children: [
               CachedNetworkImage(
-               errorWidget: (context, url, error) => Icon(Icons.image_outlined,size: 70,color: ERPTheme.GREY_COLOR),
+                errorWidget: (context, url, error) => Icon(
+                  Icons.image_outlined,
+                  size: 70,
+                  color: AppTheme.GREY_COLOR,
+                ),
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: 300.h,
                 imageUrl: widget.data!.thumbnails!.first.uri!,
                 placeholder: (context, url) => Center(
                   child: CircularProgressIndicator(
-                    color: ERPTheme.BASE_COLOR,
+                    color: AppTheme.BASE_COLOR,
                   ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 30.h),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 15.w,
+                  vertical: 30.h,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -84,23 +91,21 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                AddAmountDetait(),
+                SizedBox(
+                  height: 15.h,
+                ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    AddAmount( number: number,),
-                    Row(
-                      children: [
-                        buildSize('S', ERPFoodSize.Small),
-                        SizedBox(
-                          width: 7.w,
-                        ),
-                        buildSize('M', ERPFoodSize.Medium),
-                        SizedBox(
-                          width: 7.w,
-                        ),
-                        buildSize('L', ERPFoodSize.Large),
-                      ],
-                    )
+                    buildSize('S', ERPFoodSize.Small),
+                    SizedBox(
+                      width: 7.w,
+                    ),
+                    buildSize('M', ERPFoodSize.Medium),
+                    SizedBox(
+                      width: 7.w,
+                    ),
+                    buildSize('L', ERPFoodSize.Large),
                   ],
                 ),
                 SizedBox(
@@ -109,7 +114,7 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
                 Text(
                   widget.data!.name!,
                   style: TextStyle(
-                      color: ERPTheme.BASE_COLOR,
+                      color: AppTheme.BASE_COLOR,
                       fontSize: 24.sp,
                       fontWeight: FontWeight.w600),
                 ),
@@ -118,7 +123,7 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
                 ),
                 Text(
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Non adipiscing diam volutpat cursus. A gravida at urna, sollicitudin aliquam arcu. ',
-                  style: TextStyle(color: ERPTheme.BASE_COLOR, fontSize: 14.sp),
+                  style: TextStyle(color: AppTheme.BASE_COLOR, fontSize: 14.sp),
                 ),
                 SizedBox(
                   height: 7.h,
@@ -156,7 +161,7 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
                 ),
                 Text(
                   'ລາຍລະອຽດອື່ນໆ',
-                  style: TextStyle(fontSize: 15.sp, color: ERPTheme.BASE_COLOR),
+                  style: TextStyle(fontSize: 15.sp, color: AppTheme.BASE_COLOR),
                 ),
                 SizedBox(
                   height: 6.h,
@@ -180,23 +185,23 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
     );
   }
 
-  Padding buildOtherMenu() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 7.h),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          AddAmount(
-           number: number,
-            title: 'Cheese',
-          ),
-          Text(
-            '15,000 Kip',
-            style: TextStyle(fontSize: 15.sp, color: ERPTheme.BASE_COLOR),
-          )
-        ],
-      ),
-    );
+  SizedBox buildOtherMenu() {
+    return SizedBox(
+      height: 50.h,
+      child:  Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            AddAmountDetait(
+              title: 'Cheese',
+            ),
+            Text(
+              '15,000 Kip',
+              style: TextStyle(fontSize: 15.sp, color: AppTheme.BASE_COLOR),
+            )
+          ],
+        ),
+      );
+  
   }
 
   GestureDetector buildSize(String title, ERPFoodSize size) {
@@ -210,10 +215,10 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
         padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(3.r),
-            color: erpFoodSize == size ? ERPTheme.BASE_COLOR : Colors.white,
+            color: erpFoodSize == size ? AppTheme.BASE_COLOR : Colors.white,
             border: Border.all(
                 color: erpFoodSize == size
-                    ? ERPTheme.BASE_COLOR
+                    ? AppTheme.BASE_COLOR
                     : Color(0xFFD9D9D9))),
         child: Text(
           title,

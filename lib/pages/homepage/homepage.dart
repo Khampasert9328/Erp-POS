@@ -11,7 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 0;
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
                 ))
             .toList(),
         currentIndex: _selectedIndex,
-        selectedItemColor: ERPTheme.BASE_COLOR,
+        selectedItemColor: AppTheme.BASE_COLOR,
         onTap: _onItemTapped,
       ),
     );

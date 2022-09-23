@@ -1,5 +1,6 @@
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/add_food_type_dialog.dart';
 import 'package:erp_pos/widget/erp_textfield.dart';
 import 'package:erp_pos/widget/food_menu_card.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:erp_pos/constant/routes.dart' as custom_route;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class FoodMenuBody extends StatefulWidget {
@@ -26,23 +28,13 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
     'ນ້ຳ',
   ];
 
-  String selectedFoodType = '';
+  String selectedFoodType = 'ເຂົ້າລາດໜ້າ';
   int amount = 50000;
   double _initFabHeight = 120.0;
   double _fabHeight = 0;
   double _panelHeightOpen = 0;
   double _panelHeightClosed = 95.0;
   bool isSelectedMenuCard = true;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    setState(() {
-      selectedFoodType = foodType.first;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     _initFabHeight = MediaQuery.of(context).size.height * 0.14;
@@ -75,39 +67,6 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
     );
   }
 
-  // ElevatedButton buildFloatingButton(BuildContext context) {
-  //   return ElevatedButton(
-  //     style: ElevatedButton.styleFrom(
-  //         padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
-  //         primary: ERPTheme.BASE_COLOR,
-  //         shape: RoundedRectangleBorder(
-  //             borderRadius: BorderRadius.circular(10.r))),
-  //     onPressed: () {
-  //       Navigator.pushNamed(context, custom_route.Route.addfoodmenu);
-  //     },
-  //     child: Row(
-  //       mainAxisSize: MainAxisSize.min,
-  //       children: [
-  //         Image.asset(
-  //           ERPImages.icSoup,
-  //           width: 25.w,
-  //           height: 25.h,
-  //         ),
-  //         SizedBox(
-  //           width: 10.w,
-  //         ),
-  //         Text(
-  //           'ເພີ່ມລາຍການ',
-  //           style: TextStyle(
-  //               fontSize: 14.sp,
-  //               fontWeight: FontWeight.w600,
-  //               color: Colors.white),
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
-
   Padding buildBody(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -137,68 +96,68 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
                   onPressed: () {},
                   icon: Icon(
                     Icons.search,
-                    size: 45,
+                    size: (45.w + 45.h) / 2,
                   ))
             ],
           ),
           SizedBox(
             height: 15.h,
           ),
-          SizedBox(
-            height: 30.h,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                IconButton(
-                    color: Colors.red,
-                    onPressed: () {
-                      addFoodTypeDialog(context);
-                    },
-                    icon: Icon(
-                      Icons.add,
-                      color: ERPTheme.BASE_COLOR,
-                      size: 30,
-                    )),
-                SizedBox(
-                  width: 10.w,
-                ),
-                Expanded(
-                    child: ListView.builder(
-                  itemCount: foodType.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedFoodType = foodType[index];
-                        });
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 30),
-                        child: Text(
-                          foodType[index],
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Color(selectedFoodType == foodType[index]
-                                  ? 0xFF283150
-                                  : 0xFF999DAA),
-                              fontSize: 18.sp,
-                              decoration: selectedFoodType == foodType[index]
-                                  ? TextDecoration.underline
-                                  : TextDecoration.none),
-                        ),
-                      ),
-                    );
-                  },
-                ))
-              ],
-            ),
-          ),
+          // SizedBox(
+          //   height: 30.h,
+          //   child: Row(
+          //     crossAxisAlignment: CrossAxisAlignment.center,
+          //     children: [
+          //       IconButton(
+          //           color: Colors.red,
+          //           onPressed: () {
+          //             addFoodTypeDialog(context);
+          //           },
+          //           icon: Icon(
+          //             Icons.add,
+          //             color: AppTheme.BASE_COLOR,
+          //             size: 30,
+          //           )),
+          //       SizedBox(
+          //         width: 10.w,
+          //       ),
+          //       Expanded(
+          //           child: ListView.builder(
+          //         itemCount: foodType.length,
+          //         scrollDirection: Axis.horizontal,
+          //         itemBuilder: (context, index) {
+          //           return GestureDetector(
+          //             onTap: () {
+          //               setState(() {
+          //                 selectedFoodType = foodType[index];
+          //               });
+          //             },
+          //             child: Padding(
+          //               padding: EdgeInsets.symmetric(horizontal: 30),
+          //               child: Text(
+          //                 foodType[index],
+          //                 style: TextStyle(
+          //                     fontWeight: FontWeight.w700,
+          //                     color: Color(selectedFoodType == foodType[index]
+          //                         ? 0xFF283150
+          //                         : 0xFF999DAA),
+          //                     fontSize: 18.sp,
+          //                     decoration: selectedFoodType == foodType[index]
+          //                         ? TextDecoration.underline
+          //                         : TextDecoration.none),
+          //               ),
+          //             ),
+          //           );
+          //         },
+          //       ))
+          //     ],
+          //   ),
+          // ),
           SizedBox(
             height: 10.h,
           ),
           Expanded(
-            child: FoodMenuCard()
+            child: FoodMenuCard(),
           ),
         ],
       ),
@@ -211,12 +170,13 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
         removeTop: true,
         child: isSelectedMenuCard
             ? SelectedMenuCardExpand(
-                onNext: () {
+                onNext: () async {
                   setState(() {
                     isSelectedMenuCard = !isSelectedMenuCard;
                   });
                 },
                 scrollController: sc,
+                selectMenu: isSelectedMenuCard,
               )
             : PlaceToEatCard(
                 scrollController: sc,

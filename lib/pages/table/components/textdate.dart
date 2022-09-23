@@ -36,7 +36,7 @@ class _ERPdateState extends State<ERPdate> {
                 return Theme(
                   data: Theme.of(context).copyWith(
                     colorScheme: ColorScheme.light(
-                      primary: ERPTheme.BASE_COLOR, // header background color
+                      primary: AppTheme.BASE_COLOR, // header background color
                       // onPrimary: Colors.black, // header text color
                       // onSurface: Colors.green, // body text color
                     ),
@@ -66,13 +66,13 @@ class _ERPdateState extends State<ERPdate> {
           },
           child: Container(
             padding: EdgeInsets.symmetric(
-              horizontal: 10.w,
+              horizontal: 15.w,
               vertical: 5.h,
             ),
             decoration: BoxDecoration(
-              color: ERPTheme.GREY_COLOR,
+              color: AppTheme.GREY_COLOR,
               borderRadius: BorderRadius.circular(
-                5.r,
+                10.r,
               ),
             ),
             child: Row(
@@ -83,6 +83,7 @@ class _ERPdateState extends State<ERPdate> {
                   width: 30.w,
                   height: 30.h,
                 ),
+                SizedBox(width: 10.w,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

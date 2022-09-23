@@ -10,11 +10,11 @@ class AddFoodMenu extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: ERPTheme.BASE_COLOR),
+        iconTheme: IconThemeData(color: AppTheme.BASE_COLOR),
         backgroundColor: Colors.white,
         title: Text('ເພີ່ມລາຍການ',
             style: TextStyle(
-                color: ERPTheme.BASE_COLOR, fontWeight: FontWeight.w600)),
+                color: AppTheme.BASE_COLOR, fontWeight: FontWeight.w600)),
         centerTitle: true,
       ),
       body: AddFoodMenuBody(),

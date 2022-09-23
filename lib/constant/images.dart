@@ -28,5 +28,13 @@ class ERPImages {
   static const onboarding = 'images/coffee-shop-rafiki.png';
   static const onboard = 'images/eating-togeter-rafiki.png';
   static const onboardScreen = 'images/waiter-rafiki.png';
-  
+  static const icondelete = 'images/iconDelete.png';
+  static const animation = 'images/logo-animation.gif';
+  static const categcory = 'images/categcory.png';
+  static const printbill = 'images/printbill.png';
+  static const cart = 'images/Cart.png';  
+  static const meney = 'images/money 1.png';
+  static const addcart = 'images/addcart.png';
+  static const success = 'images/success.gif';
+  static const iconforbill = 'images/iconforbill.png';
 }
