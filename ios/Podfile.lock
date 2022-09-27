@@ -1,4 +1,8 @@
 PODS:
+  - device_info_plus (0.0.1):
+    - Flutter
+  - devla_sunmi (0.0.1):
+    - Flutter
   - Flutter (1.0.0)
   - flutter_native_splash (0.0.1):
     - Flutter
@@ -14,6 +18,8 @@ PODS:
     - FMDB (>= 2.7.5)
 
 DEPENDENCIES:
+  - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
+  - devla_sunmi (from `.symlinks/plugins/devla_sunmi/ios`)
   - Flutter (from `Flutter`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
@@ -25,6 +31,10 @@ SPEC REPOS:
     - FMDB
 
 EXTERNAL SOURCES:
+  device_info_plus:
+    :path: ".symlinks/plugins/device_info_plus/ios"
+  devla_sunmi:
+    :path: ".symlinks/plugins/devla_sunmi/ios"
   Flutter:
     :path: Flutter
   flutter_native_splash:
@@ -37,6 +47,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
 
 SPEC CHECKSUMS:
+  device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
+  devla_sunmi: 4e8b680dafc1706a1b68500f613bcac502365078
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
