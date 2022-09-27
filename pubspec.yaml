@@ -25,10 +25,11 @@ dependencies:
   cached_network_image: ^3.2.1
   sqflite: ^2.0.3+1
   badges: ^2.0.3
-  device_info_plus: ^4.1.2
   devla_sunmi: ^2.0.2
   codecamp_onepay: ^1.0.0
   qr_flutter: ^4.0.0
+  get_ip_address: ^0.0.5
+  device_info_plus: ^4.1.2
 
 dev_dependencies:
   flutter_test:

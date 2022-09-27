@@ -15,14 +15,16 @@ class paycash extends StatefulWidget {
 }
 
 class _paycashState extends State<paycash> {
-  bool ischangcolor = false;
-
-  TextEditingController? money = TextEditingController();
+  TextEditingController money = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    int totalamount = context.read<GetFoodMenuProvider>().totalamont;
-    int sumall = int.parse(money!.text) - totalamount;
+    int? totalamount = context.read<GetFoodMenuProvider>().totalamont;
+    String myMoney = money.text.replaceAll(',', '');
+    int sumall = 0;
+    if(myMoney.isNotEmpty){
+      sumall = int.parse(myMoney) - totalamount;
+    }
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -39,18 +41,11 @@ class _paycashState extends State<paycash> {
           child: Container(
             width: double.infinity,
             child: FloatingActionButton(
-              backgroundColor: money!.text.length >
-                      context.read<GetFoodMenuProvider>().totalamont
-                  ? AppTheme.GREY_COLOR
-                  : AppTheme.BASE_COLOR,
+              backgroundColor: AppTheme.BASE_COLOR,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              onPressed: () {
-
-                
-                
-              },
+              onPressed: () {},
               child: Text(
                 "ຊຳລະເງິນ",
                 style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
@@ -89,7 +84,7 @@ class _paycashState extends State<paycash> {
                         suffixIcon: Padding(
                           padding: const EdgeInsets.only(top: 15, right: 5),
                           child: Text(
-                            '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ',
+                            '${context.read<GetFoodMenuProvider>().totalamont} ກີບ',
                             style: TextStyle(color: AppTheme.RED_COLOR),
                           ),
                         ),
@@ -138,7 +133,7 @@ class _paycashState extends State<paycash> {
                           width: 15.w,
                         ),
                         Text(
-                          "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(sumall)} ກີບ",
+                          " ກີບ",
                           style: TextStyle(
                               fontSize: 16.sp, fontWeight: FontWeight.bold),
                         ),

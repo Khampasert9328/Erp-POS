@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_string_interpolations, use_build_context_synchronously, unused_import, depend_on_referenced_packages
 
 import 'dart:convert';
+
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:erp_pos/constant/api_path.dart';
 import 'package:erp_pos/model/createordermodel/create_order_models.dart';
@@ -10,6 +11,7 @@ import 'package:erp_pos/pages/table/components/textdatetime.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get_ip_address/get_ip_address.dart';
 import 'package:intl/intl.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,7 +39,6 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
     var prefixsup = partsup[0].trim(); // prefix: "date"
     var dateSup = partsup.sublist(0).join('').trim();
 
-
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? idtoken = preferences.getString("content");
     //ວິທີການເເຕກເອົາຂໍ້ມູນໃນ token
@@ -47,11 +48,14 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
     String userid = decodedToken['sub'];
     String domain = decodedToken['domain'];
 ////////////////////////////////////////////////////////////////////////////
+    var ipAddress = IpAddress(type: RequestType.json);
+    var ip = await ipAddress.getIpAddress();
+
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-    String ip = androidInfo.device!; // e.g. "Moto G (4)"
+    String? computer = await androidInfo.model;
 
-    IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+    // e.g. "Moto G (4)"
 
     SharedPreferences pri = await SharedPreferences.getInstance();
     String? billNo = pri.getString(CountPre().billNo);
@@ -77,7 +81,7 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
         "timeCooked": "string",
         "categoryOrder": {
           "categoryId": "${item.data.categoryid}",
-          "categoryName": "string",
+          "categoryName": "${item.data.categoryname}",
         }
       });
     }
@@ -105,16 +109,16 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
           "modified":
               '${DateFormat("yyyMMdd HH:mm:ss").format(DateTime.now())}',
           "modifiedID": "$userid",
-          "ipAddress": "string",
+          "ipAddress": "$ip",
           "createID": "$userid",
           "created": 0,
-          "computer": "string",
+          "computer": "$computer",
           "note": "Order Food"
         }
       },
       "bill": {
         "id": "string",
-        "prefixid": billNo,
+        "prefixid": "none",
         "issuedate": "${DateFormat("yyyMMdd").format(DateTime.now())}",
         "date": "${DateFormat("yyy-MM-dd HH:mm:ss").format(DateTime.now())}",
         "discount": 0,
@@ -125,14 +129,14 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
         "paymentMethod": 0,
         "timeReport": "string",
         "time": "string",
-        "domain": "string",
+        "domain": "$domain",
         "metaData": {
           "modified": 0,
           "modifiedID": "$userid",
-          "ipAddress": "string",
+          "ipAddress": "$ip",
           "createID": "$userid",
           "created": 0,
-          "computer": "string",
+          "computer": "$computer",
           "note": "Order Food"
         }
       },

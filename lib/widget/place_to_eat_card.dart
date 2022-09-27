@@ -95,93 +95,95 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                 CheckExpiredPackage()
                     .getCheckExpiredPackage(context)
                     .then((value) async {
-                  PrintBillKitchenProvider().getprint();
+            //       PrintBillKitchenProvider().getprint();
 
-                SharedPreferences preferences =
-                    await SharedPreferences.getInstance();
-                String? getzone = preferences.getString(CountPre().idzone);
-                SharedPreferences pri = await SharedPreferences.getInstance();
-                String? billNo = pri.getString(CountPre().billNo);
+            //     SharedPreferences preferences =
+            //         await SharedPreferences.getInstance();
+            //     String? getzone = preferences.getString(CountPre().idzone);
+            //     SharedPreferences pri = await SharedPreferences.getInstance();
+            //     String? billNo = pri.getString(CountPre().billNo);
 
-                try {
+            //     print("billNO:$billNo");
+
+            //     try {
                   
-                await SunmiPrinter.startTransactionPrint();
-                await SunmiPrinter.printText('ໃບບິນຫ້ອງຄົວ',
-                    style: SunmiStyle(
-                        align: SunmiPrintAlign.CENTER,
-                        bold: true,
-                        fontSize: SunmiFontSize.LG));
-                await SunmiPrinter.line();
+            //     await SunmiPrinter.startTransactionPrint();
+            //     await SunmiPrinter.printText('ໃບບິນຫ້ອງຄົວ',
+            //         style: SunmiStyle(
+            //             align: SunmiPrintAlign.CENTER,
+            //             bold: true,
+            //             fontSize: SunmiFontSize.LG));
+            //     await SunmiPrinter.line();
 
-                await SunmiPrinter.printRow(cols: [
-                  ColumnMaker(text: 'ໃບບິນເລກທີ', width: 6),
-                  ColumnMaker(
-                      text: '$billNo',
-                      width: 6,
-                      align: SunmiPrintAlign.RIGHT),
-                ]);
+            //     await SunmiPrinter.printRow(cols: [
+            //       ColumnMaker(text: 'ໃບບິນເລກທີ', width: 6),
+            //       ColumnMaker(
+            //           text: '$billNo',
+            //           width: 6,
+            //           align: SunmiPrintAlign.RIGHT),
+            //     ]);
 
-                await SunmiPrinter.printRow(cols: [
-                  ColumnMaker(text: 'ວັນເວລາ', width: 6),
-                  ColumnMaker(
-                      text: '${DateFormat("yyy-MM-dd HH:mm").format(DateTime.now())}',
-                      width: 6,
-                      align: SunmiPrintAlign.RIGHT),
+            //     await SunmiPrinter.printRow(cols: [
+            //       ColumnMaker(text: 'ວັນເວລາ', width: 6),
+            //       ColumnMaker(
+            //           text: '${DateFormat("yyy-MM-dd HH:mm").format(DateTime.now())}',
+            //           width: 6,
+            //           align: SunmiPrintAlign.RIGHT),
                       
-                ]);
-                await SunmiPrinter.printRow(cols: [
-                  ColumnMaker(text: 'ໂຊນ ຫຼື ພື້ນທີ່', width: 6),
-                  ColumnMaker(
-                      text: '$getzone',
-                      width: 6,
-                      align: SunmiPrintAlign.RIGHT),
+            //     ]);
+            //     await SunmiPrinter.printRow(cols: [
+            //       ColumnMaker(text: 'ໂຊນ ຫຼື ພື້ນທີ່', width: 6),
+            //       ColumnMaker(
+            //           text: '$getzone',
+            //           width: 6,
+            //           align: SunmiPrintAlign.RIGHT),
                       
-                ]);
-                await SunmiPrinter.printRow(cols: [
-                  ColumnMaker(text: 'ເລກໂຕະ', width: 6),
-                  ColumnMaker(
-                      text: '$getidtable',
-                      width: 6,
-                      align: SunmiPrintAlign.RIGHT),
+            //     ]);
+            //     await SunmiPrinter.printRow(cols: [
+            //       ColumnMaker(text: 'ເລກໂຕະ', width: 6),
+            //       ColumnMaker(
+            //           text: '$getidtable',
+            //           width: 6,
+            //           align: SunmiPrintAlign.RIGHT),
                       
-                ]);
+            //     ]);
 
 
-                await SunmiPrinter.line();
-                await SunmiPrinter.printText('ລາຍການອາຫານ',
-                    style: SunmiStyle(
-                        align: SunmiPrintAlign.CENTER,
-                        bold: true,
-                        fontSize: SunmiFontSize.MD));
+            //     await SunmiPrinter.line();
+            //     await SunmiPrinter.printText('ລາຍການອາຫານ',
+            //         style: SunmiStyle(
+            //             align: SunmiPrintAlign.CENTER,
+            //             bold: true,
+            //             fontSize: SunmiFontSize.MD));
 
-                  for (var data in context.read<GetFoodMenuProvider>().getFoodMenuModel) {
+            //       for (var data in context.read<GetFoodMenuProvider>().getFoodMenuModel) {
 
-                    await SunmiPrinter.printRow(cols: [
-                  ColumnMaker(text: '${data.data.name}', width: 6),
-                  ColumnMaker(
-                      text: '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.number)} x ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.totalAmount)}',
-                      width: 6,
-                      align: SunmiPrintAlign.RIGHT),
-                ]);
+            //         await SunmiPrinter.printRow(cols: [
+            //       ColumnMaker(text: '${data.data.name}', width: 6),
+            //       ColumnMaker(
+            //           text: '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.number)} x ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.totalAmount)}',
+            //           width: 6,
+            //           align: SunmiPrintAlign.RIGHT),
+            //     ]);
                     
-                  }
-                await SunmiPrinter.line();
+            //       }
+            //     await SunmiPrinter.line();
                 
 
-                await SunmiPrinter.printText('ຂໍຂອບໃຈ',
-                    style: SunmiStyle(
-                        align: SunmiPrintAlign.CENTER,
-                        bold: true,
-                        fontSize: SunmiFontSize.MD));
-                await SunmiPrinter.lineWrap(3);
-                await SunmiPrinter.submitTransactionPrint();
-                await SunmiPrinter.exitTransactionPrint();
-                } catch (e) {
+            //     await SunmiPrinter.printText('ຂໍຂອບໃຈ',
+            //         style: SunmiStyle(
+            //             align: SunmiPrintAlign.CENTER,
+            //             bold: true,
+            //             fontSize: SunmiFontSize.MD));
+            //     await SunmiPrinter.lineWrap(3);
+            //     await SunmiPrinter.submitTransactionPrint();
+            //     await SunmiPrinter.exitTransactionPrint();
+            //     } catch (e) {
 
-                  print("error:$e");
+            //       print("error:$e");
                   
-                }
-             });
+            //     }
+              });
                 showDialog(
                     context: context,
                     builder: (_) {

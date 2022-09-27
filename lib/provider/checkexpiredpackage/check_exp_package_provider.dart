@@ -1,3 +1,5 @@
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:erp_pos/model/checkexpiredpackage/check_expired_package.dart';
 import 'package:erp_pos/model/createordermodel/create_order_models.dart';
 import 'package:erp_pos/model/food_menu_model.dart';
@@ -7,6 +9,7 @@ import 'package:erp_pos/services/createroder/create_order_service.dart';
 import 'package:erp_pos/services/getpackage/getpackage.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get_ip_address/get_ip_address.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CheckExpiredPackage extends ChangeNotifier {
@@ -14,9 +17,10 @@ class CheckExpiredPackage extends ChangeNotifier {
   List<CheckExpiredPackageMedels> get getchecklist => checkList;
 
   Future<List<CheckExpiredPackageMedels>?> getCheckExpiredPackage(
+    
       BuildContext context) async {
     CheckExpiredPackageMedels? package = await checkExpiredPackage();
-    print("dateSubscribe:${package!.dateSubscribe.toString()}");
+
     if (package != null) {
       SharedPreferences packageid = await SharedPreferences.getInstance();
       packageid.setString(CountPre().packageId, package.packageId.toString());
@@ -33,10 +37,12 @@ class CheckExpiredPackage extends ChangeNotifier {
 
       if (getPackageModels != null) {
         CreateOrderModels? createOrderModels = await createOrder(context);
-
+      print("create:$createOrderModels");
         if (createOrderModels != null) {
+          String billid = createOrderModels.billNo!;
           SharedPreferences pre = await SharedPreferences.getInstance();
-          pre.setString(CountPre().billNo, createOrderModels.billNo!);
+          pre.setString(CountPre().billNo, billid);
+          
         }
       }
     }

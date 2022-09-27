@@ -40,7 +40,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
     super.initState();
   }
 
-  List<Category> listcategory = [];
+ 
   // Future<Null> getdataformsqlite() async {
   //   var object = await SQLiteERPPOS().getData();
   //   setState(() {

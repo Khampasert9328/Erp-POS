@@ -52,6 +52,7 @@ class Product {
     Product({
         this.thumbnails,
         this.categoryid,
+        this.categoryname,
         this.name,
         this.size,
         this.pricesale,
@@ -65,6 +66,7 @@ class Product {
 
     List<Thumbnail>? thumbnails;
     String? categoryid;
+    String? categoryname;
     String? name;
     List<Size>? size;
     int? pricesale;
