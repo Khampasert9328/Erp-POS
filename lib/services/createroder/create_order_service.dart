@@ -148,11 +148,6 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
         body: payload);
 
     if (respones.statusCode == 200) {
-      CreateOrderModels data = createOrderModelsFromJson(respones.body);
-      if (data == 'billNo') {
-        SharedPreferences pre = await SharedPreferences.getInstance();
-        pre.setString(CountPre().billNo, data.billNo.toString());
-      }
       return createOrderModelsFromJson(respones.body);
     }
   } catch (e) {

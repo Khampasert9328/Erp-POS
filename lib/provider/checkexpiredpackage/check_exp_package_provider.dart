@@ -12,9 +12,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CheckExpiredPackage extends ChangeNotifier {
   List<CheckExpiredPackageMedels> checkList = [];
   List<CheckExpiredPackageMedels> get getchecklist => checkList;
-  
 
-  Future<List<CheckExpiredPackageMedels>?> getCheckExpiredPackage(BuildContext context) async {
+  Future<List<CheckExpiredPackageMedels>?> getCheckExpiredPackage(
+      BuildContext context) async {
     CheckExpiredPackageMedels? package = await checkExpiredPackage();
     print("dateSubscribe:${package!.dateSubscribe.toString()}");
     if (package != null) {
@@ -22,18 +22,21 @@ class CheckExpiredPackage extends ChangeNotifier {
       packageid.setString(CountPre().packageId, package.packageId.toString());
 
       SharedPreferences dataexpired = await SharedPreferences.getInstance();
-      dataexpired.setString(CountPre().dateExpired, package.dateExpired.toString());
+      dataexpired.setString(
+          CountPre().dateExpired, package.dateExpired.toString());
 
       SharedPreferences datesups = await SharedPreferences.getInstance();
-      datesups.setString(CountPre().dateSubscribe, package.dateSubscribe.toString());
+      datesups.setString(
+          CountPre().dateSubscribe, package.dateSubscribe.toString());
 
       GetPackageModels? getPackageModels = await getPackage();
 
       if (getPackageModels != null) {
         CreateOrderModels? createOrderModels = await createOrder(context);
-        print("createModels:$createOrderModels");
-        if (createOrderModels != null) {
 
+        if (createOrderModels != null) {
+          SharedPreferences pre = await SharedPreferences.getInstance();
+          pre.setString(CountPre().billNo, createOrderModels.billNo!);
         }
       }
     }

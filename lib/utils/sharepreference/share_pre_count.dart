@@ -12,6 +12,7 @@ class CountPre {
   String dateSubscribe="dateSubscribe";
   String idzone = "zone";
   String billNo = "billNo";
+  String sessoinid = 'sessionId';
 
   Future<void> setsumall(int sum)async{
     preferences = await SharedPreferences.getInstance();

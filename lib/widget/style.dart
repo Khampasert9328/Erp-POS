@@ -7,8 +7,12 @@ import 'package:erp_pos/pages/table/components/dropdown.dart';
 import 'package:erp_pos/pages/table/components/dropdown_status.dart';
 import 'package:erp_pos/pages/table/components/textContainer.dart';
 import 'package:erp_pos/pages/table/components/textdatetime.dart';
+import 'package:erp_pos/provider/sessoin/get_session_provider.dart';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:form_field_validator/form_field_validator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Mystyle {
   Widget screen(String message) {
@@ -81,7 +85,10 @@ class Mystyle {
               ],
             ),
             actions: [
-              ButtomDialog(),
+              ButtomDialog(
+                text: '',
+                onPressed: () {},
+              ),
             ],
           ),
         );
@@ -90,32 +97,62 @@ class Mystyle {
   }
 
   Future dialogOpen(BuildContext context) {
+    TextEditingController? email = TextEditingController();
+    TextEditingController? cash = TextEditingController();
+    /////////////////////////////////////
+    final fromkey = GlobalKey<FormState>();
     return showDialog(
       barrierDismissible: false,
       context: context,
       builder: (context) {
         return Container(
           child: SingleChildScrollView(
-            child: AlertDialog(
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Mystyle().tiTle1("ເປີດກະ"),
-                  Mystyle().subtiTle1("ຜູ້ເປີດກະ"),
-                  TextContainer(hintext: "Telbiz@gmail.com", suffixIcon: ""),
-                  SizedBox(
-                    height: 10.h,
+            child: StatefulBuilder(
+              builder: (context, setState) => AlertDialog(
+                title: Form(
+                  key: fromkey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Mystyle().tiTle1("ເປີດກະ"),
+                      Mystyle().subtiTle1("ຜູ້ເປີດກະ"),
+                      TextContainer(
+                        hintext: "Telbiz@gmail.com",
+                        suffixIcon: "",
+                        controller: email,
+                        validator:
+                            RequiredValidator(errorText: 'ກະລຸນາປ້ອນອີເມວກ່ອນ'),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Mystyle().subtiTle1("ວັນທີ ແລະ ເວລາ"),
+                      ERPdateTime(),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Mystyle().subtiTle1("ເງິນເລີ່ມຕົ້ນ"),
+                      TextContainer(
+                        hintext: "ເງິນເລີ່ມຕົ້ນ",
+                        suffixIcon: "ກີບ",
+                        controller: cash,
+                        validator:
+                            RequiredValidator(errorText: 'ກະລຸນາປ້ອນຈຳນວນເງິນ'),
+                      ),
+                    ],
                   ),
-                  Mystyle().subtiTle1("ວັນທີ ແລະ ເວລາ"),
-                  ERPdateTime(),
-                  SizedBox(
-                    height: 10.h,
+                ),
+                actions: [
+                  ButtomDialog(
+                    text: 'ຕົກລົງ',
+                    onPressed: () async{
+                      if (fromkey.currentState!.validate()) {
+                        SessionProvoder().getsessoinProvider(context);
+                      }
+                    },
                   ),
-                  Mystyle().subtiTle1("ເງິນເລີ່ມຕົ້ນ"),
-                  TextContainer(hintext: "ເງິນເລີ່ມຕົ້ນ", suffixIcon: "ກີບ"),
                 ],
               ),
-              actions: [ButtomDialog()],
             ),
           ),
         );
@@ -124,6 +161,10 @@ class Mystyle {
   }
 
   Future dialogOff(BuildContext context) {
+    TextEditingController? emailclose;
+    TextEditingController? cashStart;
+    TextEditingController? totalSale;
+    TextEditingController? countableMoney;
     return showDialog(
       barrierDismissible: false,
       context: context,
@@ -136,7 +177,11 @@ class Mystyle {
                 children: [
                   Mystyle().tiTle1("ປີດກະ"),
                   Mystyle().subtiTle1("ຜູ້ປີດກະ"),
-                  TextContainer(hintext: "Telbiz@gmail.com", suffixIcon: ""),
+                  TextContainer(
+                    hintext: "Telbiz@gmail.com",
+                    suffixIcon: "",
+                    controller: emailclose,
+                  ),
                   SizedBox(
                     height: 10.h,
                   ),
@@ -146,11 +191,23 @@ class Mystyle {
                     height: 10.h,
                   ),
                   Mystyle().subtiTle1("ເງິນເລີ່ມຕົ້ນ"),
-                  TextContainer(hintext: "ເງິນເລີ່ມຕົ້ນ", suffixIcon: "ກີບ"),
+                  TextContainer(
+                    hintext: "ເງິນເລີ່ມຕົ້ນ",
+                    suffixIcon: "ກີບ",
+                    controller: cashStart,
+                  ),
                   Mystyle().subtiTle1("ຍອດຂາຍ"),
-                  TextContainer(hintext: "ຍອດຂາຍ", suffixIcon: "ກີບ"),
+                  TextContainer(
+                    hintext: "ຍອດຂາຍ",
+                    suffixIcon: "ກີບ",
+                    controller: totalSale,
+                  ),
                   Mystyle().subtiTle1("ເງິນທີ່ນັບໄດ້"),
-                  TextContainer(hintext: "ເງິນທີ່ນັບໄດ້", suffixIcon: "ກີບ"),
+                  TextContainer(
+                    hintext: "ເງິນທີ່ນັບໄດ້",
+                    suffixIcon: "ກີບ",
+                    controller: countableMoney,
+                  ),
                   SizedBox(
                     height: 10.h,
                   ),
@@ -165,7 +222,12 @@ class Mystyle {
                   )
                 ],
               ),
-              actions: [ButtomDialog()],
+              actions: [
+                ButtomDialog(
+                  text: '',
+                  onPressed: () {},
+                ),
+              ],
             ),
           ),
         );
@@ -174,6 +236,7 @@ class Mystyle {
   }
 
   Future dialogAddTable(BuildContext context) {
+    TextEditingController? inputInfo;
     return showDialog(
       barrierDismissible: false,
       context: context,
@@ -190,11 +253,18 @@ class Mystyle {
                   ],
                 ),
                 Mystyle().tiTle1("ເລກໂຕະ"),
-                TextContainer(hintext: "ປ້ອນຂໍ້ມູນ", suffixIcon: ""),
+                TextContainer(
+                  hintext: "ປ້ອນຂໍ້ມູນ",
+                  suffixIcon: "",
+                  controller: inputInfo,
+                ),
               ],
             ),
             actions: [
-              ButtomDialog(),
+              ButtomDialog(
+                text: '',
+                onPressed: () {},
+              ),
             ],
           ),
         );
@@ -321,31 +391,35 @@ class Mystyle {
           );
         });
   }
-  showAlertloading(BuildContext context,String title,String text)async{ 
-     CoolAlert.show(
-          context: context,
-          type: CoolAlertType.loading,
-          text: text,
-          title: 'ກຳລັງສະໝັກສະມາຊິກ',
-          autoCloseDuration: Duration(milliseconds: 10),
-        );
+
+  showAlertloading(BuildContext context, String title, String text) async {
+    CoolAlert.show(
+      context: context,
+      type: CoolAlertType.loading,
+      text: text,
+      title: 'ກຳລັງສະໝັກສະມາຊິກ',
+      autoCloseDuration: Duration(milliseconds: 10),
+    );
   }
-   showAlertloadingError(BuildContext context,String title,String text)async{ 
-     CoolAlert.show(
-          context: context,
-          type: CoolAlertType.error,
-          text: text,
-          title: 'ກາລຸນາລອງໃໝ່ອີກຄັ້ງ',
-          autoCloseDuration: Duration(milliseconds: 5),
-        );
+
+  showAlertloadingError(BuildContext context, String title, String text) async {
+    CoolAlert.show(
+      context: context,
+      type: CoolAlertType.error,
+      text: text,
+      title: 'ກາລຸນາລອງໃໝ່ອີກຄັ້ງ',
+      autoCloseDuration: Duration(milliseconds: 5),
+    );
   }
-  showAlertloadingsuccess(BuildContext context,String title,String text)async{ 
-     CoolAlert.show(
-          context: context,
-          type: CoolAlertType.success,
-          text: text,
-          title: title,
-          autoCloseDuration: Duration(milliseconds: 5),
-        );
+
+  showAlertloadingsuccess(
+      BuildContext context, String title, String text) async {
+    CoolAlert.show(
+      context: context,
+      type: CoolAlertType.success,
+      text: text,
+      title: title,
+      autoCloseDuration: Duration(milliseconds: 5),
+    );
   }
 }

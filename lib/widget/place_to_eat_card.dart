@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, must_be_immutable, use_key_in_widget_constructors
+// ignore_for_file: unused_import, must_be_immutable, use_key_in_widget_constructors, use_build_context_synchronously
 import 'dart:ui';
 
 
@@ -209,7 +209,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                         ),
                       );
                     });
-                Navigator.push(
+               await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (_) => CalculateMoney(
@@ -375,116 +375,118 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                   ),
                   Row(
                     children: [
-                      SizedBox(
-                        height: 50.h,
-                        width: 200.w,
-                        child: FutureBuilder<List<Area>>(
-                          future: AreaProvider().getZone(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              return Consumer<AreaProvider>(
-                                builder: ((context, model, _) {
-                                  return ListView.builder(
-                                      physics: ScrollPhysics(),
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: snapshot.data!.length,
-                                      itemBuilder: (context, index) {
-                                        String? id =
-                                            snapshot.data![index].id ?? "";
-
-                                        return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Expanded(
-                                              child: Column(
-                                                children: [
-                                                  GestureDetector(
-                                                    onTap: () async {
-                                                      setState(() {
-                                                        isselect = index;
-                                                        idtable = id;
-                                                      });
-                                                      SharedPreferences
-                                                          preferences =
-                                                          await SharedPreferences
-                                                              .getInstance();
-                                                      preferences.setString(
-                                                          CountPre().idzone,
-                                                          snapshot.data![index]
-                                                              .area!);
-                                                      preferences.setString(
-                                                          CountPre().tableid,
-                                                          idtable.toString());
-                                                    },
-                                                    child: Column(
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                            right: 8,
-                                                          ),
-                                                          child: Container(
-                                                            height: 40.h,
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                              horizontal: 15.w,
+                      Expanded(
+                        child: SizedBox(
+                          height: 50.h,
+                          width: double.infinity,
+                          child: FutureBuilder<List<Area>>(
+                            future: AreaProvider().getZone(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return Consumer<AreaProvider>(
+                                  builder: ((context, model, _) {
+                                    return ListView.builder(
+                                        physics: ScrollPhysics(),
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: snapshot.data!.length,
+                                        itemBuilder: (context, index) {
+                                          String? id =
+                                              snapshot.data![index].id ?? "";
+                      
+                                          return Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Expanded(
+                                                child: Column(
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: () async {
+                                                        setState(() {
+                                                          isselect = index;
+                                                          idtable = id;
+                                                        });
+                                                        SharedPreferences
+                                                            preferences =
+                                                            await SharedPreferences
+                                                                .getInstance();
+                                                        preferences.setString(
+                                                            CountPre().idzone,
+                                                            snapshot.data![index]
+                                                                .area!);
+                                                        preferences.setString(
+                                                            CountPre().tableid,
+                                                            idtable.toString());
+                                                      },
+                                                      child: Column(
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                              right: 8,
                                                             ),
-                                                            decoration: BoxDecoration(
-                                                                color: isselect == index
-                                                                    ? AppTheme
-                                                                        .BASE_COLOR
-                                                                    : AppTheme
-                                                                        .WHITE_COLOR,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5),
-                                                                border: Border.all(
-                                                                    color: AppTheme
-                                                                        .BASE_COLOR)),
-                                                            child: Center(
-                                                              child: Text(
-                                                                snapshot
-                                                                    .data![
-                                                                        index]
-                                                                    .area!,
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize:
-                                                                      18.sp,
+                                                            child: Container(
+                                                              height: 40.h,
+                                                              padding: EdgeInsets
+                                                                  .symmetric(
+                                                                horizontal: 15.w,
+                                                              ),
+                                                              decoration: BoxDecoration(
                                                                   color: isselect == index
                                                                       ? AppTheme
-                                                                          .WHITE_COLOR
+                                                                          .BASE_COLOR
                                                                       : AppTheme
-                                                                          .GREY_COLOR,
+                                                                          .WHITE_COLOR,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              5),
+                                                                  border: Border.all(
+                                                                      color: AppTheme
+                                                                          .BASE_COLOR)),
+                                                              child: Center(
+                                                                child: Text(
+                                                                  snapshot
+                                                                      .data![
+                                                                          index]
+                                                                      .area!,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        18.sp,
+                                                                    color: isselect == index
+                                                                        ? AppTheme
+                                                                            .WHITE_COLOR
+                                                                        : AppTheme
+                                                                            .GREY_COLOR,
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      ],
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              height: 10.h,
-                                            ),
-                                          ],
-                                        );
-                                      });
-                                }),
-                              );
-                            }
-                            return SizedBox();
-                          },
+                                              SizedBox(
+                                                height: 10.h,
+                                              ),
+                                            ],
+                                          );
+                                        });
+                                  }),
+                                );
+                              }
+                              return SizedBox();
+                            },
+                          ),
                         ),
                       ),
                     ],

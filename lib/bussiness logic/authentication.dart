@@ -18,6 +18,7 @@ import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
@@ -52,6 +53,8 @@ class AuthenticationProvider extends ChangeNotifier {
         ConnectTokenModels? connectTokenModels =
             await connectToken(email, password, context);
         if (connectTokenModels != null) {
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          String? idToken = pref.getString("content");
           //Mystyle().showAlertloadingsuccess(context, "ແຈ້ງເຕືອນ", "ກຳລັງເຂົ້າສູ່ລະບົບ");
           SharedPreferences preferences = await SharedPreferences.getInstance();
           preferences.setString(

@@ -120,7 +120,14 @@ class _TableBodyState extends State<TableBody> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
+                    isWitch==false?Text(
+                      "ປິດຮ້ານ",
+                      style: TextStyle(
+                        fontFamily: "Phetsarath-OT",
+                        fontSize: 20.sp,
+                        color: AppTheme.RED_COLOR,
+                      ),
+                    ):Text(
                       "ເປີດຮ້ານດຳເນີນການ",
                       style: TextStyle(
                         fontFamily: "Phetsarath-OT",
@@ -128,6 +135,23 @@ class _TableBodyState extends State<TableBody> {
                         color: AppTheme.GREEN_COLOR,
                       ),
                     ),
+                    Switch(
+                  activeColor: AppTheme.GREEN_COLOR,
+                  value: isWitch,
+                  onChanged: (vale) {
+                    if (isWitch == false) {
+                      setState(() {
+                        isWitch = vale;
+                        Mystyle().dialogOpen(context);
+                      });
+                    } else {
+                      setState(() {
+                        isWitch = vale;
+                        Mystyle().dialogOff(context);
+                      });
+                    }
+                  },
+                ),
                   ],
                 ),
                 Row(
@@ -174,23 +198,7 @@ class _TableBodyState extends State<TableBody> {
                 //                     color: ERPTheme.GREEN_COLOR,
                 //                   ),
                 //                 ),
-                // Switch(
-                //   activeColor: ERPTheme.GREEN_COLOR,
-                //   value: isWitch,
-                //   onChanged: (vale) {
-                //     if (isWitch == false) {
-                //       setState(() {
-                //         isWitch = vale;
-                //         Mystyle().dialogOpen(context);
-                //       });
-                //     } else {
-                //       setState(() {
-                //         isWitch = vale;
-                //         Mystyle().dialogOff(context);
-                //       });
-                //     }
-                //   },
-                // ),
+                
                 //   ],
                 // ),
                 //changScreen == false

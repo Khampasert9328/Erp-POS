@@ -148,7 +148,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                     color: AppTheme.WHITE_COLOR,
                                   ),
                                 ),
-                                child: Icon(
+                                child: const Icon(
                                   Icons.shopping_cart,
                                   size: 55,
                                 ),
@@ -376,7 +376,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                   width: 20.w,
                 )
               ],
-            )
+            )//////
           ],
         ),
       ),

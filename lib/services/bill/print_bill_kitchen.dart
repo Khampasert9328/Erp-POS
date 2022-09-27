@@ -1,4 +1,3 @@
-
 import 'package:devla_sunmi/flutter_sunmi_printer.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +14,7 @@ Future<void> getPrinterStatus() async {
   printerStatus = resualt;
 }
 
-Future<PrinterMode> getPrinterMode()async{
-  final PrinterMode mode = await SunmiPrinter.getPrinterMode();
-  return mode;
+Future<PrinterMode> getPrinterMode() async {
+  final PrinterMode? mode = await SunmiPrinter.getPrinterMode();
+  return mode!;
 }

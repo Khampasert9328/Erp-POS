@@ -3,52 +3,30 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../constant/theme.dart';
 
-class ButtomDialog extends StatefulWidget {
-  const ButtomDialog({Key? key}) : super(key: key);
+class ButtomDialog extends StatelessWidget {
+  VoidCallback onPressed;
+  String text;
+  
+   ButtomDialog({Key? key, required this.onPressed, required this.text}) : super(key: key);
 
-  @override
-  State<ButtomDialog> createState() => _ButtomDialogState();
-}
-
-class _ButtomDialogState extends State<ButtomDialog> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text(
-              "ຍົກເລີກ",
-              style: TextStyle(
-                color: AppTheme.GREY_COLOR,
-                fontWeight: FontWeight.bold,
-              ),
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: AppTheme.BASE_COLOR,
+            padding: EdgeInsets.symmetric(vertical: 9.h),
             ),
+        onPressed:onPressed,
+        child: Text(
+          text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w700,
           ),
-          Container(
-            width: 120.w,
-            height: 39.h,
-            decoration: BoxDecoration(
-              color: AppTheme.BASE_COLOR,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: TextButton(
-              onPressed: () {},
-              child: Text(
-                "ຕົກລົງ",
-                style: TextStyle(
-                  color: AppTheme.WHITE_COLOR,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

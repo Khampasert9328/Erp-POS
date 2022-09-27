@@ -6,19 +6,30 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class paycash extends StatelessWidget {
+class paycash extends StatefulWidget {
   final tablename;
-  const paycash({Key? key, required this.tablename}) : super(key: key);
+  paycash({Key? key, required this.tablename}) : super(key: key);
+
+  @override
+  State<paycash> createState() => _paycashState();
+}
+
+class _paycashState extends State<paycash> {
+  bool ischangcolor = false;
+
+  TextEditingController? money = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    int totalamount = context.read<GetFoodMenuProvider>().totalamont;
+    int sumall = int.parse(money!.text) - totalamount;
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: AppTheme.WHITE_COLOR,
           elevation: 0,
           title: Text(
-            tablename,
+            widget.tablename,
             style: TextStyle(color: AppTheme.BASE_COLOR),
           ),
         ),
@@ -28,11 +39,18 @@ class paycash extends StatelessWidget {
           child: Container(
             width: double.infinity,
             child: FloatingActionButton(
-              backgroundColor: AppTheme.BASE_COLOR,
+              backgroundColor: money!.text.length >
+                      context.read<GetFoodMenuProvider>().totalamont
+                  ? AppTheme.GREY_COLOR
+                  : AppTheme.BASE_COLOR,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              onPressed: () {},
+              onPressed: () {
+
+                
+                
+              },
               child: Text(
                 "ຊຳລະເງິນ",
                 style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
@@ -45,9 +63,8 @@ class paycash extends StatelessWidget {
           child: Consumer<GetFoodMenuProvider>(
             builder: (context, value, child) {
               TextEditingController? payment = TextEditingController();
-              TextEditingController? money = TextEditingController();
               payment.text = value.totalamont.toString();
-             
+
               return SingleChildScrollView(
                   child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -56,58 +73,57 @@ class paycash extends StatelessWidget {
                   children: [
                     Text(
                       "ຈ່່າຍເງິນສົດ",
-                      style:
-                          TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 16.sp, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 7.h,
                     ),
                     TextFormField(
-                       
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: const Color(0xffedebeb),
-                          border: InputBorder.none,
-                          hintText: 'ລາຄາລວມ',
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.only(top: 15,right: 5),
-                            child: Text(payment.text+" ກີບ",style: TextStyle(color: AppTheme.RED_COLOR),),
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color(0xffedebeb),
+                        border: InputBorder.none,
+                        hintText: 'ລາຄາລວມ',
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.only(top: 15, right: 5),
+                          child: Text(
+                            '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ',
+                            style: TextStyle(color: AppTheme.RED_COLOR),
                           ),
-                          
-                          hintStyle: TextStyle(
-                              fontFamily: "NotoSansLao-Regular",
-                              fontSize: 18.sp,
-                              color: AppTheme.BASE_COLOR),
                         ),
+                        hintStyle: TextStyle(
+                            fontFamily: "NotoSansLao-Regular",
+                            fontSize: 18.sp,
+                            color: AppTheme.BASE_COLOR),
                       ),
-                    
+                    ),
                     SizedBox(
                       height: 15.h,
                     ),
                     Text(
                       "ເງິນທີ່ໄດ້ຮັບ",
-                      style:
-                          TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 16.sp, fontWeight: FontWeight.bold),
                     ),
-                     SizedBox(
+                    SizedBox(
                       height: 7.h,
                     ),
-                     TextFormField(
-                     
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: const Color(0xffedebeb),
-                          border: InputBorder.none,
-                          hintText: 'ປ້ອນຂໍ້ມູນ:',
-                          
-                          hintStyle: TextStyle(
-                              fontFamily: "NotoSansLao-Regular",
-                              fontSize: 18.sp,
-                              color: AppTheme.BASE_COLOR),
-                        ),
+                    TextFormField(
+                      controller: money,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color(0xffedebeb),
+                        border: InputBorder.none,
+                        hintText: 'ປ້ອນຂໍ້ມູນ:',
+                        hintStyle: TextStyle(
+                            fontFamily: "NotoSansLao-Regular",
+                            fontSize: 18.sp,
+                            color: AppTheme.BASE_COLOR),
                       ),
+                    ),
                     SizedBox(
                       height: 15.h,
                     ),
@@ -122,7 +138,7 @@ class paycash extends StatelessWidget {
                           width: 15.w,
                         ),
                         Text(
-                          "30000 ກີບ",
+                          "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(sumall)} ກີບ",
                           style: TextStyle(
                               fontSize: 16.sp, fontWeight: FontWeight.bold),
                         ),
