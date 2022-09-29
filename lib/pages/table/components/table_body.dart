@@ -1,5 +1,6 @@
 // ignore_for_file: sized_box_for_whitespace
 
+import 'package:erp_pos/bussiness%20logic/authentication.dart';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/table/table_models.dart';
@@ -60,25 +61,42 @@ class _TableBodyState extends State<TableBody> {
                     });
                   },
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "ສະຖານະປັດຈຸບັນ",
-                        style: TextStyle(
-                          fontFamily: "Phetsarath-OT",
-                          color: AppTheme.BASE_COLOR,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25.sp,
-                        ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "ສະຖານະປັດຈຸບັນ",
+                                style: TextStyle(
+                                  fontFamily: "Phetsarath-OT",
+                                  color: AppTheme.BASE_COLOR,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25.sp,
+                                ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: AppTheme.BLACK_COLOR,
+                                    borderRadius: BorderRadius.circular(5)),
+                                height: 5.h,
+                                width: 20.w,
+                              ),
+                              //
+                            ],
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              AuthenticationProvider().logout(context);
+                            },
+                            icon: Icon(
+                              Icons.exit_to_app,
+                            ),
+                          ),
+                        ],
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: AppTheme.BLACK_COLOR,
-                            borderRadius: BorderRadius.circular(5)),
-                        height: 5.h,
-                        width: 20.w,
-                      ),
-                      //
                     ],
                   ),
                 ),
@@ -120,45 +138,45 @@ class _TableBodyState extends State<TableBody> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    isWitch==false?Text(
-                      "ປິດຮ້ານ",
-                      style: TextStyle(
-                        fontFamily: "Phetsarath-OT",
-                        fontSize: 20.sp,
-                        color: AppTheme.RED_COLOR,
-                      ),
-                    ):Text(
-                      "ເປີດຮ້ານດຳເນີນການ",
-                      style: TextStyle(
-                        fontFamily: "Phetsarath-OT",
-                        fontSize: 20.sp,
-                        color: AppTheme.GREEN_COLOR,
-                      ),
-                    ),
+                    isWitch == false
+                        ? Text(
+                            "ປິດຮ້ານ",
+                            style: TextStyle(
+                              fontFamily: "Phetsarath-OT",
+                              fontSize: 20.sp,
+                              color: AppTheme.RED_COLOR,
+                            ),
+                          )
+                        : Text(
+                            "ເປີດຮ້ານດຳເນີນການ",
+                            style: TextStyle(
+                              fontFamily: "Phetsarath-OT",
+                              fontSize: 20.sp,
+                              color: AppTheme.GREEN_COLOR,
+                            ),
+                          ),
                     Switch(
-                  activeColor: AppTheme.GREEN_COLOR,
-                  value: isWitch,
-                  onChanged: (vale) {
-                    if (isWitch == false) {
-                      setState(() {
-                        isWitch = vale;
-                        Mystyle().dialogOpen(context);
-                      });
-                    } else {
-                      setState(() {
-                        isWitch = vale;
-                        Mystyle().dialogOff(context);
-                      });
-                    }
-                  },
-                ),
+                      activeColor: AppTheme.GREEN_COLOR,
+                      value: isWitch,
+                      onChanged: (vale) {
+                        if (isWitch == false) {
+                          setState(() {
+                            isWitch = vale;
+                            Mystyle().dialogOpen(context);
+                          });
+                        } else {
+                          setState(() {
+                            isWitch = vale;
+                            Mystyle().dialogOff(context);
+                          });
+                        }
+                      },
+                    ),
                   ],
                 ),
                 Row(
-                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(formatDate)
-                  ],
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [Text(formatDate)],
                 ),
                 // changScreen == false
                 //     ? Row(
@@ -198,7 +216,7 @@ class _TableBodyState extends State<TableBody> {
                 //                     color: ERPTheme.GREEN_COLOR,
                 //                   ),
                 //                 ),
-                
+
                 //   ],
                 // ),
                 //changScreen == false

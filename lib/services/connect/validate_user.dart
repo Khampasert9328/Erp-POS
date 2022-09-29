@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:http/http.dart' as http;
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
@@ -17,6 +18,7 @@ import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<ConnectValidateModels?> connectvalidateuser(
     String email, BuildContext context, String name, String lastname) async {
@@ -47,6 +49,7 @@ Future<ConnectValidateModels?> connectvalidateuser(
     } else if (response.statusCode == 400) {
       ConnectValidatModelBadRequest data =
           connectValidatModelBadRequestFromJson(response.body);
+          
 
       /// ຖ້າບໍ່ມີຜູ້ໃຊ້ໃນລະບົບ
       if (data.code == "USERNAME_NOT_FOUND") {

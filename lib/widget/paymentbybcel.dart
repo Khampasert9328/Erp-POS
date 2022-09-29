@@ -29,8 +29,16 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
     });
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration(seconds: 3),(){
+      setState(() {
+        
+      });
+
+    });
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -161,7 +169,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                         });
                       });
                     },
-                    child: Text("refetch"),
+                    child: Text(""),
                   ),
                 ],
               ),
