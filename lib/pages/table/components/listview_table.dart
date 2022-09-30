@@ -35,7 +35,7 @@ class ListViewTable extends StatefulWidget {
   State<ListViewTable> createState() => _ListViewTableState();
 }
 
-int? selectIndex;
+int? selectIndex = 0;
 String? idtable;
 
 class _ListViewTableState extends State<ListViewTable> {
@@ -65,7 +65,7 @@ class _ListViewTableState extends State<ListViewTable> {
                                   itemCount: snapshot.data!.length,
                                   itemBuilder: (context, index) {
                                     String? id = snapshot.data![index].id ?? "";
-                
+
                                     return Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -89,8 +89,8 @@ class _ListViewTableState extends State<ListViewTable> {
                                                       ),
                                                       child: Container(
                                                         height: 40.h,
-                                                        padding:
-                                                            EdgeInsets.symmetric(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
                                                           horizontal: 15.w,
                                                         ),
                                                         decoration: BoxDecoration(
@@ -102,17 +102,20 @@ class _ListViewTableState extends State<ListViewTable> {
                                                                     .WHITE_COLOR,
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(5),
+                                                                    .circular(
+                                                                        5),
                                                             border: Border.all(
                                                                 color: AppTheme
                                                                     .BASE_COLOR)),
                                                         child: Center(
                                                           child: Text(
-                                                            snapshot.data![index]
+                                                            snapshot
+                                                                .data![index]
                                                                 .area!,
                                                             style: TextStyle(
                                                               fontWeight:
-                                                                  FontWeight.bold,
+                                                                  FontWeight
+                                                                      .bold,
                                                               fontSize: 18.sp,
                                                               color: selectIndex == index
                                                                   ? AppTheme
@@ -151,70 +154,66 @@ class _ListViewTableState extends State<ListViewTable> {
               ],
             ),
             NavBarStatusBooking(),
-            SingleChildScrollView(
-              child: SizedBox(
-                height: 600.h,
-                width: 600.w,
-                child: Container(
-                  height: 300.h,
-                  child: FutureBuilder<List<GetTable>>(
-                    future: GetTableProvider().gettablebyid(context, idtable),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Consumer<GetTableProvider>(
-                          builder: ((context, model, _) {
-                            return SingleChildScrollView(
-                                child: GridView.count(
-                              crossAxisCount: 2,
-                              childAspectRatio: (0.8 / .4),
-                              shrinkWrap: true,
-                              children:
-                                  List.generate(snapshot.data!.length, (index) {
-                                return GestureDetector(
-                                  onTap: (() {
-                                    print("res:$index");
-                                  }),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Container(
-                                      color: AppTheme.GREY_COLOR,
-                                      child: Container(
-                                        padding: const EdgeInsets.all(16),
-                                        decoration: BoxDecoration(
-                                          border: Border(
-                                            left: BorderSide(
-                                              color: AppTheme.GREEN_COLOR,
-                                              width: 15,
-                                            ),
-                                          ),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            snapshot.data![index].name!,
-                                            style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
+            FutureBuilder<List<GetTable>>(
+              future: GetTableProvider().gettablebyid(context, idtable),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Consumer<GetTableProvider>(
+                    builder: ((context, model, _) {
+                      return SingleChildScrollView(
+                          child: GridView.count(
+                        crossAxisCount: 2,
+                        childAspectRatio: (0.8 / .4),
+                        shrinkWrap: true,
+                        children: List.generate(snapshot.data!.length, (index) {
+                          return GestureDetector(
+                            onTap: (() {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: ((context) =>
+                                      TableDetail(data: snapshot.data![index])),
+                                ),
+                              );
+                            }),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Container(
+                                color: AppTheme.GREY_COLOR,
+                                child: Container(
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      left: BorderSide(
+                                        color: AppTheme.GREEN_COLOR,
+                                        width: 15,
                                       ),
                                     ),
                                   ),
-                                );
-                              }),
-                            ));
-                          }),
-                        );
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(
-                          color: AppTheme.BASE_COLOR,
-                        ),
-                      );
-                    },
+                                  child: Center(
+                                    child: Text(
+                                      snapshot.data![index].name!,
+                                      style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
+                      ));
+                    }),
+                  );
+                }
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: AppTheme.BASE_COLOR,
                   ),
-                ),
-              ),
-            )
+                );
+              },
+            ),
           ],
         ),
       ),

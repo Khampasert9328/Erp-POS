@@ -43,7 +43,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
   int? selectTable;
   FoodMenuModel? model;
 
-  int? isselect;
+  int? isselect=0;
   String? idtable;
 
   @override
@@ -184,33 +184,6 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                   
             //     }
               });
-                showDialog(
-                    context: context,
-                    builder: (_) {
-                      return Dialog(
-                        insetAnimationDuration: Duration(milliseconds: 5),
-                        insetAnimationCurve: Curves.bounceOut,
-                        child: Container(
-                          height: 150.h,
-                          width: 100.w,
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                ERPImages.animation,
-                                height: 77.h,
-                                width: 77.w,
-                              ),
-                              Text(
-                                "ອໍເດີໄດ້ສົ່ງໄປຫ້ອງຄົວແລ້ວ",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18.sp),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    });
                await Navigator.push(
                   context,
                   MaterialPageRoute(

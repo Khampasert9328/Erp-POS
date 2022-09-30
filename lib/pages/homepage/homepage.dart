@@ -1,7 +1,10 @@
+import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/pages/homepage/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -22,16 +25,39 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(child: HomePageData.pages[_selectedIndex]),
-      bottomNavigationBar: BottomNavigationBar(
-        items: HomePageData.homePageBottomBar
-            .map((e) => BottomNavigationBarItem(
-                  icon: Image.asset(e.icon, width: 30.w, height: 30.h,),
-                  label: e.title,
-                ))
-            .toList(),
-        currentIndex: _selectedIndex,
-        selectedItemColor: AppTheme.BASE_COLOR,
-        onTap: _onItemTapped,
+      bottomNavigationBar: Container(
+        color: AppTheme.WHITE_COLOR,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 15.0,
+            vertical: 7.0,
+          ),
+          child: GNav(
+            gap: 8,
+            backgroundColor: AppTheme.WHITE_COLOR,
+            color: AppTheme.BASE_COLOR,
+            activeColor: AppTheme.WHITE_COLOR,
+            tabBackgroundColor: AppTheme.BASE_COLOR,
+            padding: EdgeInsets.all(16.0),
+            onTabChange: (int index) {
+              _onItemTapped(index);
+            },
+            tabs: const [
+              GButton(
+                icon:  Icons.table_bar,
+                text: 'ໂຕະ',
+              ),
+              GButton(
+                icon: Icons.local_dining,
+                text: 'ເມນູ',
+              ),
+              GButton(
+                icon: Icons.blinds_closed,
+                text: 'ໃບບິນ',
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

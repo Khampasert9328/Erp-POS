@@ -18,46 +18,48 @@ class Login extends StatelessWidget {
       length: 2,
       child: Scaffold(
         key: _scaffoldkey,
-        body: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 116.h,
-              ),
-              Image.asset(
-                "images/narharn.png",
-                width: 271.w,
-              ),
-              SizedBox(
-                height: 50.h,
-              ),
-              SignIn(),
-              // TabBar(
-              //   indicatorPadding: EdgeInsets.only(left: 20.0, right: 20.0),
-              //   indicatorWeight: 3.0,
-              //   indicatorColor: AppTheme.BASE_COLOR,
-              //   labelColor: Colors.black,
-              //   labelStyle: TextStyle(
-              //     fontSize: 18.sp,
-              //   ),
-              //   tabs: const [
-              //     Tab(
-              //       text: 'ເຂົ້າສູ່ລະບົບ',
-              //     ),
-              //     Tab(
-              //       text: 'ລົງທະບຽນ',
-              //     ),
-              //   ],
-              // ),
-              // Expanded(
-              //     child: TabBarView(
-              //   physics: const NeverScrollableScrollPhysics(),
-              //   children: [
-                  
-              //     SignUp(),
-              //   ],
-              // ))
-            ],
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 116.h,
+                ),
+                Image.asset(
+                  "images/narharn.png",
+                  width: 271.w,
+                ),
+                SizedBox(
+                  height: 50.h,
+                ),
+                SignIn(),
+                // TabBar(
+                //   indicatorPadding: EdgeInsets.only(left: 20.0, right: 20.0),
+                //   indicatorWeight: 3.0,
+                //   indicatorColor: AppTheme.BASE_COLOR,
+                //   labelColor: Colors.black,
+                //   labelStyle: TextStyle(
+                //     fontSize: 18.sp,
+                //   ),
+                //   tabs: const [
+                //     Tab(
+                //       text: 'ເຂົ້າສູ່ລະບົບ',
+                //     ),
+                //     Tab(
+                //       text: 'ລົງທະບຽນ',
+                //     ),
+                //   ],
+                // ),
+                // Expanded(
+                //     child: TabBarView(
+                //   physics: const NeverScrollableScrollPhysics(),
+                //   children: [
+                    
+                //     SignUp(),
+                //   ],
+                // ))
+              ],
+            ),
           ),
         ),
       ),

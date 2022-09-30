@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cool_alert/cool_alert.dart';
+import 'package:erp_pos/bussiness%20logic/authentication.dart';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/pages/table/components/buttom_dialog.dart';
@@ -439,5 +440,84 @@ class Mystyle {
       title: title,
       autoCloseDuration: Duration(milliseconds: 5),
     );
+  }
+
+  showDialogSignOut(BuildContext context) {
+    showDialog(
+      barrierDismissible: false,
+        context: context,
+        builder: (_) {
+          return Dialog(
+              insetAnimationDuration: Duration(milliseconds: 5),
+              insetAnimationCurve: Curves.bounceOut,
+              child: Container(
+                height: 250.h,
+                width: 310.w,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 19.h,
+                    ),
+                    CircleAvatar(
+                      radius: 51,
+                      backgroundColor: AppTheme.GREY_COLOR,
+                      backgroundImage: AssetImage(
+                        ERPImages.iconlogout,
+                      ),
+                    ),
+                     SizedBox(
+                      height: 19.h,
+                    ),
+                    Center(
+                      child: Text(
+                        "ທ່ານຕ້ອງການອອກຈາກລະບົບແທ້ບໍ?",
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              "ຢູ່ໃນລະບົບຕໍ່",
+                              style: TextStyle(
+                                  fontSize: 18.sp,
+                                  color: AppTheme.GREY_COLOR,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: AppTheme.BASE_COLOR,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: TextButton(
+                            onPressed: () {
+                              AuthenticationProvider().logout(context);
+                            },
+                            child: Text(
+                              "ອອກຈາກລະບົບ",
+                              style: TextStyle(
+                                  fontSize: 18.sp,
+                                  color: AppTheme.WHITE_COLOR,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ));
+        });
   }
 }
