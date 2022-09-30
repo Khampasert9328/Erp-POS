@@ -114,7 +114,25 @@ class Mystyle {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Mystyle().tiTle1("ເປີດກະ"),
+                      Row(
+                        children: [
+                          Mystyle().tiTle1("ເປີດກະ"),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: Icon(
+                                  Icons.cancel_outlined,
+                                  color: AppTheme.BASE_COLOR,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                       Mystyle().subtiTle1("ຜູ້ເປີດກະ"),
                       TextContainer(
                         hintext: "Telbiz@gmail.com",
@@ -145,7 +163,7 @@ class Mystyle {
                 actions: [
                   ButtomDialog(
                     text: 'ຕົກລົງ',
-                    onPressed: () async{
+                    onPressed: () async {
                       if (fromkey.currentState!.validate()) {
                         SessionProvoder().getsessoinProvider(context);
                       }

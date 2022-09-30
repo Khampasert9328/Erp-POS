@@ -31,31 +31,32 @@ class Login extends StatelessWidget {
               SizedBox(
                 height: 50.h,
               ),
-              TabBar(
-                indicatorPadding: EdgeInsets.only(left: 20.0, right: 20.0),
-                indicatorWeight: 3.0,
-                indicatorColor: AppTheme.BASE_COLOR,
-                labelColor: Colors.black,
-                labelStyle: TextStyle(
-                  fontSize: 18.sp,
-                ),
-                tabs: const [
-                  Tab(
-                    text: 'ເຂົ້າສູ່ລະບົບ',
-                  ),
-                  Tab(
-                    text: 'ລົງທະບຽນ',
-                  ),
-                ],
-              ),
-              Expanded(
-                  child: TabBarView(
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  SignIn(),
-                  SignUp(),
-                ],
-              ))
+              SignIn(),
+              // TabBar(
+              //   indicatorPadding: EdgeInsets.only(left: 20.0, right: 20.0),
+              //   indicatorWeight: 3.0,
+              //   indicatorColor: AppTheme.BASE_COLOR,
+              //   labelColor: Colors.black,
+              //   labelStyle: TextStyle(
+              //     fontSize: 18.sp,
+              //   ),
+              //   tabs: const [
+              //     Tab(
+              //       text: 'ເຂົ້າສູ່ລະບົບ',
+              //     ),
+              //     Tab(
+              //       text: 'ລົງທະບຽນ',
+              //     ),
+              //   ],
+              // ),
+              // Expanded(
+              //     child: TabBarView(
+              //   physics: const NeverScrollableScrollPhysics(),
+              //   children: [
+                  
+              //     SignUp(),
+              //   ],
+              // ))
             ],
           ),
         ),

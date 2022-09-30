@@ -7,10 +7,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
+  @override
+  State<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
   final formKey = GlobalKey<FormState>();
+
   TextEditingController email = TextEditingController();
+
   TextEditingController password = TextEditingController();
+
+  bool value = false;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +29,7 @@ class SignIn extends StatelessWidget {
         key: formKey,
         child: SingleChildScrollView(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
                 height: 41.h,
@@ -32,8 +42,7 @@ class SignIn extends StatelessWidget {
                   color: AppTheme.BASE_COLOR,
                   size: (25.w + 25.h) / 2,
                 ),
-                validator:
-                RequiredValidator(errorText: 'ກະລຸນາປ້ອນອີເມວກ່ອນ'),
+                validator: RequiredValidator(errorText: 'ກະລຸນາປ້ອນອີເມວກ່ອນ'),
               ),
               SizedBox(
                 height: 20.h,
@@ -44,7 +53,7 @@ class SignIn extends StatelessWidget {
                   controller: password,
                   prefixIcon: Icon(
                     Icons.key,
-                     color: AppTheme.BASE_COLOR,
+                    color: AppTheme.BASE_COLOR,
                     size: (25.w + 25.h) / 2,
                   ),
                   validator: MultiValidator([
@@ -52,26 +61,28 @@ class SignIn extends StatelessWidget {
                     // MinLengthValidator(8,
                     //     errorText: 'ກະລຸນາປ້ອນລະຫັດຜ່ານໃຫ້ຄົບ 8 ຕົວ'),
                   ])),
-              SizedBox(
-                height: 11.h,
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  Checkbox(
+                    value: value,
+                    onChanged: (value) {
+                      setState(() {
+                        this.value = value!;
+                      });
+                    },
+                  ),
                   Text(
-                    'ລືມຫັດຜ່ານ',
-                    style:
-                        TextStyle(color: AppTheme.BASE_COLOR, fontSize: 14.sp),
+                    "ຈື່ລະຫັດຜ່ານ",
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                    ),
                   )
                 ],
-              ),
-              SizedBox(
-                height: 19.h,
               ),
               AppButton(
                   text: 'ເຂົ້າສູ່ລະບົບ',
                   onPressed: () {
-                 
                     if (formKey.currentState!.validate()) {
                       AuthenticationProvider().login(email.text, password.text,
                           password.text, context, "", "");

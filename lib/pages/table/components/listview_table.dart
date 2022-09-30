@@ -170,26 +170,31 @@ class _ListViewTableState extends State<ListViewTable> {
                               shrinkWrap: true,
                               children:
                                   List.generate(snapshot.data!.length, (index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Container(
-                                    color: AppTheme.GREY_COLOR,
+                                return GestureDetector(
+                                  onTap: (() {
+                                    print("res:$index");
+                                  }),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
                                     child: Container(
-                                      padding: const EdgeInsets.all(16),
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          left: BorderSide(
-                                            color: AppTheme.GREEN_COLOR,
-                                            width: 15,
+                                      color: AppTheme.GREY_COLOR,
+                                      child: Container(
+                                        padding: const EdgeInsets.all(16),
+                                        decoration: BoxDecoration(
+                                          border: Border(
+                                            left: BorderSide(
+                                              color: AppTheme.GREEN_COLOR,
+                                              width: 15,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          snapshot.data![index].name!,
-                                          style: const TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
+                                        child: Center(
+                                          child: Text(
+                                            snapshot.data![index].name!,
+                                            style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
+                                          ),
                                         ),
                                       ),
                                     ),

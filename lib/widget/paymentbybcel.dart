@@ -1,3 +1,7 @@
+// ignore_for_file: unnecessary_new
+
+import 'dart:async';
+
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
@@ -29,16 +33,34 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
     });
   }
 
-  
+  Timer? _timer;
+  int start = 3;
+  void startTimer() {
+    const oneSec = const Duration(seconds: 1);
+    _timer = new Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (start == 0) {
+          setState(() {
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            start--;
+          });
+        }
+      },
+    );
+  }
+  @override
+void dispose() {
+  _timer!.cancel();
+  super.dispose();
+}
+bool chang = false;
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 3),(){
-      setState(() {
-        
-      });
-
-    });
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -169,7 +191,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                         });
                       });
                     },
-                    child: Text(""),
+                    child:chang==false? Text("$_timer"):Text("data"),
                   ),
                 ],
               ),
