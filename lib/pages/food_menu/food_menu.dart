@@ -19,7 +19,6 @@ class _FoodMenuState extends State<FoodMenu> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<GetFoodMenuProvider>().getProduct(false);
   }

@@ -17,7 +17,6 @@ class AddAmount extends StatefulWidget {
 
 class _AddAmountState extends State<AddAmount> {
   int count = 1;
-
   void setNumber(bool isAdd) {
     if (isAdd) {
       setState(() {

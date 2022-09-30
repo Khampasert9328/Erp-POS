@@ -59,8 +59,7 @@ class _TableBodyState extends State<TableBody> {
         actions: [
           IconButton(
             onPressed: () {
-          Mystyle().showDialogSignOut(context);
-              
+              Mystyle().showDialogSignOut(context);
             },
             icon: Icon(
               Icons.exit_to_app,
@@ -68,104 +67,96 @@ class _TableBodyState extends State<TableBody> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                children: [
-                  SizedBox(
-                    height: 15.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      isWitch == false
-                          ? Text(
-                              "ປິດຮ້ານ",
-                              style: TextStyle(
-                                fontFamily: "Phetsarath-OT",
-                                fontSize: 20.sp,
-                                color: AppTheme.RED_COLOR,
+      body: Padding(
+        padding: const EdgeInsets.only(left: 10, right: 10),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 15.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                isWitch == false
+                    ? Text(
+                        "ປິດຮ້ານ",
+                        style: TextStyle(
+                          fontFamily: "Phetsarath-OT",
+                          fontSize: 20.sp,
+                          color: AppTheme.RED_COLOR,
+                        ),
+                      )
+                    : Text(
+                        "ເປີດຮ້ານດຳເນີນການ",
+                        style: TextStyle(
+                          fontFamily: "Phetsarath-OT",
+                          fontSize: 20.sp,
+                          color: AppTheme.GREEN_COLOR,
+                        ),
+                      ),
+                Switch(
+                  activeColor: AppTheme.GREEN_COLOR,
+                  value: isWitch,
+                  onChanged: (vale) {
+                    if (isWitch == false) {
+                      setState(() {
+                        isWitch = vale;
+                        Mystyle().dialogOpen(context);
+                      });
+                    } else {
+                      setState(() {
+                        isWitch = vale;
+                        Mystyle().dialogOff(context);
+                      });
+                    }
+                  },
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [Text(formatDate)],
+            ),
+            SizedBox(
+              height: 7.h,
+            ),
+            Expanded(
+                  child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            SearchTable(),
+                            IconButton(
+                              onPressed: () {
+                                //todo
+                                Mystyle().dialogbuttom(context);
+                              },
+                              icon: Image.asset(
+                                ERPImages.area,
+                                width: 21.w,
+                                height: 21.h,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                //todo
+                              },
+                              icon: Image.asset(
+                                ERPImages.search,
+                                width: 21.w,
+                                height: 21.h,
                               ),
                             )
-                          : Text(
-                              "ເປີດຮ້ານດຳເນີນການ",
-                              style: TextStyle(
-                                fontFamily: "Phetsarath-OT",
-                                fontSize: 20.sp,
-                                color: AppTheme.GREEN_COLOR,
-                              ),
-                            ),
-                      Switch(
-                        activeColor: AppTheme.GREEN_COLOR,
-                        value: isWitch,
-                        onChanged: (vale) {
-                          if (isWitch == false) {
-                            setState(() {
-                              isWitch = vale;
-                              Mystyle().dialogOpen(context);
-                            });
-                          } else {
-                            setState(() {
-                              isWitch = vale;
-                              Mystyle().dialogOff(context);
-                            });
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [Text(formatDate)],
-                  ),
-                  SizedBox(
-                    height: 7.h,
-                  ),
-                 isWitch==false?Center(child: Text("ກາລຸນາເປີດກະກ່ອນ")): Column(
-                    children: [
-                      Row(
-                        children: [
-                          SearchTable(),
-                          IconButton(
-                            onPressed: () {
-                              //todo
-                              Mystyle().dialogbuttom(context);
-                            },
-                            icon: Image.asset(
-                              ERPImages.area,
-                              width: 21.w,
-                              height: 21.h,
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              //todo
-                            },
-                            icon: Image.asset(
-                              ERPImages.search,
-                              width: 21.w,
-                              height: 21.h,
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      SizedBox(
-                        height: 700,
-                        child: ListViewTable(),
-                      ),
-                    ],
-                  )
-                ],
-              )
-            ],
-          ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Expanded(child: ListViewTable()),
+                      ],
+                    ),
+                )
+          ],
         ),
       ),
     );

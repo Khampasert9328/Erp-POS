@@ -473,16 +473,13 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                   SizedBox(
                     height: 10.h,
                   ),
-                  Container(
-                    // height: 300.h,
-                    child: FutureBuilder<List<GetTable>>(
+              FutureBuilder<List<GetTable>>(
                       future: GetTableProvider().gettablebyid(context, idtable),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return Consumer<GetTableProvider>(
                             builder: ((context, model, _) {
-                              return SingleChildScrollView(
-                                  child: GridView.count(
+                              return GridView.count(
                                 crossAxisCount: 2,
                                 childAspectRatio: (0.7 / .4),
                                 shrinkWrap: true,
@@ -498,9 +495,6 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                         preferences.setString(
                                             CountPre().tableid,
                                             snapshot.data![index].id!);
-                                        SharedPreferences pref =
-                                            await SharedPreferences
-                                                .getInstance();
                                         preferences.setString(
                                             CountPre().tablename,
                                             snapshot.data![index].name!);
@@ -531,7 +525,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                     ),
                                   );
                                 }),
-                              ));
+                              );
                             }),
                           );
                         }
@@ -542,7 +536,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                         );
                       },
                     ),
-                  ),
+                  
                 ],
               ),
             if (!selectindex) OrderToTakeHome()

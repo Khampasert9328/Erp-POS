@@ -52,7 +52,7 @@ class _TableDetailState extends State<TableDetail> {
                       borderRadius: BorderRadius.circular(10)),
                   onPressed: () {
                     Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => HomePage()));
+                        context, MaterialPageRoute(builder: (_) => FoodMenu()));
                   },
                   label: Text(
                     "ສັ່ງອາຫານ",
@@ -256,19 +256,7 @@ class _TableDetailState extends State<TableDetail> {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 15.h,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Column(
-                            children: const [
-                              ERPdate(),
-                            ],
-                          )
-                        ],
-                      ),
+                    
                     ],
                   )
                 : Image.asset(ERPImages.offtable)

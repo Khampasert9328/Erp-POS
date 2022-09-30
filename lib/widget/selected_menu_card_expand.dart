@@ -34,20 +34,6 @@ class SelectedMenuCardExpand extends StatefulWidget {
 }
 
 class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
-  @override
-  void initState() {
-    // getdataformsqlite();
-    super.initState();
-  }
-
- 
-  // Future<Null> getdataformsqlite() async {
-  //   var object = await SQLiteERPPOS().getData();
-  //   setState(() {
-  //     listcategory = object;
-  //   });
-  // }
-
   int count = 0;
   void setNumber(bool isAdd) {
     if (isAdd) {
@@ -64,7 +50,6 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
   }
 
   Widget build(BuildContext context) {
-    final counter = Provider.of<FoodMenuProvider>(context, listen: false);
     return Scaffold(
       body: StatefulBuilder(
         builder: (context, setState) => Column(
@@ -88,7 +73,9 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                       ),
                       Container(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 30.h, vertical: 15.h),
+                          horizontal: 30.h,
+                          vertical: 15.h,
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(15.r),
@@ -157,7 +144,6 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                           ],
                         ),
                       ),
-                      //SelectedMenuCardExpand(onNext: onNext, scrollController: scrollController)
                     ],
                   )
                 ],
@@ -376,7 +362,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                   width: 20.w,
                 )
               ],
-            )//////
+            ) //////
           ],
         ),
       ),

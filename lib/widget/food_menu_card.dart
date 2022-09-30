@@ -120,7 +120,7 @@ class FoodMenuCard extends StatelessWidget {
                                         await SharedPreferences.getInstance();
                                     int? amount =await 
                                         preferences.getInt(CountPre().namkey);
-                                    int totalAmount =
+                                    int? totalAmount =
                                         data.data.pricesale! * amount!;
                                     //addOrder(index);
                                     getFoodModel.setFoodMenuData(
