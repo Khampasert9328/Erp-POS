@@ -19,6 +19,8 @@ class SessionProvoder extends ChangeNotifier {
    try {
       GetSessoin? sessoin = await getsessionservice();
 
+      print("sessoin:$sessoin");
+
     if (sessoin != null) {
       _listsession = sessoin.sessionItems!;
       for (var item in sessoin.sessionItems!) {

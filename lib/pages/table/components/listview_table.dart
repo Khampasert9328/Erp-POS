@@ -152,7 +152,7 @@ class _ListViewTableState extends State<ListViewTable> {
             ],
           ),
           NavBarStatusBooking(),
-          FutureBuilder<List<GetTable>>(
+        FutureBuilder<List<GetTable>>(
             future: GetTableProvider().gettablebyid(context, idtable),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
@@ -166,6 +166,7 @@ class _ListViewTableState extends State<ListViewTable> {
                       children: List.generate(snapshot.data!.length, (index) {
                         return GestureDetector(
                           onTap: (() {
+                           
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -174,7 +175,7 @@ class _ListViewTableState extends State<ListViewTable> {
                               ),
                             );
                           }),
-                          child: Padding(
+                          child:Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Container(
                               color: AppTheme.GREY_COLOR,
@@ -198,7 +199,7 @@ class _ListViewTableState extends State<ListViewTable> {
                                 ),
                               ),
                             ),
-                          ),
+                          )
                         );
                       }),
                     ));
@@ -211,7 +212,7 @@ class _ListViewTableState extends State<ListViewTable> {
                 ),
               );
             },
-          ),
+          )
         ],
       );
   }

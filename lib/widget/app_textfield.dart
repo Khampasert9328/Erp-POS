@@ -9,6 +9,7 @@ class AppTextField extends StatelessWidget {
   Widget? prefixIcon;
   TextInputType? keyboardType;
   bool? obscureText;
+  AutofillHints? autofillHints;
 
   AppTextField(
       {required this.controller,
@@ -16,11 +17,13 @@ class AppTextField extends StatelessWidget {
       this.validator,
       this.keyboardType,
       this.prefixIcon,
-      this.obscureText});
+      this.obscureText,
+      this.autofillHints});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autofillHints: [autofillHints.toString()],
       cursorColor: AppTheme.BASE_COLOR,
       obscureText: obscureText ?? false,
       controller: controller,

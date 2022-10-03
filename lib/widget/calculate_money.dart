@@ -121,7 +121,7 @@ class CalculateMoney extends StatelessWidget {
                           CheckExpiredPackage()
                               .getCheckExpiredPackage(context)
                               .then((value) async {
-                            PrintBillCustomers().getbillCustomers();
+                            PrintBillCustomers().getbillCustomers(context);
 
                             SharedPreferences preferences =
                                 await SharedPreferences.getInstance();

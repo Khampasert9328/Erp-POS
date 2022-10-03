@@ -93,7 +93,9 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
                 width: 15.w,
               ),
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    print("open:${CountPre().prefshift==true}");
+                  },
                   icon: Icon(
                     Icons.search,
                     size: (45.w + 45.h) / 2,
@@ -180,6 +182,11 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
               )
             : PlaceToEatCard(
                 scrollController: sc,
+                onback: (){
+                  setState(() {
+                     isSelectedMenuCard = !isSelectedMenuCard;
+                  });
+                },
               ));
   }
 }

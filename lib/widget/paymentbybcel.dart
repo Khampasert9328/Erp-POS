@@ -52,12 +52,14 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
       },
     );
   }
+
   @override
-void dispose() {
-  _timer!.cancel();
-  super.dispose();
-}
-bool chang = false;
+  void dispose() {
+    _timer!.cancel();
+    super.dispose();
+  }
+
+  bool chang = false;
 
   @override
   Widget build(BuildContext context) {
@@ -97,55 +99,13 @@ bool chang = false;
               ),
             ),
             Card(
+              
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
+                
               ),
               child: Column(
                 children: [
-                  Stack(
-                    children: [
-                      Container(
-                        height: 63.h,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: AppTheme.RED_COLOR,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "ຊື່ຮ້ານ:",
-                                      style: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppTheme.WHITE_COLOR,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 15.w,
-                                    ),
-                                    Text(
-                                      "${context.read<GenerateQRBCELONE>().getShopecode}",
-                                      style: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppTheme.WHITE_COLOR,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
@@ -159,10 +119,6 @@ bool chang = false;
                   Container(
                     height: 228.h,
                     width: 228.w,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                      color: AppTheme.RED_COLOR,
-                    )),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -191,7 +147,7 @@ bool chang = false;
                         });
                       });
                     },
-                    child:chang==false? Text("$_timer"):Text("data"),
+                    child: chang == false ? Text("$_timer") : Text("data"),
                   ),
                 ],
               ),

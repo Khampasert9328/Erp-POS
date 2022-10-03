@@ -18,6 +18,7 @@ import 'package:erp_pos/pages/table/components/textContainer.dart';
 import 'package:erp_pos/pages/table/components/textdate.dart';
 import 'package:erp_pos/pages/table/components/textdatetime.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -101,12 +102,16 @@ class _TableBodyState extends State<TableBody> {
                     if (isWitch == false) {
                       setState(() {
                         isWitch = vale;
+                        print("value:$vale");
                         Mystyle().dialogOpen(context);
                       });
                     } else {
-                      setState(() {
+                      setState(() async {
                         isWitch = vale;
                         Mystyle().dialogOff(context);
+                        SharedPreferences pref =
+                            await SharedPreferences.getInstance();
+                        pref.setBool(CountPre().prefshift, vale);
                       });
                     }
                   },
@@ -120,8 +125,9 @@ class _TableBodyState extends State<TableBody> {
             SizedBox(
               height: 7.h,
             ),
-            Expanded(
-                  child: Column(
+            isWitch == true
+                ? Expanded(
+                    child: Column(
                       children: [
                         Row(
                           children: [
@@ -155,7 +161,17 @@ class _TableBodyState extends State<TableBody> {
                         Expanded(child: ListViewTable()),
                       ],
                     ),
-                )
+                  )
+                : Padding(
+                    padding: const EdgeInsets.only(top: 150),
+                    child: Text(
+                      "ກາລຸນາເປີດກະດ່ວນ",
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
           ],
         ),
       ),

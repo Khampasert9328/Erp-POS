@@ -106,8 +106,8 @@ class Mystyle {
       barrierDismissible: false,
       context: context,
       builder: (context) {
-        return Container(
-          child: SingleChildScrollView(
+        return SingleChildScrollView(
+          child: Container(
             child: StatefulBuilder(
               builder: (context, setState) => AlertDialog(
                 title: Form(
@@ -444,7 +444,7 @@ class Mystyle {
 
   showDialogSignOut(BuildContext context) {
     showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (_) {
           return Dialog(
@@ -465,7 +465,7 @@ class Mystyle {
                         ERPImages.iconlogout,
                       ),
                     ),
-                     SizedBox(
+                    SizedBox(
                       height: 19.h,
                     ),
                     Center(
@@ -516,6 +516,69 @@ class Mystyle {
                       ],
                     ),
                   ],
+                ),
+              ));
+        });
+  }
+
+  showDialogCheckData(BuildContext context, String text) {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (_) {
+          return Dialog(
+              insetAnimationDuration: Duration(milliseconds: 5),
+              insetAnimationCurve: Curves.bounceOut,
+              child: Container(
+                height: 250.h,
+                width: 310.w,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 10, left: 10),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 19.h,
+                      ),
+                      Image.asset(
+                        ERPImages.iconerror,
+                        height: 100.h,
+                        width: 100.w,
+                      ),
+                      SizedBox(
+                        height: 19.h,
+                      ),
+                      Center(
+                        child: Text(
+                          "$text",
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      Container(
+                        height: 50.h,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: AppTheme.BASE_COLOR,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "ຕົກລົງ",
+                            style: TextStyle(
+                                fontSize: 18.sp,
+                                color: AppTheme.WHITE_COLOR,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ));
         });

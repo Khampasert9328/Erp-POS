@@ -30,10 +30,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
   //ສຳລັບລັອກອິນ
- int _isRefreshingToken =0;
+  int _isRefreshingToken = 0;
 
   Future<void> login(String email, String username, String password,
       BuildContext context, String name, String lastname) async {
+
     try {
       showDialog(
           context: context,
@@ -108,24 +109,24 @@ class AuthenticationProvider extends ChangeNotifier {
 
   Future<void> logout(BuildContext context) async {
     SharedPreferences pre = await SharedPreferences.getInstance();
-    pre.clear().then((value){
-
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>Login()), (route) => false);
-
+    pre.clear().then((value) {
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (_) => Login()), (route) => false);
     });
   }
 
   Future<ConnectTokenModels?> tokenManagement(BuildContext context) async {
     String? connectTokenPref = await CountPre().getconnectToken();
+
     /// ຖ້າມີ Connect token
     if (connectTokenPref != null) {
       ConnectTokenModels connectTokenData =
           connectTokenModelsFromJson(connectTokenPref);
-     
 
       /// ກວດ Expired Date ຂອງ Access token
       DateTime expireTokenTime =
-          Jwt.getExpiryDate(connectTokenData.content!.accessToken.toString())!.toLocal();
+          Jwt.getExpiryDate(connectTokenData.content!.accessToken.toString())!
+              .toLocal();
 
       /// ຖ້າ Access token ໝົດອາຍຸ
       if (DateTime.now().isAfter(expireTokenTime)) {
@@ -151,12 +152,8 @@ class AuthenticationProvider extends ChangeNotifier {
             return connectRefreshTokenData;
           }
         }
-
-
-      }
-      else {
+      } else {
         return connectTokenData;
-        
       }
     }
 

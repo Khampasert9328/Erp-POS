@@ -15,6 +15,8 @@ class CountPre {
   String sessoinid = 'sessionId';
   String refreshToken = 'refreshToken';
   String connectToken = "connectToken";
+  String prefshift = 'prefshift';
+ 
 
 
   Future<void> setsumall(int sum)async{

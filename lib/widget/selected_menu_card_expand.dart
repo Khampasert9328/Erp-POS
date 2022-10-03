@@ -348,7 +348,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                ElevatedButton(
+              context.read<GetFoodMenuProvider>().getFoodMenuModel.isEmpty?Text(""):  ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(horizontal: 30.w),
                         primary: AppTheme.BASE_COLOR),
