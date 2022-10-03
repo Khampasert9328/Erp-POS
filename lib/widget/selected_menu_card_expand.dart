@@ -34,20 +34,6 @@ class SelectedMenuCardExpand extends StatefulWidget {
 }
 
 class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
-  @override
-  void initState() {
-    // getdataformsqlite();
-    super.initState();
-  }
-
-  List<Category> listcategory = [];
-  // Future<Null> getdataformsqlite() async {
-  //   var object = await SQLiteERPPOS().getData();
-  //   setState(() {
-  //     listcategory = object;
-  //   });
-  // }
-
   int count = 0;
   void setNumber(bool isAdd) {
     if (isAdd) {
@@ -64,7 +50,6 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
   }
 
   Widget build(BuildContext context) {
-    final counter = Provider.of<FoodMenuProvider>(context, listen: false);
     return Scaffold(
       body: StatefulBuilder(
         builder: (context, setState) => Column(
@@ -79,8 +64,8 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                       Padding(
                         padding: const EdgeInsets.only(top: 5),
                         child: Container(
-                          width: 50.w,
-                          height: 7.h,
+                          width: 30.w,
+                          height: 5.h,
                           decoration: BoxDecoration(
                               color: AppTheme.GREY_COLOR,
                               borderRadius: BorderRadius.circular(10)),
@@ -88,7 +73,9 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                       ),
                       Container(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 30.h, vertical: 15.h),
+                          horizontal: 30.h,
+                          vertical: 15.h,
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(15.r),
@@ -148,7 +135,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                     color: AppTheme.WHITE_COLOR,
                                   ),
                                 ),
-                                child: Icon(
+                                child: const Icon(
                                   Icons.shopping_cart,
                                   size: 55,
                                 ),
@@ -157,7 +144,6 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                           ],
                         ),
                       ),
-                      //SelectedMenuCardExpand(onNext: onNext, scrollController: scrollController)
                     ],
                   )
                 ],
@@ -362,7 +348,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                ElevatedButton(
+              context.read<GetFoodMenuProvider>().getFoodMenuModel.isEmpty?Text(""):  ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(horizontal: 30.w),
                         primary: AppTheme.BASE_COLOR),
@@ -376,7 +362,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                   width: 20.w,
                 )
               ],
-            )
+            ) //////
           ],
         ),
       ),

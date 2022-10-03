@@ -28,6 +28,8 @@ class GenerateQRBCELONE extends ChangeNotifier {
   //ສຳລັບ transaction
   // String token =
   //     '${double.parse("${getTime() - 15 * 60 * 10000000}").toInt()}0000';
+
+  
   // double getTime() {
   //   final dateStart = DateTime.utc(1970, 1, 1);
   //   final dateNow = DateTime.now().toUtc();

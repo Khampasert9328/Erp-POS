@@ -1,4 +1,6 @@
+import 'package:erp_pos/bussiness%20logic/authentication.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/pages/login/login.dart';
 import 'package:erp_pos/pages/onboardingscreen/models/content_models.dart';
 import 'package:flutter/material.dart';
@@ -88,16 +90,17 @@ class _OnboardBodyState extends State<OnboardBody> {
             ),
             onPressed: () {
               if (currenIndex == content.length - 1) {
-                Navigator.pushAndRemoveUntil(context,
-                    MaterialPageRoute(builder: (_) {
-                  return Login();
-                }), (route) => false);
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (_) => Login(),
-                //   ),
-                // );
+                if (AuthenticationProvider().tokenManagement(context) == null) {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: ((context) => Login())),
+                      (route) => false);
+                }else{
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: ((context) => HomePage())),
+                      (route) => false);
+                }
               }
               pagecontroller!.nextPage(
                 duration: Duration(milliseconds: 100),

@@ -13,10 +13,14 @@ class GetFoodMenuProvider extends ChangeNotifier {
   List<FoodMenuModel> foodMenuModel = [];
   int _totalamount = 0;
   GetFoodMenuModels? modelsProduct;
-
   GetFoodMenuModels? get getModelsProduct => modelsProduct;
   int get totalamont => _totalamount;
   List<FoodMenuModel> get getFoodMenuModel => foodMenuModel;
+
+
+
+
+  
 
   /// ດຶງລາຍການສິນຄ້າໃນເມນູອາຫານ
   Future<void> getProduct(bool forceReload) async {
@@ -75,5 +79,11 @@ class GetFoodMenuProvider extends ChangeNotifier {
   void deleteData(int index) {
     foodMenuModel.removeAt(index);
     notifyListeners();
+  }
+
+  void changmoney(int chang){
+    chang - totalamont;
+    notifyListeners();
+
   }
 }

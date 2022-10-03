@@ -16,7 +16,7 @@ class FoodMenuProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int count = 0;
+  int count = 1;
   int get counter => count;
   void increment(int add) async {
     count = add;

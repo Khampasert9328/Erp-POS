@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 class TextContainer extends StatefulWidget {
   String hintext;
   String suffixIcon; 
-  TextContainer({required this.hintext,required this.suffixIcon});
+  TextEditingController? controller;
+  String? Function(String?)? validator;
+  TextContainer({required this.hintext,required this.suffixIcon, required this.controller, this.validator});
   
   @override
   State<TextContainer> createState() => _TextContainerState();
@@ -24,6 +26,7 @@ class _TextContainerState extends State<TextContainer> {
             left: 20.0,
           ),
           child: TextField(
+            controller: widget.controller,
             decoration: InputDecoration(
          suffixIcon: Padding(
            padding: const EdgeInsets.all(8.0),

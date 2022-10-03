@@ -1,6 +1,5 @@
-// ignore_for_file: unused_import, must_be_immutable, use_key_in_widget_constructors
+// ignore_for_file: unused_import, must_be_immutable, use_key_in_widget_constructors, use_build_context_synchronously
 import 'dart:ui';
-
 
 import 'package:devla_sunmi/flutter_sunmi_printer.dart';
 import 'package:erp_pos/constant/images.dart';
@@ -21,6 +20,7 @@ import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/calculate_money.dart';
 import 'package:erp_pos/widget/order_to_take_home.dart';
 import 'package:erp_pos/widget/selected_menu_card.dart';
+import 'package:erp_pos/widget/selected_menu_card_expand.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,8 +30,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class PlaceToEatCard extends StatefulWidget {
   ScrollController scrollController;
+  VoidCallback onback;
 
-  PlaceToEatCard({required this.scrollController});
+  PlaceToEatCard({required this.scrollController, required this.onback});
 
   @override
   State<PlaceToEatCard> createState() => _PlaceToEatCardState();
@@ -43,8 +44,10 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
   int? selectTable;
   FoodMenuModel? model;
 
-  int? isselect;
+  int? isselect = 0;
   String? idtable;
+  String? sc;
+  bool selectMenu = false;
 
   @override
   Widget build(BuildContext context) {
@@ -55,168 +58,126 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  selecbutton = true;
-                });
-                Navigator.pop(context);
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10.h),
-                decoration: BoxDecoration(
-                    color: selecbutton == true
-                        ? AppTheme.BASE_COLOR
-                        : AppTheme.WHITE_COLOR,
-                    border: Border.all(color: AppTheme.BASE_COLOR),
-                    borderRadius: BorderRadius.circular(5)),
-                child: Row(
-                  children: [
-                    Text(
-                      "ກັບຄືນ",
-                      style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.bold,
-                          color: selecbutton == true
-                              ? AppTheme.WHITE_COLOR
-                              : AppTheme.BASE_COLOR),
-                    )
-                  ],
-                ),
-              ),
-            ),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 50.w, vertical: 10.h),
+                    primary: AppTheme.BASE_COLOR),
+                onPressed: widget.onback,
+                child: Text(
+                  'ກັບຄືນ',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w700,
+                  ),
+                )),
             GestureDetector(
               onTap: () async {
+                if (context
+                    .read<GetFoodMenuProvider>()
+                    .getFoodMenuModel
+                    .isEmpty) {
+                  Mystyle().showDialogCheckData(
+                      context, "ກາລຸນາກວດສອບອໍເດີຂອງທ່ານກ່ອນ");
+                } else {
+                  SharedPreferences pre = await SharedPreferences.getInstance();
+                  String? getidtable = pre.getString(CountPre().tablename);
 
-                SharedPreferences pre = await SharedPreferences.getInstance();
-                String? getidtable = pre.getString(CountPre().tablename);
-            
+                  CheckExpiredPackage()
+                      .getCheckExpiredPackage(context)
+                      .then((value) async {
+                    PrintBillKitchenProvider().getprint();
 
-                CheckExpiredPackage()
-                    .getCheckExpiredPackage(context)
-                    .then((value) async {
-                  PrintBillKitchenProvider().getprint();
+                    SharedPreferences preferences =
+                        await SharedPreferences.getInstance();
+                    String? getzone = preferences.getString(CountPre().idzone);
+                    SharedPreferences pri =
+                        await SharedPreferences.getInstance();
+                    String? billNo = pri.getString(CountPre().billNo);
 
-                SharedPreferences preferences =
-                    await SharedPreferences.getInstance();
-                String? getzone = preferences.getString(CountPre().idzone);
-                SharedPreferences pri = await SharedPreferences.getInstance();
-                String? billNo = pri.getString(CountPre().billNo);
+                    try {
+                      await SunmiPrinter.startTransactionPrint();
+                      await SunmiPrinter.printText('ໃບບິນຫ້ອງຄົວ',
+                          style: SunmiStyle(
+                              align: SunmiPrintAlign.CENTER,
+                              bold: true,
+                              fontSize: SunmiFontSize.LG));
+                      await SunmiPrinter.line();
 
-                try {
-                  
-                await SunmiPrinter.startTransactionPrint();
-                await SunmiPrinter.printText('ໃບບິນຫ້ອງຄົວ',
-                    style: SunmiStyle(
-                        align: SunmiPrintAlign.CENTER,
-                        bold: true,
-                        fontSize: SunmiFontSize.LG));
-                await SunmiPrinter.line();
+                      await SunmiPrinter.printRow(cols: [
+                        ColumnMaker(text: 'ໃບບິນເລກທີ', width: 6),
+                        ColumnMaker(
+                            text: '$billNo',
+                            width: 6,
+                            align: SunmiPrintAlign.RIGHT),
+                      ]);
 
-                await SunmiPrinter.printRow(cols: [
-                  ColumnMaker(text: 'ໃບບິນເລກທີ', width: 6),
-                  ColumnMaker(
-                      text: '$billNo',
-                      width: 6,
-                      align: SunmiPrintAlign.RIGHT),
-                ]);
+                      await SunmiPrinter.printRow(cols: [
+                        ColumnMaker(text: 'ວັນເວລາ', width: 6),
+                        ColumnMaker(
+                            text:
+                                '${DateFormat("yyy-MM-dd HH:mm").format(DateTime.now())}',
+                            width: 6,
+                            align: SunmiPrintAlign.RIGHT),
+                      ]);
+                      await SunmiPrinter.printRow(cols: [
+                        ColumnMaker(text: 'ໂຊນ ຫຼື ພື້ນທີ່', width: 6),
+                        ColumnMaker(
+                            text: '$getzone',
+                            width: 6,
+                            align: SunmiPrintAlign.RIGHT),
+                      ]);
+                      await SunmiPrinter.printRow(cols: [
+                        ColumnMaker(text: 'ເລກໂຕະ', width: 6),
+                        ColumnMaker(
+                            text: '$getidtable',
+                            width: 6,
+                            align: SunmiPrintAlign.RIGHT),
+                      ]);
 
-                await SunmiPrinter.printRow(cols: [
-                  ColumnMaker(text: 'ວັນເວລາ', width: 6),
-                  ColumnMaker(
-                      text: '${DateFormat("yyy-MM-dd HH:mm").format(DateTime.now())}',
-                      width: 6,
-                      align: SunmiPrintAlign.RIGHT),
-                      
-                ]);
-                await SunmiPrinter.printRow(cols: [
-                  ColumnMaker(text: 'ໂຊນ ຫຼື ພື້ນທີ່', width: 6),
-                  ColumnMaker(
-                      text: '$getzone',
-                      width: 6,
-                      align: SunmiPrintAlign.RIGHT),
-                      
-                ]);
-                await SunmiPrinter.printRow(cols: [
-                  ColumnMaker(text: 'ເລກໂຕະ', width: 6),
-                  ColumnMaker(
-                      text: '$getidtable',
-                      width: 6,
-                      align: SunmiPrintAlign.RIGHT),
-                      
-                ]);
+                      await SunmiPrinter.line();
+                      await SunmiPrinter.printText('ລາຍການອາຫານ',
+                          style: SunmiStyle(
+                              align: SunmiPrintAlign.CENTER,
+                              bold: true,
+                              fontSize: SunmiFontSize.MD));
 
+                      for (var data in context
+                          .read<GetFoodMenuProvider>()
+                          .getFoodMenuModel) {
+                        await SunmiPrinter.printRow(cols: [
+                          ColumnMaker(text: '${data.data.name}', width: 6),
+                          ColumnMaker(
+                              text:
+                                  '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.number)} x ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.totalAmount)}',
+                              width: 6,
+                              align: SunmiPrintAlign.RIGHT),
+                        ]);
+                      }
+                      await SunmiPrinter.line();
 
-                await SunmiPrinter.line();
-                await SunmiPrinter.printText('ລາຍການອາຫານ',
-                    style: SunmiStyle(
-                        align: SunmiPrintAlign.CENTER,
-                        bold: true,
-                        fontSize: SunmiFontSize.MD));
+                      await SunmiPrinter.printText('ຂໍຂອບໃຈ',
+                          style: SunmiStyle(
+                              align: SunmiPrintAlign.CENTER,
+                              bold: true,
+                              fontSize: SunmiFontSize.MD));
+                      await SunmiPrinter.lineWrap(3);
+                      await SunmiPrinter.submitTransactionPrint();
+                      await SunmiPrinter.exitTransactionPrint();
+                    } catch (e) {
+                      print("error:$e");
+                    }
+                  });
 
-                  for (var data in context.read<GetFoodMenuProvider>().getFoodMenuModel) {
-
-                    await SunmiPrinter.printRow(cols: [
-                  ColumnMaker(text: '${data.data.name}', width: 6),
-                  ColumnMaker(
-                      text: '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.number)} x ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.totalAmount)}',
-                      width: 6,
-                      align: SunmiPrintAlign.RIGHT),
-                ]);
-                    
-                  }
-                await SunmiPrinter.line();
-                
-
-                await SunmiPrinter.printText('ຂໍຂອບໃຈ',
-                    style: SunmiStyle(
-                        align: SunmiPrintAlign.CENTER,
-                        bold: true,
-                        fontSize: SunmiFontSize.MD));
-                await SunmiPrinter.lineWrap(3);
-                await SunmiPrinter.submitTransactionPrint();
-                await SunmiPrinter.exitTransactionPrint();
-                } catch (e) {
-
-                  print("error:$e");
-                  
-                }
-             });
-                showDialog(
-                    context: context,
-                    builder: (_) {
-                      return Dialog(
-                        insetAnimationDuration: Duration(milliseconds: 5),
-                        insetAnimationCurve: Curves.bounceOut,
-                        child: Container(
-                          height: 150.h,
-                          width: 100.w,
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                ERPImages.animation,
-                                height: 77.h,
-                                width: 77.w,
-                              ),
-                              Text(
-                                "ອໍເດີໄດ້ສົ່ງໄປຫ້ອງຄົວແລ້ວ",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18.sp),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    });
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => CalculateMoney(
-                      tablename: getidtable,
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => CalculateMoney(
+                        tablename: getidtable,
+                      ),
                     ),
-                  ),
-                );
+                  );
+                }
               },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10.h),
@@ -375,116 +336,121 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                   ),
                   Row(
                     children: [
-                      SizedBox(
-                        height: 50.h,
-                        width: 200.w,
-                        child: FutureBuilder<List<Area>>(
-                          future: AreaProvider().getZone(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              return Consumer<AreaProvider>(
-                                builder: ((context, model, _) {
-                                  return ListView.builder(
-                                      physics: ScrollPhysics(),
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: snapshot.data!.length,
-                                      itemBuilder: (context, index) {
-                                        String? id =
-                                            snapshot.data![index].id ?? "";
+                      Expanded(
+                        child: SizedBox(
+                          height: 50.h,
+                          width: double.infinity,
+                          child: FutureBuilder<List<Area>>(
+                            future: AreaProvider().getZone(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return Consumer<AreaProvider>(
+                                  builder: ((context, model, _) {
+                                    return ListView.builder(
+                                        physics: ScrollPhysics(),
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: snapshot.data!.length,
+                                        itemBuilder: (context, index) {
+                                          String? id =
+                                              snapshot.data![index].id ?? "";
 
-                                        return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Expanded(
-                                              child: Column(
-                                                children: [
-                                                  GestureDetector(
-                                                    onTap: () async {
-                                                      setState(() {
-                                                        isselect = index;
-                                                        idtable = id;
-                                                      });
-                                                      SharedPreferences
-                                                          preferences =
-                                                          await SharedPreferences
-                                                              .getInstance();
-                                                      preferences.setString(
-                                                          CountPre().idzone,
-                                                          snapshot.data![index]
-                                                              .area!);
-                                                      preferences.setString(
-                                                          CountPre().tableid,
-                                                          idtable.toString());
-                                                    },
-                                                    child: Column(
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                            right: 8,
-                                                          ),
-                                                          child: Container(
-                                                            height: 40.h,
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                              horizontal: 15.w,
+                                          return Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Expanded(
+                                                child: Column(
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: () async {
+                                                        setState(() {
+                                                          isselect = index;
+                                                          idtable = id;
+                                                        });
+                                                        SharedPreferences
+                                                            preferences =
+                                                            await SharedPreferences
+                                                                .getInstance();
+                                                        preferences.setString(
+                                                            CountPre().idzone,
+                                                            snapshot
+                                                                .data![index]
+                                                                .area!);
+                                                        preferences.setString(
+                                                            CountPre().tableid,
+                                                            idtable.toString());
+                                                      },
+                                                      child: Column(
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                              right: 8,
                                                             ),
-                                                            decoration: BoxDecoration(
-                                                                color: isselect == index
-                                                                    ? AppTheme
-                                                                        .BASE_COLOR
-                                                                    : AppTheme
-                                                                        .WHITE_COLOR,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5),
-                                                                border: Border.all(
-                                                                    color: AppTheme
-                                                                        .BASE_COLOR)),
-                                                            child: Center(
-                                                              child: Text(
-                                                                snapshot
-                                                                    .data![
-                                                                        index]
-                                                                    .area!,
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize:
-                                                                      18.sp,
+                                                            child: Container(
+                                                              height: 40.h,
+                                                              padding: EdgeInsets
+                                                                  .symmetric(
+                                                                horizontal:
+                                                                    15.w,
+                                                              ),
+                                                              decoration: BoxDecoration(
                                                                   color: isselect == index
                                                                       ? AppTheme
-                                                                          .WHITE_COLOR
+                                                                          .BASE_COLOR
                                                                       : AppTheme
-                                                                          .GREY_COLOR,
+                                                                          .WHITE_COLOR,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              5),
+                                                                  border: Border.all(
+                                                                      color: AppTheme
+                                                                          .BASE_COLOR)),
+                                                              child: Center(
+                                                                child: Text(
+                                                                  snapshot
+                                                                      .data![
+                                                                          index]
+                                                                      .area!,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        18.sp,
+                                                                    color: isselect ==
+                                                                            index
+                                                                        ? AppTheme
+                                                                            .WHITE_COLOR
+                                                                        : AppTheme
+                                                                            .GREY_COLOR,
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      ],
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              height: 10.h,
-                                            ),
-                                          ],
-                                        );
-                                      });
-                                }),
-                              );
-                            }
-                            return SizedBox();
-                          },
+                                              SizedBox(
+                                                height: 10.h,
+                                              ),
+                                            ],
+                                          );
+                                        });
+                                  }),
+                                );
+                              }
+                              return SizedBox();
+                            },
+                          ),
                         ),
                       ),
                     ],
@@ -496,75 +462,65 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                   SizedBox(
                     height: 10.h,
                   ),
-                  Container(
-                    // height: 300.h,
-                    child: FutureBuilder<List<GetTable>>(
-                      future: GetTableProvider().gettablebyid(context, idtable),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Consumer<GetTableProvider>(
-                            builder: ((context, model, _) {
-                              return SingleChildScrollView(
-                                  child: GridView.count(
-                                crossAxisCount: 2,
-                                childAspectRatio: (0.7 / .4),
-                                shrinkWrap: true,
-                                children: List.generate(snapshot.data!.length,
-                                    (index) {
-                                  return Padding(
+                  FutureBuilder<List<GetTable>>(
+                    future: GetTableProvider().gettablebyid(context, idtable),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Consumer<GetTableProvider>(
+                          builder: ((context, model, _) {
+                            return SingleChildScrollView(
+                                child: GridView.count(
+                              crossAxisCount: 2,
+                              childAspectRatio: (0.8 / .4),
+                              shrinkWrap: true,
+                              children:
+                                  List.generate(snapshot.data!.length, (index) {
+                                return GestureDetector(
+                                  onTap: (() async {
+                                    SharedPreferences preferences =
+                                        await SharedPreferences.getInstance();
+                                    preferences.setString(CountPre().tableid,
+                                        snapshot.data![index].id!);
+                                    preferences.setString(CountPre().tablename,
+                                        snapshot.data![index].name!);
+                                  }),
+                                  child: Padding(
                                     padding: const EdgeInsets.all(10.0),
-                                    child: GestureDetector(
-                                      onTap: () async {
-                                        SharedPreferences preferences =
-                                            await SharedPreferences
-                                                .getInstance();
-                                        preferences.setString(
-                                            CountPre().tableid,
-                                            snapshot.data![index].id!);
-                                        SharedPreferences pref =
-                                            await SharedPreferences
-                                                .getInstance();
-                                        preferences.setString(
-                                            CountPre().tablename,
-                                            snapshot.data![index].name!);
-                                      },
+                                    child: Container(
+                                      color: AppTheme.GREY_COLOR,
                                       child: Container(
-                                        height: 50.h,
-                                        color: AppTheme.GREY_COLOR,
-                                        child: Container(
-                                          padding: const EdgeInsets.all(16),
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              left: BorderSide(
-                                                color: AppTheme.GREEN_COLOR,
-                                                width: 15,
-                                              ),
+                                        padding: const EdgeInsets.all(16),
+                                        decoration: BoxDecoration(
+                                          border: Border(
+                                            left: BorderSide(
+                                              color: AppTheme.GREEN_COLOR,
+                                              width: 15,
                                             ),
                                           ),
-                                          child: Center(
-                                            child: Text(
-                                              snapshot.data![index].name!,
-                                              style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            snapshot.data![index].name!,
+                                            style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  );
-                                }),
-                              ));
-                            }),
-                          );
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: AppTheme.BASE_COLOR,
-                          ),
+                                  ),
+                                );
+                              }),
+                            ));
+                          }),
                         );
-                      },
-                    ),
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: AppTheme.BASE_COLOR,
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

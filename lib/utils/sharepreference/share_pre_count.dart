@@ -12,6 +12,12 @@ class CountPre {
   String dateSubscribe="dateSubscribe";
   String idzone = "zone";
   String billNo = "billNo";
+  String sessoinid = 'sessionId';
+  String refreshToken = 'refreshToken';
+  String connectToken = "connectToken";
+  String prefshift = 'prefshift';
+ 
+
 
   Future<void> setsumall(int sum)async{
     preferences = await SharedPreferences.getInstance();
@@ -21,5 +27,13 @@ class CountPre {
   Future<String?> getsumall()async{
     preferences = await SharedPreferences.getInstance();
   return preferences.getString(sumall);
+  }
+  Future<void> setrefreshToken(String refresh)async{
+    preferences = await SharedPreferences.getInstance();
+    preferences.setString(refreshToken, refresh);
+  }
+  Future<String?> getconnectToken()async{
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getString(connectToken);
   }
 }

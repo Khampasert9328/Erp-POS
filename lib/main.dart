@@ -14,11 +14,14 @@ import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/provider/generateQR/generate_qr_bcelone_provider.dart';
 import 'package:erp_pos/provider/getorderbyissuedate/get_order_by_issuedate_provider.dart';
+import 'package:erp_pos/provider/sessoin/get_session_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'constant/routes.dart' as custom_route;
 import 'package:flutter/material.dart';
 
@@ -50,9 +53,11 @@ class MyApp extends StatelessWidget {
                 create: ((context) => CheckExpiredPackage())),
             ChangeNotifierProvider(
                 create: (context) => PrintBillKitchenProvider()),
-                ChangeNotifierProvider(create: (_)=>PrintBillCustomers()),
-                ChangeNotifierProvider(create: (_)=>GenerateQRBCELONE()),
-                ChangeNotifierProvider(create: (_)=>GetOrderByIssueDateProvider())
+            ChangeNotifierProvider(create: (_) => PrintBillCustomers()),
+            ChangeNotifierProvider(create: (_) => GenerateQRBCELONE()),
+            ChangeNotifierProvider(
+                create: (_) => GetOrderByIssueDateProvider()),
+            ChangeNotifierProvider(create: (_) => SessionProvoder())
           ],
           child: MaterialApp(
             theme: ThemeData(

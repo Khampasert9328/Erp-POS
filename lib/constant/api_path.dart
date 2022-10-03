@@ -17,4 +17,8 @@ class APIPath {
   static const String CREATE_ORDER = BASE_URL + 'OrderService/CreateOrder';
   static const String GET_ORDER_BY_ISSUE_DATE = BASE_URL + 'OrderService/GetOrder_byIssuedate';
   static const String GET_ORDER_BY_LIST_ID = BASE_URL + 'BillService/GetBillCancel_byIdList';
+  static const String GET_SESSION = BASE_URL + 'SessionService/GetByUserStatus';
+  static const String CREATE_SESSION = BASE_URL + 'SessionService/CreateSession';
+  static const String CREATE_CACULATE_MONEY = BASE_URL + 'SessionService/CreateSession';
+  static const String REFRESH_TOKEN = BASE_URL + 'Connect/refreshToken';
 }

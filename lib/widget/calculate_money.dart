@@ -121,7 +121,7 @@ class CalculateMoney extends StatelessWidget {
                           CheckExpiredPackage()
                               .getCheckExpiredPackage(context)
                               .then((value) async {
-                            PrintBillCustomers().getbillCustomers();
+                            PrintBillCustomers().getbillCustomers(context);
 
                             SharedPreferences preferences =
                                 await SharedPreferences.getInstance();
@@ -373,12 +373,13 @@ class CalculateMoney extends StatelessWidget {
                             fontSize: 14.sp,
                             color: AppTheme.WHITE_COLOR,
                             fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     Expanded(
                       flex: 1,
                       child: Text(
-                        "ຈຳນວນ",
+                        "ຈ/ນ",
                         style: TextStyle(
                             fontSize: 14.sp,
                             color: AppTheme.WHITE_COLOR,
@@ -394,6 +395,7 @@ class CalculateMoney extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
+                    
                   ],
                 ),
               ),
@@ -430,6 +432,7 @@ class CalculateMoney extends StatelessWidget {
                               child: Text(
                                   "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(value.getFoodMenuModel[index].totalAmount)}"),
                             ),
+                            
                           ],
                         );
                       }));

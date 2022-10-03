@@ -1,3 +1,7 @@
+// ignore_for_file: unnecessary_new
+
+import 'dart:async';
+
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
@@ -28,6 +32,34 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
       });
     });
   }
+
+  Timer? _timer;
+  int start = 3;
+  void startTimer() {
+    const oneSec = const Duration(seconds: 1);
+    _timer = new Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (start == 0) {
+          setState(() {
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            start--;
+          });
+        }
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _timer!.cancel();
+    super.dispose();
+  }
+
+  bool chang = false;
 
   @override
   Widget build(BuildContext context) {
@@ -67,55 +99,13 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
               ),
             ),
             Card(
+              
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
+                
               ),
               child: Column(
                 children: [
-                  Stack(
-                    children: [
-                      Container(
-                        height: 63.h,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: AppTheme.RED_COLOR,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "ຊື່ຮ້ານ:",
-                                      style: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppTheme.WHITE_COLOR,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 15.w,
-                                    ),
-                                    Text(
-                                      "${context.read<GenerateQRBCELONE>().getShopecode}",
-                                      style: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppTheme.WHITE_COLOR,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
@@ -129,10 +119,6 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                   Container(
                     height: 228.h,
                     width: 228.w,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                      color: AppTheme.RED_COLOR,
-                    )),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -161,7 +147,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                         });
                       });
                     },
-                    child: Text("refetch"),
+                    child: chang == false ? Text("$_timer") : Text("data"),
                   ),
                 ],
               ),

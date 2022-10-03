@@ -12,8 +12,8 @@ class GetOrderByIssueDateProvider extends ChangeNotifier {
 
 
   Future<List<GetOrder>?> getorderfromservice()async{
-
     GetOrderByIssuedateModels? order=await getorderbyissuedate();
+    print("object:$order");
 
     if (order != null) {
     String billid = order.order!.first.billid!;
