@@ -19,8 +19,8 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
     return FutureBuilder<List<GetOrder>?>(
       future: GetOrderByIssueDateProvider().getorderfromservice(),
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          print("snapshot:$snapshot");
+        print("snapshot:$snapshot");
+        if (snapshot.hasData) {  
           return Consumer<GetOrderByIssueDateProvider>(
             builder: (context, value, child) {
               return ListView.builder(
@@ -46,7 +46,7 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                               Expanded(
                                 child: ListTile(
                                   title: Text(
-                                    "${snapshot.data!.first.date}",
+                                    "${snapshot.data!.first.issuedate}",
                                     style: TextStyle(
                                       fontSize: 13.sp,
                                       color: AppTheme.BASE_COLOR,

@@ -6,10 +6,10 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<GetOrderByListId?> getorderbylistid(String? id) async {
-  int limit = -1;
-  int page = 0;
-  String startdate = DateFormat('ddMMyyyy').format(DateTime.now());
-  String startend = DateFormat('ddMMyyyy').format(DateTime.now());
+  int? limit = -1;
+  int? page = 0;
+  String? startdate = DateFormat('ddMMyyyy').format(DateTime.now());
+  String? startend = DateFormat('ddMMyyyy').format(DateTime.now());
   SharedPreferences pre = await SharedPreferences.getInstance();
   String? idToken = pre.getString("content");
   try {
@@ -31,7 +31,6 @@ Future<GetOrderByListId?> getorderbylistid(String? id) async {
     });
 
     if (respones.statusCode == 200) {
-      print("respon:${respones.body}");
       return getOrderByListIdFromJson(respones.body);
     }
   } catch (e) {

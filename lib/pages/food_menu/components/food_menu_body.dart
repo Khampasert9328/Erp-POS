@@ -43,26 +43,13 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
     return Stack(
       children: [
         SlidingUpPanel(
-          maxHeight: _panelHeightOpen,
-          minHeight: _panelHeightClosed,
-          parallaxEnabled: true,
-          parallaxOffset: .5,
           body: buildBody(context),
           panelBuilder: (sc) => _panel(sc),
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(18.0),
             topRight: Radius.circular(18.0),
           ),
-          onPanelSlide: (double pos) => setState(() {
-            _fabHeight =
-                pos * (_panelHeightOpen - _panelHeightClosed) + _initFabHeight;
-          }),
         ),
-        // Positioned(
-        //   right: 20.0,
-        //   bottom: _fabHeight,
-        //   child: buildFloatingButton(context),
-        // ),
       ],
     );
   }
@@ -94,69 +81,13 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
               ),
               IconButton(
                   onPressed: () {
-                    print("open:${CountPre().prefshift==true}");
+                 //
                   },
                   icon: Icon(
                     Icons.search,
                     size: (45.w + 45.h) / 2,
                   ))
             ],
-          ),
-          SizedBox(
-            height: 15.h,
-          ),
-          // SizedBox(
-          //   height: 30.h,
-          //   child: Row(
-          //     crossAxisAlignment: CrossAxisAlignment.center,
-          //     children: [
-          //       IconButton(
-          //           color: Colors.red,
-          //           onPressed: () {
-          //             addFoodTypeDialog(context);
-          //           },
-          //           icon: Icon(
-          //             Icons.add,
-          //             color: AppTheme.BASE_COLOR,
-          //             size: 30,
-          //           )),
-          //       SizedBox(
-          //         width: 10.w,
-          //       ),
-          //       Expanded(
-          //           child: ListView.builder(
-          //         itemCount: foodType.length,
-          //         scrollDirection: Axis.horizontal,
-          //         itemBuilder: (context, index) {
-          //           return GestureDetector(
-          //             onTap: () {
-          //               setState(() {
-          //                 selectedFoodType = foodType[index];
-          //               });
-          //             },
-          //             child: Padding(
-          //               padding: EdgeInsets.symmetric(horizontal: 30),
-          //               child: Text(
-          //                 foodType[index],
-          //                 style: TextStyle(
-          //                     fontWeight: FontWeight.w700,
-          //                     color: Color(selectedFoodType == foodType[index]
-          //                         ? 0xFF283150
-          //                         : 0xFF999DAA),
-          //                     fontSize: 18.sp,
-          //                     decoration: selectedFoodType == foodType[index]
-          //                         ? TextDecoration.underline
-          //                         : TextDecoration.none),
-          //               ),
-          //             ),
-          //           );
-          //         },
-          //       ))
-          //     ],
-          //   ),
-          // ),
-          SizedBox(
-            height: 10.h,
           ),
           Expanded(
             child: FoodMenuCard(),
@@ -182,9 +113,9 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
               )
             : PlaceToEatCard(
                 scrollController: sc,
-                onback: (){
+                onback: () {
                   setState(() {
-                     isSelectedMenuCard = !isSelectedMenuCard;
+                    isSelectedMenuCard = !isSelectedMenuCard;
                   });
                 },
               ));

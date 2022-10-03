@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 class SignIn extends StatefulWidget {
   @override
   State<SignIn> createState() => _SignInState();
@@ -15,11 +14,8 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final formKey = GlobalKey<FormState>();
-
   TextEditingController email = TextEditingController();
-
   TextEditingController password = TextEditingController();
-
   bool value = false;
 
   @override
@@ -88,6 +84,8 @@ class _SignInState extends State<SignIn> {
                     if (formKey.currentState!.validate()) {
                       AuthenticationProvider().login(email.text, password.text,
                           password.text, context, "", "");
+
+                          
                     }
                   })
             ],

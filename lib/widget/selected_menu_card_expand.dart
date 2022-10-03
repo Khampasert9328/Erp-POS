@@ -64,8 +64,8 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                       Padding(
                         padding: const EdgeInsets.only(top: 5),
                         child: Container(
-                          width: 50.w,
-                          height: 7.h,
+                          width: 30.w,
+                          height: 5.h,
                           decoration: BoxDecoration(
                               color: AppTheme.GREY_COLOR,
                               borderRadius: BorderRadius.circular(10)),

@@ -18,6 +18,8 @@ class GetFoodMenuProvider extends ChangeNotifier {
   List<FoodMenuModel> get getFoodMenuModel => foodMenuModel;
 
 
+
+
   
 
   /// ດຶງລາຍການສິນຄ້າໃນເມນູອາຫານ
