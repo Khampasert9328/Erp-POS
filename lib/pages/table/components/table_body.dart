@@ -34,7 +34,7 @@ class TableBody extends StatefulWidget {
 }
 
 DateTime nowTime = DateTime.now();
-String formatDate = DateFormat('yyy-MM-dd').format(nowTime);
+String formatDate = DateFormat('yyy-MM-dd HH:mm:ss').format(nowTime);
 
 class _TableBodyState extends State<TableBody> {
   bool isWitch = false;

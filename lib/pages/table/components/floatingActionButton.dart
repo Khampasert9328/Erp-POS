@@ -20,11 +20,8 @@ class BuildFloatingActionButton extends StatelessWidget {
         width: 30,
       ),
       label: const Text(
-        "ເພີ່ມໂຕະ",
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontFamily: "Phetsarath-OT"
-        ),
+        " ເພີ່ມໂຕ໊ະ",
+        style: TextStyle(fontSize: 15, fontFamily: "Phetsarath-OT"),
       ),
     );
   }

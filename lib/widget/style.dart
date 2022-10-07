@@ -333,9 +333,12 @@ class Mystyle {
               children: [
                 Row(
                   children: [
-                    Mystyle().subtiTle1("ໂຊນ:"),
-                    Mystyle().subtiTle1("ຫ້ອງອາຫານຊັ້ນ 01"),
+                    Mystyle().subtiTle1("ໂຊນ : "),
+                    Mystyle().subtiTle1("ຊັ້ນ 1"),
                   ],
+                ),
+                SizedBox(
+                  height: 10.h,
                 ),
                 Mystyle().tiTle1("ເລກໂຕະ"),
                 TextContainer(
