@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
 Future<CreateSession?> createSession() async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   String? idtoken = preferences.getString("content");
@@ -20,7 +19,7 @@ Future<CreateSession?> createSession() async {
     String payload = jsonEncode({
       "userOpen": userid,
       "userOpenName": username,
-      "openDate": DateFormat('yyyyMMdd').format(DateTime.now()),
+      "openDate": DateFormat('yyyyMMddhhmmss').format(DateTime.now()),
       "cashOpen": 0
     });
     var respones = await http.post(

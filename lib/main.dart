@@ -14,6 +14,7 @@ import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/provider/generateQR/generate_qr_bcelone_provider.dart';
 import 'package:erp_pos/provider/getorderbyissuedate/get_order_by_issuedate_provider.dart';
+import 'package:erp_pos/provider/offsession/create_off_session_provider.dart';
 import 'package:erp_pos/provider/sessoin/get_session_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
@@ -57,7 +58,8 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (_) => GenerateQRBCELONE()),
             ChangeNotifierProvider(
                 create: (_) => GetOrderByIssueDateProvider()),
-            ChangeNotifierProvider(create: (_) => SessionProvoder())
+            ChangeNotifierProvider(create: (_) => SessionProvoder()),
+            ChangeNotifierProvider(create: (_)=>CreateOffSessionProvider()),
           ],
           child: MaterialApp(
             theme: ThemeData(

@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 Future<GetSessoin?> getsessionservice() async {
-  int status = 0;
+  int status = 1;
   SharedPreferences preferences = await SharedPreferences.getInstance();
   String? idToken = preferences.getString("content");
   String yourToken = idToken!;
@@ -13,6 +13,7 @@ Future<GetSessoin?> getsessionservice() async {
   String userId = decodedToken['sub'];
   try {
     var url = "${APIPath.GET_SESSION}/$userId/$status";
+    
     var respones = await http.get(
       Uri.parse(url),
       headers: {
@@ -20,6 +21,7 @@ Future<GetSessoin?> getsessionservice() async {
         "Authorization":"Bearer $idToken"
       },
     );
+   
     if (respones.statusCode == 200) {
       return getSessoinFromJson(respones.body);
       

@@ -62,7 +62,7 @@ class _TableBodyState extends State<TableBody> {
             onPressed: () {
               Mystyle().showDialogSignOut(context);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.exit_to_app,
             ),
           ),
@@ -102,7 +102,7 @@ class _TableBodyState extends State<TableBody> {
                     if (isWitch == false) {
                       setState(() {
                         isWitch = vale;
-                        print("value:$vale");
+
                         Mystyle().dialogOpen(context);
                       });
                     } else {
@@ -120,7 +120,11 @@ class _TableBodyState extends State<TableBody> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: [Text(formatDate)],
+              children: [
+                Text(
+                  formatDate,
+                ),
+              ],
             ),
             SizedBox(
               height: 7.h,

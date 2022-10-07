@@ -16,6 +16,8 @@ class CountPre {
   String refreshToken = 'refreshToken';
   String connectToken = "connectToken";
   String prefshift = 'prefshift';
+  String cashOpen = 'cashOpen';
+  String sale = 'sale';
  
 
 

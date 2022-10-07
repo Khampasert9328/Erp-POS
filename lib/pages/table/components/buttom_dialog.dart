@@ -11,20 +11,23 @@ class ButtomDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: AppTheme.BASE_COLOR,
-            padding: EdgeInsets.symmetric(vertical: 9.h),
+    return Padding(
+      padding: const EdgeInsets.only(right: 15, left: 15),
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: AppTheme.BASE_COLOR,
+              padding: EdgeInsets.symmetric(vertical: 9.h),
+              ),
+          onPressed:onPressed,
+          child: Text(
+            text,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w700,
             ),
-        onPressed:onPressed,
-        child: Text(
-          text,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18.sp,
-            fontWeight: FontWeight.w700,
           ),
         ),
       ),

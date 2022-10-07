@@ -16,58 +16,59 @@ class SessionProvoder extends ChangeNotifier {
   List<SessionItem> get listsession => _listsession;
 
   Future<List<SessionItem>?> getsessoinProvider(BuildContext context) async {
-   try {
+    try {
       GetSessoin? sessoin = await getsessionservice();
 
-      print("sessoin:$sessoin");
+      if (sessoin != null) {
+        _listsession = sessoin.sessionItems!;
+        for (var item in _listsession) {
+          SharedPreferences pre = await SharedPreferences.getInstance();
+          pre.setString(CountPre().sessoinid, item.id!);
+          pre.setString(CountPre().cashOpen, item.cashOpen.toString());
+          pre.setString(CountPre().sale, item.bills!.first.total.toString());
+        }
 
-    if (sessoin != null) {
-      _listsession = sessoin.sessionItems!;
-      for (var item in sessoin.sessionItems!) {
-        SharedPreferences pref = await SharedPreferences.getInstance();
-        pref.setString(CountPre().sessoinid, item.id!);
-      }
-      CreateSession? createsesion = await createSession();
-      if (createsesion != null) {
-        showDialog(
-            context: context,
-            builder: (_) {
-              return Dialog(
-                insetAnimationDuration: Duration(milliseconds: 5),
-                insetAnimationCurve: Curves.bounceOut,
-                child: Container(
-                  height: 200.h,
-                  width: 100.w,
-                  child: Center(
-                      child: Column(
-                    children: [
-                      Image.asset(
-                        ERPImages.success,
-                        height: 104.h,
-                        width: 104.w,
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Text(
-                        "ເປີດກະສຳເລັດແລ້ວ",
-                        style: TextStyle(
-                            fontSize: 18.sp, color: AppTheme.BASE_COLOR),
-                      ),
-                    ],
-                  )),
-                ),
-              );
-            });
+        CreateSession? createsesion = await createSession();
+        if (createsesion != null) {
+          print("createsesion:$createsesion");
+          // showDialog(
+          //     context: context,
+          //     builder: (_) {
+          //       return Dialog(
+          //         insetAnimationDuration: Duration(milliseconds: 5),
+          //         insetAnimationCurve: Curves.bounceOut,
+          //         child: Container(
+          //           height: 200.h,
+          //           width: 100.w,
+          //           child: Center(
+          //               child: Column(
+          //             children: [
+          //               Image.asset(
+          //                 ERPImages.success,
+          //                 height: 104.h,
+          //                 width: 104.w,
+          //               ),
+          //               SizedBox(
+          //                 height: 10.h,
+          //               ),
+          //               Text(
+          //                 "ເປີດກະສຳເລັດແລ້ວ",
+          //                 style: TextStyle(
+          //                     fontSize: 18.sp, color: AppTheme.BASE_COLOR),
+          //               ),
+          //             ],
+          //           )),
+          //         ),
+          //       );
+          //     });
 
-        Navigator.pop(context);
+        }
       }
+
       notifyListeners();
+      return _listsession;
+    } catch (e) {
+      print("error:$e");
     }
-    return _listsession;
-   } catch (e) {
-    print("error:$e");
-     
-   }
   }
 }
