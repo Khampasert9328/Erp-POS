@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, must_be_immutable, use_key_in_widget_constructors, use_build_context_synchronously
+// ignore_for_file: unused_import, must_be_immutable, use_key_in_widget_constructors, use_build_context_synchronously, unnecessary_string_interpolations
 import 'dart:ui';
 
 import 'package:devla_sunmi/flutter_sunmi_printer.dart';
@@ -87,7 +87,6 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                       .getCheckExpiredPackage(context)
                       .then((value) async {
                     PrintBillKitchenProvider().getprint();
-
                     SharedPreferences preferences =
                         await SharedPreferences.getInstance();
                     String? getzone = preferences.getString(CountPre().idzone);
@@ -165,7 +164,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                       await SunmiPrinter.submitTransactionPrint();
                       await SunmiPrinter.exitTransactionPrint();
                     } catch (e) {
-                      print("error:$e");
+                      throw Exception("ບໍ່ມີປິ່ນເຕີ");
                     }
                   });
 
@@ -236,11 +235,12 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                           Text(
                             "ກິນຢູ່ຮ້ານ",
                             style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.bold,
-                                color: selectindex == true
-                                    ? AppTheme.WHITE_COLOR
-                                    : AppTheme.BASE_COLOR),
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.bold,
+                              color: selectindex == true
+                                  ? AppTheme.WHITE_COLOR
+                                  : AppTheme.BASE_COLOR,
+                            ),
                           )
                         ],
                       ),
@@ -326,7 +326,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                       SizedBox(
                         width: 10.w,
                       ),
-                      Icon(
+                      const Icon(
                         Icons.search,
                       ),
                     ],
@@ -347,7 +347,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                 return Consumer<AreaProvider>(
                                   builder: ((context, model, _) {
                                     return ListView.builder(
-                                        physics: ScrollPhysics(),
+                                        physics: const ScrollPhysics(),
                                         shrinkWrap: true,
                                         scrollDirection: Axis.horizontal,
                                         itemCount: snapshot.data!.length,
@@ -448,7 +448,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                   }),
                                 );
                               }
-                              return SizedBox();
+                              return const SizedBox();
                             },
                           ),
                         ),
@@ -458,7 +458,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                   SizedBox(
                     height: 10.h,
                   ),
-                  NavBarStatusBooking(),
+                  const NavBarStatusBooking(),
                   SizedBox(
                     height: 10.h,
                   ),

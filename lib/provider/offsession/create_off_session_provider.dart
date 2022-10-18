@@ -3,7 +3,7 @@ import 'package:erp_pos/services/offsession/off_session_service.dart';
 import 'package:flutter/material.dart';
 class CreateOffSessionProvider extends ChangeNotifier {
   Future<List<OffSesionModels>?> getoffsession(BuildContext context) async {
-    OffSesionModels? models = await createoffsession();
+    OffSesionModels? models = await createoffsession(context);
     if (models != null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

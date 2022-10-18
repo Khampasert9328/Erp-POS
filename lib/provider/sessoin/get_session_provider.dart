@@ -14,61 +14,44 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SessionProvoder extends ChangeNotifier {
   List<SessionItem> _listsession = [];
   List<SessionItem> get listsession => _listsession;
+  GetSessoin? _sessoin;
+  GetSessoin? get sessoin => _sessoin;
+  CreateSession? _createSession;
+  CreateSession? get createSessionn => _createSession;
+  String? _idsession;
+  String? _cashopen;
+  String? _sale;
+  String? get sale => _sale;
+  String? get cashopen => _cashopen;
+  String? get idsession => _idsession;
+  bool? _isload = false;
+  bool? get isloading => _isload;
 
-  Future<List<SessionItem>?> getsessoinProvider(BuildContext context) async {
+  Future<void> getsessoinProvider(BuildContext context) async {
+    SharedPreferences pre = await SharedPreferences.getInstance();
+
+    _isload = true;
     try {
-      GetSessoin? sessoin = await getsessionservice();
+      _sessoin = await getsessionservice();
+      print('get session:$_sessoin');
 
-      if (sessoin != null) {
-        _listsession = sessoin.sessionItems!;
+      if (_sessoin != null) {
+        _listsession = _sessoin!.sessionItems!;
         for (var item in _listsession) {
-          SharedPreferences pre = await SharedPreferences.getInstance();
-          pre.setString(CountPre().sessoinid, item.id!);
-          pre.setString(CountPre().cashOpen, item.cashOpen.toString());
-          pre.setString(CountPre().sale, item.bills!.first.total.toString());
+          _idsession = item.id;
+          _cashopen = item.cashOpen.toString();
+         pre.setString(CountPre().sessoinid, item.id!);
+         
         }
-
-        CreateSession? createsesion = await createSession();
-        if (createsesion != null) {
-          print("createsesion:$createsesion");
-          // showDialog(
-          //     context: context,
-          //     builder: (_) {
-          //       return Dialog(
-          //         insetAnimationDuration: Duration(milliseconds: 5),
-          //         insetAnimationCurve: Curves.bounceOut,
-          //         child: Container(
-          //           height: 200.h,
-          //           width: 100.w,
-          //           child: Center(
-          //               child: Column(
-          //             children: [
-          //               Image.asset(
-          //                 ERPImages.success,
-          //                 height: 104.h,
-          //                 width: 104.w,
-          //               ),
-          //               SizedBox(
-          //                 height: 10.h,
-          //               ),
-          //               Text(
-          //                 "ເປີດກະສຳເລັດແລ້ວ",
-          //                 style: TextStyle(
-          //                     fontSize: 18.sp, color: AppTheme.BASE_COLOR),
-          //               ),
-          //             ],
-          //           )),
-          //         ),
-          //       );
-          //     });
-
+        _createSession = await createSession(0);
+        if (_createSession != null) {
+          print("success");
         }
       }
-
+      _isload = false;
       notifyListeners();
-      return _listsession;
     } catch (e) {
-      print("error:$e");
+      rethrow;
     }
   }
 }

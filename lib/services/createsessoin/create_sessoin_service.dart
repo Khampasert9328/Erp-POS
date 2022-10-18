@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-Future<CreateSession?> createSession() async {
+Future<CreateSession?> createSession(int cash) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   String? idtoken = preferences.getString("content");
   //ວິທີການເເຕກເອົາຂໍ້ມູນໃນ token

@@ -10,12 +10,16 @@ import 'package:erp_pos/provider/areaprovider/insert_area_provider.dart';
 import 'package:erp_pos/provider/bill/print_bill_customers_provider.dart';
 import 'package:erp_pos/provider/bill/print_bill_provider.dart';
 import 'package:erp_pos/provider/checkexpiredpackage/check_exp_package_provider.dart';
+import 'package:erp_pos/provider/confirmpaymentbybcel/confirmpaymentbybcel_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/provider/generateQR/generate_qr_bcelone_provider.dart';
 import 'package:erp_pos/provider/getorderbyissuedate/get_order_by_issuedate_provider.dart';
+import 'package:erp_pos/provider/gettableall/get_table_all_provider.dart';
 import 'package:erp_pos/provider/offsession/create_off_session_provider.dart';
+import 'package:erp_pos/provider/paycash/paymentcash_provider.dart';
 import 'package:erp_pos/provider/sessoin/get_session_provider.dart';
+import 'package:erp_pos/provider/switch/switch_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/services.dart';
@@ -60,6 +64,10 @@ class MyApp extends StatelessWidget {
                 create: (_) => GetOrderByIssueDateProvider()),
             ChangeNotifierProvider(create: (_) => SessionProvoder()),
             ChangeNotifierProvider(create: (_)=>CreateOffSessionProvider()),
+            ChangeNotifierProvider(create: (_)=>SwitchProvider()),
+            ChangeNotifierProvider(create: (_)=>GetTableAllProvider()),
+            ChangeNotifierProvider(create: (_)=>PaymentCashProvider()),
+            ChangeNotifierProvider(create: (_)=>ConfirmPaymentByBCELONE())
           ],
           child: MaterialApp(
             theme: ThemeData(

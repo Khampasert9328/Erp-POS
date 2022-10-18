@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_literals_to_create_immutables, use_build_context_synchronously, unnecessary_string_interpolations
 
 import 'package:badges/badges.dart';
 import 'package:devla_sunmi/flutter_sunmi_printer.dart';
@@ -32,7 +32,7 @@ class CalculateMoney extends StatelessWidget {
           backgroundColor: AppTheme.WHITE_COLOR,
           elevation: 0,
           title: Text(
-            tablename,
+            tablename ?? 'ບໍ່ມີໂຕະ',
             style: TextStyle(
                 color: AppTheme.BASE_COLOR, fontWeight: FontWeight.bold),
           ),
@@ -212,7 +212,7 @@ class CalculateMoney extends StatelessWidget {
                               await SunmiPrinter.submitTransactionPrint();
                               await SunmiPrinter.exitTransactionPrint();
                             } catch (e) {
-                              print("error:$e");
+                              throw Exception("ບໍ່ມີປິ່ນເຕີ");
                             }
                           });
                         },

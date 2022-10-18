@@ -18,6 +18,7 @@ class CountPre {
   String prefshift = 'prefshift';
   String cashOpen = 'cashOpen';
   String sale = 'sale';
+  String billid = 'billid';
  
 
 

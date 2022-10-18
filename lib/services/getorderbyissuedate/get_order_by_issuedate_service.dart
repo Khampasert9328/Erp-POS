@@ -1,22 +1,16 @@
-import 'dart:convert';
+// ignore_for_file: use_build_context_synchronously, unused_import, depend_on_referenced_packages
 
-import 'package:dio/dio.dart';
+import 'dart:convert';
 import 'package:erp_pos/constant/api_path.dart';
 import 'package:erp_pos/model/getorderbyissuedate/get_order_by_isuedatemodels.dart';
+import 'package:erp_pos/widget/style.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-Future<GetOrderByIssuedateModels?> getorderbyissuedate() async {
-  int? limit = -1;
-  int? page = 0;
-  String? startdate = DateFormat('ddMMyyyy').format(DateTime.now());
-  String? startend = DateFormat('ddMMyyyy').format(DateTime.now());
-  SharedPreferences pre = await SharedPreferences.getInstance();
-  String? idToken = pre.getString("content");
-  // print("startdate:${startdate}");
-  // print("startend:${startend}");
-  // print("startend:${idToken}");
+Future<GetOrderByIssuedateModels?> getorderbyissuedate(int limit, int page,
+    String? idToken, String startdate, String startend, BuildContext context) async {
   try {
     var url =
         "${APIPath.GET_ORDER_BY_ISSUE_DATE}/$limit/$page/$startdate/$startend";
@@ -28,12 +22,15 @@ Future<GetOrderByIssuedateModels?> getorderbyissuedate() async {
       },
     );
     if (respones.statusCode == 200) {
+      print("response:${respones.body}");
       GetOrderByIssuedateModels models = GetOrderByIssuedateModels.fromJson(
         jsonDecode(respones.body),
       );
       return models;
+    }else if(respones.statusCode==400){
+      Mystyle().showDialogCheckData(context, "ມື້ນີ້ບໍ່ມີຂໍ້ມູນໃບບິນ");
     }
   } catch (e) {
-    print("error:$e");
+    rethrow;
   }
 }

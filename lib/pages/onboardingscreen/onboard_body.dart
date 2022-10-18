@@ -90,7 +90,7 @@ class _OnboardBodyState extends State<OnboardBody> {
             ),
             onPressed: () {
               if (currenIndex == content.length - 1) {
-                if (AuthenticationProvider().tokenManagement(context) == null) {
+                if (AuthenticationProvider().tokenManagement(context) == "") {
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: ((context) => Login())),

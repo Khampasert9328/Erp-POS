@@ -106,8 +106,8 @@ class Mystyle {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? idtoken = preferences.getString("content");
     //ວິທີການເເຕກເອົາຂໍ້ມູນໃນ token
-    String yourToken = idtoken!;
-    Map<String, dynamic> decodedToken = JwtDecoder.decode(yourToken);
+    String? yourToken = idtoken;
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(yourToken!);
     String username = decodedToken['name'];
     String userid = decodedToken['sub'];
 

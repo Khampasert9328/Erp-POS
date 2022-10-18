@@ -17,12 +17,14 @@ import 'package:erp_pos/pages/table/components/search_table.dart';
 import 'package:erp_pos/pages/table/components/textContainer.dart';
 import 'package:erp_pos/pages/table/components/textdate.dart';
 import 'package:erp_pos/pages/table/components/textdatetime.dart';
+import 'package:erp_pos/provider/switch/switch_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -75,48 +77,50 @@ class _TableBodyState extends State<TableBody> {
             SizedBox(
               height: 15.h,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                isWitch == false
-                    ? Text(
-                        "ປິດຮ້ານ",
-                        style: TextStyle(
-                          fontFamily: "Phetsarath-OT",
-                          fontSize: 20.sp,
-                          color: AppTheme.RED_COLOR,
-                        ),
-                      )
-                    : Text(
-                        "ເປີດຮ້ານດຳເນີນການ",
-                        style: TextStyle(
-                          fontFamily: "Phetsarath-OT",
-                          fontSize: 20.sp,
-                          color: AppTheme.GREEN_COLOR,
-                        ),
-                      ),
-                Switch(
-                  activeColor: AppTheme.GREEN_COLOR,
-                  value: isWitch,
-                  onChanged: (vale) {
-                    if (isWitch == false) {
-                      setState(() {
-                        isWitch = vale;
+            Consumer<SwitchProvider>(
+              builder: ((context, value, child) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    value.switchang == false
+                        ? Text(
+                            "ປິດຮ້ານ",
+                            style: TextStyle(
+                              fontFamily: "Phetsarath-OT",
+                              fontSize: 20.sp,
+                              color: AppTheme.RED_COLOR,
+                            ),
+                          )
+                        : Text(
+                            "ເປີດຮ້ານດຳເນີນການ",
+                            style: TextStyle(
+                              fontFamily: "Phetsarath-OT",
+                              fontSize: 20.sp,
+                              color: AppTheme.GREEN_COLOR,
+                            ),
+                          ),
 
-                        Mystyle().dialogOpen(context);
-                      });
-                    } else {
-                      setState(() async {
-                        isWitch = vale;
-                        Mystyle().dialogOff(context);
-                        SharedPreferences pref =
-                            await SharedPreferences.getInstance();
-                        pref.setBool(CountPre().prefshift, vale);
-                      });
-                    }
-                  },
-                ),
-              ],
+                   
+                    Switch(
+                      activeColor: AppTheme.GREEN_COLOR,
+                      value: value.switchang,
+                      onChanged: (vale) async {
+                        if (isWitch == false) {
+                          setState(() {
+                            value.switchang = vale;
+                            Mystyle().dialogOpen(context);
+                          });
+                        } else {
+                          setState(() {
+                           value.switchang = vale;
+                            Mystyle().dialogOff(context);
+                          });
+                        }
+                      },
+                    ),
+                  ],
+                );
+              }),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -129,7 +133,7 @@ class _TableBodyState extends State<TableBody> {
             SizedBox(
               height: 7.h,
             ),
-            isWitch == true
+            isWitch == false
                 ? Expanded(
                     child: Column(
                       children: [
@@ -162,14 +166,16 @@ class _TableBodyState extends State<TableBody> {
                         SizedBox(
                           height: 10.h,
                         ),
-                        Expanded(child: ListViewTable()),
+                        const Expanded(
+                          child: ListViewTable(),
+                        ),
                       ],
                     ),
                   )
                 : Padding(
                     padding: const EdgeInsets.only(top: 150),
                     child: Text(
-                      "ກາລຸນາເປີດກະດ່ວນ",
+                      "ກາລຸນາເປີດກະກ່ອນ",
                       style: TextStyle(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.bold,

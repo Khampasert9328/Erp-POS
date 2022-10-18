@@ -10,7 +10,7 @@ Future<bool> bindingPrinter() async {
 }
 
 Future<void> getPrinterStatus() async {
-  final PrinterStatus resualt = await SunmiPrinter.getPrinterStatus();
+   PrinterStatus resualt = await SunmiPrinter.getPrinterStatus();
   printerStatus = resualt;
 }
 

@@ -5,35 +5,28 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<GetOrderByListId?> getorderbylistid(String? id) async {
-  int? limit = -1;
-  int? page = 0;
-  String? startdate = DateFormat('ddMMyyyy').format(DateTime.now());
-  String? startend = DateFormat('ddMMyyyy').format(DateTime.now());
+Future<GetOrderByListId?> getorderbylistid(List<String?> id, int limit,
+    int page, String? startdate, String? endDate) async {
   SharedPreferences pre = await SharedPreferences.getInstance();
   String? idToken = pre.getString("content");
   try {
-    var url = "${APIPath.GET_ORDER_BY_LIST_ID}/$id";
+    var url = "${APIPath.GET_ORDER_BY_LIST_ID}";
     var payload = jsonEncode({
-      {
-        "id": [id],
-        "limit": limit,
-        "page": page,
-        "packagestartdate": startdate,
-        "packageenddate": startend
-      }
+      "id": id,
+      "limit": limit,
+      "page": page,
+      "packagestartdate": startdate,
+      "packageenddate": endDate
     });
-
     var respones = await http.post(Uri.parse(url), body: payload, headers: {
       "accept": "text/plain",
       "Authorization": "Bearer $idToken",
       "Content-Type": "application/json"
     });
-
     if (respones.statusCode == 200) {
       return getOrderByListIdFromJson(respones.body);
     }
   } catch (e) {
-    print("error:$e");
+    throw Exception("ບໍ່ມີຂໍ້ມູນ");
   }
 }
