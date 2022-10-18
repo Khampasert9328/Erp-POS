@@ -83,7 +83,8 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                   SharedPreferences pre = await SharedPreferences.getInstance();
                   String? getidtable = pre.getString(CountPre().tablename);
 
-                  CheckExpiredPackage()
+                  
+                await CheckExpiredPackage()
                       .getCheckExpiredPackage(context)
                       .then((value) async {
                     PrintBillKitchenProvider().getprint();
@@ -164,15 +165,15 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                       await SunmiPrinter.submitTransactionPrint();
                       await SunmiPrinter.exitTransactionPrint();
                     } catch (e) {
-                      throw Exception("ບໍ່ມີປິ່ນເຕີ");
+                      print("error:$e");
                     }
                   });
 
-                  await Navigator.push(
+                 await  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (_) => CalculateMoney(
-                        tablename: getidtable,
+                        tablename: getidtable??"ບໍ່ມີໂຕະ",
                       ),
                     ),
                   );

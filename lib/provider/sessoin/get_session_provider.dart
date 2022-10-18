@@ -33,7 +33,7 @@ class SessionProvoder extends ChangeNotifier {
     _isload = true;
     try {
       _sessoin = await getsessionservice();
-      print('get session:$_sessoin');
+    
 
       if (_sessoin != null) {
         _listsession = _sessoin!.sessionItems!;
@@ -41,6 +41,7 @@ class SessionProvoder extends ChangeNotifier {
           _idsession = item.id;
           _cashopen = item.cashOpen.toString();
          pre.setString(CountPre().sessoinid, item.id!);
+        
          
         }
         _createSession = await createSession(0);

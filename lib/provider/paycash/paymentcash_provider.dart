@@ -26,13 +26,12 @@ class PaymentCashProvider extends ChangeNotifier {
     String? endDate = pre.getString(CountPre().dateExpired);
     String? billid = context.read<GetOrderByIssueDateProvider>().billid;
     String? sessionid = pre.getString(CountPre().sessoinid);
-    int paymenttype =0;
+    int paymenttype = 0;
 
     try {
       isload = true;
       _createPaymentCashModels = await createpaymentcash(
           billid!, number, sessionid!, startDate!, endDate!, paymenttype);
-      print("create:$_createPaymentCashModels");
       if (_createPaymentCashModels != null) {
         showDialog(
             context: context,
@@ -64,8 +63,46 @@ class PaymentCashProvider extends ChangeNotifier {
                 ),
               );
             });
+     
+         
       }
-    } catch (e) {}
+    } catch (e) {
+      return showDialog(
+          context: context,
+          builder: (_) {
+            return Dialog(
+              insetAnimationDuration: const Duration(milliseconds: 5),
+              insetAnimationCurve: Curves.bounceOut,
+              child: SizedBox(
+                height: 200.h,
+                width: 100.w,
+                child: Center(
+                    child: Column(
+                  children: [
+                    Image.asset(
+                      ERPImages.iconerror,
+                      height: 104.h,
+                      width: 104.w,
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Text(
+                      "ກາລຸນາລອງໃໝ່ອີກຄັ້ງ",
+                      style: TextStyle(
+                          fontSize: 18.sp, color: AppTheme.BASE_COLOR),
+                    ),
+                  ],
+                )),
+              ),
+            );
+          }).then((value) async{
+            await Future.delayed(Duration(seconds: 3));
+            Navigator.pop(context);
+
+          });
+         
+    }
     isload = false;
     notifyListeners();
   }

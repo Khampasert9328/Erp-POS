@@ -34,16 +34,17 @@ class CheckExpiredPackage extends ChangeNotifier {
           CountPre().dateSubscribe, package.dateSubscribe.toString());
 
       GetPackageModels? getPackageModels = await getPackage();
+      
 
 
 
       if (getPackageModels != null) {
         CreateOrderModels? createOrderModels = await createOrder(context);
-      print("create:$createOrderModels");
         if (createOrderModels != null) {
           String billid = createOrderModels.billNo!;
           SharedPreferences pre = await SharedPreferences.getInstance();
           pre.setString(CountPre().billNo, billid);
+          String? billNo = pre.getString(CountPre().billNo);
           
         }
       }

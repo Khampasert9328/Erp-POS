@@ -17,11 +17,6 @@ class GetFoodMenuProvider extends ChangeNotifier {
   int get totalamont => _totalamount;
   List<FoodMenuModel> get getFoodMenuModel => foodMenuModel;
 
-
-
-
-  
-
   /// ດຶງລາຍການສິນຄ້າໃນເມນູອາຫານ
   Future<void> getProduct(bool forceReload) async {
     if (forceReload) {
@@ -34,7 +29,6 @@ class GetFoodMenuProvider extends ChangeNotifier {
         for (Product i in modelsProduct!.product!) {
           listProduct.add(FoodMenuDataModel(data: i, size: 0));
         }
-        // GetFoodMenuPostTypeModels? models = await getfoodmenutype();
       }
     }
     notifyListeners();
@@ -81,9 +75,14 @@ class GetFoodMenuProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changmoney(int chang){
+  void changmoney(int chang) {
     chang - totalamont;
     notifyListeners();
+  }
 
+  void clearKitchenData(){
+    _totalamount = 0;
+    foodMenuModel = [];
+    notifyListeners();
   }
 }

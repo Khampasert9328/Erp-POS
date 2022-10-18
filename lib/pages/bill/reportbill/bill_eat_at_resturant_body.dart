@@ -50,7 +50,11 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                   }
                 }
                 if (prefix.length != 1) {
-                  return const Text("ບໍ່ມີລາຍການ");
+                  return Center(
+                    child: const Text(
+                      "ບໍ່ມີລາຍການ",
+                    ),
+                  );
                 }
                 return Padding(
                   padding: const EdgeInsets.all(10.0),

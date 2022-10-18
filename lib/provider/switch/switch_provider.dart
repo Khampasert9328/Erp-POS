@@ -5,7 +5,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SwitchProvider extends ChangeNotifier {
   bool switchang = false;
   void changSwitch({bool toggle = true}) async {
-    toggle = switchang;
+    SharedPreferences pre = await SharedPreferences.getInstance();
+    String? id = pre.getString(CountPre().sessoinid);
+    if (id==0) {
+      toggle = switchang;
+    }
+    
     notifyListeners();
   }
 }

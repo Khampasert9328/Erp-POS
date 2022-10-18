@@ -55,8 +55,6 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
     String? computer = await androidInfo.model;
 
-    // e.g. "Moto G (4)"
-
     SharedPreferences pri = await SharedPreferences.getInstance();
     String? billNo = pri.getString(CountPre().billNo);
     List<Map<String, dynamic>> products = [];
@@ -93,7 +91,7 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
         "issueDate": "${DateFormat("yyyMMdd").format(DateTime.now())}",
         "date": "${DateFormat("yyy-MM-dd HH:mm:ss").format(DateTime.now())}",
         "billId": "string",
-        "tableId": "$tableid1",
+        "tableId": "${tableid1??"none"}",
         "product": products,
         "userId": "$username",
         "description": {

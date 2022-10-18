@@ -20,15 +20,19 @@ class paycash extends StatefulWidget {
 
 class _paycashState extends State<paycash> {
   TextEditingController money = TextEditingController();
+  int totalamount =0;
   ////////ວິທີການເຮັດການທ້ອນເງິນຢູ່ໜ້າ ການຈ່າຍເງິນສົດ
-
   int sumall = 0;
   @override
+  void initState() {
+    super.initState();
+    setState(() {
+       totalamount = context.read<GetFoodMenuProvider>().totalamont;
+       money.text= NumberFormat.currency(symbol: '', decimalDigits: 0).format(totalamount);
+    });
+  }
+  @override
   Widget build(BuildContext context) {
-    int? totalamount = context.read<GetFoodMenuProvider>().totalamont;
-
-  
-  
 ////////////////////////////////////////////////////////////
     return Scaffold(
         appBar: AppBar(
@@ -54,7 +58,6 @@ class _paycashState extends State<paycash> {
                 String mmoney = money.text.replaceAll(',','');
                 int intMoney = int.parse(mmoney);
                 PaymentCashProvider().createpaymentcashprovider(context, intMoney);
-               
               },
               child: Text(
                 "ຊຳລະເງິນ",
