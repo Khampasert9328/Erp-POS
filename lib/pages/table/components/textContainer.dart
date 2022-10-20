@@ -1,5 +1,9 @@
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/model/createoffsession/createoffsession_models.dart';
+import 'package:erp_pos/provider/offsession/create_off_session_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:pattern_formatter/numeric_formatter.dart';
+import 'package:provider/provider.dart';
 
 class TextContainer extends StatefulWidget {
   String hintext;
@@ -8,6 +12,7 @@ class TextContainer extends StatefulWidget {
   String? Function(String?)? validator;
   bool readOnly;
   TextInputType keyboardType;
+  ThousandsFormatter inputFormatters;
 
   TextContainer({
     required this.hintext,
@@ -16,6 +21,7 @@ class TextContainer extends StatefulWidget {
     this.validator,
     required this.readOnly,
     required this.keyboardType,
+    required this.inputFormatters
   });
 
   @override
@@ -23,6 +29,8 @@ class TextContainer extends StatefulWidget {
 }
 
 class _TextContainerState extends State<TextContainer> {
+  TextEditingController controller = TextEditingController();
+ 
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,6 +44,7 @@ class _TextContainerState extends State<TextContainer> {
           left: 20.0,
         ),
         child: TextField(
+          inputFormatters: [ThousandsFormatter()],
           keyboardType: widget.keyboardType,
           readOnly: widget.readOnly,
           controller: widget.controller,

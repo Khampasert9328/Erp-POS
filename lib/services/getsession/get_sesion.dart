@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 Future<GetSessoin?> getsessionservice() async {
-  int status = 1;
+  int status = 0;
   SharedPreferences preferences = await SharedPreferences.getInstance();
   String? idToken = preferences.getString("content");
   String yourToken = idToken!;

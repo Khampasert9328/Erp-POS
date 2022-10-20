@@ -123,14 +123,14 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                       await SunmiPrinter.printRow(cols: [
                         ColumnMaker(text: 'ໂຊນ ຫຼື ພື້ນທີ່', width: 6),
                         ColumnMaker(
-                            text: '$getzone',
+                            text: '${getzone??"ສັ່ງກັບບ້ານ"}',
                             width: 6,
                             align: SunmiPrintAlign.RIGHT),
                       ]);
                       await SunmiPrinter.printRow(cols: [
                         ColumnMaker(text: 'ເລກໂຕະ', width: 6),
                         ColumnMaker(
-                            text: '$getidtable',
+                            text: '${getidtable??"ສັ່ງກັບບ້ານ"}',
                             width: 6,
                             align: SunmiPrintAlign.RIGHT),
                       ]);

@@ -41,176 +41,178 @@ String? idtable;
 class _ListViewTableState extends State<ListViewTable> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: SizedBox(
-                height: 50.h,
-                width: double.infinity,
-                child: FutureBuilder<List<Area>>(
-                  future: AreaProvider().getZone(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Consumer<AreaProvider>(
-                        builder: ((context, model, _) {
-                          return ListView.builder(
-                              physics: ScrollPhysics(),
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (context, index) {
-                                String? id = snapshot.data![index].id ?? "";
-
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                selectIndex = index;
-                                                idtable = id;
-                                              });
-                                            },
-                                            child: Column(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                    right: 8,
-                                                  ),
-                                                  child: Container(
-                                                    height: 40.h,
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: SizedBox(
+                  height: 50.h,
+                  width: double.infinity,
+                  child: FutureBuilder<List<Area>>(
+                    future: AreaProvider().getZone(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Consumer<AreaProvider>(
+                          builder: ((context, model, _) {
+                            return ListView.builder(
+                                physics: ScrollPhysics(),
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (context, index) {
+                                  String? id = snapshot.data![index].id ?? "";
+    
+                                  return Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  selectIndex = index;
+                                                  idtable = id;
+                                                });
+                                              },
+                                              child: Column(
+                                                children: [
+                                                  Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                      horizontal: 15.w,
+                                                        const EdgeInsets.only(
+                                                      right: 8,
                                                     ),
-                                                    decoration: BoxDecoration(
-                                                        color: selectIndex ==
-                                                                index
-                                                            ? AppTheme
-                                                                .BASE_COLOR
-                                                            : AppTheme
-                                                                .WHITE_COLOR,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5),
-                                                        border: Border.all(
-                                                            color: AppTheme
-                                                                .BASE_COLOR)),
-                                                    child: Center(
-                                                      child: Text(
-                                                        snapshot
-                                                            .data![index].area!,
-                                                        style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 18.sp,
+                                                    child: Container(
+                                                      height: 40.h,
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                        horizontal: 15.w,
+                                                      ),
+                                                      decoration: BoxDecoration(
                                                           color: selectIndex ==
                                                                   index
                                                               ? AppTheme
-                                                                  .WHITE_COLOR
+                                                                  .BASE_COLOR
                                                               : AppTheme
-                                                                  .GREY_COLOR,
+                                                                  .WHITE_COLOR,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5),
+                                                          border: Border.all(
+                                                              color: AppTheme
+                                                                  .BASE_COLOR)),
+                                                      child: Center(
+                                                        child: Text(
+                                                          snapshot
+                                                              .data![index].area!,
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 18.sp,
+                                                            color: selectIndex ==
+                                                                    index
+                                                                ? AppTheme
+                                                                    .WHITE_COLOR
+                                                                : AppTheme
+                                                                    .GREY_COLOR,
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                  ],
-                                );
-                              });
-                        }),
+                                      SizedBox(
+                                        height: 10.h,
+                                      ),
+                                    ],
+                                  );
+                                });
+                          }),
+                        );
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: AppTheme.BASE_COLOR,
+                        ),
                       );
-                    }
-                    return Center(
-                      child: CircularProgressIndicator(
-                        color: AppTheme.BASE_COLOR,
-                      ),
-                    );
-                  },
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-        const NavBarStatusBooking(),
-        FutureBuilder<List<GetTable>>(
-          future: GetTableProvider().gettablebyid(context, idtable),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Consumer<GetTableProvider>(
-                builder: ((context, model, _) {
-                  return SingleChildScrollView(
-                      child: GridView.count(
-                    crossAxisCount: 2,
-                    childAspectRatio: (0.8 / .4),
-                    shrinkWrap: true,
-                    children: List.generate(snapshot.data!.length, (index) {
-                      return GestureDetector(
-                          onTap: (() {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: ((context) =>
-                                    TableDetail(data: snapshot.data![index])),
-                              ),
-                            );
-                          }),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: AppTheme.GREY_COLOR,
-                                  borderRadius: BorderRadius.circular(5)),
+            ],
+          ),
+          const NavBarStatusBooking(),
+          FutureBuilder<List<GetTable>>(
+            future: GetTableProvider().gettablebyid(context, idtable),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Consumer<GetTableProvider>(
+                  builder: ((context, model, _) {
+                    return SingleChildScrollView(
+                        child: GridView.count(
+                      crossAxisCount: 2,
+                      childAspectRatio: (0.8 / .4),
+                      shrinkWrap: true,
+                      children: List.generate(snapshot.data!.length, (index) {
+                        return GestureDetector(
+                            onTap: (() {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: ((context) =>
+                                      TableDetail(data: snapshot.data![index])),
+                                ),
+                              );
+                            }),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
                               child: Container(
-                                padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
-                                  border: Border(
-                                    left: BorderSide(
-                                      color: AppTheme.GREEN_COLOR,
-                                      width: 15,
+                                    color: AppTheme.GREY_COLOR,
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Container(
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      left: BorderSide(
+                                        color: AppTheme.GREEN_COLOR,
+                                        width: 15,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      snapshot.data![index].name!,
+                                      style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                 ),
-                                child: Center(
-                                  child: Text(
-                                    snapshot.data![index].name!,
-                                    style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
                               ),
-                            ),
-                          ));
-                    }),
-                  ));
-                }),
+                            ));
+                      }),
+                    ));
+                  }),
+                );
+              }
+              return Center(
+                child: CircularProgressIndicator(
+                  color: AppTheme.BASE_COLOR,
+                ),
               );
-            }
-            return Center(
-              child: CircularProgressIndicator(
-                color: AppTheme.BASE_COLOR,
-              ),
-            );
-          },
-        )
-      ],
+            },
+          )
+        ],
+      ),
     );
   }
 }

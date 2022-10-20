@@ -25,4 +25,6 @@ class APIPath {
   static const String CREATE_CACULATE_MONEY = BASE_URL + 'SessionService/CreateSession';
   static const String REFRESH_TOKEN = BASE_URL + 'Connect/refreshToken';
   static const String PAYMENT_CASH = BASE_URL + 'OrderService/CaculateMoney';
+  static const String GETSESSION_BY_STATUS = BASE_URL + 'SessionService/GetByUserStatus';
+
 }

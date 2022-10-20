@@ -82,7 +82,7 @@ class _TableBodyState extends State<TableBody> {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    value.switchang == false
+                    !value.switchchang
                         ? Text(
                             "ປິດຮ້ານ",
                             style: TextStyle(
@@ -103,18 +103,13 @@ class _TableBodyState extends State<TableBody> {
                    
                     Switch(
                       activeColor: AppTheme.GREEN_COLOR,
-                      value: value.switchang,
+                      value: value.switchchang,
                       onChanged: (vale) async {
-                        if (isWitch == false) {
-                          setState(() {
-                            value.switchang = vale;
-                            Mystyle().dialogOpen(context);
-                          });
-                        } else {
-                          setState(() {
-                           value.switchang = vale;
-                            Mystyle().dialogOff(context);
-                          });
+                        if (value.switchchang) {
+                           Mystyle().dialogOpen(context);
+                          
+                        }else{
+                          Mystyle().dialogOff(context);
                         }
                       },
                     ),

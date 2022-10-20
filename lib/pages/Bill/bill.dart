@@ -31,7 +31,7 @@ class Bill extends StatelessWidget {
       ),
       body: Consumer<SwitchProvider>(
         builder: (context, value, child) {
-          return value.switchang == false
+          return !value.switchchang
               ? Center(
                   child: Text(
                   "ກາລຸນາເປີດກະກ່ອນ",

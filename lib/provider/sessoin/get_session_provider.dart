@@ -5,6 +5,7 @@ import 'package:erp_pos/model/getsesion/get_sessoin_models.dart';
 import 'package:erp_pos/services/createsessoin/create_sessoin_service.dart';
 import 'package:erp_pos/services/getsession/get_sesion.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
+import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,27 +29,12 @@ class SessionProvoder extends ChangeNotifier {
   bool? get isloading => _isload;
 
   Future<void> getsessoinProvider(BuildContext context) async {
-    SharedPreferences pre = await SharedPreferences.getInstance();
-
     _isload = true;
     try {
-      _sessoin = await getsessionservice();
-    
-
-      if (_sessoin != null) {
-        _listsession = _sessoin!.sessionItems!;
-        for (var item in _listsession) {
-          _idsession = item.id;
-          _cashopen = item.cashOpen.toString();
-         pre.setString(CountPre().sessoinid, item.id!);
-        
-         
-        }
-        _createSession = await createSession(0);
+        _createSession = await createSession(0, context);
         if (_createSession != null) {
-          print("success");
+          ScaffoldMessenger.of(context).showSnackBar(Mystyle().snackbar);
         }
-      }
       _isload = false;
       notifyListeners();
     } catch (e) {

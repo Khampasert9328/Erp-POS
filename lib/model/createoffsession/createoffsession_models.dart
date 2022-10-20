@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final offSesionModels = offSesionModelsFromJson(jsonString);
+//     final createOffSessionModels = createOffSessionModelsFromJson(jsonString);
 
 import 'dart:convert';
 
-OffSesionModels offSesionModelsFromJson(String str) => OffSesionModels.fromJson(json.decode(str));
+CreateOffSessionModels createOffSessionModelsFromJson(String str) => CreateOffSessionModels.fromJson(json.decode(str));
 
-String offSesionModelsToJson(OffSesionModels data) => json.encode(data.toJson());
+String createOffSessionModelsToJson(CreateOffSessionModels data) => json.encode(data.toJson());
 
-class OffSesionModels {
-    OffSesionModels({
+class CreateOffSessionModels {
+    CreateOffSessionModels({
         this.isSuccess,
         this.code,
         this.error,
@@ -17,6 +17,7 @@ class OffSesionModels {
         this.billNo,
         this.totalBillCanPrint,
         this.billId,
+        this.jobId,
     });
 
     bool? isSuccess;
@@ -26,8 +27,9 @@ class OffSesionModels {
     String? billNo;
     int? totalBillCanPrint;
     String? billId;
+    List<String>? jobId;
 
-    factory OffSesionModels.fromJson(Map<String, dynamic> json) => OffSesionModels(
+    factory CreateOffSessionModels.fromJson(Map<String, dynamic> json) => CreateOffSessionModels(
         isSuccess: json["isSuccess"],
         code: json["code"],
         error: json["error"],
@@ -35,6 +37,7 @@ class OffSesionModels {
         billNo: json["billNo"],
         totalBillCanPrint: json["totalBillCanPrint"],
         billId: json["billId"],
+        jobId: List<String>.from(json["jobId"].map((x) => x)),
     );
 
     Map<String, dynamic> toJson() => {
@@ -45,5 +48,6 @@ class OffSesionModels {
         "billNo": billNo,
         "totalBillCanPrint": totalBillCanPrint,
         "billId": billId,
+        "jobId": List<dynamic>.from(jobId!.map((x) => x)),
     };
 }

@@ -98,7 +98,7 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
           Expanded(
             child: Consumer<SwitchProvider>(
               builder: (context, value, child) {
-                return value.switchang == false
+                return !value.switchchang
                     ? Center(
                         child: Text(
                         "ກາລຸນາເປີກກະກ່ອນ",
