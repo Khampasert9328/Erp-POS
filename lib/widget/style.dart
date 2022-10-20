@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:erp_pos/bussiness%20logic/authentication.dart';
@@ -8,11 +10,17 @@ import 'package:erp_pos/pages/table/components/dropdown.dart';
 import 'package:erp_pos/pages/table/components/dropdown_status.dart';
 import 'package:erp_pos/pages/table/components/textContainer.dart';
 import 'package:erp_pos/pages/table/components/textdatetime.dart';
+import 'package:erp_pos/provider/offsession/create_off_session_provider.dart';
 import 'package:erp_pos/provider/sessoin/get_session_provider.dart';
+import 'package:erp_pos/provider/switch/switch_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:intl/intl.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:pattern_formatter/numeric_formatter.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Mystyle {
@@ -97,31 +105,43 @@ class Mystyle {
     );
   }
 
-  Future dialogOpen(BuildContext context) {
-    TextEditingController? email = TextEditingController();
-    TextEditingController? cash = TextEditingController();
+  Future dialogOpen(BuildContext context) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? idtoken = preferences.getString("content");
+    //ວິທີການເເຕກເອົາຂໍ້ມູນໃນ token
+    String? yourToken = idtoken;
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(yourToken!);
+    String username = decodedToken['name'];
+    String userid = decodedToken['sub'];
+
+    TextEditingController? email =
+        TextEditingController.fromValue(TextEditingValue(text: username));
+    TextEditingController? cash =
+        TextEditingController.fromValue(TextEditingValue(text: "0"));
     /////////////////////////////////////
     final fromkey = GlobalKey<FormState>();
     return showDialog(
       barrierDismissible: false,
       context: context,
       builder: (context) {
-        return SingleChildScrollView(
-          child: Container(
-            child: StatefulBuilder(
-              builder: (context, setState) => AlertDialog(
-                title: Form(
-                  key: fromkey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Mystyle().tiTle1("ເປີດກະ"),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              IconButton(
+        return Center(
+          child: SingleChildScrollView(
+            child: Container(
+              child: StatefulBuilder(
+                builder: (context, setState) => AlertDialog(
+                  title: Form(
+                    key: fromkey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Mystyle().tiTle1("ເປີດກະ"),
+                            CircleAvatar(
+                              backgroundColor: AppTheme.GREY_COLOR,
+                              radius: 20,
+                              child: IconButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
@@ -130,47 +150,58 @@ class Mystyle {
                                   color: AppTheme.BASE_COLOR,
                                 ),
                               ),
-                            ],
-                          )
-                        ],
-                      ),
-                      Mystyle().subtiTle1("ຜູ້ເປີດກະ"),
-                      TextContainer(
-                        hintext: "Telbiz@gmail.com",
-                        suffixIcon: "",
-                        controller: email,
-                        validator:
-                            RequiredValidator(errorText: 'ກະລຸນາປ້ອນອີເມວກ່ອນ'),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Mystyle().subtiTle1("ວັນທີ ແລະ ເວລາ"),
-                      ERPdateTime(),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Mystyle().subtiTle1("ເງິນເລີ່ມຕົ້ນ"),
-                      TextContainer(
-                        hintext: "ເງິນເລີ່ມຕົ້ນ",
-                        suffixIcon: "ກີບ",
-                        controller: cash,
-                        validator:
-                            RequiredValidator(errorText: 'ກະລຸນາປ້ອນຈຳນວນເງິນ'),
-                      ),
-                    ],
+                            ),
+                          ],
+                        ),
+                        Mystyle().subtiTle1("ຜູ້ເປີດກະ"),
+                        TextContainer(
+                          inputFormatters: ThousandsFormatter(),
+                          keyboardType: TextInputType.text,
+                          readOnly: true,
+                          hintext: "Telbiz@gmail.com",
+                          suffixIcon: "",
+                          controller: email,
+                          validator: RequiredValidator(
+                              errorText: 'ກະລຸນາປ້ອນອີເມວກ່ອນ'),
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Mystyle().subtiTle1("ວັນທີ ແລະ ເວລາ"),
+                        ERPdateTime(),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Mystyle().subtiTle1("ເງິນເລີ່ມຕົ້ນ"),
+                        TextContainer(
+                          inputFormatters: ThousandsFormatter(),
+                          keyboardType: TextInputType.number,
+                          readOnly: false,
+                          hintext: "ເງິນເລີ່ມຕົ້ນ",
+                          suffixIcon: "ກີບ",
+                          controller: cash,
+                          validator: RequiredValidator(
+                              errorText: 'ກະລຸນາປ້ອນຈຳນວນເງິນ'),
+                        ),
+                      ],
+                    ),
                   ),
+                  actions: [
+                    ButtomDialog(
+                      text: 'ຕົກລົງ',
+                      onPressed: () async {
+                        if (fromkey.currentState!.validate()) {
+                          SessionProvoder()
+                              .getsessoinProvider(context)
+                              .then((value) {
+                                context.read<SwitchProvider>().changSwitch(false);
+                            Navigator.pop(context);
+                          });
+                        }
+                      },
+                    ),
+                  ],
                 ),
-                actions: [
-                  ButtomDialog(
-                    text: 'ຕົກລົງ',
-                    onPressed: () async {
-                      if (fromkey.currentState!.validate()) {
-                        SessionProvoder().getsessoinProvider(context);
-                      }
-                    },
-                  ),
-                ],
               ),
             ),
           ),
@@ -179,77 +210,121 @@ class Mystyle {
     );
   }
 
-  Future dialogOff(BuildContext context) {
-    TextEditingController? emailclose;
-    TextEditingController? cashStart;
-    TextEditingController? totalSale;
-    TextEditingController? countableMoney;
+  Future dialogOff(BuildContext context) async {
     return showDialog(
       barrierDismissible: false,
       context: context,
       builder: (context) {
-        return Container(
-          child: SingleChildScrollView(
-            child: AlertDialog(
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Mystyle().tiTle1("ປີດກະ"),
-                  Mystyle().subtiTle1("ຜູ້ປີດກະ"),
-                  TextContainer(
-                    hintext: "Telbiz@gmail.com",
-                    suffixIcon: "",
-                    controller: emailclose,
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Mystyle().subtiTle1("ວັນທີ ແລະ ເວລາ"),
-                  ERPdateTime(),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Mystyle().subtiTle1("ເງິນເລີ່ມຕົ້ນ"),
-                  TextContainer(
-                    hintext: "ເງິນເລີ່ມຕົ້ນ",
-                    suffixIcon: "ກີບ",
-                    controller: cashStart,
-                  ),
-                  Mystyle().subtiTle1("ຍອດຂາຍ"),
-                  TextContainer(
-                    hintext: "ຍອດຂາຍ",
-                    suffixIcon: "ກີບ",
-                    controller: totalSale,
-                  ),
-                  Mystyle().subtiTle1("ເງິນທີ່ນັບໄດ້"),
-                  TextContainer(
-                    hintext: "ເງິນທີ່ນັບໄດ້",
-                    suffixIcon: "ກີບ",
-                    controller: countableMoney,
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Mystyle().tiTle1("ຜິດດ່ຽງ"),
-                      Mystyle().texttitle(
-                        "30,000 ກີບ",
+        return Consumer<CreateOffSessionProvider>(
+            builder: ((context, value, child) {
+          TextEditingController userName = TextEditingController();
+          TextEditingController cashOpen = TextEditingController();
+          TextEditingController totalSale = TextEditingController();
+          TextEditingController cashCount = TextEditingController();
+          userName.text = value.userOpenName ?? "";
+          cashOpen.text = NumberFormat.currency(symbol: '',decimalDigits: 0).format(value.cashOpen);
+          totalSale.text =NumberFormat.currency(symbol: '',decimalDigits: 0).format(value.total);
+          cashCount.text = NumberFormat.currency(symbol: '',decimalDigits: 0).format(value.cashCount);
+          return Center(
+            child: SingleChildScrollView(
+              child: Container(
+                child: AlertDialog(
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Mystyle().tiTle1("ປີດກະ"),
+                            CircleAvatar(
+                              backgroundColor: AppTheme.GREY_COLOR,
+                              radius: 20,
+                              child: IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: Icon(
+                                  Icons.cancel_outlined,
+                                  color: AppTheme.BASE_COLOR,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Mystyle().subtiTle1("ຜູ້ປີດກະ"),
+                        TextContainer(
+                          inputFormatters: ThousandsFormatter(),
+                          keyboardType: TextInputType.text,
+                          readOnly: true,
+                          hintext: "Telbiz@gmail.com",
+                          suffixIcon: "",
+                          controller: userName,
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Mystyle().subtiTle1("ວັນທີ ແລະ ເວລາ"),
+                        ERPdateTime(),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Mystyle().subtiTle1("ເງິນເລີ່ມຕົ້ນ"),
+                        TextContainer(
+                          inputFormatters: ThousandsFormatter(),
+                          keyboardType: TextInputType.number,
+                          readOnly: true,
+                          hintext: "ເງິນເລີ່ມຕົ້ນ",
+                          suffixIcon: "ກີບ",
+                          controller: cashOpen,
+                        ),
+                        Mystyle().subtiTle1("ຍອດຂາຍ"),
+                        TextContainer(
+                          inputFormatters: ThousandsFormatter(),
+                          keyboardType: TextInputType.number,
+                          readOnly: true,
+                          hintext: "ຍອດຂາຍ",
+                          suffixIcon: "ກີບ",
+                          controller: totalSale,
+                        ),
+                        Mystyle().subtiTle1("ເງິນທີ່ນັບໄດ້"),
+                        TextContainer(
+                          inputFormatters: ThousandsFormatter(),
+                          keyboardType: TextInputType.number,
+                          readOnly: false,
+                          hintext: "ເງິນທີ່ນັບໄດ້",
+                          suffixIcon: "ກີບ",
+                          controller: cashCount,
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Mystyle().tiTle1("ຜິດດ່ຽງ"),
+                            Mystyle().texttitle(
+                              "30,000 ກີບ",
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    actions: [
+                      ButtomDialog(
+                        text: 'ຕົກລົງ',
+                        onPressed: () {
+                          CreateOffSessionProvider().getoffsession(context);
+                          context.read<SwitchProvider>().changSwitch(true);
+                          Navigator.pop(context);
+                        },
                       ),
                     ],
-                  )
-                ],
-              ),
-              actions: [
-                ButtomDialog(
-                  text: '',
-                  onPressed: () {},
+                  ),
                 ),
-              ],
             ),
-          ),
-        );
+            
+          );
+        }));
       },
     );
   }
@@ -276,6 +351,9 @@ class Mystyle {
                 ),
                 Mystyle().tiTle1("ເລກໂຕະ"),
                 TextContainer(
+                  inputFormatters: ThousandsFormatter(),
+                  keyboardType: TextInputType.text,
+                  readOnly: false,
                   hintext: "ປ້ອນຂໍ້ມູນ",
                   suffixIcon: "",
                   controller: inputInfo,
@@ -586,4 +664,17 @@ class Mystyle {
               ));
         });
   }
-}
+
+  final snackbar=SnackBar(
+      content: const Text(
+        "ເປີດກະສຳເລັດ",
+      ),
+      action: SnackBarAction(
+        label: "ຕົກລົງ",
+        onPressed: () {
+         
+        },
+      ),
+    );
+  }
+

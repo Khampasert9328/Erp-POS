@@ -13,6 +13,7 @@ Future<GetSessoin?> getsessionservice() async {
   String userId = decodedToken['sub'];
   try {
     var url = "${APIPath.GET_SESSION}/$userId/$status";
+    
     var respones = await http.get(
       Uri.parse(url),
       headers: {
@@ -20,6 +21,7 @@ Future<GetSessoin?> getsessionservice() async {
         "Authorization":"Bearer $idToken"
       },
     );
+   
     if (respones.statusCode == 200) {
       return getSessoinFromJson(respones.body);
       

@@ -15,8 +15,10 @@ TextEditingController _dateStart = TextEditingController();
 String date = '';
 String day = '';
 String clock = '';
-TimeOfDay? time = TimeOfDay(hour: 10, minute: 30);
+TimeOfDay? time = TimeOfDay.now();
 bool datetime = true;
+String date1 = DateFormat('dd-MM-yyyy').format(DateTime.now());
+String day1 = DateFormat.E().format(DateTime.now());
 
 
 class _ERPdateTimeState extends State<ERPdateTime> {
@@ -27,46 +29,7 @@ class _ERPdateTimeState extends State<ERPdateTime> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        GestureDetector(
-          onTap: () async {
-            DateTime? pickedDate = await showDatePicker(
-              context: context, //context of current state
-              initialDate: DateTime.now(),
-              firstDate: DateTime.now(),
-              lastDate: DateTime(2100),
-              builder: (context, child) {
-                return Theme(
-                  data: Theme.of(context).copyWith(
-                    colorScheme: ColorScheme.light(
-                      primary: AppTheme.BASE_COLOR, // header background color
-                      // onPrimary: Colors.black, // header text color
-                      // onSurface: Colors.green, // body text color
-                    ),
-                    // textButtonTheme: TextButtonThemeData(
-                    //   style: TextButton.styleFrom(
-                    //     primary: Colors.red, // button text color
-                    //   ),
-                    // ),
-                  ),
-                  child: child!,
-                );
-              },
-            );
-
-            if (pickedDate != null) {
-              String formattedDate =
-                  DateFormat('yyyy-MM-dd').format(pickedDate);
-              String formattedDay = DateFormat.E().format(pickedDate);
-              print('Picked date: $formattedDate');
-              setState(() {
-                date = formattedDate;
-                day = formattedDay;
-              });
-            } else {
-              print("Date is not selected");
-            }
-          },
-          child: Container(
+         Container(
             
             padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 5.h),
             decoration: BoxDecoration(
@@ -91,13 +54,13 @@ class _ERPdateTimeState extends State<ERPdateTime> {
                   children: [
                     Center(
                       child: Text(
-                        date,
+                        date1,
                         style: TextStyle(
                             fontSize: 12.sp, fontWeight: FontWeight.w700),
                       ),
                     ),
                     Text(
-                      day,
+                      day1,
                       style: TextStyle(fontSize: 10.sp, color: Colors.grey),
                     )
                   ],
@@ -105,27 +68,11 @@ class _ERPdateTimeState extends State<ERPdateTime> {
               ],
             ),
           ),
-        ),
+        
         SizedBox(
           width: 10.w,
         ),
-        GestureDetector(
-          onTap: () async {
-            TimeOfDay? newTime = await showTimePicker(
-              context: context,
-              initialTime: time!,
-            );
-            if (time != null) {
-              setState(() {
-              time = newTime;
-            });
-            } else {
-                 print("Date is not selected");
-            }
-            
-            
-          },
-          child: Container(
+        Container(
             //width: 150,
             padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 5.h),
             decoration: BoxDecoration(
@@ -160,7 +107,7 @@ class _ERPdateTimeState extends State<ERPdateTime> {
               ],
             ),
           ),
-        ),
+        
       ],
     );
   }

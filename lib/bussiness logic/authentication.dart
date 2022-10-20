@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, unused_import, unnecessary_import, sized_box_for_whitespace, body_might_complete_normally_nullable, unused_local_variable
 
 import 'dart:convert';
 
@@ -40,7 +40,7 @@ class AuthenticationProvider extends ChangeNotifier {
           context: context,
           builder: (_) {
             return Dialog(
-              insetAnimationDuration: Duration(milliseconds: 5),
+              insetAnimationDuration: const Duration(milliseconds: 5),
               insetAnimationCurve: Curves.bounceOut,
               child: Container(
                 height: 100.h,
@@ -67,7 +67,7 @@ class AuthenticationProvider extends ChangeNotifier {
           preferences.setString(
               "content", connectTokenModels.content!.accessToken!);
           await Navigator.pushAndRemoveUntil(context,
-              MaterialPageRoute(builder: (_) => HomePage()), (route) => false);
+              MaterialPageRoute(builder: (_) => const HomePage()), (route) => false);
         }
       }
     } catch (e) {

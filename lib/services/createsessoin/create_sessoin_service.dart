@@ -1,13 +1,15 @@
 import 'dart:convert';
-
 import 'package:erp_pos/constant/api_path.dart';
 import 'package:erp_pos/model/createsessoin/create_sessoin_models.dart';
+import 'package:erp_pos/provider/switch/switch_provider.dart';
+import 'package:erp_pos/widget/style.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
-Future<CreateSession?> createSession() async {
+import 'package:provider/provider.dart';
+Future<CreateSession?> createSession(int cash, BuildContext context) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   String? idtoken = preferences.getString("content");
   //ວິທີການເເຕກເອົາຂໍ້ມູນໃນ token
@@ -20,7 +22,7 @@ Future<CreateSession?> createSession() async {
     String payload = jsonEncode({
       "userOpen": userid,
       "userOpenName": username,
-      "openDate": DateFormat('yyyyMMdd').format(DateTime.now()),
+      "openDate": DateFormat('yyyyMMddhhmmss').format(DateTime.now()),
       "cashOpen": 0
     });
     var respones = await http.post(
@@ -32,9 +34,14 @@ Future<CreateSession?> createSession() async {
       },
       body: payload,
     );
+    print("res:${respones.statusCode}");
     if (respones.statusCode == 200) {
       return createSessionFromJson(respones.body);
+    }else if(respones.statusCode==400){
+    // bool chang =  context.read<SwitchProvider>().switchang;
+    // chang = false;
     }
+   
   } catch (e) {
     print("error:$e");
   }

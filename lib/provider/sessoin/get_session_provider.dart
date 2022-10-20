@@ -5,6 +5,7 @@ import 'package:erp_pos/model/getsesion/get_sessoin_models.dart';
 import 'package:erp_pos/services/createsessoin/create_sessoin_service.dart';
 import 'package:erp_pos/services/getsession/get_sesion.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
+import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,60 +15,30 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SessionProvoder extends ChangeNotifier {
   List<SessionItem> _listsession = [];
   List<SessionItem> get listsession => _listsession;
+  GetSessoin? _sessoin;
+  GetSessoin? get sessoin => _sessoin;
+  CreateSession? _createSession;
+  CreateSession? get createSessionn => _createSession;
+  String? _idsession;
+  String? _cashopen;
+  String? _sale;
+  String? get sale => _sale;
+  String? get cashopen => _cashopen;
+  String? get idsession => _idsession;
+  bool? _isload = false;
+  bool? get isloading => _isload;
 
-  Future<List<SessionItem>?> getsessoinProvider(BuildContext context) async {
-   try {
-      GetSessoin? sessoin = await getsessionservice();
-
-      print("sessoin:$sessoin");
-
-    if (sessoin != null) {
-      _listsession = sessoin.sessionItems!;
-      for (var item in sessoin.sessionItems!) {
-        SharedPreferences pref = await SharedPreferences.getInstance();
-        pref.setString(CountPre().sessoinid, item.id!);
-      }
-      CreateSession? createsesion = await createSession();
-      if (createsesion != null) {
-        showDialog(
-            context: context,
-            builder: (_) {
-              return Dialog(
-                insetAnimationDuration: Duration(milliseconds: 5),
-                insetAnimationCurve: Curves.bounceOut,
-                child: Container(
-                  height: 200.h,
-                  width: 100.w,
-                  child: Center(
-                      child: Column(
-                    children: [
-                      Image.asset(
-                        ERPImages.success,
-                        height: 104.h,
-                        width: 104.w,
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Text(
-                        "ເປີດກະສຳເລັດແລ້ວ",
-                        style: TextStyle(
-                            fontSize: 18.sp, color: AppTheme.BASE_COLOR),
-                      ),
-                    ],
-                  )),
-                ),
-              );
-            });
-
-        Navigator.pop(context);
-      }
+  Future<void> getsessoinProvider(BuildContext context) async {
+    _isload = true;
+    try {
+        _createSession = await createSession(0, context);
+        if (_createSession != null) {
+          ScaffoldMessenger.of(context).showSnackBar(Mystyle().snackbar);
+        }
+      _isload = false;
       notifyListeners();
+    } catch (e) {
+      rethrow;
     }
-    return _listsession;
-   } catch (e) {
-    print("error:$e");
-     
-   }
   }
 }

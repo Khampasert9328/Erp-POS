@@ -1,8 +1,11 @@
+// ignore_for_file: unused_import, unnecessary_import
+
 import 'package:codecamp_onepay/codecamp_onepay.dart';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/services/generateqrBCEL/generate_qr_bcelone.dart';
+import 'package:erp_pos/utils/transaction/transaction.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +15,6 @@ import 'package:provider/provider.dart';
 class GenerateQRBCELONE extends ChangeNotifier {
   String transaction = '';
   String mcid = 'mch5c2f0404102fb';
-
   String subScribeKey = 'sub-c-91489692-fa26-11e9-be22-ea7c5aada356';
   String uuID = 'BCELBANK';
   int expiredTime = 3; // ຕ້ອງເປັນນາທີ
@@ -26,21 +28,10 @@ class GenerateQRBCELONE extends ChangeNotifier {
   String shopcode = '12345678';
 
   //ສຳລັບ transaction
-  // String token =
-  //     '${double.parse("${getTime() - 15 * 60 * 10000000}").toInt()}0000';
-
-  
-  // double getTime() {
-  //   final dateStart = DateTime.utc(1970, 1, 1);
-  //   final dateNow = DateTime.now().toUtc();
-  //   final difference = dateNow.difference(dateStart);
-  //   final d = difference.inMilliseconds;
-
-  //   return d.truncate().toDouble();
-  // }
-
+  String token =
+      '${double.parse("${getTime() - 15 * 60 * 10000000}").toInt()}0000';
   Future<String> getGenerateQR(BuildContext context) async {
-    transaction = DateTime.now().toString();
+    transaction = token;
     qrData = CodecampOnepay.initQR(
       mcid,
       transaction,
@@ -57,9 +48,9 @@ class GenerateQRBCELONE extends ChangeNotifier {
           context: context,
           builder: (_) {
             return Dialog(
-              insetAnimationDuration: Duration(milliseconds: 5),
+              insetAnimationDuration: const Duration(milliseconds: 5),
               insetAnimationCurve: Curves.bounceOut,
-              child: Container(
+              child: SizedBox(
                 height: 200.h,
                 width: 100.w,
                 child: Center(

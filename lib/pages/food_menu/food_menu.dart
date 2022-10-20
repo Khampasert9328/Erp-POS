@@ -23,7 +23,6 @@ class _FoodMenuState extends State<FoodMenu> {
     super.initState();
     context.read<GetFoodMenuProvider>().getProduct(true);
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

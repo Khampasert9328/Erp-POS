@@ -1,6 +1,10 @@
+// ignore_for_file: unused_import
+
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/getorderbyissuedate/get_order_by_isuedatemodels.dart';
+import 'package:erp_pos/model/getorderbylistid/get_order_by_list_id_models.dart';
+import 'package:erp_pos/pages/bill/detail/bill_detail.dart';
 import 'package:erp_pos/provider/getorderbyissuedate/get_order_by_issuedate_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,22 +19,57 @@ class BilleatatresturantBody extends StatefulWidget {
 
 class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
   @override
+  void initState() {
+    super.initState();
+    context.read<GetOrderByIssueDateProvider>().getorderfromservice(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<GetOrder>?>(
-      future: GetOrderByIssueDateProvider().getorderfromservice(),
-      builder: (context, snapshot) {
-        print("snapshot:$snapshot");
-        if (snapshot.hasData) {  
-          return Consumer<GetOrderByIssueDateProvider>(
-            builder: (context, value, child) {
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      children: [
-                        Container(
+    return Consumer<GetOrderByIssueDateProvider>(
+      builder: ((context, value, _) {
+        //ຖ້າມັນໂຫຼດຢູ່
+        if (value.isloading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          //ໃນກໍລະນີ API ເກີດຂໍ້ຜິດພາດບາງຢ່າງ
+          if (value.getOrderByListId == null || value.order == null) {
+            return const Center(
+              child: Text("ເກີດຂໍ້ຜິດພາດ"),
+            );
+          } else {
+            return ListView.builder(
+              itemCount: value.order!.totalcount,
+              itemBuilder: (context, index) {
+                List<String> prefix = [];
+                for (var i in value.getOrderByListId!.bill!) {
+                  if (i.id == value.order!.order![index].billid) {
+                    prefix.add(i.prefixid!);
+                  }
+                }
+                if (prefix.length != 1) {
+                  return Center(
+                    child: const Text(
+                      "ບໍ່ມີລາຍການ",
+                    ),
+                  );
+                }
+                return Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const BillDetail(),
+                            ),
+                          );
+                        },
+                        child: Container(
                           height: 81.h,
                           width: double.infinity,
                           decoration: BoxDecoration(
@@ -38,21 +77,88 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                               borderRadius: BorderRadius.circular(5)),
                           child: Row(
                             children: [
-                              Image.asset(
-                                ERPImages.bill,
-                                height: 58.h,
-                                width: 58.w,
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      height: 4.h,
+                                      width: 42.w,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: AppTheme.BASE_COLOR),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                    ),
+                                    SizedBox(
+                                      height: 2.h,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          height: 26.h,
+                                          width: 4.w,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: AppTheme.BASE_COLOR),
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                        ),
+                                        SizedBox(
+                                          width: 2.h,
+                                        ),
+                                        Container(
+                                          height: 36.h,
+                                          width: 57.w,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: AppTheme.BASE_COLOR),
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: const Center(
+                                            child: Text(""),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 2.h,
+                                        ),
+                                        Container(
+                                          height: 26.h,
+                                          width: 4.w,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: AppTheme.BASE_COLOR),
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 2.h,
+                                    ),
+                                    Container(
+                                      height: 4.h,
+                                      width: 42.w,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: AppTheme.BASE_COLOR),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                    ),
+                                  ],
+                                ),
                               ),
                               Expanded(
                                 child: ListTile(
                                   title: Text(
-                                    "${snapshot.data!.first.issuedate}",
+                                    "# Order ${prefix.first}",
                                     style: TextStyle(
                                       fontSize: 13.sp,
                                       color: AppTheme.BASE_COLOR,
                                     ),
                                   ),
-                                  subtitle: Text("ຈ່າຍແລ້ວ"),
+                                  subtitle: const Text(""),
                                 ),
                               ),
                               Padding(
@@ -61,31 +167,28 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     IconButton(
-                                        onPressed: () {},
-                                        icon: Image.asset(
-                                          ERPImages.iconforbill,
-                                          height: 9.h,
-                                          width: 18.w,
-                                        ))
+                                      onPressed: () {},
+                                      icon: Image.asset(
+                                        ERPImages.iconforbill,
+                                        height: 9.h,
+                                        width: 18.w,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               )
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            },
-          );
-        } else {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          }
         }
-      },
+      }),
     );
   }
 }

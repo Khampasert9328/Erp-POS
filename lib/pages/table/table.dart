@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/pages/table/components/floatingActionButton.dart';
 import 'package:erp_pos/pages/table/components/table_body.dart';
@@ -15,8 +17,9 @@ class _POSTableState extends State<POSTable> {
   
   @override
   Widget build(BuildContext context) {
+    // ignore: prefer_const_constructors
     return Scaffold(
-      body: TableBody(),
+      body: const TableBody(),
    
     );
   }

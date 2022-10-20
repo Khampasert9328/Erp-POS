@@ -1,9 +1,13 @@
+import 'dart:math';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/model/paymentcash/paymentcash_models.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
+import 'package:erp_pos/provider/paycash/paymentcash_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:pattern_formatter/numeric_formatter.dart';
 import 'package:provider/provider.dart';
 
 class paycash extends StatefulWidget {
@@ -16,15 +20,20 @@ class paycash extends StatefulWidget {
 
 class _paycashState extends State<paycash> {
   TextEditingController money = TextEditingController();
-
+  int totalamount =0;
+  ////////ວິທີການເຮັດການທ້ອນເງິນຢູ່ໜ້າ ການຈ່າຍເງິນສົດ
+  int sumall = 0;
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+       totalamount = context.read<GetFoodMenuProvider>().totalamont;
+       money.text= NumberFormat.currency(symbol: '', decimalDigits: 0).format(totalamount);
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    int? totalamount = context.read<GetFoodMenuProvider>().totalamont;
-    String myMoney = money.text.replaceAll(',', '');
-    int sumall = 0;
-    if(myMoney.isNotEmpty){
-      sumall = int.parse(myMoney) - totalamount;
-    }
+////////////////////////////////////////////////////////////
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -45,7 +54,11 @@ class _paycashState extends State<paycash> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              onPressed: () {},
+              onPressed: () {
+                String mmoney = money.text.replaceAll(',','');
+                int intMoney = int.parse(mmoney);
+                PaymentCashProvider().createpaymentcashprovider(context, intMoney);
+              },
               child: Text(
                 "ຊຳລະເງິນ",
                 style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
@@ -57,9 +70,6 @@ class _paycashState extends State<paycash> {
           padding: const EdgeInsets.all(8.0),
           child: Consumer<GetFoodMenuProvider>(
             builder: (context, value, child) {
-              TextEditingController? payment = TextEditingController();
-              payment.text = value.totalamont.toString();
-
               return SingleChildScrollView(
                   child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -75,6 +85,7 @@ class _paycashState extends State<paycash> {
                       height: 7.h,
                     ),
                     TextFormField(
+                      readOnly: true,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         filled: true,
@@ -84,7 +95,7 @@ class _paycashState extends State<paycash> {
                         suffixIcon: Padding(
                           padding: const EdgeInsets.only(top: 15, right: 5),
                           child: Text(
-                            '${context.read<GetFoodMenuProvider>().totalamont} ກີບ',
+                            '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(value.totalamont)} ກີບ',
                             style: TextStyle(color: AppTheme.RED_COLOR),
                           ),
                         ),
@@ -106,17 +117,40 @@ class _paycashState extends State<paycash> {
                       height: 7.h,
                     ),
                     TextFormField(
+                      inputFormatters: [ThousandsFormatter()],
                       controller: money,
                       keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        //ວິທີເຮັດ setState ການທ້ອນເງິນໃຫ້ຕົວເລກປ່ຽນ Auto
+                        if (money.text.isNotEmpty) {
+                          String myMoney = money.text.replaceAll(',', '');
+                          int myMoney1 = int.parse(myMoney);
+                          if (myMoney1 >= totalamount) {
+                            setState(() {
+                              sumall = myMoney1 - totalamount;
+                            });
+                          }
+                        } else {
+                          setState(() {
+                            sumall = 0;
+                          });
+                        }
+                      },
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: const Color(0xffedebeb),
                         border: InputBorder.none,
-                        hintText: 'ປ້ອນຂໍ້ມູນ:',
                         hintStyle: TextStyle(
                             fontFamily: "NotoSansLao-Regular",
                             fontSize: 18.sp,
                             color: AppTheme.BASE_COLOR),
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.only(top: 15, right: 5),
+                          child: Text(
+                            'ກີບ',
+                            style: TextStyle(color: AppTheme.RED_COLOR),
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -133,9 +167,11 @@ class _paycashState extends State<paycash> {
                           width: 15.w,
                         ),
                         Text(
-                          " ກີບ",
+                          "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(sumall)} ກີບ",
                           style: TextStyle(
-                              fontSize: 16.sp, fontWeight: FontWeight.bold),
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),

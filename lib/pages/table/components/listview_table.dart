@@ -41,7 +41,8 @@ String? idtable;
 class _ListViewTableState extends State<ListViewTable> {
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return SingleChildScrollView(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -63,10 +64,9 @@ class _ListViewTableState extends State<ListViewTable> {
                                 itemCount: snapshot.data!.length,
                                 itemBuilder: (context, index) {
                                   String? id = snapshot.data![index].id ?? "";
-
+    
                                   return Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Expanded(
                                         child: Column(
@@ -87,8 +87,8 @@ class _ListViewTableState extends State<ListViewTable> {
                                                     ),
                                                     child: Container(
                                                       height: 40.h,
-                                                      padding: EdgeInsets
-                                                          .symmetric(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
                                                         horizontal: 15.w,
                                                       ),
                                                       decoration: BoxDecoration(
@@ -100,22 +100,20 @@ class _ListViewTableState extends State<ListViewTable> {
                                                                   .WHITE_COLOR,
                                                           borderRadius:
                                                               BorderRadius
-                                                                  .circular(
-                                                                      5),
+                                                                  .circular(5),
                                                           border: Border.all(
                                                               color: AppTheme
                                                                   .BASE_COLOR)),
                                                       child: Center(
                                                         child: Text(
                                                           snapshot
-                                                              .data![index]
-                                                              .area!,
+                                                              .data![index].area!,
                                                           style: TextStyle(
                                                             fontWeight:
-                                                                FontWeight
-                                                                    .bold,
+                                                                FontWeight.bold,
                                                             fontSize: 18.sp,
-                                                            color: selectIndex == index
+                                                            color: selectIndex ==
+                                                                    index
                                                                 ? AppTheme
                                                                     .WHITE_COLOR
                                                                 : AppTheme
@@ -151,8 +149,8 @@ class _ListViewTableState extends State<ListViewTable> {
               ),
             ],
           ),
-          NavBarStatusBooking(),
-        FutureBuilder<List<GetTable>>(
+          const NavBarStatusBooking(),
+          FutureBuilder<List<GetTable>>(
             future: GetTableProvider().gettablebyid(context, idtable),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
@@ -165,42 +163,42 @@ class _ListViewTableState extends State<ListViewTable> {
                       shrinkWrap: true,
                       children: List.generate(snapshot.data!.length, (index) {
                         return GestureDetector(
-                          onTap: (() {
-                           
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: ((context) =>
-                                    TableDetail(data: snapshot.data![index])),
-                              ),
-                            );
-                          }),
-                          child:Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                              color: AppTheme.GREY_COLOR,
+                            onTap: (() {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: ((context) =>
+                                      TableDetail(data: snapshot.data![index])),
+                                ),
+                              );
+                            }),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
                               child: Container(
-                                padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
-                                  border: Border(
-                                    left: BorderSide(
-                                      color: AppTheme.GREEN_COLOR,
-                                      width: 15,
+                                    color: AppTheme.GREY_COLOR,
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Container(
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      left: BorderSide(
+                                        color: AppTheme.GREEN_COLOR,
+                                        width: 15,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      snapshot.data![index].name!,
+                                      style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                 ),
-                                child: Center(
-                                  child: Text(
-                                    snapshot.data![index].name!,
-                                    style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
                               ),
-                            ),
-                          )
-                        );
+                            ));
                       }),
                     ));
                   }),
@@ -214,6 +212,7 @@ class _ListViewTableState extends State<ListViewTable> {
             },
           )
         ],
-      );
+      ),
+    );
   }
 }

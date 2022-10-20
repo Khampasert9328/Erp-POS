@@ -1,5 +1,10 @@
+// ignore_for_file: unused_field, unused_import, use_key_in_widget_constructors, unnecessary_import, prefer_final_fields
+
+import 'dart:ui';
+
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/provider/switch/switch_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/add_food_type_dialog.dart';
 import 'package:erp_pos/widget/erp_textfield.dart';
@@ -11,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:erp_pos/constant/routes.dart' as custom_route;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -81,7 +87,7 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
               ),
               IconButton(
                   onPressed: () {
-                 //
+                    //
                   },
                   icon: Icon(
                     Icons.search,
@@ -90,7 +96,19 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
             ],
           ),
           Expanded(
-            child: FoodMenuCard(),
+            child: Consumer<SwitchProvider>(
+              builder: (context, value, child) {
+                return !value.switchchang
+                    ? Center(
+                        child: Text(
+                        "ກາລຸນາເປີກກະກ່ອນ",
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                        ),
+                      ))
+                    : FoodMenuCard();
+              },
+            ),
           ),
         ],
       ),
@@ -99,26 +117,26 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
 
   Widget _panel(ScrollController sc) {
     return MediaQuery.removePadding(
-        context: context,
-        removeTop: true,
-        child: isSelectedMenuCard
-            ? SelectedMenuCardExpand(
-                onNext: () async {
-                  setState(() {
-                    isSelectedMenuCard = !isSelectedMenuCard;
-                  });
-                },
-                scrollController: sc,
-                selectMenu: isSelectedMenuCard,
-              )
-            : PlaceToEatCard(
-                scrollController: sc,
-                onback: () {
-                  setState(() {
-                    isSelectedMenuCard = !isSelectedMenuCard;
-                  });
-                },
-              ));
+      context: context,
+      removeTop: true,
+      child: isSelectedMenuCard
+          ? SelectedMenuCardExpand(
+              onNext: () async {
+                setState(() {
+                  isSelectedMenuCard = !isSelectedMenuCard;
+                });
+              },
+              scrollController: sc,
+              selectMenu: isSelectedMenuCard,
+            )
+          : PlaceToEatCard(
+              scrollController: sc,
+              onback: () {
+                setState(() {
+                  isSelectedMenuCard = !isSelectedMenuCard;
+                });
+              },
+            ),
+    );
   }
 }
-
