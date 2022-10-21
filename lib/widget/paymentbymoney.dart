@@ -13,8 +13,10 @@ class PaymentMmoney extends StatefulWidget {
   @override
   State<PaymentMmoney> createState() => _PaymentMmoneyState();
 }
+
 DateTime time = DateTime.now();
 final timenow = DateFormat('HH:mm').format(time);
+
 class _PaymentMmoneyState extends State<PaymentMmoney> {
   @override
   Widget build(BuildContext context) {
@@ -108,6 +110,7 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
                     child: Text(
                       "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ",
                       style: TextStyle(
+                          fontFamily: 'Phetsarath-OT',
                           fontSize: 20.sp,
                           fontWeight: FontWeight.bold,
                           color: AppTheme.RED_COLOR),

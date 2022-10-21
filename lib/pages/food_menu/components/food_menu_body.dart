@@ -71,7 +71,11 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
           ),
           Text(
             'ລາຍການອາຫານ',
-            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w700),
+            style: TextStyle(
+              fontFamily: 'Phetsarath-OT',
+              fontSize: 20.sp,
+              fontWeight: FontWeight.w700,
+            ),
           ),
           SizedBox(
             height: 10.h,
@@ -81,7 +85,9 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
             children: [
               Expanded(
                   child: ERPTextfield(
-                      controller: searchMenu, hintText: 'ຄົ້ນຫາອາຫານ')),
+                controller: searchMenu,
+                hintText: 'ຄົ້ນຫາອາຫານ',
+              )),
               SizedBox(
                 width: 15.w,
               ),
@@ -101,10 +107,11 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
                 return !value.switchchang
                     ? Center(
                         child: Text(
-                        "ກາລຸນາເປີກກະກ່ອນ",
+                        "ກະລຸນາເປີດກະກ່ອນ",
                         style: TextStyle(
-                          fontSize: 18.sp,
-                        ),
+                            fontFamily: 'Phetsarath-OT',
+                            fontSize: 16.sp,
+                            color: Colors.grey),
                       ))
                     : FoodMenuCard();
               },

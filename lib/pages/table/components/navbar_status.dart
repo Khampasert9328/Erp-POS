@@ -59,8 +59,9 @@ class _NavBarStatusState extends State<NavBarStatus> {
                 width: 5.w,
               ),
               Text(
-                "00 ບໍ່ວ່າງ",
+                "00 ບໍ່ຫວ່າງ",
                 style: TextStyle(
+                  fontFamily: 'Phetsarath-OT',
                   fontSize: 13.sp,
                 ),
               ),

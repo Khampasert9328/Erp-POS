@@ -17,6 +17,9 @@ class ERPTextfield extends StatelessWidget {
       decoration: InputDecoration(
         isDense: true,
         hintText: hintText,
+        hintStyle: TextStyle(
+          fontFamily: 'Phetsarath-OT',
+        ),
         fillColor: Colors.white,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(3.r),

@@ -29,10 +29,9 @@ class FoodMenuCard extends StatelessWidget {
       builder: (context, foodModel, getFoodModel, child) {
         return Scrollbar(
           child: RefreshIndicator(
-            onRefresh: () async{
+            onRefresh: () async {
               await Future.delayed(Duration(seconds: 2));
-               GetFoodMenuProvider().getProduct(false);
-
+              GetFoodMenuProvider().getProduct(false);
             },
             key: _refresh,
             child: ListView.builder(
@@ -85,7 +84,8 @@ class FoodMenuCard extends StatelessWidget {
                                 ),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         data.data.name!,
@@ -109,6 +109,7 @@ class FoodMenuCard extends StatelessWidget {
                                               text:
                                                   '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.data.pricesale)} ກີບ',
                                               style: TextStyle(
+                                                fontFamily: 'Phetsarath-OT',
                                                 fontSize: 14.sp,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -129,7 +130,8 @@ class FoodMenuCard extends StatelessWidget {
                                     child: IconButton(
                                       onPressed: () async {
                                         SharedPreferences? preferences =
-                                            await SharedPreferences.getInstance();
+                                            await SharedPreferences
+                                                .getInstance();
                                         int? amount = await preferences
                                             .getInt(CountPre().namkey);
                                         int? totalAmount =
@@ -138,8 +140,9 @@ class FoodMenuCard extends StatelessWidget {
                                         getFoodModel.setFoodMenuData(
                                             data.data, amount, totalAmount);
                                         foodModel.increment(add);
-          
-                                        getFoodModel.addTotalAmount(totalAmount);
+
+                                        getFoodModel
+                                            .addTotalAmount(totalAmount);
                                       },
                                       icon: const Icon(
                                         Icons.add_shopping_cart_sharp,

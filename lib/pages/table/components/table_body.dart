@@ -56,7 +56,7 @@ class _TableBodyState extends State<TableBody> {
             fontFamily: "Phetsarath-OT",
             color: AppTheme.BASE_COLOR,
             fontWeight: FontWeight.bold,
-            fontSize: 25.sp,
+            fontSize: 21.sp,
           ),
         ),
         actions: [
@@ -99,16 +99,13 @@ class _TableBodyState extends State<TableBody> {
                               color: AppTheme.GREEN_COLOR,
                             ),
                           ),
-
-                   
                     Switch(
                       activeColor: AppTheme.GREEN_COLOR,
                       value: value.switchchang,
                       onChanged: (vale) async {
                         if (value.switchchang) {
-                           Mystyle().dialogOpen(context);
-                          
-                        }else{
+                          Mystyle().dialogOpen(context);
+                        } else {
                           Mystyle().dialogOff(context);
                         }
                       },

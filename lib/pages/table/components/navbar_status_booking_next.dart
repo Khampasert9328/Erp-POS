@@ -35,8 +35,9 @@ class _NavBarStatusBookingState extends State<NavBarStatusBooking> {
                 width: 5.w,
               ),
               Text(
-                "00 ວ່າງ",
+                "00 ຫວ່າງ",
                 style: TextStyle(
+                  fontFamily: 'Phetsarath-OT',
                   fontSize: 13.sp,
                 ),
               ),
@@ -44,7 +45,7 @@ class _NavBarStatusBookingState extends State<NavBarStatusBooking> {
           ),
         ),
         SizedBox(
-          width: 10.w,
+          width: 6.w,
         ),
         Container(
           child: Row(
@@ -62,8 +63,9 @@ class _NavBarStatusBookingState extends State<NavBarStatusBooking> {
                 width: 5.w,
               ),
               Text(
-                "00 ບໍ່ວ່າງ",
+                "00 ບໍ່ຫວ່າງ",
                 style: TextStyle(
+                  fontFamily: 'Phetsarath-OT',
                   fontSize: 13.sp,
                 ),
               ),
@@ -88,6 +90,7 @@ class _NavBarStatusBookingState extends State<NavBarStatusBooking> {
               Text(
                 "00 ຈອງແລ້ວ",
                 style: TextStyle(
+                  fontFamily: 'Phetsarath-OT',
                   fontSize: 13.sp,
                 ),
               ),

@@ -17,7 +17,8 @@ class Bill extends StatelessWidget {
         title: Text(
           "ໃບບິນ",
           style: TextStyle(
-              fontSize: 25.sp,
+              fontFamily: 'Phetsarath-OT',
+              fontSize: 21.sp,
               color: AppTheme.BASE_COLOR,
               fontWeight: FontWeight.bold),
         ),
@@ -34,10 +35,11 @@ class Bill extends StatelessWidget {
           return !value.switchchang
               ? Center(
                   child: Text(
-                  "ກາລຸນາເປີດກະກ່ອນ",
+                  "ກະລຸນາເປີດກະກ່ອນ",
                   style: TextStyle(
-                    fontSize: 18.sp,
-                  ),
+                      fontFamily: 'Phetsarath-OT',
+                      fontSize: 16.sp,
+                      color: Colors.grey),
                 ))
               : const BillBody();
         },

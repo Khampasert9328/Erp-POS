@@ -10,21 +10,19 @@ class AppTextField extends StatelessWidget {
   TextInputType? keyboardType;
   bool? obscureText;
 
-
-  AppTextField(
-      {required this.controller,
-      this.hintText,
-      this.validator,
-      this.keyboardType,
-      this.prefixIcon,
-      this.obscureText,
-      });
+  AppTextField({
+    required this.controller,
+    this.hintText,
+    this.validator,
+    this.keyboardType,
+    this.prefixIcon,
+    this.obscureText,
+  });
 
   @override
   Widget build(BuildContext context) {
     return AutofillGroup(
       child: TextFormField(
-    
         cursorColor: AppTheme.BASE_COLOR,
         obscureText: obscureText ?? false,
         controller: controller,
@@ -37,7 +35,7 @@ class AppTextField extends StatelessWidget {
           hintText: hintText ?? '',
           prefixIcon: prefixIcon ?? Container(),
           hintStyle: TextStyle(
-            fontFamily: "NotoSansLao-Regular",
+            fontFamily: 'Phetsarath-OT',
             fontSize: 18.sp,
           ),
         ),

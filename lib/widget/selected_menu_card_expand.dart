@@ -91,6 +91,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                 Text(
                                   'ລາຍການອາຫານ',
                                   style: TextStyle(
+                                      fontFamily: 'Phetsarath-OT',
                                       fontSize: 16.sp,
                                       color: AppTheme.BASE_COLOR),
                                 ),
@@ -104,6 +105,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                         Text.rich(
                                       TextSpan(
                                         style: TextStyle(
+                                            fontFamily: 'Phetsarath-OT',
                                             fontSize: 16.sp,
                                             color: AppTheme.BASE_COLOR),
                                         text: 'ລວມລາຄາ: ',
@@ -112,6 +114,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                             text:
                                                 '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ',
                                             style: TextStyle(
+                                                fontFamily: 'Phetsarath-OT',
                                                 fontSize: 16.sp,
                                                 color: AppTheme.BASE_COLOR,
                                                 fontWeight: FontWeight.bold),
@@ -225,6 +228,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                                 value.getFoodMenuModel[index]
                                                     .data.name!,
                                                 style: TextStyle(
+                                                    fontFamily: 'Phetsarath-OT',
                                                     fontSize: 16.sp,
                                                     fontWeight: FontWeight.w700,
                                                     color: AppTheme.BASE_COLOR),
@@ -251,6 +255,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                             TextSpan(
                                                 text: 'ລາຄາ ',
                                                 style: TextStyle(
+                                                    fontFamily: 'Phetsarath-OT',
                                                     fontSize: 14.sp,
                                                     color: AppTheme.BASE_COLOR),
                                                 children: <InlineSpan>[
@@ -258,6 +263,8 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                                     text:
                                                         '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(value.getFoodMenuModel[index].totalAmount)} ກີບ',
                                                     style: TextStyle(
+                                                        fontFamily:
+                                                            'Phetsarath-OT',
                                                         fontSize: 14.sp,
                                                         fontWeight:
                                                             FontWeight.bold),
@@ -329,6 +336,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                       Text(
                         'ລວມລາຄາ: ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ',
                         style: TextStyle(
+                          fontFamily: 'Phetsarath-OT',
                           fontSize: 15.sp,
                           color: AppTheme.BASE_COLOR,
                         ),
@@ -338,6 +346,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                   Text(
                     'ກີບ',
                     style: TextStyle(
+                        fontFamily: 'Phetsarath-OT',
                         color: Colors.red,
                         fontWeight: FontWeight.w700,
                         fontSize: 15.sp),
@@ -348,16 +357,21 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-              context.read<GetFoodMenuProvider>().getFoodMenuModel.isEmpty?Text(""):  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 30.w),
-                        primary: AppTheme.BASE_COLOR),
-                    onPressed: widget.onNext,
-                    child: Text(
-                      'ຕໍ່ໄປ',
-                      style: TextStyle(
-                          fontSize: 14.sp, fontWeight: FontWeight.w700),
-                    )),
+                context.read<GetFoodMenuProvider>().getFoodMenuModel.isEmpty
+                    ? Text("")
+                    : ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(horizontal: 30.w),
+                            primary: AppTheme.BASE_COLOR),
+                        onPressed: widget.onNext,
+                        child: Text(
+                          'ຕໍ່ໄປ',
+                          style: TextStyle(
+                            fontFamily: 'Phetsarath-OT',
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        )),
                 SizedBox(
                   width: 20.w,
                 )

@@ -170,7 +170,11 @@ class AddFoodMenuBody extends StatelessWidget {
           if (showCurrency)
             Text(
               'ກີບ',
-              style: TextStyle(fontSize: 12.sp, color: Colors.black),
+              style: TextStyle(
+                fontFamily: 'Phetsarath-OT',
+                fontSize: 12.sp,
+                color: Colors.black,
+              ),
             )
         ],
       ),

@@ -83,8 +83,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                   SharedPreferences pre = await SharedPreferences.getInstance();
                   String? getidtable = pre.getString(CountPre().tablename);
 
-                  
-                await CheckExpiredPackage()
+                  await CheckExpiredPackage()
                       .getCheckExpiredPackage(context)
                       .then((value) async {
                     PrintBillKitchenProvider().getprint();
@@ -123,14 +122,14 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                       await SunmiPrinter.printRow(cols: [
                         ColumnMaker(text: 'ໂຊນ ຫຼື ພື້ນທີ່', width: 6),
                         ColumnMaker(
-                            text: '${getzone??"ສັ່ງກັບບ້ານ"}',
+                            text: '${getzone ?? "ສັ່ງກັບບ້ານ"}',
                             width: 6,
                             align: SunmiPrintAlign.RIGHT),
                       ]);
                       await SunmiPrinter.printRow(cols: [
                         ColumnMaker(text: 'ເລກໂຕະ', width: 6),
                         ColumnMaker(
-                            text: '${getidtable??"ສັ່ງກັບບ້ານ"}',
+                            text: '${getidtable ?? "ສັ່ງກັບບ້ານ"}',
                             width: 6,
                             align: SunmiPrintAlign.RIGHT),
                       ]);
@@ -169,11 +168,11 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                     }
                   });
 
-                 await  Navigator.push(
+                  await Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (_) => CalculateMoney(
-                        tablename: getidtable??"ບໍ່ມີໂຕະ",
+                        tablename: getidtable ?? "ບໍ່ມີໂຕະ",
                       ),
                     ),
                   );
@@ -318,6 +317,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                   border: InputBorder.none,
                                   hintText: 'ຄົ້ນຫາໂຕະ',
                                   hintStyle: TextStyle(
+                                    fontFamily: 'Phetsarath-OT',
                                     fontSize: 15.sp,
                                   )),
                             ),

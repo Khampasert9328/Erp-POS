@@ -98,6 +98,7 @@ class CalculateMoney extends StatelessWidget {
                               Text(
                                 "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ",
                                 style: TextStyle(
+                                  fontFamily: 'Phetsarath-OT',
                                   fontSize: 18.sp,
                                   color: AppTheme.RED_COLOR,
                                   fontWeight: FontWeight.bold,
@@ -161,14 +162,14 @@ class CalculateMoney extends StatelessWidget {
                                   ColumnMaker(
                                       text: 'ໂຊນ ຫຼື ພື້ນທີ່', width: 6),
                                   ColumnMaker(
-                                      text: '${getzone??"none"}',
+                                      text: '${getzone ?? "none"}',
                                       width: 6,
                                       align: SunmiPrintAlign.RIGHT),
                                 ]);
                                 await SunmiPrinter.printRow(cols: [
                                   ColumnMaker(text: 'ເລກໂຕະ', width: 6),
                                   ColumnMaker(
-                                      text: '${getidtable??"none"}',
+                                      text: '${getidtable ?? "none"}',
                                       width: 6,
                                       align: SunmiPrintAlign.RIGHT),
                                 ]);
@@ -214,12 +215,13 @@ class CalculateMoney extends StatelessWidget {
                                 await SunmiPrinter.submitTransactionPrint();
                                 await SunmiPrinter.exitTransactionPrint();
 
-                                context.read<GetFoodMenuProvider>().clearKitchenData();
+                                context
+                                    .read<GetFoodMenuProvider>()
+                                    .clearKitchenData();
                               } catch (e) {
                                 throw Exception("ບໍ່ມີປິ່ນເຕີ");
                               }
                             });
-                 
                           },
                           child: Container(
                             height: 60.h,

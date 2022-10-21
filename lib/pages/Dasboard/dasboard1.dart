@@ -596,14 +596,14 @@ class _Dasboard1State extends State<Dasboard1> {
                                         Text(
                                           "5,000,000",
                                           style: TextStyle(
-                                            fontFamily: 'NotoSansLao-Regular',
+                                            fontFamily: 'Phetsarath-OT',
                                             color: Colors.black,
                                           ),
                                         ),
                                         Text(
                                           "ກີບ",
                                           style: TextStyle(
-                                            fontFamily: 'NotoSansLao-Regular',
+                                            fontFamily: 'Phetsarath-OT',
                                             color: Colors.black,
                                           ),
                                         )
@@ -677,7 +677,7 @@ class _Dasboard1State extends State<Dasboard1> {
                                         Text(
                                           "ກີບ",
                                           style: TextStyle(
-                                            fontFamily: 'NotoSansLao-Regular',
+                                            fontFamily: 'Phetsarath-OT',
                                             color: Colors.black,
                                           ),
                                         )
@@ -751,7 +751,7 @@ class _Dasboard1State extends State<Dasboard1> {
                                         Text(
                                           "ກີບ",
                                           style: TextStyle(
-                                            fontFamily: 'NotoSansLao-Regular',
+                                            fontFamily: 'Phetsarath-OT',
                                             color: Colors.black,
                                           ),
                                         )
@@ -825,7 +825,7 @@ class _Dasboard1State extends State<Dasboard1> {
                                         Text(
                                           "ກີບ",
                                           style: TextStyle(
-                                            fontFamily: 'NotoSansLao-Regular',
+                                            fontFamily: 'Phetsarath-OT',
                                             color: Colors.black,
                                           ),
                                         )

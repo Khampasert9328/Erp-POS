@@ -73,6 +73,7 @@ class _SignInState extends State<SignIn> {
                   Text(
                     "ຈື່ລະຫັດຜ່ານ",
                     style: TextStyle(
+                      fontFamily: 'Phetsarath-OT',
                       fontSize: 16.sp,
                     ),
                   )
@@ -81,8 +82,6 @@ class _SignInState extends State<SignIn> {
               AppButton(
                   text: 'ເຂົ້າສູ່ລະບົບ',
                   onPressed: () async {
-                  
-
                     if (formKey.currentState!.validate()) {
                       AuthenticationProvider().login(email.text, password.text,
                           password.text, context, "", "");

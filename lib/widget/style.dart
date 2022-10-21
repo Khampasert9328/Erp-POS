@@ -194,7 +194,7 @@ class Mystyle {
                           SessionProvoder()
                               .getsessoinProvider(context)
                               .then((value) {
-                                context.read<SwitchProvider>().changSwitch(false);
+                            context.read<SwitchProvider>().changSwitch(false);
                             Navigator.pop(context);
                           });
                         }
@@ -222,107 +222,109 @@ class Mystyle {
           TextEditingController totalSale = TextEditingController();
           TextEditingController cashCount = TextEditingController();
           userName.text = value.userOpenName ?? "";
-          cashOpen.text = NumberFormat.currency(symbol: '',decimalDigits: 0).format(value.cashOpen);
-          totalSale.text =NumberFormat.currency(symbol: '',decimalDigits: 0).format(value.total);
-          cashCount.text = NumberFormat.currency(symbol: '',decimalDigits: 0).format(value.cashCount);
+          cashOpen.text = NumberFormat.currency(symbol: '', decimalDigits: 0)
+              .format(value.cashOpen);
+          totalSale.text = NumberFormat.currency(symbol: '', decimalDigits: 0)
+              .format(value.total);
+          cashCount.text = NumberFormat.currency(symbol: '', decimalDigits: 0)
+              .format(value.cashCount);
           return Center(
             child: SingleChildScrollView(
               child: Container(
                 child: AlertDialog(
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Mystyle().tiTle1("ປີດກະ"),
-                            CircleAvatar(
-                              backgroundColor: AppTheme.GREY_COLOR,
-                              radius: 20,
-                              child: IconButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                icon: Icon(
-                                  Icons.cancel_outlined,
-                                  color: AppTheme.BASE_COLOR,
-                                ),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Mystyle().tiTle1("ປີດກະ"),
+                          CircleAvatar(
+                            backgroundColor: AppTheme.GREY_COLOR,
+                            radius: 20,
+                            child: IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: Icon(
+                                Icons.cancel_outlined,
+                                color: AppTheme.BASE_COLOR,
                               ),
                             ),
-                          ],
-                        ),
-                        Mystyle().subtiTle1("ຜູ້ປີດກະ"),
-                        TextContainer(
-                          inputFormatters: ThousandsFormatter(),
-                          keyboardType: TextInputType.text,
-                          readOnly: true,
-                          hintext: "Telbiz@gmail.com",
-                          suffixIcon: "",
-                          controller: userName,
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Mystyle().subtiTle1("ວັນທີ ແລະ ເວລາ"),
-                        ERPdateTime(),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Mystyle().subtiTle1("ເງິນເລີ່ມຕົ້ນ"),
-                        TextContainer(
-                          inputFormatters: ThousandsFormatter(),
-                          keyboardType: TextInputType.number,
-                          readOnly: true,
-                          hintext: "ເງິນເລີ່ມຕົ້ນ",
-                          suffixIcon: "ກີບ",
-                          controller: cashOpen,
-                        ),
-                        Mystyle().subtiTle1("ຍອດຂາຍ"),
-                        TextContainer(
-                          inputFormatters: ThousandsFormatter(),
-                          keyboardType: TextInputType.number,
-                          readOnly: true,
-                          hintext: "ຍອດຂາຍ",
-                          suffixIcon: "ກີບ",
-                          controller: totalSale,
-                        ),
-                        Mystyle().subtiTle1("ເງິນທີ່ນັບໄດ້"),
-                        TextContainer(
-                          inputFormatters: ThousandsFormatter(),
-                          keyboardType: TextInputType.number,
-                          readOnly: false,
-                          hintext: "ເງິນທີ່ນັບໄດ້",
-                          suffixIcon: "ກີບ",
-                          controller: cashCount,
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Mystyle().tiTle1("ຜິດດ່ຽງ"),
-                            Mystyle().texttitle(
-                              "30,000 ກີບ",
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                    actions: [
-                      ButtomDialog(
-                        text: 'ຕົກລົງ',
-                        onPressed: () {
-                          CreateOffSessionProvider().getoffsession(context);
-                          context.read<SwitchProvider>().changSwitch(true);
-                          Navigator.pop(context);
-                        },
+                          ),
+                        ],
                       ),
+                      Mystyle().subtiTle1("ຜູ້ປີດກະ"),
+                      TextContainer(
+                        inputFormatters: ThousandsFormatter(),
+                        keyboardType: TextInputType.text,
+                        readOnly: true,
+                        hintext: "Telbiz@gmail.com",
+                        suffixIcon: "",
+                        controller: userName,
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Mystyle().subtiTle1("ວັນທີ ແລະ ເວລາ"),
+                      ERPdateTime(),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Mystyle().subtiTle1("ເງິນເລີ່ມຕົ້ນ"),
+                      TextContainer(
+                        inputFormatters: ThousandsFormatter(),
+                        keyboardType: TextInputType.number,
+                        readOnly: true,
+                        hintext: "ເງິນເລີ່ມຕົ້ນ",
+                        suffixIcon: "ກີບ",
+                        controller: cashOpen,
+                      ),
+                      Mystyle().subtiTle1("ຍອດຂາຍ"),
+                      TextContainer(
+                        inputFormatters: ThousandsFormatter(),
+                        keyboardType: TextInputType.number,
+                        readOnly: true,
+                        hintext: "ຍອດຂາຍ",
+                        suffixIcon: "ກີບ",
+                        controller: totalSale,
+                      ),
+                      Mystyle().subtiTle1("ເງິນທີ່ນັບໄດ້"),
+                      TextContainer(
+                        inputFormatters: ThousandsFormatter(),
+                        keyboardType: TextInputType.number,
+                        readOnly: false,
+                        hintext: "ເງິນທີ່ນັບໄດ້",
+                        suffixIcon: "ກີບ",
+                        controller: cashCount,
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Mystyle().tiTle1("ຜິດດ່ຽງ"),
+                          Mystyle().texttitle(
+                            "30,000 ກີບ",
+                          ),
+                        ],
+                      )
                     ],
                   ),
+                  actions: [
+                    ButtomDialog(
+                      text: 'ຕົກລົງ',
+                      onPressed: () {
+                        CreateOffSessionProvider().getoffsession(context);
+                        context.read<SwitchProvider>().changSwitch(true);
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
                 ),
+              ),
             ),
-            
           );
         }));
       },
@@ -553,6 +555,7 @@ class Mystyle {
                       child: Text(
                         "ທ່ານຕ້ອງການອອກຈາກລະບົບແທ້ບໍ?",
                         style: TextStyle(
+                          fontFamily: 'Phetsarath-OT',
                           fontSize: 18.sp,
                         ),
                       ),
@@ -569,8 +572,9 @@ class Mystyle {
                               Navigator.pop(context);
                             },
                             child: Text(
-                              "ຢູ່ໃນລະບົບຕໍ່",
+                              "ຍົກເລີກ",
                               style: TextStyle(
+                                  fontFamily: 'Phetsarath-OT',
                                   fontSize: 18.sp,
                                   color: AppTheme.GREY_COLOR,
                                   fontWeight: FontWeight.bold),
@@ -588,6 +592,7 @@ class Mystyle {
                             child: Text(
                               "ອອກຈາກລະບົບ",
                               style: TextStyle(
+                                  fontFamily: 'Phetsarath-OT',
                                   fontSize: 18.sp,
                                   color: AppTheme.WHITE_COLOR,
                                   fontWeight: FontWeight.bold),
@@ -652,6 +657,7 @@ class Mystyle {
                           child: Text(
                             "ຕົກລົງ",
                             style: TextStyle(
+                                fontFamily: "Phetsarath-OT",
                                 fontSize: 18.sp,
                                 color: AppTheme.WHITE_COLOR,
                                 fontWeight: FontWeight.bold),
@@ -665,16 +671,13 @@ class Mystyle {
         });
   }
 
-  final snackbar=SnackBar(
-      content: const Text(
-        "ເປີດກະສຳເລັດ",
-      ),
-      action: SnackBarAction(
-        label: "ຕົກລົງ",
-        onPressed: () {
-         
-        },
-      ),
-    );
-  }
-
+  final snackbar = SnackBar(
+    content: const Text(
+      "ເປີດກະສຳເລັດ",
+    ),
+    action: SnackBarAction(
+      label: "ຕົກລົງ",
+      onPressed: () {},
+    ),
+  );
+}
