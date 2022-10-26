@@ -18,6 +18,7 @@ import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/calculate_money.dart';
+import 'package:erp_pos/widget/eat_resturant.dart';
 import 'package:erp_pos/widget/order_to_take_home.dart';
 import 'package:erp_pos/widget/selected_menu_card.dart';
 import 'package:erp_pos/widget/selected_menu_card_expand.dart';
@@ -29,251 +30,186 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PlaceToEatCard extends StatefulWidget {
-  ScrollController scrollController;
+  // ScrollController scrollController;
   VoidCallback onback;
 
-  PlaceToEatCard({required this.scrollController, required this.onback});
+  PlaceToEatCard({required this.onback});
 
   @override
   State<PlaceToEatCard> createState() => _PlaceToEatCardState();
 }
 
 class _PlaceToEatCardState extends State<PlaceToEatCard> {
-  bool selectindex = true;
-  bool selecbutton = true;
-  int? selectTable;
   FoodMenuModel? model;
-
-  int? isselect = 0;
-  String? idtable;
-  String? sc;
-  bool selectMenu = false;
+  TabController? controller;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(right: 15, left: 15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 50.w, vertical: 10.h),
-                    primary: AppTheme.BASE_COLOR),
-                onPressed: widget.onback,
-                child: Text(
-                  'ກັບຄືນ',
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w700,
-                  ),
-                )),
-            GestureDetector(
-              onTap: () async {
-                if (context
-                    .read<GetFoodMenuProvider>()
-                    .getFoodMenuModel
-                    .isEmpty) {
-                  Mystyle().showDialogCheckData(
-                      context, "ກາລຸນາກວດສອບອໍເດີຂອງທ່ານກ່ອນ");
-                } else {
-                  SharedPreferences pre = await SharedPreferences.getInstance();
-                  String? getidtable = pre.getString(CountPre().tablename);
-
-                  
-                await CheckExpiredPackage()
-                      .getCheckExpiredPackage(context)
-                      .then((value) async {
-                    PrintBillKitchenProvider().getprint();
-                    SharedPreferences preferences =
-                        await SharedPreferences.getInstance();
-                    String? getzone = preferences.getString(CountPre().idzone);
-                    SharedPreferences pri =
-                        await SharedPreferences.getInstance();
-                    String? billNo = pri.getString(CountPre().billNo);
-
-                    try {
-                      await SunmiPrinter.startTransactionPrint();
-                      await SunmiPrinter.printText('ໃບບິນຫ້ອງຄົວ',
-                          style: SunmiStyle(
-                              align: SunmiPrintAlign.CENTER,
-                              bold: true,
-                              fontSize: SunmiFontSize.LG));
-                      await SunmiPrinter.line();
-
-                      await SunmiPrinter.printRow(cols: [
-                        ColumnMaker(text: 'ໃບບິນເລກທີ', width: 6),
-                        ColumnMaker(
-                            text: '$billNo',
-                            width: 6,
-                            align: SunmiPrintAlign.RIGHT),
-                      ]);
-
-                      await SunmiPrinter.printRow(cols: [
-                        ColumnMaker(text: 'ວັນເວລາ', width: 6),
-                        ColumnMaker(
-                            text:
-                                '${DateFormat("yyy-MM-dd HH:mm").format(DateTime.now())}',
-                            width: 6,
-                            align: SunmiPrintAlign.RIGHT),
-                      ]);
-                      await SunmiPrinter.printRow(cols: [
-                        ColumnMaker(text: 'ໂຊນ ຫຼື ພື້ນທີ່', width: 6),
-                        ColumnMaker(
-                            text: '${getzone??"ສັ່ງກັບບ້ານ"}',
-                            width: 6,
-                            align: SunmiPrintAlign.RIGHT),
-                      ]);
-                      await SunmiPrinter.printRow(cols: [
-                        ColumnMaker(text: 'ເລກໂຕະ', width: 6),
-                        ColumnMaker(
-                            text: '${getidtable??"ສັ່ງກັບບ້ານ"}',
-                            width: 6,
-                            align: SunmiPrintAlign.RIGHT),
-                      ]);
-
-                      await SunmiPrinter.line();
-                      await SunmiPrinter.printText('ລາຍການອາຫານ',
-                          style: SunmiStyle(
-                              align: SunmiPrintAlign.CENTER,
-                              bold: true,
-                              fontSize: SunmiFontSize.MD));
-
-                      for (var data in context
-                          .read<GetFoodMenuProvider>()
-                          .getFoodMenuModel) {
-                        await SunmiPrinter.printRow(cols: [
-                          ColumnMaker(text: '${data.data.name}', width: 6),
-                          ColumnMaker(
-                              text:
-                                  '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.number)} x ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.totalAmount)}',
-                              width: 6,
-                              align: SunmiPrintAlign.RIGHT),
-                        ]);
-                      }
-                      await SunmiPrinter.line();
-
-                      await SunmiPrinter.printText('ຂໍຂອບໃຈ',
-                          style: SunmiStyle(
-                              align: SunmiPrintAlign.CENTER,
-                              bold: true,
-                              fontSize: SunmiFontSize.MD));
-                      await SunmiPrinter.lineWrap(3);
-                      await SunmiPrinter.submitTransactionPrint();
-                      await SunmiPrinter.exitTransactionPrint();
-                    } catch (e) {
-                      print("error:$e");
-                    }
-                  });
-
-                 await  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => CalculateMoney(
-                        tablename: getidtable??"ບໍ່ມີໂຕະ",
-                      ),
-                    ),
-                  );
-                }
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10.h),
-                decoration: BoxDecoration(
-                  color: selecbutton == false
-                      ? AppTheme.BASE_COLOR
-                      : AppTheme.WHITE_COLOR,
-                  border: Border.all(color: AppTheme.BASE_COLOR),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Row(
-                  children: [
-                    Text(
-                      "ສົ່ງຫ້ອງຄົວ",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                        color: selecbutton == false
-                            ? AppTheme.WHITE_COLOR
-                            : AppTheme.BASE_COLOR,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.only(top: 30.h),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        bottomNavigationBar: Container(
+          height: 70.h,
+          child: BottomAppBar(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 10, left: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectindex = true;
-                      });
-                    },
+                    onTap: widget.onback,
                     child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 45.w, vertical: 5.h),
+                      height: 50.h,
+                      width: 150.w,
                       decoration: BoxDecoration(
-                          color: selectindex == true
-                              ? AppTheme.BASE_COLOR
-                              : AppTheme.WHITE_COLOR,
-                          border: Border.all(color: AppTheme.BASE_COLOR),
-                          borderRadius: BorderRadius.circular(5)),
+                        color: AppTheme.WHITE_COLOR,
+                        border: Border.all(color: AppTheme.BASE_COLOR),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "ກິນຢູ່ຮ້ານ",
+                            "ກັບຄືນ",
                             style: TextStyle(
                               fontSize: 16.sp,
                               fontWeight: FontWeight.bold,
-                              color: selectindex == true
-                                  ? AppTheme.WHITE_COLOR
-                                  : AppTheme.BASE_COLOR,
+                              color: AppTheme.BASE_COLOR,
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
                   ),
+                  //SizedBox(width: 15.w,),
                   GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectindex = false;
-                      });
-                      Mystyle().showAlertloadingsuccess(
-                          context, "ແຈ້ງເຕືອນ", "ກຳລັງພັດທະນາ");
+                    onTap: () async {
+                      if (context
+                          .read<GetFoodMenuProvider>()
+                          .getFoodMenuModel
+                          .isEmpty) {
+                        Mystyle().showDialogCheckData(
+                            context, "ກາລຸນາກວດສອບອໍເດີຂອງທ່ານກ່ອນ");
+                      } else {
+                        SharedPreferences pre =
+                            await SharedPreferences.getInstance();
+                        String? getidtable =
+                            pre.getString(CountPre().tablename);
+
+                        await CheckExpiredPackage()
+                            .getCheckExpiredPackage(context)
+                            .then((value) async {
+                          PrintBillKitchenProvider().getprint();
+                          SharedPreferences preferences =
+                              await SharedPreferences.getInstance();
+                          String? getzone =
+                              preferences.getString(CountPre().idzone);
+                          SharedPreferences pri =
+                              await SharedPreferences.getInstance();
+                          String? billNo = pri.getString(CountPre().billNo);
+
+                          try {
+                            await SunmiPrinter.startTransactionPrint();
+                            await SunmiPrinter.printText('ໃບບິນຫ້ອງຄົວ',
+                                style: SunmiStyle(
+                                    align: SunmiPrintAlign.CENTER,
+                                    bold: true,
+                                    fontSize: SunmiFontSize.LG));
+                            await SunmiPrinter.line();
+
+                            await SunmiPrinter.printRow(cols: [
+                              ColumnMaker(text: 'ໃບບິນເລກທີ', width: 6),
+                              ColumnMaker(
+                                  text: '$billNo',
+                                  width: 6,
+                                  align: SunmiPrintAlign.RIGHT),
+                            ]);
+
+                            await SunmiPrinter.printRow(cols: [
+                              ColumnMaker(text: 'ວັນເວລາ', width: 6),
+                              ColumnMaker(
+                                  text:
+                                      '${DateFormat("yyy-MM-dd HH:mm").format(DateTime.now())}',
+                                  width: 6,
+                                  align: SunmiPrintAlign.RIGHT),
+                            ]);
+                            await SunmiPrinter.printRow(cols: [
+                              ColumnMaker(text: 'ໂຊນ ຫຼື ພື້ນທີ່', width: 6),
+                              ColumnMaker(
+                                  text: '${getzone ?? "ສັ່ງກັບບ້ານ"}',
+                                  width: 6,
+                                  align: SunmiPrintAlign.RIGHT),
+                            ]);
+                            await SunmiPrinter.printRow(cols: [
+                              ColumnMaker(text: 'ເລກໂຕະ', width: 6),
+                              ColumnMaker(
+                                  text: '${getidtable ?? "ສັ່ງກັບບ້ານ"}',
+                                  width: 6,
+                                  align: SunmiPrintAlign.RIGHT),
+                            ]);
+
+                            await SunmiPrinter.line();
+                            await SunmiPrinter.printText('ລາຍການອາຫານ',
+                                style: SunmiStyle(
+                                    align: SunmiPrintAlign.CENTER,
+                                    bold: true,
+                                    fontSize: SunmiFontSize.MD));
+
+                            for (var data in context
+                                .read<GetFoodMenuProvider>()
+                                .getFoodMenuModel) {
+                              await SunmiPrinter.printRow(cols: [
+                                ColumnMaker(
+                                    text: '${data.data.name}', width: 6),
+                                ColumnMaker(
+                                    text:
+                                        '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.number)} x ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.totalAmount)}',
+                                    width: 6,
+                                    align: SunmiPrintAlign.RIGHT),
+                              ]);
+                            }
+                            await SunmiPrinter.line();
+
+                            await SunmiPrinter.printText('ຂໍຂອບໃຈ',
+                                style: SunmiStyle(
+                                    align: SunmiPrintAlign.CENTER,
+                                    bold: true,
+                                    fontSize: SunmiFontSize.MD));
+                            await SunmiPrinter.lineWrap(3);
+                            await SunmiPrinter.submitTransactionPrint();
+                            await SunmiPrinter.exitTransactionPrint();
+                          } catch (e) {
+                            print("error:$e");
+                          }
+                        });
+
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => CalculateMoney(
+                              tablename: getidtable ?? "ບໍ່ມີໂຕະ",
+                            ),
+                          ),
+                        );
+                      }
                     },
                     child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 45.w, vertical: 5.h),
+                      height: 50.h,
+                      width: 150.w,
                       decoration: BoxDecoration(
-                          color: selectindex == false
-                              ? AppTheme.BASE_COLOR
-                              : AppTheme.WHITE_COLOR,
-                          border: Border.all(color: AppTheme.BASE_COLOR),
-                          borderRadius: BorderRadius.circular(5)),
+                        color: AppTheme.BASE_COLOR,
+                        border: Border.all(color: AppTheme.BASE_COLOR),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "ສັ່ງກັບບ້ານ",
+                            "ສົ່ງຫ້ອງຄົວ",
                             style: TextStyle(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.bold,
-                                color: selectindex == false
-                                    ? AppTheme.WHITE_COLOR
-                                    : AppTheme.BASE_COLOR),
+                                color: AppTheme.WHITE_COLOR),
                           ),
                         ],
                       ),
@@ -282,251 +218,51 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 10.h,
-            ),
-            if (selectindex == true)
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "ເລືອກໂຕະ",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          color: AppTheme.BASE_COLOR,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.only(right: 10, left: 10),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 10.h,
+              ),
+              TabBar(
+                controller: controller,
+                indicatorPadding: EdgeInsets.only(left: 10.0, right: 10.0),
+                indicatorWeight: 3.0,
+                indicatorColor: AppTheme.BASE_COLOR,
+                labelColor: Colors.black,
+                labelStyle: TextStyle(
+                  fontSize: 18.sp,
+                ),
+                tabs: const [
+                  Tab(
+                    text: 'ກິນຢູ່ຮ້ານ',
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: AppTheme.GREY_COLOR,
-                            border: Border.all(color: AppTheme.WHITE_COLOR),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              left: 20.0,
-                            ),
-                            child: TextField(
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'ຄົ້ນຫາໂຕະ',
-                                  hintStyle: TextStyle(
-                                    fontSize: 15.sp,
-                                  )),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      const Icon(
-                        Icons.search,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: SizedBox(
-                          height: 50.h,
-                          width: double.infinity,
-                          child: FutureBuilder<List<Area>>(
-                            future: AreaProvider().getZone(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                return Consumer<AreaProvider>(
-                                  builder: ((context, model, _) {
-                                    return ListView.builder(
-                                        physics: const ScrollPhysics(),
-                                        shrinkWrap: true,
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: snapshot.data!.length,
-                                        itemBuilder: (context, index) {
-                                          String? id =
-                                              snapshot.data![index].id ?? "";
-
-                                          return Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Expanded(
-                                                child: Column(
-                                                  children: [
-                                                    GestureDetector(
-                                                      onTap: () async {
-                                                        setState(() {
-                                                          isselect = index;
-                                                          idtable = id;
-                                                        });
-                                                        SharedPreferences
-                                                            preferences =
-                                                            await SharedPreferences
-                                                                .getInstance();
-                                                        preferences.setString(
-                                                            CountPre().idzone,
-                                                            snapshot
-                                                                .data![index]
-                                                                .area!);
-                                                        preferences.setString(
-                                                            CountPre().tableid,
-                                                            idtable.toString());
-                                                      },
-                                                      child: Column(
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .only(
-                                                              right: 8,
-                                                            ),
-                                                            child: Container(
-                                                              height: 40.h,
-                                                              padding: EdgeInsets
-                                                                  .symmetric(
-                                                                horizontal:
-                                                                    15.w,
-                                                              ),
-                                                              decoration: BoxDecoration(
-                                                                  color: isselect == index
-                                                                      ? AppTheme
-                                                                          .BASE_COLOR
-                                                                      : AppTheme
-                                                                          .WHITE_COLOR,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5),
-                                                                  border: Border.all(
-                                                                      color: AppTheme
-                                                                          .BASE_COLOR)),
-                                                              child: Center(
-                                                                child: Text(
-                                                                  snapshot
-                                                                      .data![
-                                                                          index]
-                                                                      .area!,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        18.sp,
-                                                                    color: isselect ==
-                                                                            index
-                                                                        ? AppTheme
-                                                                            .WHITE_COLOR
-                                                                        : AppTheme
-                                                                            .GREY_COLOR,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 10.h,
-                                              ),
-                                            ],
-                                          );
-                                        });
-                                  }),
-                                );
-                              }
-                              return const SizedBox();
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  const NavBarStatusBooking(),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  FutureBuilder<List<GetTable>>(
-                    future: GetTableProvider().gettablebyid(context, idtable),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Consumer<GetTableProvider>(
-                          builder: ((context, model, _) {
-                            return SingleChildScrollView(
-                                child: GridView.count(
-                              crossAxisCount: 2,
-                              childAspectRatio: (0.8 / .4),
-                              shrinkWrap: true,
-                              children:
-                                  List.generate(snapshot.data!.length, (index) {
-                                return GestureDetector(
-                                  onTap: (() async {
-                                    SharedPreferences preferences =
-                                        await SharedPreferences.getInstance();
-                                    preferences.setString(CountPre().tableid,
-                                        snapshot.data![index].id!);
-                                    preferences.setString(CountPre().tablename,
-                                        snapshot.data![index].name!);
-                                  }),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Container(
-                                      color: AppTheme.GREY_COLOR,
-                                      child: Container(
-                                        padding: const EdgeInsets.all(16),
-                                        decoration: BoxDecoration(
-                                          border: Border(
-                                            left: BorderSide(
-                                              color: AppTheme.GREEN_COLOR,
-                                              width: 15,
-                                            ),
-                                          ),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            snapshot.data![index].name!,
-                                            style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }),
-                            ));
-                          }),
-                        );
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(
-                          color: AppTheme.BASE_COLOR,
-                        ),
-                      );
-                    },
+                  Tab(
+                    text: 'ສັ່ງກັບບ້ານ',
                   ),
                 ],
               ),
-            if (!selectindex) OrderToTakeHome()
-          ],
+              SizedBox(
+                height: 10.h,
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              Expanded(
+                child: TabBarView(
+                  controller: controller,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    EatResturant(),
+                    OrderToTakeHome(),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

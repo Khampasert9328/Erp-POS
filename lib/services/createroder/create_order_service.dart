@@ -20,12 +20,10 @@ import 'package:provider/provider.dart';
 
 Future<CreateOrderModels?> createOrder(BuildContext context) async {
   try {
-    SharedPreferences pre = await SharedPreferences.getInstance();
-    String? idToken = pre.getString("content");
-    SharedPreferences pre1 = await SharedPreferences.getInstance();
-    String? dateexpired = pre1.getString(CountPre().dateExpired);
-    SharedPreferences pre2 = await SharedPreferences.getInstance();
-    String? datesup = pre2.getString(CountPre().dateSubscribe);
+    
+
+    String? dateexpired = await CountPre().getDateExpired();
+    String? datesup = await CountPre().getDateSupscribe();
     SharedPreferences tableid = await SharedPreferences.getInstance();
     String? tableid1 = tableid.getString(CountPre().tableid);
 
@@ -39,10 +37,9 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
     var prefixsup = partsup[0].trim(); // prefix: "date"
     var dateSup = partsup.sublist(0).join('').trim();
 
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String? idtoken = preferences.getString("content");
+    String? idtoken = await CountPre().getToken();
     //ວິທີການເເຕກເອົາຂໍ້ມູນໃນ token
-    String yourToken = idToken!;
+    String yourToken = idtoken!;
     Map<String, dynamic> decodedToken = JwtDecoder.decode(yourToken);
     String username = decodedToken['name'];
     String userid = decodedToken['sub'];
@@ -50,13 +47,15 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
 ////////////////////////////////////////////////////////////////////////////
     var ipAddress = IpAddress(type: RequestType.json);
     var ip = await ipAddress.getIpAddress();
+    var ipa = '$ip';
+     var ip1 = str.split('-');
+    var ip2 = ip1[0].trim(); // prefix: "date"
+    var ip3 = ip1.sublist(0).join('').trim();
 
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
     String? computer = await androidInfo.model;
-
-    SharedPreferences pri = await SharedPreferences.getInstance();
-    String? billNo = pri.getString(CountPre().billNo);
+    String? billNo = await CountPre().getBillNo();
     List<Map<String, dynamic>> products = [];
 
     for (var item in context.read<GetFoodMenuProvider>().getFoodMenuModel) {
@@ -107,7 +106,7 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
           "modified":
               '${DateFormat("yyyMMdd HH:mm:ss").format(DateTime.now())}',
           "modifiedID": "$userid",
-          "ipAddress": "$ip",
+          "ipAddress": "$ip3",
           "createID": "$userid",
           "created": 0,
           "computer": "$computer",
@@ -131,7 +130,7 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
         "metaData": {
           "modified": 0,
           "modifiedID": "$userid",
-          "ipAddress": "$ip",
+          "ipAddress": "$ip3",
           "createID": "$userid",
           "created": 0,
           "computer": "$computer",
@@ -144,7 +143,7 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
     var respones = await http.post(Uri.parse(url),
         headers: {
           "accept": "text/plain",
-          "Authorization": "Bearer $idToken",
+          "Authorization": "Bearer $idtoken",
           "Content-Type": "application/json"
         },
         body: payload,);

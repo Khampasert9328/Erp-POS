@@ -25,15 +25,17 @@ class GetOrderByIssueDateProvider extends ChangeNotifier {
   Future<void> getorderfromservice(BuildContext context) async {
     _isload = true;
     SharedPreferences pre = await SharedPreferences.getInstance();
-    String? startDate = pre.getString(CountPre().dateSubscribe);
-    String? endDate = pre.getString(CountPre().dateExpired);
-    String? idToken = pre.getString("content");
+    String? startDate = await CountPre().getDateSupscribe();
+    String? endDate = await CountPre().getDateExpired();
+    String? idToken =await CountPre().getToken();
     DateTime time = DateTime.now();
     String? startdate = '20221006';
     String? startend = '20221006';
 
     _order =
-        await getorderbyissuedate(-1, 0, idToken, startdate, startend, context);
+        await getorderbyissuedate(-1, 0, idToken!, startdate, startend, context);
+
+        print("order:$order");
 
     if (_order != null) {
       for (var item in _order!.order!) {
@@ -42,6 +44,8 @@ class GetOrderByIssueDateProvider extends ChangeNotifier {
       }
       _getOrderByListId =
           await getorderbylistid(listID, -1, 0, startDate, endDate);
+
+          print("orderbyid:$_getOrderByListId");
     }
     _isload = false;
     notifyListeners();

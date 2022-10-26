@@ -107,7 +107,7 @@ class Mystyle {
 
   Future dialogOpen(BuildContext context) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    String? idtoken = preferences.getString("content");
+    String? idtoken = await CountPre().getToken();
     //ວິທີການເເຕກເອົາຂໍ້ມູນໃນ token
     String? yourToken = idtoken;
     Map<String, dynamic> decodedToken = JwtDecoder.decode(yourToken!);
@@ -194,7 +194,7 @@ class Mystyle {
                           SessionProvoder()
                               .getsessoinProvider(context)
                               .then((value) {
-                                context.read<SwitchProvider>().changSwitch(false);
+                                context.read<SwitchProvider>().changSwitch(true);
                             Navigator.pop(context);
                           });
                         }
@@ -314,7 +314,7 @@ class Mystyle {
                         text: 'ຕົກລົງ',
                         onPressed: () {
                           CreateOffSessionProvider().getoffsession(context);
-                          context.read<SwitchProvider>().changSwitch(true);
+                          context.read<SwitchProvider>().changSwitch(false);
                           Navigator.pop(context);
                         },
                       ),
@@ -604,7 +604,7 @@ class Mystyle {
 
   showDialogCheckData(BuildContext context, String text) {
     showDialog(
-        barrierDismissible: false,
+       
         context: context,
         builder: (_) {
           return Dialog(
@@ -647,7 +647,7 @@ class Mystyle {
                             borderRadius: BorderRadius.circular(10)),
                         child: TextButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                            Navigator.of(context).pop();
                           },
                           child: Text(
                             "ຕົກລົງ",

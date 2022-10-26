@@ -37,6 +37,7 @@ class ListViewTable extends StatefulWidget {
 
 int? selectIndex = 0;
 String? idtable;
+int selectTable = 0;
 
 class _ListViewTableState extends State<ListViewTable> {
   @override
@@ -64,9 +65,10 @@ class _ListViewTableState extends State<ListViewTable> {
                                 itemCount: snapshot.data!.length,
                                 itemBuilder: (context, index) {
                                   String? id = snapshot.data![index].id ?? "";
-    
+
                                   return Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Expanded(
                                         child: Column(
@@ -106,14 +108,13 @@ class _ListViewTableState extends State<ListViewTable> {
                                                                   .BASE_COLOR)),
                                                       child: Center(
                                                         child: Text(
-                                                          snapshot
-                                                              .data![index].area!,
+                                                          snapshot.data![index]
+                                                              .area!,
                                                           style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             fontSize: 18.sp,
-                                                            color: selectIndex ==
-                                                                    index
+                                                            color: selectIndex == index
                                                                 ? AppTheme
                                                                     .WHITE_COLOR
                                                                 : AppTheme
@@ -171,32 +172,50 @@ class _ListViewTableState extends State<ListViewTable> {
                                       TableDetail(data: snapshot.data![index])),
                                 ),
                               );
+                              setState(() {
+                                selectTable = index;
+                              });
                             }),
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Container(
                                 decoration: BoxDecoration(
-                                    color: AppTheme.GREY_COLOR,
+                                    color: selectTable == index
+                                        ? AppTheme.BASE_COLOR
+                                        : AppTheme.GREY_COLOR,
                                     borderRadius: BorderRadius.circular(5)),
                                 child: Container(
-                                  padding: const EdgeInsets.all(16),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      left: BorderSide(
-                                        color: AppTheme.GREEN_COLOR,
-                                        width: 15,
+                                    padding: const EdgeInsets.all(16),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        left: BorderSide(
+                                          color: AppTheme.GREEN_COLOR,
+                                          width: 15,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      snapshot.data![index].name!,
-                                      style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ),
+                                    child: Stack(
+                                      alignment: AlignmentDirectional.topEnd,
+                                      children: [
+                                        selectTable == index
+                                            ? Icon(
+                                                Icons.check_circle,
+                                                color: AppTheme.WHITE_COLOR,
+                                              )
+                                            : SizedBox(),
+                                        Center(
+                                          child: Text(
+                                            snapshot.data![index].name!,
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: selectTable == index
+                                                    ? AppTheme.WHITE_COLOR
+                                                    : AppTheme.BASE_COLOR),
+                                          ),
+                                        ),
+                                      ],
+                                    )),
                               ),
                             ));
                       }),

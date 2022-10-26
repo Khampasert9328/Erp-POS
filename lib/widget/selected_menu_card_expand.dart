@@ -21,12 +21,11 @@ import '../constant/theme.dart';
 class SelectedMenuCardExpand extends StatefulWidget {
   VoidCallback onNext;
 
-  ScrollController scrollController;
   bool selectMenu = false;
 
   SelectedMenuCardExpand(
       {required this.onNext,
-      required this.scrollController,
+   
       required this.selectMenu});
 
   @override
@@ -53,102 +52,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
     return Scaffold(
       body: StatefulBuilder(
         builder: (context, setState) => Column(
-          children: [
-            Expanded(
-              child: ListView(
-                controller: widget.scrollController,
-                children: <Widget>[
-                  Column(
-                    // mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: Container(
-                          width: 30.w,
-                          height: 5.h,
-                          decoration: BoxDecoration(
-                              color: AppTheme.GREY_COLOR,
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 30.h,
-                          vertical: 15.h,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(15.r),
-                            topLeft: Radius.circular(15.r),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'ລາຍການອາຫານ',
-                                  style: TextStyle(
-                                      fontSize: 16.sp,
-                                      color: AppTheme.BASE_COLOR),
-                                ),
-                                SizedBox(
-                                  height: 5.h,
-                                ),
-                                StatefulBuilder(
-                                  builder: (context, setState) =>
-                                      Consumer<FoodMenuProvider>(
-                                    builder: (context, value, child) =>
-                                        Text.rich(
-                                      TextSpan(
-                                        style: TextStyle(
-                                            fontSize: 16.sp,
-                                            color: AppTheme.BASE_COLOR),
-                                        text: 'ລວມລາຄາ: ',
-                                        children: <InlineSpan>[
-                                          TextSpan(
-                                            text:
-                                                '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ',
-                                            style: TextStyle(
-                                                fontSize: 16.sp,
-                                                color: AppTheme.BASE_COLOR,
-                                                fontWeight: FontWeight.bold),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              child: Badge(
-                                badgeContent: Text(
-                                  context
-                                      .watch<GetFoodMenuProvider>()
-                                      .getFoodMenuModel
-                                      .length
-                                      .toString(),
-                                  style: TextStyle(
-                                    color: AppTheme.WHITE_COLOR,
-                                  ),
-                                ),
-                                child: const Icon(
-                                  Icons.shopping_cart,
-                                  size: 55,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
+          children: [ 
             Expanded(
               child: Consumer<GetFoodMenuProvider>(
                 builder: (context, value, child) {
@@ -362,7 +266,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                   width: 20.w,
                 )
               ],
-            ) //////
+            ) 
           ],
         ),
       ),

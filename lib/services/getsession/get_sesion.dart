@@ -1,14 +1,14 @@
 import 'package:erp_pos/constant/api_path.dart';
 import 'package:erp_pos/model/getsesion/get_sessoin_models.dart';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 Future<GetSessoin?> getsessionservice() async {
   int status = 0;
-  SharedPreferences preferences = await SharedPreferences.getInstance();
-  String? idToken = preferences.getString("content");
-  String yourToken = idToken!;
+  String? idtoken = await CountPre().getToken();
+  String yourToken = idtoken!;
   Map<String, dynamic> decodedToken = JwtDecoder.decode(yourToken);
   String userId = decodedToken['sub'];
   try {
@@ -18,7 +18,7 @@ Future<GetSessoin?> getsessionservice() async {
       Uri.parse(url),
       headers: {
         "accept":"text/plain",
-        "Authorization":"Bearer $idToken"
+        "Authorization":"Bearer $idtoken"
       },
     );
    

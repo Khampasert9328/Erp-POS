@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:erp_pos/bussiness%20logic/authentication.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/pages/login/login.dart';
 import 'package:erp_pos/pages/onboardingscreen/models/content_models.dart';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -88,22 +91,33 @@ class _OnboardBodyState extends State<OnboardBody> {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            onPressed: () {
+            onPressed: () async {
               if (currenIndex == content.length - 1) {
+                bool firstTime = true;
+                CountPre().setLogin(firstTime);
                 if (AuthenticationProvider().tokenManagement(context) == "") {
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: ((context) => Login())),
                       (route) => false);
-                }else{
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: ((context) => HomePage())),
-                      (route) => false);
+                } else {
+                  bool? rember = await CountPre().getRememberPass();
+                  if (rember == true) {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => const HomePage())),
+                        (route) => false);
+                  } else {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: ((context) => Login())),
+                        (route) => false);
+                  }
                 }
               }
               pagecontroller!.nextPage(
-                duration: Duration(milliseconds: 100),
+                duration: const Duration(milliseconds: 100),
                 curve: Curves.bounceIn,
               );
             },

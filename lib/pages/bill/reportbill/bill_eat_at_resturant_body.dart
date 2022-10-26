@@ -6,6 +6,7 @@ import 'package:erp_pos/model/getorderbyissuedate/get_order_by_isuedatemodels.da
 import 'package:erp_pos/model/getorderbylistid/get_order_by_list_id_models.dart';
 import 'package:erp_pos/pages/bill/detail/bill_detail.dart';
 import 'package:erp_pos/provider/getorderbyissuedate/get_order_by_issuedate_provider.dart';
+import 'package:erp_pos/provider/gettableall/get_table_all_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -47,14 +48,16 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                 for (var i in value.getOrderByListId!.bill!) {
                   if (i.id == value.order!.order![index].billid) {
                     prefix.add(i.prefixid!);
+                    // print("value:${value.order!.order![index].billid}");
+                    // print("itemId:${i.id}");
+                    // print("prefix:${i.prefixid}");
                   }
                 }
-                if (prefix.length != 1) {
-                  return Center(
-                    child: const Text(
-                      "ບໍ່ມີລາຍການ",
-                    ),
-                  );
+                List<String> tableid =[];
+                for (var item in context.read<GetTableAllProvider>().tableModels!.table!) {
+                  if (item.id == value.order!.order![index].tableid) {
+                    tableid.add(item.id!); 
+                  }
                 }
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -116,8 +119,8 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                                                   color: AppTheme.BASE_COLOR),
                                               borderRadius:
                                                   BorderRadius.circular(10)),
-                                          child: const Center(
-                                            child: Text(""),
+                                          child:  Center(
+                                            child: Text("${tableid.first}"),
                                           ),
                                         ),
                                         SizedBox(

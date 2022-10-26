@@ -99,17 +99,14 @@ class _TableBodyState extends State<TableBody> {
                               color: AppTheme.GREEN_COLOR,
                             ),
                           ),
-
-                   
                     Switch(
                       activeColor: AppTheme.GREEN_COLOR,
                       value: value.switchchang,
                       onChanged: (vale) async {
                         if (value.switchchang) {
-                           Mystyle().dialogOpen(context);
-                          
-                        }else{
                           Mystyle().dialogOff(context);
+                        } else {
+                          Mystyle().dialogOpen(context);
                         }
                       },
                     ),

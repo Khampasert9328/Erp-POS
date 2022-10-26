@@ -2,6 +2,7 @@
 
 import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/services/gettable/getalltable/get_all_table.dart';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,8 +17,7 @@ class GetTableAllProvider extends ChangeNotifier {
 
   Future<void> gettableall(BuildContext context) async {
     _isload = true;
-    SharedPreferences pre = await SharedPreferences.getInstance();
-    String? idToken = pre.getString("content");
+    String? idToken = await CountPre().getToken();
 
     _tableModels = await getTable(context, idToken, -1, 0);
     if (_tableModels != null) {

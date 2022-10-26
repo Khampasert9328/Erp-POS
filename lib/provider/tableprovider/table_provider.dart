@@ -1,6 +1,7 @@
 import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/pages/onboardingscreen/models/content_models.dart';
 import 'package:erp_pos/services/gettable/get_table.dart';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,8 +15,7 @@ class GetTableProvider extends ChangeNotifier {
     if (models != null) {
       _tablelist = models.table!;
      for (var item in models.table!) {
-       SharedPreferences preferences = await SharedPreferences.getInstance();
-       preferences.setString("table", item.id!);
+       CountPre().setTableId(item.id!);
      }
       notifyListeners();
     }

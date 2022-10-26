@@ -13,8 +13,8 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 Future<CreateOffSessionModels?> createoffsession(BuildContext context, String id, String closeDate, int cashCount, String userclose, String userName) async {
-  SharedPreferences preferences = await SharedPreferences.getInstance();
-  String? idtoken = preferences.getString("content");
+  
+  String? idtoken =await CountPre().getToken();
  
  
 

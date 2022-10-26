@@ -1,4 +1,3 @@
-
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:erp_pos/model/checkexpiredpackage/check_expired_package.dart';
 import 'package:erp_pos/model/createordermodel/create_order_models.dart';
@@ -17,35 +16,25 @@ class CheckExpiredPackage extends ChangeNotifier {
   List<CheckExpiredPackageMedels> get getchecklist => checkList;
 
   Future<List<CheckExpiredPackageMedels>?> getCheckExpiredPackage(
-    
       BuildContext context) async {
     CheckExpiredPackageMedels? package = await checkExpiredPackage();
 
     if (package != null) {
-      SharedPreferences packageid = await SharedPreferences.getInstance();
-      packageid.setString(CountPre().packageId, package.packageId.toString());
+      CountPre().setPackageId(package.packageId.toString());
+      CountPre().setDateExpired(package.dateExpired.toString());
+      CountPre().setDateSupscribe(package.dateSubscribe.toString());
 
-      SharedPreferences dataexpired = await SharedPreferences.getInstance();
-      dataexpired.setString(
-          CountPre().dateExpired, package.dateExpired.toString());
+      String? startDate = await CountPre().getDateSupscribe();
+    String? endDate = await CountPre().getDateExpired();
 
-      SharedPreferences datesups = await SharedPreferences.getInstance();
-      datesups.setString(
-          CountPre().dateSubscribe, package.dateSubscribe.toString());
+    print("startDate:$startDate");
+    print("endDate:$endDate");
 
       GetPackageModels? getPackageModels = await getPackage();
-      
-
-
-
       if (getPackageModels != null) {
         CreateOrderModels? createOrderModels = await createOrder(context);
         if (createOrderModels != null) {
-          String billid = createOrderModels.billNo!;
-          SharedPreferences pre = await SharedPreferences.getInstance();
-          pre.setString(CountPre().billNo, billid);
-          String? billNo = pre.getString(CountPre().billNo);
-          
+          CountPre().setBillNo(createOrderModels.billNo!);
         }
       }
     }

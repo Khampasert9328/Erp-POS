@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:erp_pos/constant/api_path.dart';
 import 'package:erp_pos/model/createsessoin/create_sessoin_models.dart';
 import 'package:erp_pos/provider/switch/switch_provider.dart';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
@@ -10,8 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 Future<CreateSession?> createSession(int cash, BuildContext context) async {
-  SharedPreferences preferences = await SharedPreferences.getInstance();
-  String? idtoken = preferences.getString("content");
+  String? idtoken = await CountPre().getToken();
   //ວິທີການເເຕກເອົາຂໍ້ມູນໃນ token
   String yourToken = idtoken!;
   Map<String, dynamic> decodedToken = JwtDecoder.decode(yourToken);

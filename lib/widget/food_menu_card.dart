@@ -30,9 +30,10 @@ class FoodMenuCard extends StatelessWidget {
         return Scrollbar(
           child: RefreshIndicator(
             onRefresh: () async{
-              await Future.delayed(Duration(seconds: 2));
-               GetFoodMenuProvider().getProduct(false);
-
+              await Future.delayed(Duration(seconds: 3)).then((value){
+                GetFoodMenuProvider().getProduct(true);
+              });
+               
             },
             key: _refresh,
             child: ListView.builder(

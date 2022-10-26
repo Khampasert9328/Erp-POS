@@ -32,9 +32,14 @@ class AuthenticationProvider extends ChangeNotifier {
   //ສຳລັບລັອກອິນ
   int _isRefreshingToken = 0;
 
-  Future<void> login(String email, String username, String password,
-      BuildContext context, String name, String lastname) async {
-
+  Future<void> login(
+      String email,
+      String username,
+      String password,
+      BuildContext context,
+      String name,
+      String lastname,
+      bool rememberpass) async {
     try {
       showDialog(
           context: context,
@@ -64,14 +69,15 @@ class AuthenticationProvider extends ChangeNotifier {
         if (connectTokenModels != null) {
           //Mystyle().showAlertloadingsuccess(context, "ແຈ້ງເຕືອນ", "ກຳລັງເຂົ້າສູ່ລະບົບ");
           SharedPreferences preferences = await SharedPreferences.getInstance();
-          preferences.setString(
-              "content", connectTokenModels.content!.accessToken!);
-          await Navigator.pushAndRemoveUntil(context,
-              MaterialPageRoute(builder: (_) => const HomePage()), (route) => false);
+          CountPre().setRememberPassword(rememberpass);
+          CountPre().setToken(connectTokenModels.content!.accessToken!);
+          await Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (_) => const HomePage()),
+              (route) => false);
         }
       }
     } catch (e) {
-      Navigator.pop(context);
       Mystyle()
           .dialogError(context, "ເເຈ້ງເຕືອນ", "ກາລຸນາກວດສອບອິນເຕີເນັດຂອງທ່ານ");
     }
@@ -109,10 +115,16 @@ class AuthenticationProvider extends ChangeNotifier {
 
   Future<void> logout(BuildContext context) async {
     SharedPreferences pre = await SharedPreferences.getInstance();
-    pre.clear().then((value) {
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (_) => Login()), (route) => false);
-    });
+    bool? clearFristTime = await CountPre().getLogin();
+    String? saveemail = await CountPre().getemail();
+    await pre.clear();
+    if ((clearFristTime != null)) {
+      if (clearFristTime) {
+        await CountPre().setLogin(clearFristTime);
+      }
+    }
+    Navigator.pushAndRemoveUntil(
+        context, MaterialPageRoute(builder: (_) => Login()), (route) => false);
   }
 
   Future<ConnectTokenModels?> tokenManagement(BuildContext context) async {

@@ -8,13 +8,12 @@ Future<GetPackageModels?> getPackage() async {
   try {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? packageid = preferences.getString(CountPre().packageId);
-    SharedPreferences pre = await SharedPreferences.getInstance();
-    String? idToken = pre.getString("content");
+    String? idtoken = await CountPre().getToken();
 
     var url = '${APIPath.GET_PACKAGE}/$packageid';
     var respones = await http.get(Uri.parse(url), headers: {
       "accept": "text/plain",
-      "Authorization": "Bearer $idToken",
+      "Authorization": "Bearer $idtoken",
     });
     if (respones.statusCode==200) {
       return getPackageModelsFromJson(respones.body);

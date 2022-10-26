@@ -17,163 +17,143 @@ class OrderToTakeHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Consumer<GetFoodMenuProvider>(
-                builder: (context, value, child) {
-                  return ListView.builder(
-                      itemCount: value.getFoodMenuModel.length,
-                      itemBuilder: ((context, index) {
-                        return Column(
+        builder: (context, value, child) {
+          return ListView.builder(
+              itemCount: value.getFoodMenuModel.length,
+              itemBuilder: ((context, index) {
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15, left: 15),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 10.h, horizontal: 20.w),
+                        decoration: BoxDecoration(
+                            color: Color(0xFFF4F5F6),
+                            borderRadius: BorderRadius.circular(7.r)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 15, left: 15),
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10.h, horizontal: 20.w),
-                                decoration: BoxDecoration(
-                                    color: Color(0xFFF4F5F6),
-                                    borderRadius: BorderRadius.circular(7.r)),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 30),
+                                child: Column(
                                   children: [
-                                    Expanded(
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 30),
-                                        child: Column(
-                                          children: [
-                                            CachedNetworkImage(
-                                              imageBuilder:
-                                                  (context, imageProvider) =>
-                                                      Container(
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                    image: DecorationImage(
-                                                        image: imageProvider)),
-                                              ),
-                                              height: 100.h,
-                                              width: 100.w,
-                                              errorWidget:
-                                                  (context, url, error) => Icon(
-                                                      Icons.image_outlined,
-                                                      size: 70,
-                                                      color:
-                                                          AppTheme.GREY_COLOR),
-                                              imageUrl: value
-                                                  .getFoodMenuModel[index]
-                                                  .data
-                                                  .thumbnails!
-                                                  .first
-                                                  .uri!,
-                                              placeholder: (context, url) =>
-                                                  Center(
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  color: AppTheme.BASE_COLOR,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                    CachedNetworkImage(
+                                      imageBuilder: (context, imageProvider) =>
+                                          Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            image: DecorationImage(
+                                                image: imageProvider)),
                                       ),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                value.getFoodMenuModel[index]
-                                                    .data.name!,
-                                                style: TextStyle(
-                                                    fontSize: 16.sp,
-                                                    fontWeight: FontWeight.w700,
-                                                    color: AppTheme.BASE_COLOR),
-                                              ),
-                                              IconButton(
-                                                  onPressed: () async {
-                                                    context
-                                                        .read<
-                                                            GetFoodMenuProvider>()
-                                                        .deleteTotalAmount(value
-                                                            .getFoodMenuModel[
-                                                                index]
-                                                            .totalAmount);
-                                                    context
-                                                        .read<
-                                                            GetFoodMenuProvider>()
-                                                        .deleteData(index);
-                                                  },
-                                                  icon: Image.asset(
-                                                      ERPImages.icondelete)),
-                                            ],
-                                          ),
-                                          Text.rich(
-                                            TextSpan(
-                                                text: 'ລາຄາ ',
-                                                style: TextStyle(
-                                                    fontSize: 14.sp,
-                                                    color: AppTheme.BASE_COLOR),
-                                                children: <InlineSpan>[
-                                                  TextSpan(
-                                                    text:
-                                                        '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(value.getFoodMenuModel[index].totalAmount)} ກີບ',
-                                                    style: TextStyle(
-                                                        fontSize: 14.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )
-                                                ]),
-                                          ),
-                                          AddAmount(),
-                                          SizedBox(
-                                            height: 5.h,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                height: 22.h,
-                                                width: 22.w,
-                                                decoration: BoxDecoration(
-                                                    color: AppTheme.BASE_COLOR,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            2)),
-                                                child: Center(
-                                                  child: Text(
-                                                    "S",
-                                                    style: TextStyle(
-                                                        color: AppTheme
-                                                            .WHITE_COLOR,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                                      height: 100.h,
+                                      width: 100.w,
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.image_outlined,
+                                              size: 70,
+                                              color: AppTheme.GREY_COLOR),
+                                      imageUrl: value.getFoodMenuModel[index]
+                                          .data.thumbnails!.first.uri!,
+                                      placeholder: (context, url) => Center(
+                                        child: CircularProgressIndicator(
+                                          color: AppTheme.BASE_COLOR,
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 15.h,
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        value
+                                            .getFoodMenuModel[index].data.name!,
+                                        style: TextStyle(
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w700,
+                                            color: AppTheme.BASE_COLOR),
+                                      ),
+                                      IconButton(
+                                          onPressed: () async {
+                                            context
+                                                .read<GetFoodMenuProvider>()
+                                                .deleteTotalAmount(value
+                                                    .getFoodMenuModel[index]
+                                                    .totalAmount);
+                                            context
+                                                .read<GetFoodMenuProvider>()
+                                                .deleteData(index);
+                                          },
+                                          icon: Image.asset(
+                                              ERPImages.icondelete)),
+                                    ],
+                                  ),
+                                  Text.rich(
+                                    TextSpan(
+                                        text: 'ລາຄາ ',
+                                        style: TextStyle(
+                                            fontSize: 14.sp,
+                                            color: AppTheme.BASE_COLOR),
+                                        children: <InlineSpan>[
+                                          TextSpan(
+                                            text:
+                                                '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(value.getFoodMenuModel[index].totalAmount)} ກີບ',
+                                            style: TextStyle(
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                        ]),
+                                  ),
+                                  AddAmount(),
+                                  SizedBox(
+                                    height: 5.h,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        height: 22.h,
+                                        width: 22.w,
+                                        decoration: BoxDecoration(
+                                            color: AppTheme.BASE_COLOR,
+                                            borderRadius:
+                                                BorderRadius.circular(2)),
+                                        child: Center(
+                                          child: Text(
+                                            "S",
+                                            style: TextStyle(
+                                                color: AppTheme.WHITE_COLOR,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
-                        );
-                      }));
-                },
-              ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                  ],
+                );
+              }));
+        },
+      ),
     );
   }
 }
