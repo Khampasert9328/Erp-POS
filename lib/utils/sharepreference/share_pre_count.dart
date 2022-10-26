@@ -26,6 +26,16 @@ class CountPre {
   String firstTime ='firstTime';
 
 
+  Future<void> setamount(int val)async{
+    preferences = await SharedPreferences.getInstance();
+    preferences.setInt(namkey, val);
+  }
+  Future<int?> getamount()async{
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getInt(namkey);
+  }
+
+
 Future<void> setLogin(bool val)async{
     preferences = await SharedPreferences.getInstance();
     preferences.setBool(firstTime, val);

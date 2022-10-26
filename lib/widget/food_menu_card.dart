@@ -14,14 +14,25 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constant/theme.dart';
 
-class FoodMenuCard extends StatelessWidget {
+class FoodMenuCard extends StatefulWidget {
+  @override
+  State<FoodMenuCard> createState() => _FoodMenuCardState();
+}
+
+class _FoodMenuCardState extends State<FoodMenuCard> {
   int? number;
+
   Product data = Product();
+
   ERPFoodSize erpFoodSize = ERPFoodSize.Small;
+
   List<Product> listdata = [];
-  final _refresh = GlobalKey<ScaffoldState>();
+
+  final _refresh = GlobalKey<RefreshIndicatorState>();
 
   int add = 0;
+  @override
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +40,8 @@ class FoodMenuCard extends StatelessWidget {
       builder: (context, foodModel, getFoodModel, child) {
         return Scrollbar(
           child: RefreshIndicator(
-            onRefresh: () async{
-              await Future.delayed(Duration(seconds: 3)).then((value){
-                GetFoodMenuProvider().getProduct(true);
-              });
-               
+            onRefresh: () async {
+              GetFoodMenuProvider().getProduct(true);
             },
             key: _refresh,
             child: ListView.builder(
@@ -86,7 +94,8 @@ class FoodMenuCard extends StatelessWidget {
                                 ),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         data.data.name!,
@@ -130,7 +139,8 @@ class FoodMenuCard extends StatelessWidget {
                                     child: IconButton(
                                       onPressed: () async {
                                         SharedPreferences? preferences =
-                                            await SharedPreferences.getInstance();
+                                            await SharedPreferences
+                                                .getInstance();
                                         int? amount = await preferences
                                             .getInt(CountPre().namkey);
                                         int? totalAmount =
@@ -139,8 +149,9 @@ class FoodMenuCard extends StatelessWidget {
                                         getFoodModel.setFoodMenuData(
                                             data.data, amount, totalAmount);
                                         foodModel.increment(add);
-          
-                                        getFoodModel.addTotalAmount(totalAmount);
+
+                                        getFoodModel
+                                            .addTotalAmount(totalAmount);
                                       },
                                       icon: const Icon(
                                         Icons.add_shopping_cart_sharp,
