@@ -54,6 +54,8 @@ Future<ConnectValidateModels?> connectvalidateuser(
       /// ຖ້າບໍ່ມີຜູ້ໃຊ້ໃນລະບົບ
       if (data.code == "USERNAME_NOT_FOUND") {
 
+        print("No user");
+
         AuthenticationProvider().registerUser(context, email, name, lastname);
 
       } else {
@@ -70,7 +72,7 @@ Future<ConnectValidateModels?> connectvalidateuser(
     }
   } catch (e) {
     // Navigator.pop(context);
-    // Mystyle().dialogError(context, "ແຈ້ງເຕືອນ", "ກາລຸນາລອງໃໝ່ອີກຄັ້ງ");
+    Mystyle().dialogError(context, "ແຈ້ງເຕືອນ", "ກາລຸນາລອງໃໝ່ອີກຄັ້ງ");
 
     /// show errr dialog
     rethrow;

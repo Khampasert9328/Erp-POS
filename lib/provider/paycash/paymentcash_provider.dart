@@ -21,17 +21,17 @@ class PaymentCashProvider extends ChangeNotifier {
 
   Future<void> createpaymentcashprovider(
       BuildContext context, int number) async {
-    SharedPreferences pre = await SharedPreferences.getInstance();
-    String? startDate = pre.getString(CountPre().dateSubscribe);
-    String? endDate = pre.getString(CountPre().dateExpired);
+    String? startDate = await CountPre().getDateSupscribe();
+    String? endDate = await CountPre().getDateExpired();
     String? billid = context.read<GetOrderByIssueDateProvider>().billid;
-    String? sessionid = pre.getString(CountPre().sessoinid);
+    String? sessionid = await CountPre().getSessionId();
     int paymenttype = 0;
 
     try {
       isload = true;
       _createPaymentCashModels = await createpaymentcash(
           billid!, number, sessionid!, startDate!, endDate!, paymenttype);
+    
       if (_createPaymentCashModels != null) {
         showDialog(
             context: context,
@@ -67,6 +67,7 @@ class PaymentCashProvider extends ChangeNotifier {
          
       }
     } catch (e) {
+      print("error1:$e");
       return showDialog(
           context: context,
           builder: (_) {

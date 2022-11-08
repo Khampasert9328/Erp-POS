@@ -6,8 +6,9 @@ import '../../../constant/theme.dart';
 class ButtomDialog extends StatelessWidget {
   VoidCallback onPressed;
   String text;
-  
-   ButtomDialog({Key? key, required this.onPressed, required this.text}) : super(key: key);
+
+  ButtomDialog({Key? key, required this.onPressed, required this.text})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +19,13 @@ class ButtomDialog extends StatelessWidget {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             primary: AppTheme.BASE_COLOR,
-              padding: EdgeInsets.symmetric(vertical: 9.h),
-              ),
-          onPressed:onPressed,
+            padding: EdgeInsets.symmetric(vertical: 9.h),
+          ),
+          onPressed: onPressed,
           child: Text(
             text,
             style: TextStyle(
+              fontFamily: "Phetsarath-OT",
               color: Colors.white,
               fontSize: 18.sp,
               fontWeight: FontWeight.w700,

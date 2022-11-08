@@ -14,23 +14,20 @@ class TextContainer extends StatefulWidget {
   TextInputType keyboardType;
   ThousandsFormatter inputFormatters;
 
-  TextContainer({
-    required this.hintext,
-    required this.suffixIcon,
-    required this.controller,
-    this.validator,
-    required this.readOnly,
-    required this.keyboardType,
-    required this.inputFormatters
-  });
+  TextContainer(
+      {required this.hintext,
+      required this.suffixIcon,
+      required this.controller,
+      this.validator,
+      required this.readOnly,
+      required this.keyboardType,
+      required this.inputFormatters});
 
   @override
   State<TextContainer> createState() => _TextContainerState();
 }
 
 class _TextContainerState extends State<TextContainer> {
-  TextEditingController controller = TextEditingController();
- 
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,23 +36,22 @@ class _TextContainerState extends State<TextContainer> {
         border: Border.all(color: AppTheme.WHITE_COLOR),
         borderRadius: BorderRadius.circular(5),
       ),
-      child: Padding(
-        padding: const EdgeInsets.only(
-          left: 20.0,
-        ),
-        child: TextField(
-          inputFormatters: [ThousandsFormatter()],
-          keyboardType: widget.keyboardType,
-          readOnly: widget.readOnly,
-          controller: widget.controller,
-          decoration: InputDecoration(
-            suffixIcon: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(widget.suffixIcon),
+      child: TextField(
+        inputFormatters: [
+          ThousandsFormatter(),
+        ],
+        keyboardType: widget.keyboardType,
+        readOnly: widget.readOnly,
+        controller: widget.controller,
+        decoration: InputDecoration(
+          suffixIcon: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              widget.suffixIcon,
             ),
-            border: InputBorder.none,
-            hintText: widget.hintext,
           ),
+          border: InputBorder.none,
+          hintText: widget.hintext,
         ),
       ),
     );

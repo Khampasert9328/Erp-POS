@@ -8,6 +8,7 @@ import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/app_button.dart';
 import 'package:erp_pos/widget/app_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -51,7 +52,8 @@ class _SignInState extends State<SignIn> {
                   height: 41.h,
                 ),
                 AppTextField(
-               
+                  onEditing: (() => TextInput.finishAutofillContext()),
+                  autofillHints: [AutofillHints.email],
                   controller: email,
                   hintText: 'ອີເມວ',
                   prefixIcon: Icon(
@@ -59,63 +61,66 @@ class _SignInState extends State<SignIn> {
                     color: AppTheme.BASE_COLOR,
                     size: (25.w + 25.h) / 2,
                   ),
-                  validator: RequiredValidator(errorText: 'ກະລຸນາປ້ອນອີເມວກ່ອນ'),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                AppTextField(
-                 
+                  validator: MultiValidator([
+                    RequiredValidator(errorText: 'ກະລຸນາປ້ອນອີເມລກ່ອນ'),
+                    // MinLengthValidator(8,
+                    //     errorText: 'ກະລຸນາປ້ອນລະຫັດຜ່ານໃຫ້ຄົບ 8 ຕົວ'),
+                  ])),
+
+                  SizedBox(height: 10.h,),
+                  AppTextField(
+                  
+                    onEditing: (() => TextInput.finishAutofillContext()),
+                    autofillHints: [AutofillHints.password],
                     obscureText: true,
-                    hintText: 'ລະຫັດຜ່ານ',
-                    controller: password,
-                    prefixIcon: Icon(
-                      Icons.key,
-                      color: AppTheme.BASE_COLOR,
-                      size: (25.w + 25.h) / 2,
+               keyboardType: TextInputType.text,
+                  controller: password,
+                  hintText: 'ລະຫັດຜ່ານ',
+                
+                  prefixIcon: Icon(
+                    Icons.vpn_key,
+                    color: AppTheme.BASE_COLOR,
+                    size: (25.w + 25.h) / 2,
+                  ),
+                  validator: MultiValidator([
+                    RequiredValidator(errorText: 'ກະລຸນາປ້ອນລະຫັດຜ່ານກ່ອນ'),
+                    // MinLengthValidator(8,
+                    //     errorText: 'ກະລຸນາປ້ອນລະຫັດຜ່ານໃຫ້ຄົບ 8 ຕົວ'),
+                  ])),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Checkbox(
+                    value: rememberpassword,
+                    onChanged: (value) {
+                      setState(() {
+                        rememberpassword = value!;
+                      });
+                    },
+                  ),
+                  Text(
+                    "ຈື່ລະຫັດຜ່ານ",
+                    style: TextStyle(
+                      fontFamily: 'Phetsarath-OT',
+                      fontSize: 16.sp,
                     ),
-                    validator: MultiValidator([
-                      RequiredValidator(errorText: 'ກະລຸນາປ້ອນລະຫັດຜ່ານກ່ອນ'),
-                      // MinLengthValidator(8,
-                      //     errorText: 'ກະລຸນາປ້ອນລະຫັດຜ່ານໃຫ້ຄົບ 8 ຕົວ'),
-                    ])),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Checkbox(
-                      value: rememberpassword,
-                      onChanged: (value) {
-                        setState(() {
-                          rememberpassword = value!;
-                        });
-                      },
-                    ),
-                    Text(
-                      "ຈື່ລະຫັດຜ່ານ",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                      ),
-                    )
-                  ],
-                ),
-                AppButton(
-                    text: 'ເຂົ້າສູ່ລະບົບ',
-                    onPressed: () async {
-                      if (formKey.currentState!.validate()) {
-                        AuthenticationProvider().login(email.text, password.text,
-                            password.text, context, "", "", rememberpassword);
-                        CountPre().setEmail(email.text);
-                        
-                      }
-                       
-                    }),
-          
+                  )
+                ],
+              ),
+              AppButton(
+                  text: 'ເຂົ້າສູ່ລະບົບ',
+                  onPressed: () async {
                    
-              ],
-            ),
+                    if (formKey.currentState!.validate()) {
+                      AuthenticationProvider().login(email.text, password.text,
+                          password.text, context, "", "", rememberpassword);
+                           CountPre().setEmail(email.text);
+                    }
+                  })
+            ],
           ),
         ),
       ),
-    );
+    ));
   }
 }

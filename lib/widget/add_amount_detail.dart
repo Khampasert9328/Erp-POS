@@ -38,6 +38,7 @@ class _AddAmountDetaitState extends State<AddAmountDetait> {
         Text(
           widget.title ?? 'ຈຳນວນ',
           style: TextStyle(
+            fontFamily: 'Phetsarath-OT',
             fontSize: 14.sp,
             color: AppTheme.BASE_COLOR,
           ),

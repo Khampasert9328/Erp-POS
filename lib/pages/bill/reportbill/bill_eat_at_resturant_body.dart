@@ -5,8 +5,10 @@ import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/getorderbyissuedate/get_order_by_isuedatemodels.dart';
 import 'package:erp_pos/model/getorderbylistid/get_order_by_list_id_models.dart';
 import 'package:erp_pos/pages/bill/detail/bill_detail.dart';
+import 'package:erp_pos/pages/bill/detail/body_detail_bill.dart';
 import 'package:erp_pos/provider/getorderbyissuedate/get_order_by_issuedate_provider.dart';
 import 'package:erp_pos/provider/gettableall/get_table_all_provider.dart';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +25,7 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
   void initState() {
     super.initState();
     context.read<GetOrderByIssueDateProvider>().getorderfromservice(context);
+    context.read<GetTableAllProvider>().gettableall(context);
   }
 
   @override
@@ -53,10 +56,11 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                     // print("prefix:${i.prefixid}");
                   }
                 }
-                List<String> tableid =[];
+                List<String> table =[];
                 for (var item in context.read<GetTableAllProvider>().tableModels!.table!) {
                   if (item.id == value.order!.order![index].tableid) {
-                    tableid.add(item.id!); 
+                    table.add(item.name!);
+                    CountPre().setNameTable(item.name!);
                   }
                 }
                 return Padding(
@@ -68,7 +72,7 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => const BillDetail(),
+                              builder: (_) => BodyDetailBill(dataorder: value.order,)
                             ),
                           );
                         },
@@ -103,6 +107,7 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                                           height: 26.h,
                                           width: 4.w,
                                           decoration: BoxDecoration(
+                                          //  color: AppTheme.GREEN_COLOR,
                                               border: Border.all(
                                                   color: AppTheme.BASE_COLOR),
                                               borderRadius:
@@ -118,9 +123,9 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                                               border: Border.all(
                                                   color: AppTheme.BASE_COLOR),
                                               borderRadius:
-                                                  BorderRadius.circular(10)),
+                                                  BorderRadius.circular(5)),
                                           child:  Center(
-                                            child: Text("${tableid.first}"),
+                                            child: Text("${table.first}"),
                                           ),
                                         ),
                                         SizedBox(
@@ -155,13 +160,19 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                               Expanded(
                                 child: ListTile(
                                   title: Text(
-                                    "# Order ${prefix.first}",
+                                    "ໂຕະ ${table.first}",
+                                    style: TextStyle(
+                                      fontSize: 18.sp,
+                                      color: AppTheme.BASE_COLOR,
+                                      fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+                                  subtitle:  Text("# Order ${prefix.first}",
                                     style: TextStyle(
                                       fontSize: 13.sp,
                                       color: AppTheme.BASE_COLOR,
-                                    ),
-                                  ),
-                                  subtitle: const Text(""),
+                              
+                                    ),),
                                 ),
                               ),
                               Padding(

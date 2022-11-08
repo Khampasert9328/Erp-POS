@@ -3,6 +3,7 @@
 import 'package:badges/badges.dart';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/model/getorderbyissuedate/get_order_by_isuedatemodels.dart';
 import 'package:erp_pos/pages/bill/detail/body_detail_bill.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/widget/bottombar_of_bill.dart';
@@ -11,8 +12,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class BillDetail extends StatelessWidget {
-  const BillDetail({super.key});
+class BillDetail extends StatefulWidget {
+ GetOrderByIssuedateModels? dataorder;
+
+   BillDetail({super.key, required this.dataorder});
+
+  @override
+  State<BillDetail> createState() => _BillDetailState();
+}
+
+class _BillDetailState extends State<BillDetail> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +32,7 @@ class BillDetail extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          "ເລກໂຕະ 000",
+          "ເລກໂຕະ ",
           style: TextStyle(
             color: AppTheme.BASE_COLOR,
             fontWeight: FontWeight.bold,
@@ -29,7 +40,7 @@ class BillDetail extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: const BottomBarOfBill(),
-      body: const BodyDetailBill()
+      body:  BodyDetailBill(dataorder:widget.dataorder ,)
     );
   }
 }

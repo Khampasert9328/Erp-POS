@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:erp_pos/bussiness%20logic/authentication.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/model/generateqrmmoney/generateqrmmoney.dart';
 import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/pages/Dasboard/dasboard.dart';
 import 'package:erp_pos/pages/homepage/homepage.dart';
@@ -14,10 +15,12 @@ import 'package:erp_pos/provider/confirmpaymentbybcel/confirmpaymentbybcel_provi
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/provider/generateQR/generate_qr_bcelone_provider.dart';
+import 'package:erp_pos/provider/generateqrmmoney/generate_qr_mmoney_provider.dart';
 import 'package:erp_pos/provider/getorderbyissuedate/get_order_by_issuedate_provider.dart';
 import 'package:erp_pos/provider/gettableall/get_table_all_provider.dart';
 import 'package:erp_pos/provider/offsession/create_off_session_provider.dart';
 import 'package:erp_pos/provider/paycash/paymentcash_provider.dart';
+import 'package:erp_pos/provider/printbill/print_bill.dart';
 import 'package:erp_pos/provider/sessoin/get_session_provider.dart';
 import 'package:erp_pos/provider/switch/switch_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
@@ -67,7 +70,9 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (_)=>SwitchProvider()),
             ChangeNotifierProvider(create: (_)=>GetTableAllProvider()),
             ChangeNotifierProvider(create: (_)=>PaymentCashProvider()),
-            ChangeNotifierProvider(create: (_)=>ConfirmPaymentByBCELONE())
+            ChangeNotifierProvider(create: (_)=>ConfirmPaymentByBCELONE()),
+            ChangeNotifierProvider(create: (_)=>PrintBill()),
+            ChangeNotifierProvider(create: (_)=>GenerateQrMmoneyProvider())
           ],
           child: MaterialApp(
             theme: ThemeData(

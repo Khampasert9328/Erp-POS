@@ -23,10 +23,10 @@ class FoodMenuSize extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(3.r),
-              color: model.getlistProduct[index].size == size ? AppTheme.BASE_COLOR : Colors.white,
+              color: model.getlistProduct[index].size == size ? AppTheme.YELLOW_COLOR : Colors.white,
               border: Border.all(
                   color:
-                  model.getlistProduct[index].size == size ? AppTheme.BASE_COLOR : Color(0xFFD9D9D9))),
+                  model.getlistProduct[index].size == size ? AppTheme.YELLOW_COLOR : Color(0xFFD9D9D9))),
           child: Text(
             title,
             style: TextStyle(

@@ -101,6 +101,7 @@ class OrderToTakeHome extends StatelessWidget {
                                     TextSpan(
                                         text: 'ລາຄາ ',
                                         style: TextStyle(
+                                           fontFamily: 'Phetsarath-OT',
                                             fontSize: 14.sp,
                                             color: AppTheme.BASE_COLOR),
                                         children: <InlineSpan>[
@@ -108,6 +109,7 @@ class OrderToTakeHome extends StatelessWidget {
                                             text:
                                                 '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(value.getFoodMenuModel[index].totalAmount)} ກີບ',
                                             style: TextStyle(
+                                                fontFamily: 'Phetsarath-OT',
                                                 fontSize: 14.sp,
                                                 fontWeight: FontWeight.bold),
                                           )

@@ -23,18 +23,16 @@ class CheckExpiredPackage extends ChangeNotifier {
       CountPre().setPackageId(package.packageId.toString());
       CountPre().setDateExpired(package.dateExpired.toString());
       CountPre().setDateSupscribe(package.dateSubscribe.toString());
-
-      String? startDate = await CountPre().getDateSupscribe();
-    String? endDate = await CountPre().getDateExpired();
-
-    print("startDate:$startDate");
-    print("endDate:$endDate");
-
       GetPackageModels? getPackageModels = await getPackage();
+
+   
+      CountPre().setDateSupscribe(package.dateSubscribe.toString());
       if (getPackageModels != null) {
         CreateOrderModels? createOrderModels = await createOrder(context);
+        print("create order:$createOrderModels");
         if (createOrderModels != null) {
           CountPre().setBillNo(createOrderModels.billNo!);
+          CountPre().setBillId(createOrderModels.billId!);
         }
       }
     }

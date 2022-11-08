@@ -31,6 +31,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
       });
     });
   }
+
   bool chang = false;
   @override
   Widget build(BuildContext context) {
@@ -66,6 +67,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                   fontSize: 20.sp,
                   color: AppTheme.BASE_COLOR,
                   fontWeight: FontWeight.bold,
+                  fontFamily: 'Phetsarath-OT',
                 ),
               ),
             ),
@@ -80,6 +82,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                     child: Text(
                       "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ",
                       style: TextStyle(
+                          fontFamily: 'Phetsarath-OT',
                           fontSize: 20.sp,
                           fontWeight: FontWeight.bold,
                           color: AppTheme.RED_COLOR),
@@ -137,11 +140,12 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                     ConfirmPaymentByBCELONE().confirmbcelone(context);
                   },
                   child: Text(
-                    "ຢືນຢິນການຊຳລະ",
+                    "ຢືນຢັນການຊຳລະ",
                     style: TextStyle(
                       color: AppTheme.WHITE_COLOR,
                       fontSize: 16.sp,
-                      fontWeight: FontWeight.bold
+                      fontFamily: 'Phetsarath-OT',
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),

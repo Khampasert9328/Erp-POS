@@ -10,7 +10,7 @@ class FoodMenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 30.h,
-      width: 20.w,
+      width: 30.w,
       decoration: BoxDecoration(
           border: Border.all(color: AppTheme.BASE_COLOR),
           shape: BoxShape.circle),

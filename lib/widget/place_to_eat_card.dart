@@ -49,7 +49,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
       length: 2,
       child: Scaffold(
         bottomNavigationBar: Container(
-          height: 70.h,
+          height: 100.h,
           child: BottomAppBar(
             child: Padding(
               padding: const EdgeInsets.only(right: 10, left: 10),
@@ -75,6 +75,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                               fontSize: 16.sp,
                               fontWeight: FontWeight.bold,
                               color: AppTheme.BASE_COLOR,
+                               fontFamily: 'Phetsarath-OT',
                             ),
                           ),
                         ],
@@ -91,10 +92,8 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                         Mystyle().showDialogCheckData(
                             context, "ກາລຸນາກວດສອບອໍເດີຂອງທ່ານກ່ອນ");
                       } else {
-                        SharedPreferences pre =
-                            await SharedPreferences.getInstance();
-                        String? getidtable =
-                            pre.getString(CountPre().tablename);
+                        String? tablename = await CountPre().getTableName();
+                            
 
                         await CheckExpiredPackage()
                             .getCheckExpiredPackage(context)
@@ -143,7 +142,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                             await SunmiPrinter.printRow(cols: [
                               ColumnMaker(text: 'ເລກໂຕະ', width: 6),
                               ColumnMaker(
-                                  text: '${getidtable ?? "ສັ່ງກັບບ້ານ"}',
+                                  text: '${tablename ?? "ສັ່ງກັບບ້ານ"}',
                                   width: 6,
                                   align: SunmiPrintAlign.RIGHT),
                             ]);
@@ -187,7 +186,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                           context,
                           MaterialPageRoute(
                             builder: (_) => CalculateMoney(
-                              tablename: getidtable ?? "ບໍ່ມີໂຕະ",
+                              tablename: tablename ?? "ບໍ່ມີໂຕະ",
                             ),
                           ),
                         );
@@ -207,6 +206,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                           Text(
                             "ສົ່ງຫ້ອງຄົວ",
                             style: TextStyle(
+                               fontFamily: 'Phetsarath-OT',
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.bold,
                                 color: AppTheme.WHITE_COLOR),
@@ -228,13 +228,13 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                 height: 10.h,
               ),
               TabBar(
-                controller: controller,
                 indicatorPadding: EdgeInsets.only(left: 10.0, right: 10.0),
                 indicatorWeight: 3.0,
                 indicatorColor: AppTheme.BASE_COLOR,
                 labelColor: Colors.black,
                 labelStyle: TextStyle(
                   fontSize: 18.sp,
+                   fontFamily: 'Phetsarath-OT',
                 ),
                 tabs: const [
                   Tab(

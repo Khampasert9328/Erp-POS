@@ -1,8 +1,9 @@
-// ignore_for_file: sized_box_for_whitespace
+// ignore_for_file: sized_box_for_whitespace, prefer_const_literals_to_create_immutables
 
 import 'package:erp_pos/bussiness%20logic/authentication.dart';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/model/getsesion/get_sessoin_models.dart';
 import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/pages/table/components/buttom_dialog.dart';
 import 'package:erp_pos/pages/table/components/card_item.dart';
@@ -42,6 +43,24 @@ class _TableBodyState extends State<TableBody> {
   bool isWitch = false;
   bool changScreen = true;
   bool isButton = false;
+  int? status;
+  bool switcstatus = false;
+
+  @override
+  void initState() {
+    CountPre().getStatus().then((value) async {
+      status = await CountPre().getStatus();
+      print("status:$status");
+  
+      if (status == 0) {
+         context.read<SwitchProvider>().changSwitch(true);
+      }else{
+        context.read<SwitchProvider>().changSwitch(false);
+      }
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +75,7 @@ class _TableBodyState extends State<TableBody> {
             fontFamily: "Phetsarath-OT",
             color: AppTheme.BASE_COLOR,
             fontWeight: FontWeight.bold,
-            fontSize: 25.sp,
+            fontSize: 21.sp,
           ),
         ),
         actions: [
@@ -74,15 +93,12 @@ class _TableBodyState extends State<TableBody> {
         padding: const EdgeInsets.only(left: 10, right: 10),
         child: Column(
           children: [
-            SizedBox(
-              height: 15.h,
-            ),
             Consumer<SwitchProvider>(
               builder: ((context, value, child) {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    !value.switchchang
+                    !switcstatus
                         ? Text(
                             "ປິດຮ້ານ",
                             style: TextStyle(
@@ -129,38 +145,7 @@ class _TableBodyState extends State<TableBody> {
                 ? Expanded(
                     child: Column(
                       children: [
-                        Row(
-                          children: [
-                            SearchTable(),
-                            IconButton(
-                              onPressed: () {
-                                //todo
-                                Mystyle().dialogbuttom(context);
-                              },
-                              icon: Image.asset(
-                                ERPImages.area,
-                                width: 21.w,
-                                height: 21.h,
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                //todo
-                              },
-                              icon: Image.asset(
-                                ERPImages.search,
-                                width: 21.w,
-                                height: 21.h,
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        const Expanded(
-                          child: ListViewTable(),
-                        ),
+                        ListViewTable(),
                       ],
                     ),
                   )
@@ -170,7 +155,7 @@ class _TableBodyState extends State<TableBody> {
                       "ກາລຸນາເປີດກະກ່ອນ",
                       style: TextStyle(
                         fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Phetsarath-OT',
                       ),
                     ),
                   ),

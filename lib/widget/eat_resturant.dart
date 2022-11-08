@@ -21,6 +21,7 @@ class _EatResturantState extends State<EatResturant> {
   bool selectindex = true;
   bool selecbutton = false;
   int? selectTable = 0;
+  int? selectIndex = 0;
 
   int? isselect = 0;
   String? idtable;
@@ -29,116 +30,93 @@ class _EatResturantState extends State<EatResturant> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: SizedBox(
-                height: 50.h,
-                width: double.infinity,
-                child: FutureBuilder<List<Area>>(
-                  future: AreaProvider().getZone(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Consumer<AreaProvider>(
-                        builder: ((context, model, _) {
-                          return ListView.builder(
-                              physics: const ScrollPhysics(),
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (context, index) {
-                                String? id = snapshot.data![index].id ?? "";
-
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+        SizedBox(
+          height: 50.h,
+          width: double.infinity,
+          child: FutureBuilder<List<Area>>(
+            future: AreaProvider().getZone(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Consumer<AreaProvider>(
+                  builder: ((context, model, _) {
+                    return ListView.builder(
+                        physics: ScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          String? id = snapshot.data![index].id ?? "";
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
                                   children: [
-                                    Expanded(
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          selectIndex = index;
+                                          idtable = id;
+                                        });
+                                      },
                                       child: Column(
                                         children: [
-                                          GestureDetector(
-                                            onTap: () async {
-                                              setState(() {
-                                                isselect = index;
-                                                idtable = id;
-                                              });
-                                              SharedPreferences preferences =
-                                                  await SharedPreferences
-                                                      .getInstance();
-                                              preferences.setString(
-                                                  CountPre().idzone,
-                                                  snapshot.data![index].area!);
-                                              CountPre().setTableId(
-                                                  idtable.toString());
-                                            },
-                                            child: Column(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                    right: 8,
-                                                  ),
-                                                  child: Container(
-                                                    height: 40.h,
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                      horizontal: 15.w,
-                                                    ),
-                                                    decoration: BoxDecoration(
-                                                        color: isselect == index
-                                                            ? AppTheme
-                                                                .BASE_COLOR
-                                                            : AppTheme
-                                                                .WHITE_COLOR,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5),
-                                                        border: Border.all(
-                                                            color: AppTheme
-                                                                .BASE_COLOR)),
-                                                    child: Center(
-                                                      child: Text(
-                                                        snapshot
-                                                            .data![index].area!,
-                                                        style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 18.sp,
-                                                          color: isselect ==
-                                                                  index
-                                                              ? AppTheme
-                                                                  .WHITE_COLOR
-                                                              : AppTheme
-                                                                  .GREY_COLOR,
-                                                        ),
-                                                      ),
-                                                    ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              right: 8,
+                                            ),
+                                            child: Container(
+                                              height: 40.h,
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 15.w,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                  color: selectIndex == index
+                                                      ? AppTheme.BASE_COLOR
+                                                      : AppTheme.WHITE_COLOR,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  border: Border.all(
+                                                      color:
+                                                          AppTheme.BASE_COLOR)),
+                                              child: Center(
+                                                child: Text(
+                                                  snapshot.data![index].area!,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18.sp,
+                                                    color: selectIndex == index
+                                                        ? AppTheme.WHITE_COLOR
+                                                        : Colors.grey,
                                                   ),
                                                 ),
-                                              ],
+                                              ),
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
                                   ],
-                                );
-                              });
-                        }),
-                      );
-                    }
-                    return const SizedBox();
-                  },
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                            ],
+                          );
+                        });
+                  }),
+                );
+              }
+              return Center(
+                child: CircularProgressIndicator(
+                  color: AppTheme.BASE_COLOR,
                 ),
-              ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 10.h,
+              );
+            },
+          ),
         ),
         const NavBarStatusBooking(),
         SizedBox(
@@ -155,65 +133,113 @@ class _EatResturantState extends State<EatResturant> {
                       crossAxisCount: 2,
                       childAspectRatio: (0.8 / .4),
                       shrinkWrap: true,
+                      crossAxisSpacing: 5.0,
+                      mainAxisSpacing: 10.0,
                       children: List.generate(snapshot.data!.length, (index) {
                         return GestureDetector(
-                          onTap: (() async {
-                            SharedPreferences preferences =
-                                await SharedPreferences.getInstance();
-                            preferences.setString(
-                                CountPre().tableid, snapshot.data![index].id!);
-                            preferences.setString(CountPre().tablename,
-                                snapshot.data![index].name!);
+                          onTap: (() {
+                            bool clicktable = true;
+                            CountPre().setClickTable(clicktable);
+                            CountPre()
+                                .setTableName(snapshot.data![index].name!);
+
+                            setState(() {
+                              selectTable = index;
+                            });
                           }),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: GestureDetector(
-                              onTap: (() {
-                                setState(() {
-                                  selectTable = index;
-                                });
-                              }),
-                              child: Container(
-                                color: selectTable == index
-                                    ? AppTheme.BASE_COLOR
-                                    : AppTheme.GREY_COLOR,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 10.h,
+                                width: 130.w,
+                                decoration: BoxDecoration(
+                                    border:
+                                        Border.all(color: AppTheme.BASE_COLOR),
+                                    borderRadius: BorderRadius.circular(10)),
+                              ),
+                              SizedBox(
+                                height: 5.h,
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                    height: 50.h,
+                                    width: 10.w,
+                                    decoration: BoxDecoration(
+                                        color: AppTheme.GREEN_COLOR,
+                                        border: Border.all(
+                                            color: AppTheme.BASE_COLOR),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                  ),
+                                  SizedBox(
+                                    width: 3.w,
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                        height: 70.h,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                            color: selectTable == index
+                                                ? AppTheme.BASE_COLOR
+                                                : AppTheme.GREY_COLOR,
+                                            border: Border.all(
+                                                color: AppTheme.BASE_COLOR),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Stack(
+                                          alignment: Alignment.topRight,
+                                          children: [
+                                            selectTable == index
+                                                ? Icon(
+                                                    Icons.check_circle,
+                                                    color: AppTheme.WHITE_COLOR,
+                                                  )
+                                                : SizedBox(),
+                                            Center(
+                                              child: Text(
+                                                snapshot.data![index].name!,
+                                                style: TextStyle(
+                                                  color: selectTable == index
+                                                      ? AppTheme.WHITE_COLOR
+                                                      : AppTheme.BASE_COLOR,
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        )),
+                                  ),
+                                  SizedBox(
+                                    width: 3.w,
+                                  ),
+                                  Container(
+                                    height: 50.h,
+                                    width: 10.w,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: AppTheme.BASE_COLOR),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 3.h,
+                              ),
+                              Expanded(
                                 child: Container(
-                                  padding: const EdgeInsets.all(16),
+                                  height: 10.h,
+                                  width: 130.w,
                                   decoration: BoxDecoration(
-                                    border: Border(
-                                      left: BorderSide(
-                                        color: selectTable == index
-                                            ? AppTheme.GREEN_COLOR
-                                            : AppTheme.GREEN_COLOR,
-                                        width: 15,
-                                      ),
-                                    ),
-                                  ),
-                                  child: Stack(
-                                    alignment: AlignmentDirectional.topEnd,
-                                    children: [
-                                      selectTable == index
-                                          ? Icon(
-                                              Icons.check_circle,
-                                              color: AppTheme.WHITE_COLOR,
-                                            )
-                                          : SizedBox(),
-                                      Center(
-                                        child: Text(
-                                          snapshot.data![index].name!,
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                              color: selectTable == index
-                                                  ? AppTheme.WHITE_COLOR
-                                                  : AppTheme.BASE_COLOR),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                      border: Border.all(
+                                          color: AppTheme.BASE_COLOR),
+                                      borderRadius: BorderRadius.circular(10)),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
                         );
                       }),

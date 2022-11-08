@@ -28,6 +28,7 @@ class _SearchTableState extends State<SearchTable> {
                 border: InputBorder.none,
                 hintText: 'ຄົ້ນຫາໂຕະ',
                 hintStyle: TextStyle(
+                  fontFamily: 'Phetsarath-OT',
                   fontSize: 15.sp,
                 )),
           ),

@@ -6,6 +6,7 @@ import 'package:erp_pos/pages/food_menu/components/food_menu_body.dart';
 import 'package:erp_pos/pages/food_menu/food_menu.dart';
 import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/pages/table/components/textdate.dart';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/food_menu_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,8 +52,14 @@ class _TableDetailState extends State<TableDetail> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   onPressed: () {
+                    bool clicktable = true;
+                    CountPre().setClickTable(clicktable);
                     Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => FoodMenu()));
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => FoodMenu(),
+                      ),
+                    );
                   },
                   label: Text(
                     "ສັ່ງອາຫານ",
@@ -70,44 +77,44 @@ class _TableDetailState extends State<TableDetail> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            SizedBox(
-              height: 25.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                isWitch == true
-                    ? const Text(
-                        "ເປິດໂຕະ",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                    : const Text(
-                        "ປິດໂຕະ",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                Switch(
-                  activeColor: AppTheme.GREEN_COLOR,
-                  value: isWitch,
-                  onChanged: (vale) {
-                    if (isWitch == true) {
-                      setState(() {
-                        isWitch = vale;
-                      });
-                    } else {
-                      setState(() {
-                        isWitch = vale;
-                      });
-                    }
-                  },
-                ),
-              ],
-            ),
+            // SizedBox(
+            //   height: 25.h,
+            // ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.end,
+            //   children: [
+            //     isWitch == true
+            //         ? const Text(
+            //             "ເປິດໂຕະ",
+            //             style: TextStyle(
+            //               fontSize: 18,
+            //               fontWeight: FontWeight.bold,
+            //             ),
+            //           )
+            //         : const Text(
+            //             "ປິດໂຕະ",
+            //             style: TextStyle(
+            //               fontSize: 18,
+            //               fontWeight: FontWeight.bold,
+            //             ),
+            //           ),
+            //     Switch(
+            //       activeColor: AppTheme.GREEN_COLOR,
+            //       value: isWitch,
+            //       onChanged: (vale) {
+            //         if (isWitch == true) {
+            //           setState(() {
+            //             isWitch = vale;
+            //           });
+            //         } else {
+            //           setState(() {
+            //             isWitch = vale;
+            //           });
+            //         }
+            //       },
+            //     ),
+            //   ],
+            // ),
             SizedBox(
               height: 25.h,
             ),
@@ -115,108 +122,77 @@ class _TableDetailState extends State<TableDetail> {
                 ? Column(
                     children: [
                       Center(
-                        child: Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 14.h,
-                                width: 80.w,
-                                decoration: BoxDecoration(
-                                  color: AppTheme.GREY_COLOR,
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(
-                                    color: AppTheme.BASE_COLOR,
-                                    width: 2,
-                                  ),
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height: 50.h,
-                                    width: 14.w,
-                                    decoration: BoxDecoration(
-                                      color: AppTheme.GREY_COLOR,
-                                      borderRadius: BorderRadius.circular(5),
+                          child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 10.h,
+                              width: 110.w,
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: AppTheme.BASE_COLOR),
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                            SizedBox(
+                              height: 5.h,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: 40.h,
+                                  width: 10.w,
+                                  decoration: BoxDecoration(
                                       border: Border.all(
-                                        color: AppTheme.BASE_COLOR,
-                                        width: 2,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 70.h,
-                                    width: 100.w,
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(
-                                        side: BorderSide(
-                                            color: AppTheme.BASE_COLOR,
-                                            width: 2),
-                                      ),
-                                      color: AppTheme.CARD_COLOR,
-                                      child: ClipPath(
-                                        child: Container(
-                                          padding: const EdgeInsets.all(16),
-                                          decoration: BoxDecoration(
-                                            //  borderRadius: BorderRadius.only(topRight: Radius.circular(10)),
-                                            border: Border(
-                                              left: BorderSide(
-                                                color: AppTheme.GREEN_COLOR,
-                                                width: 15,
-                                              ),
-                                            ),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              widget.data!.name!,
-                                              style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        ),
-                                        clipper: ShapeBorderClipper(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                              3,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 50.h,
-                                    width: 14.w,
-                                    decoration: BoxDecoration(
-                                      color: AppTheme.GREY_COLOR,
-                                      borderRadius: BorderRadius.circular(5),
-                                      border: Border.all(
-                                        color: AppTheme.BASE_COLOR,
-                                        width: 2,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                height: 14.h,
-                                width: 80.w,
-                                decoration: BoxDecoration(
-                                  color: AppTheme.GREY_COLOR,
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(
-                                    color: AppTheme.BASE_COLOR,
-                                    width: 2,
-                                  ),
+                                          color: AppTheme.BASE_COLOR),
+                                      borderRadius: BorderRadius.circular(10)),
                                 ),
-                              ),
-                            ],
-                          ),
+                                SizedBox(
+                                  width: 5.w,
+                                ),
+                                Container(
+                                  height: 70.h,
+                                  width: 130.w,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: AppTheme.BASE_COLOR),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Center(
+                                      child: Text(
+                                    widget.data!.name!,
+                                    style: TextStyle(
+                                      fontSize: 18.sp,
+                                    ),
+                                  )),
+                                ),
+                                SizedBox(
+                                  width: 5.w,
+                                ),
+                                Container(
+                                  height: 40.h,
+                                  width: 10.w,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: AppTheme.BASE_COLOR),
+                                      borderRadius: BorderRadius.circular(10)),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5.h,
+                            ),
+                            Container(
+                              height: 10.h,
+                              width: 110.w,
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: AppTheme.BASE_COLOR),
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                          ],
                         ),
-                      ),
+                      )),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -256,7 +232,6 @@ class _TableDetailState extends State<TableDetail> {
                           ),
                         ],
                       ),
-                    
                     ],
                   )
                 : Image.asset(ERPImages.offtable)

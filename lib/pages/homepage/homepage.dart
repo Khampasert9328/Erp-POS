@@ -37,15 +37,23 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: AppTheme.WHITE_COLOR,
             color: AppTheme.BASE_COLOR,
             activeColor: AppTheme.WHITE_COLOR,
+            iconSize: 28,
+            textStyle: TextStyle(
+              color: Colors.white,
+              fontFamily: 'Phetsarath-OT',
+            ),
             tabBackgroundColor: AppTheme.BASE_COLOR,
             padding: EdgeInsets.all(16.0),
             onTabChange: (int index) {
               _onItemTapped(index);
             },
+            //style: text(
+            //fontFamily: 'NotoSansLao-Regular',
+            //),
             tabs: const [
               GButton(
-                icon:  Icons.table_bar,
-                text: 'ໂຕະ',
+                icon: Icons.table_bar,
+                text: 'ໂຕ໋ະ',
               ),
               GButton(
                 icon: Icons.local_dining,

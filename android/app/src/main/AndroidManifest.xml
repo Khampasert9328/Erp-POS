@@ -2,7 +2,7 @@
     package="com.example.erp_pos">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="erp_pos"
+        android:label="ໜ້າຮ້ານPOS"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

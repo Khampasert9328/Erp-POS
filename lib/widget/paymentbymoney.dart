@@ -5,17 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class PaymentMmoney extends StatefulWidget {
   final tablename;
-  const PaymentMmoney({Key? key, required this.tablename}) : super(key: key);
+  final qrdata;
+  const PaymentMmoney({Key? key, required this.tablename, required this.qrdata}) : super(key: key);
 
   @override
   State<PaymentMmoney> createState() => _PaymentMmoneyState();
 }
+
 DateTime time = DateTime.now();
 final timenow = DateFormat('HH:mm').format(time);
+
 class _PaymentMmoneyState extends State<PaymentMmoney> {
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +55,7 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
                   fontSize: 20.sp,
                   color: AppTheme.BASE_COLOR,
                   fontWeight: FontWeight.bold,
+                   fontFamily: 'Phetsarath-OT',
                 ),
               ),
             ),
@@ -59,55 +65,12 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
               ),
               child: Column(
                 children: [
-                  Stack(
-                    children: [
-                      Container(
-                        height: 63.h,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: AppTheme.RED_COLOR,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "ຊື່ຮ້ານ:",
-                                      style: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppTheme.WHITE_COLOR,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 15.w,
-                                    ),
-                                    Text(
-                                      "Xaiy",
-                                      style: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppTheme.WHITE_COLOR,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
                       "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ",
                       style: TextStyle(
+                          fontFamily: 'Phetsarath-OT',
                           fontSize: 20.sp,
                           fontWeight: FontWeight.bold,
                           color: AppTheme.RED_COLOR),
@@ -115,14 +78,21 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
                   ),
                   //ສຳລັບ generate code
                   Container(
-                    height: 226.h,
+                    height: 228.h,
                     width: 228.w,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                      color: AppTheme.BASE_COLOR,
-                    )),
-                    child: Image.asset(
-                      ERPImages.mmoney,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                      widget.qrdata.isEmpty
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : QrImage(
+                                data: widget.qrdata,
+                                version: QrVersions.auto,
+                                size: 200.0,
+                              ),
+                      ],
                     ),
                   ),
                   ///////////////////////////////////////////

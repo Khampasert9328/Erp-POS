@@ -1,4 +1,5 @@
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:erp_pos/pages/table/components/listview_table.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,6 +25,76 @@ class CountPre {
   String billid = 'billid';
   String email = "email";
   String firstTime ='firstTime';
+  String status = 'status';
+  String nametable='nametable';
+  String clicktable = 'clicktable';
+  String count = "count";
+  String idarea = 'idarea';
+
+  Future<void> setAreaId(String val)async{
+    preferences = await SharedPreferences.getInstance();
+    preferences.setString(idarea, val);
+  }
+  Future<String?> getAreaId()async{
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getString(idarea);
+  }
+
+  Future<void> setCount(int val)async{
+    preferences = await SharedPreferences.getInstance();
+    preferences.setInt(count, val);
+  }
+  Future<int?> getCount()async{
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getInt(count);
+  }
+
+  Future<void> setBillId(String val)async{
+    preferences = await SharedPreferences.getInstance();
+    preferences.setString(billid, val);
+  }
+  Future<String?> getBillId()async{
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getString(billid);
+  }
+
+  Future<void> setClickTable(bool val)async{
+    preferences = await SharedPreferences.getInstance();
+    preferences.setBool(clicktable, val);
+
+  }
+  Future<bool?> getClickTable()async{
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getBool(clicktable);
+  }
+
+
+  Future<void> setNameTable(String val)async{
+    preferences = await SharedPreferences.getInstance();
+    preferences.setString(nametable, val);
+  }
+  Future<String?> getNameTable()async{
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getString(nametable);
+  }
+
+  Future<void> setStatus(int val)async{
+    preferences = await SharedPreferences.getInstance();
+    preferences.setInt(status, val);
+  }
+  Future<int?> getStatus()async{
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getInt(status);
+  }
+
+  Future<void> setSessionId(String val)async{
+    preferences = await SharedPreferences.getInstance();
+    preferences.setString(sessoinid, val);
+  }
+  Future<String?> getSessionId()async{
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getString(sessoinid);
+  }
 
 
   Future<void> setamount(int val)async{
@@ -72,6 +143,15 @@ Future<void> setLogin(bool val)async{
   Future<String?> getTableId()async{
     preferences = await SharedPreferences.getInstance();
    return preferences.getString(tableid);
+  }
+
+   Future<void> setTableName(String val)async{
+    preferences = await SharedPreferences.getInstance();
+    preferences.setString(tablename, val);
+  }
+  Future<String?> getTableName()async{
+    preferences = await SharedPreferences.getInstance();
+   return preferences.getString(tablename);
   }
 
   Future<void> setBillNo(String val)async{

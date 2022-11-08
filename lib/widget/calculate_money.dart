@@ -98,6 +98,7 @@ class CalculateMoney extends StatelessWidget {
                               Text(
                                 "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ",
                                 style: TextStyle(
+                                  fontFamily: 'Phetsarath-OT',
                                   fontSize: 18.sp,
                                   color: AppTheme.RED_COLOR,
                                   fontWeight: FontWeight.bold,
@@ -161,14 +162,14 @@ class CalculateMoney extends StatelessWidget {
                                   ColumnMaker(
                                       text: 'ໂຊນ ຫຼື ພື້ນທີ່', width: 6),
                                   ColumnMaker(
-                                      text: '${getzone??"none"}',
+                                      text: '${getzone ?? "none"}',
                                       width: 6,
                                       align: SunmiPrintAlign.RIGHT),
                                 ]);
                                 await SunmiPrinter.printRow(cols: [
                                   ColumnMaker(text: 'ເລກໂຕະ', width: 6),
                                   ColumnMaker(
-                                      text: '${getidtable??"none"}',
+                                      text: '${getidtable ?? "none"}',
                                       width: 6,
                                       align: SunmiPrintAlign.RIGHT),
                                 ]);
@@ -214,12 +215,13 @@ class CalculateMoney extends StatelessWidget {
                                 await SunmiPrinter.submitTransactionPrint();
                                 await SunmiPrinter.exitTransactionPrint();
 
-                                context.read<GetFoodMenuProvider>().clearKitchenData();
+                                context
+                                    .read<GetFoodMenuProvider>()
+                                    .clearKitchenData();
                               } catch (e) {
                                 throw Exception("ບໍ່ມີປິ່ນເຕີ");
                               }
                             });
-                 
                           },
                           child: Container(
                             height: 60.h,
@@ -243,6 +245,7 @@ class CalculateMoney extends StatelessWidget {
                                       fontSize: 18.sp,
                                       color: AppTheme.BASE_COLOR,
                                       fontWeight: FontWeight.bold,
+                                      fontFamily: 'Phetsarath-OT',
                                     ),
                                   ),
                                 ),
@@ -277,6 +280,7 @@ class CalculateMoney extends StatelessWidget {
                                   fontSize: 18.sp,
                                   color: AppTheme.WHITE_COLOR,
                                   fontWeight: FontWeight.bold,
+                                  fontFamily: 'Phetsarath-OT',
                                 ),
                               ),
                             ),
@@ -322,6 +326,7 @@ class CalculateMoney extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 15.sp,
                                 fontWeight: FontWeight.bold,
+                                fontFamily: 'Phetsarath-OT',
                               ),
                             ),
                           ],
@@ -336,9 +341,11 @@ class CalculateMoney extends StatelessWidget {
                     Text(
                       "ລາຍການອໍເດີ",
                       style: TextStyle(
-                          fontSize: 16.sp,
-                          color: AppTheme.BASE_COLOR,
-                          fontWeight: FontWeight.bold),
+                        fontSize: 16.sp,
+                        color: AppTheme.BASE_COLOR,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Phetsarath-OT',
+                      ),
                     ),
                   ],
                 ),
@@ -355,9 +362,11 @@ class CalculateMoney extends StatelessWidget {
                         child: Text(
                           "ລ/ດ",
                           style: TextStyle(
-                              fontSize: 14.sp,
-                              color: AppTheme.WHITE_COLOR,
-                              fontWeight: FontWeight.bold),
+                            fontSize: 14.sp,
+                            color: AppTheme.WHITE_COLOR,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Phetsarath-OT',
+                          ),
                         ),
                       ),
                       Expanded(
@@ -365,9 +374,11 @@ class CalculateMoney extends StatelessWidget {
                         child: Text(
                           "ລາຍການ",
                           style: TextStyle(
-                              fontSize: 14.sp,
-                              color: AppTheme.WHITE_COLOR,
-                              fontWeight: FontWeight.bold),
+                            fontSize: 14.sp,
+                            color: AppTheme.WHITE_COLOR,
+                            fontWeight: FontWeight.bold,
+                             fontFamily: 'Phetsarath-OT',
+                          ),
                         ),
                       ),
                       Expanded(
@@ -375,6 +386,7 @@ class CalculateMoney extends StatelessWidget {
                         child: Text(
                           "ຂະໜາດ",
                           style: TextStyle(
+                             fontFamily: 'Phetsarath-OT',
                               fontSize: 14.sp,
                               color: AppTheme.WHITE_COLOR,
                               fontWeight: FontWeight.bold),
@@ -386,6 +398,7 @@ class CalculateMoney extends StatelessWidget {
                         child: Text(
                           "ຈ/ນ",
                           style: TextStyle(
+                             fontFamily: 'Phetsarath-OT',
                               fontSize: 14.sp,
                               color: AppTheme.WHITE_COLOR,
                               fontWeight: FontWeight.bold),
@@ -395,6 +408,7 @@ class CalculateMoney extends StatelessWidget {
                         child: Text(
                           "ລາຄາ",
                           style: TextStyle(
+                             fontFamily: 'Phetsarath-OT',
                               fontSize: 14.sp,
                               color: AppTheme.WHITE_COLOR,
                               fontWeight: FontWeight.bold),

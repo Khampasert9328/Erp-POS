@@ -20,21 +20,25 @@ import 'package:provider/provider.dart';
 
 Future<CreateOrderModels?> createOrder(BuildContext context) async {
   try {
-    
-
     String? dateexpired = await CountPre().getDateExpired();
     String? datesup = await CountPre().getDateSupscribe();
     SharedPreferences tableid = await SharedPreferences.getInstance();
     String? tableid1 = tableid.getString(CountPre().tableid);
 
     var str = "$dateexpired";
-    var parts = str.split('-');
+    var parts = str.split(' ');
     var prefix = parts[0].trim(); // prefix: "date"
+    var rmDash = prefix.replaceAll('-', '');
     var dateExp = parts.sublist(0).join('').trim();
+    
+    
+
+    
 
     var strsup = "$datesup";
-    var partsup = str.split('-');
-    var prefixsup = partsup[0].trim(); // prefix: "date"
+    var partsup = strsup.split(' ');
+    var prefixsup = partsup[0].trim();
+    var rmDate = prefixsup.replaceAll("-", '');// prefix: "date"
     var dateSup = partsup.sublist(0).join('').trim();
 
     String? idtoken = await CountPre().getToken();
@@ -48,7 +52,7 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
     var ipAddress = IpAddress(type: RequestType.json);
     var ip = await ipAddress.getIpAddress();
     var ipa = '$ip';
-     var ip1 = str.split('-');
+    var ip1 = ipa.split('.');
     var ip2 = ip1[0].trim(); // prefix: "date"
     var ip3 = ip1.sublist(0).join('').trim();
 
@@ -60,10 +64,10 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
 
     for (var item in context.read<GetFoodMenuProvider>().getFoodMenuModel) {
       products.add({
-        "productId": "${item.data.id}",
+     "productId": "${item.data.id}",
         "name": "${item.data.name}",
         "size": 0,
-        "amount": item.totalAmount,
+        "amount": "${item.totalAmount}",
         "priceSale": context
             .read<GetFoodMenuProvider>()
             .getFoodMenuModel
@@ -77,12 +81,11 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
         "cooked": true,
         "timeCooked": "string",
         "categoryOrder": {
-          "categoryId": "${item.data.categoryid}",
-          "categoryName": "${item.data.categoryname}",
+          "categoryId": item.data.categoryid,
+          "categoryName": item.data.name
         }
       });
     }
-
     var url = "${APIPath.CREATE_ORDER}";
     String payload = jsonEncode({
       "order": {
@@ -90,7 +93,7 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
         "issueDate": "${DateFormat("yyyMMdd").format(DateTime.now())}",
         "date": "${DateFormat("yyy-MM-dd HH:mm:ss").format(DateTime.now())}",
         "billId": "string",
-        "tableId": "${tableid1??"none"}",
+        "tableId": "${tableid1 ?? "none"}",
         "product": products,
         "userId": "$username",
         "description": {
@@ -137,16 +140,18 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
           "note": "Order Food"
         }
       },
-      "packageDateStart": "${dateSup}",
-      "packageDateEnd": "${dateExp}",
+      "packageDateStart": "${rmDash}",
+      "packageDateEnd": "${rmDate}",
     });
-    var respones = await http.post(Uri.parse(url),
-        headers: {
-          "accept": "text/plain",
-          "Authorization": "Bearer $idtoken",
-          "Content-Type": "application/json"
-        },
-        body: payload,);
+    var respones = await http.post(
+      Uri.parse(url),
+      headers: {
+        "accept": "text/plain",
+        "Authorization": "Bearer $idtoken",
+        "Content-Type": "application/json"
+      },
+      body: payload,
+    );
 
     if (respones.statusCode == 200) {
       return createOrderModelsFromJson(respones.body);

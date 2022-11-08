@@ -9,15 +9,20 @@ import 'package:erp_pos/model/connect/connect_authorize_models.dart';
 import 'package:erp_pos/model/connect/connect_create_tenant.dart';
 import 'package:erp_pos/model/connect/connect_token_models.dart';
 import 'package:erp_pos/model/connect/connect_validate_user.dart';
+import 'package:erp_pos/model/createoffsession/createoffsession_models.dart';
+import 'package:erp_pos/model/getsesion/get_sessoin_models.dart';
 import 'package:erp_pos/model/refreshtoken/refresh_token_models.dart';
 import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/pages/login/login.dart';
 import 'package:erp_pos/pages/onboardingscreen/models/content_models.dart';
+import 'package:erp_pos/provider/offsession/create_off_session_provider.dart';
+import 'package:erp_pos/provider/switch/switch_provider.dart';
 import 'package:erp_pos/services/connect/connect_authorize.dart';
 import 'package:erp_pos/services/connect/connect_token.dart';
 import 'package:erp_pos/services/connect/create_tenant.dart';
 import 'package:erp_pos/services/connect/validate_user.dart';
 import 'package:erp_pos/services/getArea/get_area.dart';
+import 'package:erp_pos/services/getsession/get_sesion.dart';
 import 'package:erp_pos/services/refreshtoken/refresh_token_service.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/style.dart';
@@ -31,6 +36,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthenticationProvider extends ChangeNotifier {
   //ສຳລັບລັອກອິນ
   int _isRefreshingToken = 0;
+  GetSessoin? _sessoin;
 
   Future<void> login(
       String email,
@@ -58,19 +64,26 @@ class AuthenticationProvider extends ChangeNotifier {
               ),
             );
           });
+
       ConnectValidateModels? connectValidateModels =
           await connectvalidateuser(email, context, name, lastname);
 
-      // ວິທີການເຊັກເງື່ອນໄຂກວດ User
+      //ວິທີການເຊັກເງື່ອນໄຂກວດ User
       if (connectValidateModels != null) {
         //ຖ້າວ່າ connectValidateModels ບໍ່ເທົ່າກັບຄ່າວ່າງ ໃຫ້ມັນ Access ຂໍ Token
         ConnectTokenModels? connectTokenModels =
             await connectToken(email, password, context);
         if (connectTokenModels != null) {
           //Mystyle().showAlertloadingsuccess(context, "ແຈ້ງເຕືອນ", "ກຳລັງເຂົ້າສູ່ລະບົບ");
-          SharedPreferences preferences = await SharedPreferences.getInstance();
           CountPre().setRememberPassword(rememberpass);
           CountPre().setToken(connectTokenModels.content!.accessToken!);
+          _sessoin = await getsessionservice();
+        print("session:$_sessoin");
+          if (_sessoin != null) {
+            for (var item in _sessoin!.sessionItems!) {
+              CountPre().setStatus(item.status!);
+            }
+          }
           await Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (_) => const HomePage()),
@@ -78,6 +91,7 @@ class AuthenticationProvider extends ChangeNotifier {
         }
       }
     } catch (e) {
+      print("Error:$e");
       Mystyle()
           .dialogError(context, "ເເຈ້ງເຕືອນ", "ກາລຸນາກວດສອບອິນເຕີເນັດຂອງທ່ານ");
     }
@@ -121,6 +135,10 @@ class AuthenticationProvider extends ChangeNotifier {
     if ((clearFristTime != null)) {
       if (clearFristTime) {
         await CountPre().setLogin(clearFristTime);
+      }
+
+      if (saveemail != null) {
+        await CountPre().setEmail(saveemail);
       }
     }
     Navigator.pushAndRemoveUntil(

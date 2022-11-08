@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:erp_pos/constant/enum.dart';
 import 'package:erp_pos/model/foodmenu/food_menu_models.dart';
@@ -32,8 +33,6 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
 
   int add = 0;
   @override
-
-
   @override
   Widget build(BuildContext context) {
     return Consumer2<FoodMenuProvider, GetFoodMenuProvider>(
@@ -52,118 +51,120 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                     padding: EdgeInsets.symmetric(vertical: 5.h),
                     child: Column(
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => FoodMenuDetailBody(
-                                  data: data.data,
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 10.h, horizontal: 10.w),
-                            decoration: BoxDecoration(
+                        Stack(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10.h, horizontal: 10.w),
+                              decoration: BoxDecoration(
                                 color: Color(0xFFF4F5F6),
-                                borderRadius: BorderRadius.circular(10.r)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 30),
-                                    child: Container(
-                                      child: CachedNetworkImage(
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons.image_outlined,
-                                                size: 70,
-                                                color: AppTheme.GREY_COLOR),
-                                        imageUrl:
-                                            data.data.thumbnails!.first.uri!,
-                                        placeholder: (context, url) => Center(
-                                          child: CircularProgressIndicator(
-                                            color: AppTheme.BASE_COLOR,
-                                          ),
-                                        ),
-                                      ),
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
                                     ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        data.data.name!,
-                                        style: TextStyle(
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w700,
+                                    child: CachedNetworkImage(
+                                      memCacheHeight: 63,
+                                      memCacheWidth: 69,
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.image_outlined,
+                                              size: 70,
+                                              color: AppTheme.GREY_COLOR),
+                                      imageUrl:
+                                          data.data.thumbnails!.first.uri!,
+                                      placeholder: (context, url) => Center(
+                                        child: CircularProgressIndicator(
                                           color: AppTheme.BASE_COLOR,
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: 5.h,
-                                      ),
-                                      Text.rich(TextSpan(
-                                          text: 'ລາຄາ ',
-                                          style: TextStyle(
-                                            fontSize: 14.sp,
-                                            color: AppTheme.BASE_COLOR,
-                                          ),
-                                          children: <InlineSpan>[
-                                            TextSpan(
-                                              text:
-                                                  '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.data.pricesale)} ກີບ',
-                                              style: TextStyle(
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            )
-                                          ])),
-                                      AddAmount()
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 20.w),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: AppTheme.BASE_COLOR,
-                                        shape: BoxShape.circle),
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 2.w, vertical: 2.h),
-                                    child: IconButton(
-                                      onPressed: () async {
-                                        SharedPreferences? preferences =
-                                            await SharedPreferences
-                                                .getInstance();
-                                        int? amount = await preferences
-                                            .getInt(CountPre().namkey);
-                                        int? totalAmount =
-                                            data.data.pricesale! * amount!;
-                                        //addOrder(index);
-                                        getFoodModel.setFoodMenuData(
-                                            data.data, amount, totalAmount);
-                                        foodModel.increment(add);
-
-                                        getFoodModel
-                                            .addTotalAmount(totalAmount);
-                                      },
-                                      icon: const Icon(
-                                        Icons.add_shopping_cart_sharp,
-                                        color: Colors.white,
-                                        size: 35,
-                                      ),
                                     ),
                                   ),
-                                )
-                              ],
+                                  SizedBox(
+                                    width: 11.w,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          data.data.name!,
+                                          style: TextStyle(
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w700,
+                                            color: AppTheme.BASE_COLOR,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 5.h,
+                                        ),
+                                        Text.rich(TextSpan(
+                                            text: 'ລາຄາ ',
+                                            style: TextStyle(
+                                              fontSize: 14.sp,
+                                              color: AppTheme.BASE_COLOR,
+                                               fontFamily: 'Phetsarath-OT',
+                                            ),
+                                            children: <InlineSpan>[
+                                              TextSpan(
+                                                text:
+                                                    '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.data.pricesale)} ກີບ',
+                                                style: TextStyle(
+                                                  fontFamily: 'Phetsarath-OT',
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              )
+                                            ])),
+                                     AddAmount()
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 20.w),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: AppTheme.YELLOW_COLOR,
+                                          shape: BoxShape.circle,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: AppTheme.GREY_COLOR,
+                                                spreadRadius: 5.0,
+                                                blurRadius: 10,
+                                                offset: Offset(0, 3))
+                                          ]),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 2.w, vertical: 2.h),
+                                      child: IconButton(
+                                        onPressed: () async {
+                                          int? amount = context.read<FoodMenuProvider>().counter;
+                                          CountPre().setCount(amount!);
+                                          int totalAmount =
+                                              data.data.pricesale! * amount;
+                                          //addOrder(index);
+                                          getFoodModel.setFoodMenuData(
+                                              data.data, amount, totalAmount);
+                                          foodModel.increment(add);
+                                          getFoodModel
+                                              .addTotalAmount(totalAmount);
+                                        },
+                                        icon: const Icon(
+                                          Icons.add_shopping_cart_sharp,
+                                          color: Colors.white,
+                                          size: 35,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
+                           
+                          ],
                         ),
                         SizedBox(
                           height: 5.h,

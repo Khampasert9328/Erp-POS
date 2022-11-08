@@ -58,9 +58,10 @@ class _OnboardBodyState extends State<OnboardBody> {
                         Text(
                           content[i].title,
                           style: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Phetsarath-OT'),
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Phetsarath-OT',
+                          ),
                         ),
                         Text(
                           content[i].subtitle,
@@ -95,7 +96,7 @@ class _OnboardBodyState extends State<OnboardBody> {
               if (currenIndex == content.length - 1) {
                 bool firstTime = true;
                 CountPre().setLogin(firstTime);
-                if (AuthenticationProvider().tokenManagement(context) == "") {
+                if (AuthenticationProvider().tokenManagement(context) == null) {
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: ((context) => Login())),

@@ -22,7 +22,7 @@ Future<GetOrderByIssuedateModels?> getorderbyissuedate(int limit, int page,
       },
     );
     if (respones.statusCode == 200) {
-      print("response:${respones.body}");
+      
       GetOrderByIssuedateModels models = GetOrderByIssuedateModels.fromJson(
         jsonDecode(respones.body),
       );

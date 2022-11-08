@@ -20,17 +20,21 @@ class paycash extends StatefulWidget {
 
 class _paycashState extends State<paycash> {
   TextEditingController money = TextEditingController();
-  int totalamount =0;
+  int totalamount = 0;
   ////////ວິທີການເຮັດການທ້ອນເງິນຢູ່ໜ້າ ການຈ່າຍເງິນສົດ
   int sumall = 0;
+  final FocusNode _focusNode = FocusNode();
+
   @override
   void initState() {
     super.initState();
     setState(() {
-       totalamount = context.read<GetFoodMenuProvider>().totalamont;
-       money.text= NumberFormat.currency(symbol: '', decimalDigits: 0).format(totalamount);
+      totalamount = context.read<GetFoodMenuProvider>().totalamont;
+      money.text = NumberFormat.currency(symbol: '', decimalDigits: 0)
+          .format(totalamount);
     });
   }
+
   @override
   Widget build(BuildContext context) {
 ////////////////////////////////////////////////////////////
@@ -55,13 +59,18 @@ class _paycashState extends State<paycash> {
                 borderRadius: BorderRadius.circular(10),
               ),
               onPressed: () {
-                String mmoney = money.text.replaceAll(',','');
+                String mmoney = money.text.replaceAll(',', '');
                 int intMoney = int.parse(mmoney);
-                PaymentCashProvider().createpaymentcashprovider(context, intMoney);
+                PaymentCashProvider()
+                    .createpaymentcashprovider(context, intMoney);
               },
               child: Text(
                 "ຊຳລະເງິນ",
-                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Phetsarath-OT',
+                ),
               ),
             ),
           ),
@@ -79,7 +88,10 @@ class _paycashState extends State<paycash> {
                     Text(
                       "ຈ່່າຍເງິນສົດ",
                       style: TextStyle(
-                          fontSize: 16.sp, fontWeight: FontWeight.bold),
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Phetsarath-OT',
+                      ),
                     ),
                     SizedBox(
                       height: 7.h,
@@ -96,11 +108,13 @@ class _paycashState extends State<paycash> {
                           padding: const EdgeInsets.only(top: 15, right: 5),
                           child: Text(
                             '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(value.totalamont)} ກີບ',
-                            style: TextStyle(color: AppTheme.RED_COLOR),
+                            style: TextStyle(
+                                fontFamily: 'Phetsarath-OT',
+                                color: AppTheme.RED_COLOR),
                           ),
                         ),
                         hintStyle: TextStyle(
-                            fontFamily: "NotoSansLao-Regular",
+                            fontFamily: 'Phetsarath-OT',
                             fontSize: 18.sp,
                             color: AppTheme.BASE_COLOR),
                       ),
@@ -111,13 +125,20 @@ class _paycashState extends State<paycash> {
                     Text(
                       "ເງິນທີ່ໄດ້ຮັບ",
                       style: TextStyle(
-                          fontSize: 16.sp, fontWeight: FontWeight.bold),
+                          fontFamily: 'Phetsarath-OT',
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 7.h,
                     ),
                     TextFormField(
-                      inputFormatters: [ThousandsFormatter()],
+                      autofocus: true,
+                      focusNode: _focusNode,
+                      showCursor: true,
+                      inputFormatters: [
+                        ThousandsFormatter(),
+                      ],
                       controller: money,
                       keyboardType: TextInputType.number,
                       onChanged: (value) {
@@ -141,14 +162,16 @@ class _paycashState extends State<paycash> {
                         fillColor: const Color(0xffedebeb),
                         border: InputBorder.none,
                         hintStyle: TextStyle(
-                            fontFamily: "NotoSansLao-Regular",
+                            fontFamily: 'Phetsarath-OT',
                             fontSize: 18.sp,
                             color: AppTheme.BASE_COLOR),
                         suffixIcon: Padding(
                           padding: const EdgeInsets.only(top: 15, right: 5),
                           child: Text(
                             'ກີບ',
-                            style: TextStyle(color: AppTheme.RED_COLOR),
+                            style: TextStyle(
+                                fontFamily: 'Phetsarath-OT',
+                                color: AppTheme.RED_COLOR),
                           ),
                         ),
                       ),
@@ -161,7 +184,9 @@ class _paycashState extends State<paycash> {
                         Text(
                           "ເງິນທອນ:",
                           style: TextStyle(
-                              fontSize: 16.sp, fontWeight: FontWeight.bold),
+                              fontFamily: 'Phetsarath-OT',
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
                           width: 15.w,
@@ -169,6 +194,7 @@ class _paycashState extends State<paycash> {
                         Text(
                           "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(sumall)} ກີບ",
                           style: TextStyle(
+                            fontFamily: 'Phetsarath-OT',
                             fontSize: 16.sp,
                             fontWeight: FontWeight.bold,
                           ),

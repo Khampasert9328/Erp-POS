@@ -1,5 +1,7 @@
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/model/foodmenu/food_menu_models.dart';
 import 'package:erp_pos/pages/food_menu/components/food_menu_button.dart';
+import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,7 @@ class AddAmount extends StatefulWidget {
 
 class _AddAmountState extends State<AddAmount> {
   int count = 1;
+  bool show = false;
   void setNumber(bool isAdd) {
     if (isAdd) {
       setState(() {
@@ -35,8 +38,13 @@ class _AddAmountState extends State<AddAmount> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(widget.title ?? 'ຈຳນວນ',
-            style: TextStyle(fontSize: 14.sp, color: AppTheme.BASE_COLOR)),
+        Text(
+          widget.title ?? 'ຈຳນວນ',
+          style: TextStyle(
+            fontSize: 14.sp,
+            color: AppTheme.BASE_COLOR,
+          ),
+        ),
         SizedBox(
           width: 10.w,
         ),
@@ -45,10 +53,12 @@ class _AddAmountState extends State<AddAmount> {
             onTap: () async {
               setNumber(true);
               context.read<FoodMenuProvider>().increment(count);
-              SharedPreferences preferences = await SharedPreferences.getInstance();
-              preferences.setInt(CountPre().namkey, count);
+
+              CountPre().setCount(count);
             },
-            child: FoodMenuButton(title: '+',),
+            child: FoodMenuButton(
+              title: '+',
+            ),
           ),
         ),
         Padding(
@@ -61,22 +71,22 @@ class _AddAmountState extends State<AddAmount> {
               ),
               Container(
                 width: 20.w,
-                height: 2.h,
+                height: 3.h,
                 decoration: BoxDecoration(color: Color(0xFFD9D9D9)),
               )
             ],
           ),
         ),
         Expanded(
-
           child: GestureDetector(
-            onTap: () async{
+            onTap: () async {
               setNumber(false);
-             context.read<FoodMenuProvider>().remove(count);
-             SharedPreferences preferences = await SharedPreferences.getInstance();
-            preferences.setInt(CountPre().namkey, count);
+              context.read<FoodMenuProvider>().remove(count);
+              CountPre().setamount(count);
             },
-            child: FoodMenuButton(title: '-',),
+            child: FoodMenuButton(
+              title: '-',
+            ),
           ),
         ),
       ],

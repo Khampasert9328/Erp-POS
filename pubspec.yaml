@@ -35,6 +35,15 @@ dependencies:
   material_design_icons_flutter: ^5.0.6996
   lite_rolling_switch: ^1.0.0
   pattern_formatter: ^2.0.0
+  flutter_launcher_icons: ^0.9.0
+
+
+
+flutter_icons:
+  android: true
+  image_path: "images/Shape6.png"
+
+
 
 dev_dependencies:
   flutter_test:

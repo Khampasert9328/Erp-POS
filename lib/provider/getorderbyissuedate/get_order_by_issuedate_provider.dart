@@ -2,6 +2,7 @@
 
 import 'package:erp_pos/model/getorderbyissuedate/get_order_by_isuedatemodels.dart';
 import 'package:erp_pos/model/getorderbylistid/get_order_by_list_id_models.dart';
+import 'package:erp_pos/model/gettableall/gettable_all_models.dart';
 import 'package:erp_pos/model/order/order_models.dart';
 import 'package:erp_pos/pages/order/order.dart';
 import 'package:erp_pos/services/getorderbyissuedate/get_order_by_issuedate_service.dart';
@@ -20,32 +21,32 @@ class GetOrderByIssueDateProvider extends ChangeNotifier {
   GetOrderByIssuedateModels? get order => _order;
   GetOrderByListId? get getOrderByListId => _getOrderByListId;
   String? billid;
-  String? get _billid =>billid;
+  String? get _billid => billid;
+
 
   Future<void> getorderfromservice(BuildContext context) async {
     _isload = true;
     SharedPreferences pre = await SharedPreferences.getInstance();
     String? startDate = await CountPre().getDateSupscribe();
     String? endDate = await CountPre().getDateExpired();
-    String? idToken =await CountPre().getToken();
+    String? idToken = await CountPre().getToken();
     DateTime time = DateTime.now();
     String? startdate = '20221006';
     String? startend = '20221006';
 
-    _order =
-        await getorderbyissuedate(-1, 0, idToken!, startdate, startend, context);
+    _order = await getorderbyissuedate(
+        -1, 0, idToken!, startdate, startend, context);
 
-        print("order:$order");
+    print("order:$order");
 
     if (_order != null) {
       for (var item in _order!.order!) {
         listID.add(item.billid!);
         billid = item.billid;
+        CountPre().setBillId(item.billid.toString());
       }
       _getOrderByListId =
           await getorderbylistid(listID, -1, 0, startDate, endDate);
-
-          print("orderbyid:$_getOrderByListId");
     }
     _isload = false;
     notifyListeners();

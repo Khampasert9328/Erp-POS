@@ -1,6 +1,7 @@
 import 'package:erp_pos/model/area/area_models.dart';
 import 'package:erp_pos/pages/table/components/listview_table.dart';
 import 'package:erp_pos/services/getArea/get_area.dart';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,9 +16,8 @@ class AreaProvider extends ChangeNotifier {
     if (areaModels != null) {
       _areaList = areaModels.area!;
       for (var item in areaModels.area!) {
-        _areaID.add(item.id!.toString());
-     
-       
+        CountPre().setAreaId(item.id!);
+        _areaID.add(item.id!);
       }
 
     }

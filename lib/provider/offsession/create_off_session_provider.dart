@@ -3,6 +3,7 @@ import 'package:erp_pos/model/getsesion/get_sessoin_models.dart';
 import 'package:erp_pos/services/getsession/get_sesion.dart';
 
 import 'package:erp_pos/services/offsession/off_session_service.dart';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/material.dart';
 
 class CreateOffSessionProvider extends ChangeNotifier {
@@ -33,6 +34,8 @@ CreateOffSessionModels? get createOffSessionModels => _createOffSessionModels;
           _userOpenName = item.userOpenName!;
           _cashOpen = item.cashOpen??0;
           _cashCount = item.cashCount??0;
+          CountPre().setStatus(item.status!);
+          CountPre().setSessionId(item.id!);
 
           for (var item1 in item.bills!) {
             _total += item1.total ?? 0;
@@ -40,7 +43,7 @@ CreateOffSessionModels? get createOffSessionModels => _createOffSessionModels;
         }
         _createOffSessionModels = await createoffsession(context, _idsession!, _openDate!, cashCount!, _userOpenName!, _userOpenName!);
         if (_createOffSessionModels != null) {
-          print("close session success");
+         
           
         }
 

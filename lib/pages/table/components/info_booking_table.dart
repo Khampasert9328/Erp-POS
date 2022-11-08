@@ -28,6 +28,7 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
           "ປ້ອນຂໍ້ມູນການຈອງ",
           style: TextStyle(
               color: AppTheme.BLACK_COLOR,
+              fontFamily: 'Phetsarath-OT',
               fontWeight: FontWeight.bold,
               fontSize: 18.sp),
         ),
@@ -46,6 +47,7 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                     "ຊື່ ແລະ ນາມສະກຸນ *",
                     style: TextStyle(
                       fontSize: 15.sp,
+                      fontFamily: 'Phetsarath-OT',
                     ),
                   ),
                   TextFormField(
@@ -63,7 +65,7 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                       border: InputBorder.none,
                       hintText: "ປ້ອນຂໍ້ມູນ",
                       hintStyle: TextStyle(
-                        fontFamily: "NotoSansLao-Regular",
+                        fontFamily: 'Phetsarath-OT',
                         fontSize: 15.sp,
                       ),
                     ),
@@ -92,7 +94,7 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                       border: InputBorder.none,
                       hintText: "ປ້ອນຂໍ້ມູນ",
                       hintStyle: TextStyle(
-                        fontFamily: "NotoSansLao-Regular",
+                        fontFamily: 'Phetsarath-OT',
                         fontSize: 15.sp,
                       ),
                     ),
@@ -104,6 +106,7 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                     "ຈຳນວນລູກຄ້າ *",
                     style: TextStyle(
                       fontSize: 15.sp,
+                      fontFamily: 'Phetsarath-OT',
                     ),
                   ),
                   TextFormField(
@@ -121,7 +124,7 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                       border: InputBorder.none,
                       hintText: "ປ້ອນຂໍ້ມູນ",
                       hintStyle: TextStyle(
-                        fontFamily: "NotoSansLao-Regular",
+                       fontFamily: 'Phetsarath-OT',
                         fontSize: 15.sp,
                       ),
                     ),
@@ -133,6 +136,7 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                     "ວັນທີ ແລະ ເວລາ *",
                     style: TextStyle(
                       fontSize: 15.sp,
+                      fontFamily: 'Phetsarath-OT',
                     ),
                   ),
                   Row(
@@ -148,6 +152,7 @@ class _InfoBookingTableState extends State<InfoBookingTable> {
                     "ລາຍລະອຽດ ແລະອື່ນໆ *",
                     style: TextStyle(
                       fontSize: 15.sp,
+                      fontFamily: 'Phetsarath-OT',
                     ),
                   ),
                   InputDetail(

@@ -5,11 +5,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AppTextField extends StatelessWidget {
 
   TextEditingController controller;
+
   String? Function(String?)? validator;
   String? hintText;
   Widget? prefixIcon;
   TextInputType? keyboardType;
   bool? obscureText;
+  final Iterable<String> autofillHints;
+  VoidCallback onEditing;
+  
+  
   
 
   
@@ -20,6 +25,9 @@ class AppTextField extends StatelessWidget {
     this.keyboardType,
     this.prefixIcon,
     this.obscureText,
+    required this.autofillHints,
+   required this.onEditing,
+ 
    
   
     
@@ -29,7 +37,7 @@ class AppTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutofillGroup(
       child: TextFormField(
- 
+        onEditingComplete: onEditing,
           cursorColor: AppTheme.BASE_COLOR,
           obscureText: obscureText ?? false,
           controller: controller,
@@ -42,7 +50,7 @@ class AppTextField extends StatelessWidget {
             hintText: hintText ?? '',
             prefixIcon: prefixIcon ?? Container(),
             hintStyle: TextStyle(
-              fontFamily: "NotoSansLao-Regular",
+              fontFamily: 'Phetsarath-OT',
               fontSize: 18.sp,
             ),
           ),

@@ -27,14 +27,26 @@ class SessionProvoder extends ChangeNotifier {
   String? get idsession => _idsession;
   bool? _isload = false;
   bool? get isloading => _isload;
+  
 
   Future<void> getsessoinProvider(BuildContext context) async {
     _isload = true;
     try {
+      _sessoin =await getsessionservice();
+      if (_sessoin != null) {
+        for (var item in _sessoin!.sessionItems!) {
+          CountPre().setSessionId(item.id!);
+          CountPre().setStatus(item.status!);
+          
+        }
         _createSession = await createSession(0, context);
         if (_createSession != null) {
           ScaffoldMessenger.of(context).showSnackBar(Mystyle().snackbar);
         }
+      }
+
+        
+        
       _isload = false;
       notifyListeners();
     } catch (e) {

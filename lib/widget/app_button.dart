@@ -15,12 +15,13 @@ class AppButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: AppTheme.BASE_COLOR,
-            padding: EdgeInsets.symmetric(vertical: 9.h),
-            ),
-        onPressed:onPressed,
+          padding: EdgeInsets.symmetric(vertical: 9.h),
+        ),
+        onPressed: onPressed,
         child: Text(
           text,
           style: TextStyle(
+            fontFamily: 'Phetsarath-OT',
             color: Colors.white,
             fontSize: 18.sp,
             fontWeight: FontWeight.w700,

@@ -6,6 +6,8 @@ import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/model/foodmenu/food_menu_models.dart';
+import 'package:erp_pos/pages/food_menu/components/search_food_menu.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/provider/switch/switch_provider.dart';
@@ -34,106 +36,140 @@ class FoodMenuBody extends StatefulWidget {
 class _FoodMenuBodyState extends State<FoodMenuBody> {
   TextEditingController searchMenu = TextEditingController();
   PanelController panelController = PanelController();
+  
+  get cusicon => null;
   void toglePanel() => panelController.isPanelOpen
       ? panelController.close()
       : panelController.open();
 
-  // List<String> foodType = [
-  //   'ເຂົ້າລາດໜ້າ',
-  //   'ເຄື່ອງດື່ມ',
-  //   'ນ້ຳ',
-  // ];
-
-  // String selectedFoodType = 'ເຂົ້າລາດໜ້າ';
+  void closepanel() => panelController.open();
   int amount = 50000;
   double _initFabHeight = 120.0;
   double _fabHeight = 0;
   double _panelHeightOpen = 0;
-  double _panelHeightClosed = 95.0;
+  double _panelHeightClosed = 90.0;
   bool isSelectedMenuCard = true;
   @override
   Widget build(BuildContext context) {
+    _panelHeightOpen = MediaQuery.of(context).size.height * .80;
 
-    _panelHeightOpen = MediaQuery.of(context).size.height*.80;
-
-    return Stack(
-      children: [
-        SlidingUpPanel(
-          
-          maxHeight: _panelHeightOpen,
-          minHeight: _panelHeightClosed,
-          controller: panelController,
-          backdropEnabled: true,
-          panel: _panel(),
-          collapsed: Container(
-            decoration: BoxDecoration(
-              color: AppTheme.WHITE_COLOR,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(18.0),
-                topRight: Radius.circular(18.0),
-              ),
+    Icon cusicon = Icon(Icons.search);
+    Widget search = Text("ລາຍການອາຫານ");
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: AppTheme.WHITE_COLOR,
+        elevation: 0,
+        title: Text(
+          "$search",
+          style: TextStyle(
+            fontFamily: 'Phetsarath-OT',
+            fontSize: 18.sp,
+            color: AppTheme.BASE_COLOR,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        actions: [
+          IconButton(
+              icon: cusicon,
+              onPressed: () {
+                setState(() {
+                  if (this.cusicon.icon == Icons.search) {
+                    cusicon = Icon(Icons.cancel);
+                    search = TextField();
+                  } else {
+                    cusicon = Icon(Icons.search);
+                    search = Text("ລາຍການອາຫານ");
+                  }
+                });
+              })
+        ],
+      ),
+      body: SlidingUpPanel(
+        maxHeight: _panelHeightOpen,
+        minHeight: _panelHeightClosed,
+        controller: panelController,
+        backdropEnabled: true,
+        panel: _panel(),
+        collapsed: Container(
+          decoration: BoxDecoration(
+            color: AppTheme.WHITE_COLOR,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(18.0),
+              topRight: Radius.circular(18.0),
             ),
-            child: Padding(
-              padding: const EdgeInsets.only(right: 20, left: 20),
-              child: Column(
-                children: [
-                  Center(
-                    child: GestureDetector(
-                      onTap: () {
-                        toglePanel();
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.only(top: 10),
-                        height: 10.h,
-                        width: 30.w,
-                        decoration: BoxDecoration(
-                            color: AppTheme.GREY_COLOR,
-                            borderRadius: BorderRadius.circular(5)),
-                      ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(right: 20, left: 20),
+            child: Column(
+              children: [
+                Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      toglePanel();
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(top: 10),
+                      height: 10.h,
+                      width: 30.w,
+                      decoration: BoxDecoration(
+                          color: AppTheme.GREY_COLOR,
+                          borderRadius: BorderRadius.circular(5)),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'ລາຍການອາຫານ',
-                            style: TextStyle(
-                                fontSize: 16.sp, color: AppTheme.BASE_COLOR),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'ລາຍການອາຫານ',
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            color: AppTheme.BASE_COLOR,
+                             fontFamily: 'Phetsarath-OT',
                           ),
-                          SizedBox(
-                            height: 5.h,
-                          ),
-                          StatefulBuilder(
-                            builder: (context, setState) =>
-                                Consumer<FoodMenuProvider>(
-                              builder: (context, value, child) => Text.rich(
-                                TextSpan(
-                                  style: TextStyle(
+                        ),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        StatefulBuilder(
+                          builder: (context, setState) =>
+                              Consumer<FoodMenuProvider>(
+                            builder: (context, value, child) => Text.rich(
+                              TextSpan(
+                                style: TextStyle(
+                                    fontSize: 16.sp,
+                                     fontFamily: 'Phetsarath-OT',
+                                    color: AppTheme.BASE_COLOR),
+                                text: 'ລວມລາຄາ: ',
+                                children: <InlineSpan>[
+                                  TextSpan(
+                                    text:
+                                        '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ',
+                                    style: TextStyle(
                                       fontSize: 16.sp,
-                                      color: AppTheme.BASE_COLOR),
-                                  text: 'ລວມລາຄາ: ',
-                                  children: <InlineSpan>[
-                                    TextSpan(
-                                      text:
-                                          '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ',
-                                      style: TextStyle(
-                                          fontSize: 16.sp,
-                                          color: AppTheme.BASE_COLOR,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
-                                ),
+                                      color: AppTheme.BASE_COLOR,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                      Container(
+                        ),
+                      ],
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        closepanel();
+                      },
+                      child: Container(
                         child: Badge(
+                          badgeColor: AppTheme.GREEN_COLOR,
                           badgeContent: Text(
                             context
                                 .watch<GetFoodMenuProvider>()
@@ -144,80 +180,46 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
                               color: AppTheme.WHITE_COLOR,
                             ),
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.shopping_cart,
                             size: 55,
+                            color: AppTheme.GREY_COLOR,
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
+                      ),
+                    )
+                  ],
+                ),
+              ],
             ),
           ),
-          //panelBuilder: (sc) => _panel(sc),
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(18.0),
-            topRight: Radius.circular(18.0),
-          ),
-          body: buildBody(context),
         ),
-      ],
+        //panelBuilder: (sc) => _panel(sc),
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(18.0),
+          topRight: Radius.circular(18.0),
+        ),
+        body: buildBody(context),
+      ),
     );
   }
 
   Padding buildBody(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 40.h,
-          ),
-          Text(
-            'ລາຍການອາຫານ',
-            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w700),
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                  child: ERPTextfield(
-                      controller: searchMenu, hintText: 'ຄົ້ນຫາອາຫານ')),
-              SizedBox(
-                width: 15.w,
-              ),
-              IconButton(
-                  onPressed: () {
-                    //
-                  },
-                  icon: Icon(
-                    Icons.search,
-                    size: (45.w + 45.h) / 2,
-                  ))
-            ],
-          ),
-          Expanded(
-            child: Consumer<SwitchProvider>(
-              builder: (context, value, child) {
-                return !value.switchchang
-                    ? Center(
-                        child: Text(
-                        "ກາລຸນາເປີກກະກ່ອນ",
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                        ),
-                      ))
-                    : FoodMenuCard();
-              },
-            ),
-          ),
-        ],
+      child: Consumer<SwitchProvider>(
+        builder: (context, value, child) {
+          return !value.switchchang
+              ? Center(
+                  child: Text(
+                  "ກະລຸນາເປີດກະກ່ອນ",
+                  style: TextStyle(
+                      fontFamily: 'Phetsarath-OT',
+                      fontSize: 16.sp,
+                      color: Colors.grey),
+                ))
+              : FoodMenuCard();
+        },
       ),
     );
   }
