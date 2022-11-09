@@ -36,7 +36,7 @@ class FoodMenuBody extends StatefulWidget {
 class _FoodMenuBodyState extends State<FoodMenuBody> {
   TextEditingController searchMenu = TextEditingController();
   PanelController panelController = PanelController();
-  
+
   get cusicon => null;
   void toglePanel() => panelController.isPanelOpen
       ? panelController.close()
@@ -61,7 +61,7 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
         backgroundColor: AppTheme.WHITE_COLOR,
         elevation: 0,
         title: Text(
-          "$search",
+          "ລາຍການອາຫານ",
           style: TextStyle(
             fontFamily: 'Phetsarath-OT',
             fontSize: 18.sp,
@@ -130,7 +130,7 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
                           style: TextStyle(
                             fontSize: 16.sp,
                             color: AppTheme.BASE_COLOR,
-                             fontFamily: 'Phetsarath-OT',
+                            fontFamily: 'Phetsarath-OT',
                           ),
                         ),
                         SizedBox(
@@ -143,7 +143,7 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
                               TextSpan(
                                 style: TextStyle(
                                     fontSize: 16.sp,
-                                     fontFamily: 'Phetsarath-OT',
+                                    fontFamily: 'Phetsarath-OT',
                                     color: AppTheme.BASE_COLOR),
                                 text: 'ລວມລາຄາ: ',
                                 children: <InlineSpan>[

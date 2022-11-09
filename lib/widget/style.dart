@@ -67,7 +67,7 @@ class Mystyle {
     return Text(
       message,
       style: const TextStyle(
-        fontFamily: "Phetsarath-OT",
+        fontFamily: 'Phetsarath-OT',
         fontSize: 16,
       ),
     );
@@ -231,26 +231,25 @@ class Mystyle {
                 title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Mystyle().tiTle1("ປີດກະ"),
-                          CircleAvatar(
-                            backgroundColor: AppTheme.GREY_COLOR,
-                            radius: 20,
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: Icon(
-                                Icons.cancel_outlined,
-                                color: AppTheme.BASE_COLOR,
-                              ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Mystyle().tiTle1("ປີດກະ"),
+                        CircleAvatar(
+                          backgroundColor: AppTheme.GREY_COLOR,
+                          radius: 20,
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(
+                              Icons.cancel_outlined,
+                              color: AppTheme.BASE_COLOR,
                             ),
                           ),
-                        ],
-                      ),
-                    
+                        ),
+                      ],
+                    ),
                     Mystyle().subtiTle1("ຜູ້ປີດກະ"),
                     TextContainer(
                       inputFormatters: ThousandsFormatter(),

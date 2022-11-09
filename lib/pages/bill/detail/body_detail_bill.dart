@@ -17,7 +17,7 @@ class BodyDetailBill extends StatefulWidget {
 
   BodyDetailBill({
     super.key,
-   required this.dataorder,
+    required this.dataorder,
   });
 
   @override
@@ -29,10 +29,10 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
   int? size;
   int? amount;
   int? price;
-String? nameTable;
+  String? nameTable;
   @override
-  void initState() async{
-     nameTable = await CountPre().getNameTable();
+  void initState() async {
+    nameTable = await CountPre().getNameTable();
     super.initState();
   }
 
@@ -44,7 +44,7 @@ String? nameTable;
       amount = item.amount;
       price = item.pricesale;
     }
-    
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppTheme.WHITE_COLOR,
@@ -289,6 +289,7 @@ String? nameTable;
                   child: Text(
                     "ຈຳນວນ",
                     style: TextStyle(
+                      fontFamily: 'Phetsarath-OT',
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -299,6 +300,7 @@ String? nameTable;
                   child: Text(
                     "ລາຄາ",
                     style: TextStyle(
+                      fontFamily: 'Phetsarath-OT',
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
                     ),

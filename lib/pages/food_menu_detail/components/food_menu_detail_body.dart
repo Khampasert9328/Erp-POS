@@ -83,7 +83,10 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
           ),
           Text(
             'ອາຫານມີພ້ອມເສີບ',
-            style: TextStyle(color: Color(0xFF3CB95F), fontSize: 20.sp),
+            style: TextStyle(
+                fontFamily: 'Phetsarath-OT',
+                color: Color(0xFF3CB95F),
+                fontSize: 20.sp),
           ),
           SizedBox(height: 10.h),
           Padding(
@@ -114,6 +117,7 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
                 Text(
                   widget.data!.name!,
                   style: TextStyle(
+                      fontFamily: 'Phetsarath-OT',
                       color: AppTheme.BASE_COLOR,
                       fontSize: 24.sp,
                       fontWeight: FontWeight.w600),
@@ -123,7 +127,10 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
                 ),
                 Text(
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Non adipiscing diam volutpat cursus. A gravida at urna, sollicitudin aliquam arcu. ',
-                  style: TextStyle(color: AppTheme.BASE_COLOR, fontSize: 14.sp),
+                  style: TextStyle(
+                      fontFamily: 'Phetsarath-OT',
+                      color: AppTheme.BASE_COLOR,
+                      fontSize: 14.sp),
                 ),
                 SizedBox(
                   height: 7.h,
@@ -133,7 +140,9 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
                     Text(
                       'ເພີ່ມຕື່ມ',
                       style: TextStyle(
-                          fontSize: 18.sp, fontWeight: FontWeight.w700),
+                          fontFamily: 'Phetsarath-OT',
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w700),
                     ),
                     SizedBox(
                       width: 15.w,
@@ -161,7 +170,10 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
                 ),
                 Text(
                   'ລາຍລະອຽດອື່ນໆ',
-                  style: TextStyle(fontSize: 15.sp, color: AppTheme.BASE_COLOR),
+                  style: TextStyle(
+                      fontFamily: 'Phetsarath-OT',
+                      fontSize: 15.sp,
+                      color: AppTheme.BASE_COLOR),
                 ),
                 SizedBox(
                   height: 6.h,
@@ -188,20 +200,22 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
   SizedBox buildOtherMenu() {
     return SizedBox(
       height: 50.h,
-      child:  Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            AddAmountDetait(
-              title: 'Cheese',
-            ),
-            Text(
-              '15,000 Kip',
-              style: TextStyle(fontSize: 15.sp, color: AppTheme.BASE_COLOR),
-            )
-          ],
-        ),
-      );
-  
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          AddAmountDetait(
+            title: 'Cheese',
+          ),
+          Text(
+            '15,000 Kip',
+            style: TextStyle(
+                fontFamily: 'Phetsarath-OT',
+                fontSize: 15.sp,
+                color: AppTheme.BASE_COLOR),
+          )
+        ],
+      ),
+    );
   }
 
   GestureDetector buildSize(String title, ERPFoodSize size) {
@@ -223,6 +237,7 @@ class _FoodMenuDetailBodyState extends State<FoodMenuDetailBody> {
         child: Text(
           title,
           style: TextStyle(
+              fontFamily: 'Phetsarath-OT',
               fontSize: 14.sp,
               fontWeight: FontWeight.w700,
               color: erpFoodSize == size ? Colors.white : Color(0xFFD9D9D9)),
