@@ -94,6 +94,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                         Text(
                                           data.data.name!,
                                           style: TextStyle(
+                                            fontFamily: 'Phetsarath-OT',
                                             fontSize: 16.sp,
                                             fontWeight: FontWeight.w700,
                                             color: AppTheme.BASE_COLOR,
@@ -107,7 +108,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                             style: TextStyle(
                                               fontSize: 14.sp,
                                               color: AppTheme.BASE_COLOR,
-                                               fontFamily: 'Phetsarath-OT',
+                                              fontFamily: 'Phetsarath-OT',
                                             ),
                                             children: <InlineSpan>[
                                               TextSpan(
@@ -120,7 +121,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                 ),
                                               )
                                             ])),
-                                     AddAmount()
+                                        AddAmount()
                                       ],
                                     ),
                                   ),
@@ -141,7 +142,9 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                           horizontal: 2.w, vertical: 2.h),
                                       child: IconButton(
                                         onPressed: () async {
-                                          int? amount = context.read<FoodMenuProvider>().counter;
+                                          int? amount = context
+                                              .read<FoodMenuProvider>()
+                                              .counter;
                                           CountPre().setCount(amount!);
                                           int totalAmount =
                                               data.data.pricesale! * amount;
@@ -163,7 +166,6 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                 ],
                               ),
                             ),
-                           
                           ],
                         ),
                         SizedBox(

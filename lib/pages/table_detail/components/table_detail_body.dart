@@ -63,8 +63,10 @@ class _TableDetailState extends State<TableDetail> {
                   },
                   label: Text(
                     "ສັ່ງອາຫານ",
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
+                    style: TextStyle(
+                        fontFamily: 'Phetsarath-OT',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.sp),
                   ),
                   backgroundColor: AppTheme.BASE_COLOR,
                   elevation: 5,
@@ -199,6 +201,7 @@ class _TableDetailState extends State<TableDetail> {
                           const Text(
                             "ເລກໂຕະ",
                             style: TextStyle(
+                              fontFamily: 'Phetsarath-OT',
                               fontSize: 18,
                             ),
                           ),
@@ -220,6 +223,7 @@ class _TableDetailState extends State<TableDetail> {
                           const Text(
                             "ໂຊນ ຫຼື ພື້ນທີ່",
                             style: TextStyle(
+                              fontFamily: 'Phetsarath-OT',
                               fontSize: 18,
                             ),
                           ),
