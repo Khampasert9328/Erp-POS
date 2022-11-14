@@ -34,12 +34,8 @@ Future<CreateSession?> createSession(int cash, BuildContext context) async {
       },
       body: payload,
     );
-    print("res:${respones.statusCode}");
     if (respones.statusCode == 200) {
       return createSessionFromJson(respones.body);
-    }else if(respones.statusCode==400){
-    // bool chang =  context.read<SwitchProvider>().switchang;
-    // chang = false;
     }
    
   } catch (e) {

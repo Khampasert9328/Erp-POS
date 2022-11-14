@@ -16,6 +16,7 @@ import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/provider/generateQR/generate_qr_bcelone_provider.dart';
 import 'package:erp_pos/provider/generateqrmmoney/generate_qr_mmoney_provider.dart';
+import 'package:erp_pos/provider/getaccount/getaccount_provider.dart';
 import 'package:erp_pos/provider/getorderbyissuedate/get_order_by_issuedate_provider.dart';
 import 'package:erp_pos/provider/gettableall/get_table_all_provider.dart';
 import 'package:erp_pos/provider/offsession/create_off_session_provider.dart';
@@ -72,7 +73,8 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (_)=>PaymentCashProvider()),
             ChangeNotifierProvider(create: (_)=>ConfirmPaymentByBCELONE()),
             ChangeNotifierProvider(create: (_)=>PrintBill()),
-            ChangeNotifierProvider(create: (_)=>GenerateQrMmoneyProvider())
+            ChangeNotifierProvider(create: (_)=>GenerateQrMmoneyProvider()),
+            ChangeNotifierProvider(create: (_)=>GetAccountProvider()),
           ],
           child: MaterialApp(
             theme: ThemeData(

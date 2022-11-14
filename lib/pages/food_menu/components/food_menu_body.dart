@@ -36,7 +36,7 @@ class FoodMenuBody extends StatefulWidget {
 class _FoodMenuBodyState extends State<FoodMenuBody> {
   TextEditingController searchMenu = TextEditingController();
   PanelController panelController = PanelController();
-  
+
   get cusicon => null;
   void toglePanel() => panelController.isPanelOpen
       ? panelController.close()
@@ -53,15 +53,13 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
   Widget build(BuildContext context) {
     _panelHeightOpen = MediaQuery.of(context).size.height * .80;
 
-    Icon cusicon = Icon(Icons.search);
-    Widget search = Text("ລາຍການອາຫານ");
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: AppTheme.WHITE_COLOR,
         elevation: 0,
         title: Text(
-          "$search",
+          "ລາຍການອາຫານ",
           style: TextStyle(
             fontFamily: 'Phetsarath-OT',
             fontSize: 18.sp,
@@ -71,17 +69,11 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
         ),
         actions: [
           IconButton(
-              icon: cusicon,
+              icon: Icon(Icons.search),
               onPressed: () {
-                setState(() {
-                  if (this.cusicon.icon == Icons.search) {
-                    cusicon = Icon(Icons.cancel);
-                    search = TextField();
-                  } else {
-                    cusicon = Icon(Icons.search);
-                    search = Text("ລາຍການອາຫານ");
-                  }
-                });
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return SearchDataMune();
+                }));
               })
         ],
       ),
@@ -130,7 +122,7 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
                           style: TextStyle(
                             fontSize: 16.sp,
                             color: AppTheme.BASE_COLOR,
-                             fontFamily: 'Phetsarath-OT',
+                            fontFamily: 'Phetsarath-OT',
                           ),
                         ),
                         SizedBox(
@@ -143,7 +135,7 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
                               TextSpan(
                                 style: TextStyle(
                                     fontSize: 16.sp,
-                                     fontFamily: 'Phetsarath-OT',
+                                    fontFamily: 'Phetsarath-OT',
                                     color: AppTheme.BASE_COLOR),
                                 text: 'ລວມລາຄາ: ',
                                 children: <InlineSpan>[

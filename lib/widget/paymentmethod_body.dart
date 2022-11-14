@@ -1,6 +1,8 @@
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/provider/generateqrmmoney/generate_qr_mmoney_provider.dart';
+import 'package:erp_pos/widget/list_account_bcelone.dart';
+import 'package:erp_pos/widget/list_account_mmoney.dart';
 import 'package:erp_pos/widget/paycash_detail.dart';
 import 'package:erp_pos/widget/paymentbybcel.dart';
 import 'package:erp_pos/widget/paymentbymoney.dart';
@@ -51,9 +53,9 @@ class _PaymentBodyState extends State<PaymentBody> {
                       width: 15.w,
                     ),
                     Text(
-                      "ຈ່າຍດ້ວຍສົດ",
+                      "ຈ່າຍດ້ວຍເງິນສົດ",
                       style: TextStyle(
-                        fontFamily: 'Phetsarath-OT',
+                          fontFamily: 'Phetsarath-OT',
                           fontSize: 18.sp,
                           color: AppTheme.BASE_COLOR,
                           fontWeight: FontWeight.bold),
@@ -68,12 +70,22 @@ class _PaymentBodyState extends State<PaymentBody> {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => PaymentBcelone(tablename: widget.tablename),
-                ),
-              );
+               showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text(
+                        'ເລືອກບັນຊີ',
+                        style: TextStyle(
+                          fontFamily: 'Phetsarath-OT',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.sp
+                        ),
+                      ),
+                      content: ListAccountBCELONE(tablename: widget.tablename,),
+                    );
+                  });
+              
             },
             child: Container(
               height: 81.h,
@@ -99,8 +111,7 @@ class _PaymentBodyState extends State<PaymentBody> {
                           fontSize: 18.sp,
                           color: AppTheme.BASE_COLOR,
                           fontWeight: FontWeight.bold,
-                          fontFamily: 'Phetsarath-OT'
-                          ),
+                          fontFamily: 'Phetsarath-OT'),
                     )
                   ],
                 ),
@@ -112,16 +123,22 @@ class _PaymentBodyState extends State<PaymentBody> {
           ),
           GestureDetector(
             onTap: () {
-              context.read<GenerateQrMmoneyProvider>().getqrmmoney(context);
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (_) => PaymentMmoney(
-              //       tablename: widget.tablename,
-
-              //     ),
-              //   ),
-              // );
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text(
+                        'ເລືອກບັນຊີ',
+                        style: TextStyle(
+                          fontFamily: 'Phetsarath-OT',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.sp
+                        ),
+                      ),
+                      content: ListAccountMmoney(),
+                    );
+                  });
+              
             },
             child: Container(
               height: 81.h,
@@ -138,15 +155,16 @@ class _PaymentBodyState extends State<PaymentBody> {
                       height: 63.h,
                       width: 63.w,
                     ),
-                     SizedBox(width: 15.w,),
+                    SizedBox(
+                      width: 15.w,
+                    ),
                     Text(
                       "ຈ່າຍດ້ວຍ M-money",
                       style: TextStyle(
                           fontSize: 18.sp,
                           color: AppTheme.BASE_COLOR,
                           fontWeight: FontWeight.bold,
-                          fontFamily: 'Phetsarath-OT'
-                          ),
+                          fontFamily: 'Phetsarath-OT'),
                     )
                   ],
                 ),

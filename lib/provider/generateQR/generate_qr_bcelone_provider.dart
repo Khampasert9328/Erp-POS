@@ -24,13 +24,13 @@ class GenerateQRBCELONE extends ChangeNotifier {
   String get getdateTime => dateTime;
   String qrData = '';
   String get getqrData => qrData;
-  String get getShopecode => shopcode;
-  String shopcode = '12345678';
+  //String get getShopecode => shopcode;
+  //String shopcode = '12345678';
 
   //ສຳລັບ transaction
   String token =
       '${double.parse("${getTime() - 15 * 60 * 10000000}").toInt()}0000';
-  Future<String> getGenerateQR(BuildContext context) async {
+  Future<String> getGenerateQR(BuildContext context, String mcid, String shopcode) async {
     transaction = token;
     qrData = CodecampOnepay.initQR(
       mcid,

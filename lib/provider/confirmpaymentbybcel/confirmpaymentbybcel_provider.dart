@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/paymentcash/paymentcash_models.dart';
@@ -21,20 +23,21 @@ class ConfirmPaymentByBCELONE extends ChangeNotifier {
   bool isload = false;
   bool get isloading => isload;
 
-  Future<void> confirmbcelone(
-      BuildContext context) async {
+  Future<void> confirmbcelone(BuildContext context) async {
     SharedPreferences pre = await SharedPreferences.getInstance();
     String? startDate = pre.getString(CountPre().dateSubscribe);
     String? endDate = pre.getString(CountPre().dateExpired);
     String? billid = context.read<GetOrderByIssueDateProvider>().billid;
     String? sessionid = pre.getString(CountPre().sessoinid);
-    String? totalamount = context.read<GetFoodMenuProvider>().totalamont.toString();
+    String? totalamount =
+        context.read<GetFoodMenuProvider>().totalamont.toString();
     int total = int.parse(totalamount);
-    int paymenttype =1;
+    int paymenttype = 1;
 
     try {
       isload = true;
-      _createPaymentCashModels = await confirmpaymentbybcelone(context, billid!, sessionid!, startDate!, endDate!, paymenttype, 1);
+      _createPaymentCashModels = await confirmpaymentbybcelone(
+          context, billid!, sessionid!, startDate!, endDate!, paymenttype, 1);
       // print("create:$_createPaymentCashModels");
       if (_createPaymentCashModels != null) {
         showDialog(
@@ -60,7 +63,9 @@ class ConfirmPaymentByBCELONE extends ChangeNotifier {
                       Text(
                         "ຢືນຢັນການຊຳລະ",
                         style: TextStyle(
-                            fontSize: 18.sp, color: AppTheme.BASE_COLOR),
+                          fontSize: 18.sp,
+                          color: AppTheme.BASE_COLOR,
+                        ),
                       ),
                     ],
                   )),

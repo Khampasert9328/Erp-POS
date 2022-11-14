@@ -1,5 +1,6 @@
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/provider/confirmpaymentbybcel/confirmpaymentbybcel_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +11,8 @@ import 'package:qr_flutter/qr_flutter.dart';
 class PaymentMmoney extends StatefulWidget {
   final tablename;
   final qrdata;
-  const PaymentMmoney({Key? key, required this.tablename, required this.qrdata}) : super(key: key);
+  const PaymentMmoney({Key? key, required this.tablename, required this.qrdata})
+      : super(key: key);
 
   @override
   State<PaymentMmoney> createState() => _PaymentMmoneyState();
@@ -20,7 +22,6 @@ DateTime time = DateTime.now();
 final timenow = DateFormat('HH:mm').format(time);
 
 class _PaymentMmoneyState extends State<PaymentMmoney> {
- 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +56,7 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
                   fontSize: 20.sp,
                   color: AppTheme.BASE_COLOR,
                   fontWeight: FontWeight.bold,
-                   fontFamily: 'Phetsarath-OT',
+                  fontFamily: 'Phetsarath-OT',
                 ),
               ),
             ),
@@ -83,7 +84,7 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                      widget.qrdata.isEmpty
+                        widget.qrdata.isEmpty
                             ? const Center(
                                 child: CircularProgressIndicator(),
                               )
@@ -111,7 +112,34 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
                   )
                 ],
               ),
-            )
+            ),
+            SizedBox(
+              height: 5.h,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 65.0, left: 65.0),
+              child: Container(
+                height: 50.h,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: AppTheme.BASE_COLOR,
+                    borderRadius: BorderRadius.circular(10)),
+                child: TextButton(
+                  onPressed: () {
+                    ConfirmPaymentByBCELONE().confirmbcelone(context);
+                  },
+                  child: Text(
+                    "ຢືນຢັນການຊຳລະ",
+                    style: TextStyle(
+                      color: AppTheme.WHITE_COLOR,
+                      fontSize: 16.sp,
+                      fontFamily: 'Phetsarath-OT',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

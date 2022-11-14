@@ -1,7 +1,5 @@
-// ignore_for_file: avoid_unnecessary_containers, sort_child_properties_last
-
+// ignore_for_file: avoid_unnecessary_containers, sort_child_properties_last, unused_import
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:erp_pos/bussiness%20logic/authentication.dart';
 import 'package:erp_pos/constant/api_path.dart';
@@ -28,7 +26,8 @@ import 'package:erp_pos/constant/routes.dart' as custom_route;
 import '../../../constant/theme.dart';
 
 class ListViewTable extends StatefulWidget {
-  const ListViewTable({
+  
+   ListViewTable({
     Key? key,
   }) : super(key: key);
 
@@ -43,120 +42,125 @@ int selectTable = 0;
 class _ListViewTableState extends State<ListViewTable> {
   @override
   void initState() {
-   context.read<GetTableProvider>().gettablelist;
+    CountPre().getAreaId().then((value) {
+      String? id = CountPre().getAreaId().toString();
+      context.read<GetTableProvider>().gettablebyid(context, id);
+    });
+ 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 50.h,
-            width: double.infinity,
-            child: FutureBuilder<List<Area>>(
-              future: context.read<AreaProvider>().getZone(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Consumer<AreaProvider>(
-                    builder: ((context, model, _) {
-                      return ListView.builder(
-                          physics: ScrollPhysics(),
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
-                            String? id = snapshot.data![index].id ?? "";
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            selectIndex = index;
-                                            idtable = id;
-                                          });
-                                        },
-                                        child: Column(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                right: 8,
+    return  Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 50.h,
+          width: double.infinity,
+          child: FutureBuilder<List<Area>>(
+            future: context.read<AreaProvider>().getZone(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Consumer<AreaProvider>(
+                  builder: ((context, model, _) {
+                    return ListView.builder(
+                        physics: ScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          String? id = snapshot.data![index].id ?? "";
+                          CountPre().setAreaId(id);
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          selectIndex = index;
+                                          idtable = id;
+                                        });
+                                      },
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              right: 8,
+                                            ),
+                                            child: Container(
+                                              height: 40.h,
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 15.w,
                                               ),
-                                              child: Container(
-                                                height: 40.h,
-                                                padding: EdgeInsets.symmetric(
-                                                  horizontal: 15.w,
-                                                ),
-                                                decoration: BoxDecoration(
+                                              decoration: BoxDecoration(
+                                                  color: selectIndex == index
+                                                      ? AppTheme.BASE_COLOR
+                                                      : AppTheme.WHITE_COLOR,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  border: Border.all(
+                                                      color:
+                                                          AppTheme.BASE_COLOR)),
+                                              child: Center(
+                                                child: Text(
+                                                  snapshot.data![index].area!,
+                                                  style: TextStyle(
+                                                    fontFamily: 'Phetsarath-OT',
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18.sp,
                                                     color: selectIndex == index
-                                                        ? AppTheme.BASE_COLOR
-                                                        : AppTheme.WHITE_COLOR,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    border: Border.all(
-                                                        color: AppTheme
-                                                            .BASE_COLOR)),
-                                                child: Center(
-                                                  child: Text(
-                                                    snapshot.data![index].area!,
-                                                    style: TextStyle(
-                                                      fontFamily: 'Phetsarath-OT',
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 18.sp,
-                                                      color: selectIndex ==
-                                                              index
-                                                          ? AppTheme.WHITE_COLOR
-                                                          : Colors.grey,
-                                                    ),
+                                                        ? AppTheme.WHITE_COLOR
+                                                        : Colors.grey,
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: 10.h,
-                                ),
-                              ],
-                            );
-                          });
-                    }),
-                  );
-                }
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: AppTheme.BASE_COLOR,
-                  ),
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                            ],
+                          );
+                        });
+                  }),
                 );
-              },
-            ),
+              }
+              return Center(
+                child: CircularProgressIndicator(
+                  color: AppTheme.BASE_COLOR,
+                ),
+              );
+            },
           ),
-          const NavBarStatusBooking(),
-          SizedBox(
-            height: 10.h,
-          ),
-          FutureBuilder<List<GetTable>>(
-            future: context.read<GetTableProvider>().gettablebyid(context, idtable),
+        ),
+        const NavBarStatusBooking(),
+        SizedBox(
+          height: 10.h,
+        ),
+        Expanded(
+          child: FutureBuilder<List<GetTable>>(
+            future:
+                context.read<GetTableProvider>().gettablebyid(context, idtable),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Consumer<GetTableProvider>(
                   builder: ((context, model, _) {
                     return GridView.count(
                       crossAxisCount: 2,
-                      childAspectRatio: (0.8 / .4),
+                      physics: ScrollPhysics(),
+                    childAspectRatio: (0.8.w / .6.h),
                       shrinkWrap: true,
-                      crossAxisSpacing: 5.0,
+                      crossAxisSpacing: 20.0,
                       mainAxisSpacing: 10.0,
                       children: List.generate(snapshot.data!.length, (index) {
                         return GestureDetector(
@@ -175,39 +179,39 @@ class _ListViewTableState extends State<ListViewTable> {
                               selectTable = index;
                             });
                           }),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 10.h,
-                                width: 130.w,
-                                decoration: BoxDecoration(
-                                    border:
-                                        Border.all(color: AppTheme.BASE_COLOR),
-                                    borderRadius: BorderRadius.circular(10)),
-                              ),
-                              SizedBox(
-                                height: 5.h,
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    height: 50.h,
-                                    width: 10.w,
-                                    decoration: BoxDecoration(
-                                        color: AppTheme.GREEN_COLOR,
-                                        border: Border.all(
-                                            color: AppTheme.BASE_COLOR),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                  ),
-                                  SizedBox(
-                                    width: 3.w,
-                                  ),
-                                  Expanded(
-                                    child: Container(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: 10.h,
+                                  width: 120.w,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: AppTheme.BASE_COLOR,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10)),
+                                ),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 50.h,
+                                      width: 10.w,
+                                      decoration: BoxDecoration(
+                                          color: AppTheme.GREEN_COLOR,
+                                          border: Border.all(
+                                              color: AppTheme.BASE_COLOR),
+                                          borderRadius: BorderRadius.circular(10)),
+                                    ),
+                                    SizedBox(
+                                      width: 3.w,
+                                    ),
+                                    Container(
                                         height: 70.h,
-                                        width: 100,
+                                        width: 130.w,
                                         decoration: BoxDecoration(
                                             color: selectTable == index
                                                 ? AppTheme.BASE_COLOR
@@ -239,35 +243,32 @@ class _ListViewTableState extends State<ListViewTable> {
                                             ),
                                           ],
                                         )),
-                                  ),
-                                  SizedBox(
-                                    width: 3.w,
-                                  ),
-                                  Container(
-                                    height: 50.h,
-                                    width: 10.w,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: AppTheme.BASE_COLOR),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 3.h,
-                              ),
-                              Expanded(
-                                child: Container(
+                                    SizedBox(
+                                      width: 3.w,
+                                    ),
+                                    Container(
+                                      height: 50.h,
+                                      width: 10.w,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: AppTheme.BASE_COLOR),
+                                          borderRadius: BorderRadius.circular(10)),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 3.h,
+                                ),
+                                Container(
                                   height: 10.h,
-                                  width: 130.w,
+                                  width: 120.w,
                                   decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: AppTheme.BASE_COLOR),
+                                      border:
+                                          Border.all(color: AppTheme.BASE_COLOR),
                                       borderRadius: BorderRadius.circular(10)),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         );
                       }),
@@ -281,9 +282,9 @@ class _ListViewTableState extends State<ListViewTable> {
                 ),
               );
             },
-          )
-        ],
-      ),
+          ),
+        )
+      ],
     );
   }
 }

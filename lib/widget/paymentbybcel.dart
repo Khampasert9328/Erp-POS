@@ -14,7 +14,10 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 class PaymentBcelone extends StatefulWidget {
   final tablename;
-  const PaymentBcelone({Key? key, required this.tablename}) : super(key: key);
+  final mcid;
+  final shopcode;
+
+  const PaymentBcelone({Key? key, required this.tablename, required this.mcid, required this.shopcode}) : super(key: key);
 
   @override
   State<PaymentBcelone> createState() => _PaymentBceloneState();
@@ -25,7 +28,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
   @override
   void initState() {
     super.initState();
-    GenerateQRBCELONE().getGenerateQR(context).then((value) {
+    GenerateQRBCELONE().getGenerateQR(context, widget.mcid, widget.shopcode).then((value) {
       setState(() {
         qrData = value;
       });
@@ -112,7 +115,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                   TextButton(
                     onPressed: () async {
                       await GenerateQRBCELONE()
-                          .getGenerateQR(context)
+                          .getGenerateQR(context,  widget.mcid, widget.shopcode)
                           .then((value) {
                         setState(() {
                           qrData = value;

@@ -30,6 +30,40 @@ class CountPre {
   String clicktable = 'clicktable';
   String count = "count";
   String idarea = 'idarea';
+  String merchid = 'merchid';
+  String merchname = 'merchname';
+  String accountnumber = 'accountnumber';
+
+
+   Future<void> setAccountNumber(String val)async{
+    preferences = await SharedPreferences.getInstance();
+    preferences.setString(accountnumber, val);
+  }
+  Future<String?> getAccountNumber()async{
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getString(accountnumber);
+
+  }
+
+  Future<void> setMerchid(String val)async{
+    preferences = await SharedPreferences.getInstance();
+    preferences.setString(merchid, val);
+  }
+  Future<String?> getMerchid()async{
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getString(merchid);
+
+  }
+
+  Future<void> setMerchName(String val)async{
+ preferences = await SharedPreferences.getInstance();
+    preferences.setString(merchname, val);
+  }
+   Future<String?> getMerchName()async{
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getString(merchname);
+
+  }
 
   Future<void> setAreaId(String val)async{
     preferences = await SharedPreferences.getInstance();

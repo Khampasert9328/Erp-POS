@@ -40,7 +40,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
         return Scrollbar(
           child: RefreshIndicator(
             onRefresh: () async {
-              GetFoodMenuProvider().getProduct(true);
+              context.read<GetFoodMenuProvider>().getProduct(true);
             },
             key: _refresh,
             child: ListView.builder(

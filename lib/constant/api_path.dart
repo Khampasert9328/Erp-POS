@@ -26,6 +26,7 @@ class APIPath {
   static const String REFRESH_TOKEN = BASE_URL + 'Connect/refreshToken';
   static const String PAYMENT_CASH = BASE_URL + 'OrderService/CaculateMoney';
   static const String GETSESSION_BY_STATUS = BASE_URL + 'SessionService/GetByUserStatus';
-   static const String GENERATE_MMONEY = 'http://172.28.14.87:6000/GenerateQR';
+   static const String GENERATE_MMONEY = BASE_URL + 'LaoTelPoint/GenerateMmoney';
+   static const String GET_ACCOUNT = BASE_URL + 'PaymentIssuer/GetPayment';
 
 }

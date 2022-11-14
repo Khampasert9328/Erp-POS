@@ -8,7 +8,6 @@ import '../Table/table.dart';
 
 class Dasboard extends StatefulWidget {
   const Dasboard({Key? key}) : super(key: key);
-
   @override
   State<Dasboard> createState() => _DasboardState();
 }

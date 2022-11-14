@@ -51,10 +51,10 @@ class _TableBodyState extends State<TableBody> {
     CountPre().getStatus().then((value) async {
       status = await CountPre().getStatus();
       print("status:$status");
-  
+
       if (status == 0) {
-         context.read<SwitchProvider>().changSwitch(true);
-      }else{
+        context.read<SwitchProvider>().changSwitch(true);
+      } else {
         context.read<SwitchProvider>().changSwitch(false);
       }
     });
@@ -79,6 +79,15 @@ class _TableBodyState extends State<TableBody> {
           ),
         ),
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_)=>SearchTable()));
+            
+            },
+            icon: const Icon(
+              Icons.search_sharp,
+            ),
+          ),
           IconButton(
             onPressed: () {
               Mystyle().showDialogSignOut(context);
@@ -141,21 +150,16 @@ class _TableBodyState extends State<TableBody> {
             SizedBox(
               height: 7.h,
             ),
-            isWitch == false
-                ? Expanded(
-                    child: Column(
-                      children: [
-                        ListViewTable(),
-                      ],
-                    ),
-                  )
+            !isWitch
+                ? Expanded(child: ListViewTable())
                 : Padding(
                     padding: const EdgeInsets.only(top: 150),
                     child: Text(
                       "ກາລຸນາເປີດກະກ່ອນ",
                       style: TextStyle(
                         fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,fontFamily: 'Phetsarath-OT',
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Phetsarath-OT',
                       ),
                     ),
                   ),

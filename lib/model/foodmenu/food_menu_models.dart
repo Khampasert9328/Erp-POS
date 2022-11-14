@@ -102,6 +102,7 @@ class Product {
         "postype": postype,
         "selected": selected,
     };
+
 }
 
 class Size {
