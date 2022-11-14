@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_string_interpolations, use_build_context_synchronously, unused_import, depend_on_referenced_packages
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:erp_pos/constant/api_path.dart';
@@ -18,12 +19,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-Future<CreateOrderModels?> createOrder(BuildContext context) async {
+Future<CreateOrderModels?> createOrder(BuildContext context, String dateexpired, String datesup) async {
   try {
-    String? dateexpired = await CountPre().getDateExpired();
-    String? datesup = await CountPre().getDateSupscribe();
-   
-
     var str = "$dateexpired";
     var parts = str.split(' ');
     var prefix = parts[0].trim(); // prefix: "date"
@@ -36,6 +33,8 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
     var rmDate = prefixsup.replaceAll("-", ''); // prefix: "date"
     var dateSup = partsup.sublist(0).join('').trim();
 
+   
+
     String? idtoken = await CountPre().getToken();
     //ວິທີການເເຕກເອົາຂໍ້ມູນໃນ token
     String yourToken = idtoken!;
@@ -44,20 +43,26 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
     String userid = decodedToken['sub'];
     String domain = decodedToken['domain'];
 ////////////////////////////////////////////////////////////////////////////
-    var ipAddress = IpAddress(type: RequestType.json);
-    var ip = await ipAddress.getIpAddress();
-    var ipa = '$ip';
-    var ip1 = ipa.split('.');
-    var ip2 = ip1[0].trim(); // prefix: "date"
-    var ip3 = ip1.sublist(0).join('').trim();
+
 
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
     String? computer = await androidInfo.model;
-    String? billNo = await CountPre().getBillNo();
+    // String? billNo = await CountPre().getBillNo();
     String? tableid = await CountPre().getTableId();
     List<Map<String, dynamic>> products = [];
 
+    var ipA = IpAddress(type: RequestType.json);
+    dynamic data = await ipA.getIpAddress();
+    String ipaddress = data["ip"];
+    String ipc = ipaddress.replaceAll(".","");
+
+
+    print("ipaddress:$ipc");
+    
+
+    DateTime time = DateTime.now();
+    String formattime = DateFormat('yyyyMMdd').format(time);
     for (var item in context.read<GetFoodMenuProvider>().getFoodMenuModel) {
       products.add({
         "productId": "${item.data.id}",
@@ -79,14 +84,14 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
     }
     var url = "${APIPath.CREATE_ORDER}";
     String payload = jsonEncode({
-      {
+      
         "order": {
           "id": "none",
-          "issueDate": "${DateFormat("yyyMMdd").format(DateTime.now())}",
-          "date": "${DateFormat("yyyMMdd").format(DateTime.now())}",
+          "issueDate": "$formattime",
+          "date": formattime,
           "billId": "none",
-          "tableId": "$tableid",
-          "product": [products],
+          "tableId": tableid ?? 'none',
+          "product": products,
           "userId": "$username",
           "description": {
             "customerName": "none",
@@ -100,7 +105,7 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
           "metaData": {
             "modified": 0,
             "modifiedID": "$userid",
-            "ipAddress": "$ip3",
+            "ipAddress": ipc,
             "createID": "$userid",
             "created": 0,
             "computer": "$computer",
@@ -111,8 +116,8 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
         "bill": {
           "id": "none",
           "prefixid": "none",
-          "issuedate": "${DateFormat("yyyMMdd").format(DateTime.now())}",
-          "date": "${DateFormat("yyyMMdd").format(DateTime.now())}",
+          "issuedate": "$formattime",
+          "date": "$formattime",
           "discount": 0,
           "total_price": 0,
           "paid": 0,
@@ -125,7 +130,7 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
           "metaData": {
             "modified": 0,
             "modifiedID": "$userid",
-            "ipAddress": "$ip3",
+            "ipAddress": ipc,
             "createID": "$userid",
             "created": 0,
             "computer": "$computer",
@@ -135,7 +140,7 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
         },
         "packageDateStart": "$rmDate",
         "packageDateEnd": "$rmDash"
-      }
+      
     });
     var respones = await http.post(
       Uri.parse(url),
@@ -146,12 +151,11 @@ Future<CreateOrderModels?> createOrder(BuildContext context) async {
       },
       body: payload,
     );
-
     if (respones.statusCode == 200) {
-      print("resOrder:${respones.body}");
-      return createOrderModelsFromJson(json.decode(respones.body));
+      CreateOrderModels models = createOrderModelsFromJson(respones.body);
+      return models;
     }
   } catch (e) {
-    print("error:$e");
+    print("error1:$e");
   }
 }

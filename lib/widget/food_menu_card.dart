@@ -6,6 +6,7 @@ import 'package:erp_pos/pages/food_menu/components/food_menu_size.dart';
 import 'package:erp_pos/pages/food_menu_detail/components/food_menu_detail_body.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
+import 'package:erp_pos/utils/set_size.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/add_amount.dart';
 import 'package:flutter/material.dart';
@@ -174,15 +175,27 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            FoodMenuSize(size: 0, title: 'S', index: index),
+                            FoodMenuSize(
+                              size: 0,
+                              title: setSize(0),
+                              index: index,
+                            ),
                             SizedBox(
                               width: 7.w,
                             ),
-                            FoodMenuSize(size: 1, title: 'M', index: index),
+                            FoodMenuSize(
+                              size: 1,
+                              title: setSize(1),
+                              index: index,
+                            ),
                             SizedBox(
                               width: 7.w,
                             ),
-                            FoodMenuSize(size: 2, title: 'L', index: index),
+                            FoodMenuSize(
+                              size: 2,
+                              title: setSize(2),
+                              index: index,
+                            ),
                           ],
                         )
                       ],

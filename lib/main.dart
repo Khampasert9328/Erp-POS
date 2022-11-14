@@ -12,6 +12,7 @@ import 'package:erp_pos/provider/bill/print_bill_customers_provider.dart';
 import 'package:erp_pos/provider/bill/print_bill_provider.dart';
 import 'package:erp_pos/provider/checkexpiredpackage/check_exp_package_provider.dart';
 import 'package:erp_pos/provider/confirmpaymentbybcel/confirmpaymentbybcel_provider.dart';
+import 'package:erp_pos/provider/createorder/create_order_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/provider/generateQR/generate_qr_bcelone_provider.dart';
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
                 create: (_) => GetOrderByIssueDateProvider()),
             ChangeNotifierProvider(create: (_) => SessionProvoder()),
             ChangeNotifierProvider(create: (_)=>CreateOffSessionProvider()),
+            ChangeNotifierProvider(create: (_)=>CreateOrderProvider()),
             ChangeNotifierProvider(create: (_)=>SwitchProvider()),
             ChangeNotifierProvider(create: (_)=>GetTableAllProvider()),
             ChangeNotifierProvider(create: (_)=>PaymentCashProvider()),

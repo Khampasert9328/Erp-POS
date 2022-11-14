@@ -44,9 +44,9 @@ class _ListViewTableState extends State<ListViewTable> {
   void initState() {
     CountPre().getAreaId().then((value) {
       String? id = CountPre().getAreaId().toString();
+      context.read<AreaProvider>().getZone();
       context.read<GetTableProvider>().gettablebyid(context, id);
     });
- 
     super.initState();
   }
 
@@ -158,7 +158,7 @@ class _ListViewTableState extends State<ListViewTable> {
                     return GridView.count(
                       crossAxisCount: 2,
                       physics: ScrollPhysics(),
-                    childAspectRatio: (0.8.w / .6.h),
+                    childAspectRatio: (0.8.w / .5.h),
                       shrinkWrap: true,
                       crossAxisSpacing: 20.0,
                       mainAxisSpacing: 10.0,
@@ -257,7 +257,7 @@ class _ListViewTableState extends State<ListViewTable> {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 3.h,
+                                  height: 5.h,
                                 ),
                                 Container(
                                   height: 10.h,
