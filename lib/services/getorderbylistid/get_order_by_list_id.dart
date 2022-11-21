@@ -12,7 +12,7 @@ Future<GetOrderByListId?> getorderbylistid(List<String?> id, int limit,
   try {
     var url = "${APIPath.GET_ORDER_BY_LIST_ID}";
     var payload = jsonEncode({
-      "id": id,
+      "id": [id],
       "limit": limit,
       "page": page,
       "packagestartdate": startdate,

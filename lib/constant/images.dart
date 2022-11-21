@@ -39,4 +39,7 @@ class ERPImages {
   static const iconforbill = 'images/iconforbill.png';
   static const iconerror = 'images/icon-error.png';
   static const iconlogout = 'images/icon-logout.png';
+  static const onepay = 'images/onepay.png';
+  static const qrcode = 'images/qrcode.png';
+  static const iconerrorbcel = 'images/icon-error.gif';
 }

@@ -130,7 +130,7 @@ class _SearchDataMuneState extends State<SearchDataMune> {
                                                       ),
                                                     )
                                                   ])),
-                                              AddAmount()
+                                              AddAmount(index: index,)
                                             ],
                                           ),
                                         ),
@@ -187,18 +187,18 @@ class _SearchDataMuneState extends State<SearchDataMune> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  FoodMenuSize(
-                                      size: 0, title: 'S', index: index),
-                                  SizedBox(
-                                    width: 7.w,
-                                  ),
-                                  FoodMenuSize(
-                                      size: 1, title: 'M', index: index),
-                                  SizedBox(
-                                    width: 7.w,
-                                  ),
-                                  FoodMenuSize(
-                                      size: 2, title: 'L', index: index),
+                                  // FoodMenuSize(
+                                  //     size: 0, title: 'S', index: index),
+                                  // SizedBox(
+                                  //   width: 7.w,
+                                  // ),
+                                  // FoodMenuSize(
+                                  //     size: 1, title: 'M', index: index),
+                                  // SizedBox(
+                                  //   width: 7.w,
+                                  // ),
+                                  // FoodMenuSize(
+                                  //     size: 2, title: 'L', index: index),
                                 ],
                               )
                             ],

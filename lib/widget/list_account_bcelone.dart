@@ -55,13 +55,16 @@ class ListAccountBCELONE extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(5.0)),
                               child: Row(
                                 children: [
-                                  Container(
-                                    height: 50.h,
-                                    width: 50.w,
-                                    child: Image.asset(ERPImages.bcelone),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      height: 50.h,
+                                      width: 50.w,
+                                      child: Image.asset(ERPImages.onepay),
+                                    ),
                                   ),
                                   Text(
-                                    snapshot.data![index].merchname!,
+                                    snapshot.data![index].shopcode!,
                                   ),
                                 ],
                               ),

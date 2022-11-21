@@ -19,10 +19,14 @@ class FoodMenuProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int? count = 1;
+  int? count = 0;
   int? get counter => count;
   void increment(int add) async {
     count = add;
+    // CountPre().setCount(count!);
+    // int? counterr = await CountPre().getCount();
+    // print("counterone:$counterr");
+    // print("countertwo:$count");
     notifyListeners();
   }
 

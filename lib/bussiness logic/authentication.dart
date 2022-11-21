@@ -64,7 +64,6 @@ class AuthenticationProvider extends ChangeNotifier {
               ),
             );
           });
-
       ConnectValidateModels? connectValidateModels =
           await connectvalidateuser(email, context, name, lastname);
 
@@ -78,10 +77,10 @@ class AuthenticationProvider extends ChangeNotifier {
           CountPre().setRememberPassword(rememberpass);
           CountPre().setToken(connectTokenModels.content!.accessToken!);
           _sessoin = await getsessionservice();
-        print("session:$_sessoin");
           if (_sessoin != null) {
             for (var item in _sessoin!.sessionItems!) {
               CountPre().setStatus(item.status!);
+              CountPre().setSessionId(item.id!);
             }
           }
           await Navigator.pushAndRemoveUntil(
@@ -95,6 +94,7 @@ class AuthenticationProvider extends ChangeNotifier {
       Mystyle()
           .dialogError(context, "ເເຈ້ງເຕືອນ", "ກາລຸນາກວດສອບອິນເຕີເນັດຂອງທ່ານ");
     }
+    notifyListeners();
   }
 
 //ສຳລັບລົງທະບຽນ ຫຼື ສະໝັກສະມາຊິກໃໝ່
@@ -107,6 +107,8 @@ class AuthenticationProvider extends ChangeNotifier {
     ConnectValidateModels? connectValidateModel =
         await connectvalidateuser(email, context, name, lastname);
     if (connectValidateModel != null) {}
+
+    notifyListeners();
   }
 
   Future<void> registerUser(
@@ -125,24 +127,31 @@ class AuthenticationProvider extends ChangeNotifier {
       );
       if (createTenantModels != null) {}
     }
+    notifyListeners();
   }
 
   Future<void> logout(BuildContext context) async {
     SharedPreferences pre = await SharedPreferences.getInstance();
     bool? clearFristTime = await CountPre().getLogin();
-    String? saveemail = await CountPre().getemail();
+    String? saveEmail = await CountPre().getemail();
+    String? savePassword = await CountPre().getPassword();
     await pre.clear();
     if ((clearFristTime != null)) {
       if (clearFristTime) {
         await CountPre().setLogin(clearFristTime);
       }
 
-      if (saveemail != null) {
-        await CountPre().setEmail(saveemail);
+      if (saveEmail != null) {
+        await CountPre().setEmail(saveEmail);
+      }
+      if (savePassword != null) {
+        await CountPre().setPassword(savePassword);
       }
     }
     Navigator.pushAndRemoveUntil(
         context, MaterialPageRoute(builder: (_) => Login()), (route) => false);
+
+    notifyListeners();
   }
 
   Future<ConnectTokenModels?> tokenManagement(BuildContext context) async {

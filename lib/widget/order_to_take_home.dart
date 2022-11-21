@@ -115,7 +115,7 @@ class OrderToTakeHome extends StatelessWidget {
                                           )
                                         ]),
                                   ),
-                                  AddAmount(),
+                                  AddAmount(index: index,),
                                   SizedBox(
                                     height: 5.h,
                                   ),

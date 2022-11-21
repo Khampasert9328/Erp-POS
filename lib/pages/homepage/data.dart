@@ -2,6 +2,7 @@ import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/pages/bill/bill.dart';
 import 'package:erp_pos/pages/food_menu/food_menu.dart';
 import 'package:erp_pos/pages/homepage/models/homepage_bottom_bar.dart';
+import 'package:erp_pos/pages/order/order.dart';
 import 'package:erp_pos/pages/table/table.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class HomePageData {
     // ),
     POSTable(),
     FoodMenu(),
+    Order(),
     Bill(),
     // Icon(
     //   Icons.camera,

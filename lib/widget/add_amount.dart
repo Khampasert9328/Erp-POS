@@ -11,14 +11,15 @@ import 'package:provider/provider.dart';
 
 class AddAmount extends StatefulWidget {
   String? title;
-  AddAmount({this.title});
+  int index;
+  AddAmount({this.title,required this.index});
 
   @override
   State<AddAmount> createState() => _AddAmountState();
 }
 
 class _AddAmountState extends State<AddAmount> {
-  int count = 1;
+  int count = 0;
   bool show = false;
   void setNumber(bool isAdd) {
     if (isAdd) {
@@ -54,7 +55,6 @@ class _AddAmountState extends State<AddAmount> {
             onTap: () async {
               setNumber(true);
               context.read<FoodMenuProvider>().increment(count);
-
               CountPre().setCount(count);
             },
             child: FoodMenuButton(

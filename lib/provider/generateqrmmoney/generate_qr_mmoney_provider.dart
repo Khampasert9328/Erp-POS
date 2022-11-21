@@ -11,17 +11,20 @@ class GenerateQrMmoneyProvider extends ChangeNotifier {
   GenerateQrMmoney? _generateQrMmoney;
   GenerateQrMmoney? get generateQrMmoney => _generateQrMmoney;
 
-  Future<void> getqrmmoney(BuildContext context, String username, String walletid) async {
+  Future<void> getqrmmoney(
+      BuildContext context, String username, String walletid) async {
     String? tablename = await CountPre().getTableName();
     _generateQrMmoney = await generatemmneyservice(context, username, walletid);
-  
+
     if (_generateQrMmoney != null) {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (_) => PaymentMmoney(
             qrdata: _generateQrMmoney!.qrcodeStr,
-            tablename: tablename,
+            tablename: tablename ?? "ບໍ່ມີໂຕະ",
+            username: username,
+            walletid: walletid,
           ),
         ),
       );

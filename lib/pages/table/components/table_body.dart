@@ -52,7 +52,7 @@ class _TableBodyState extends State<TableBody> {
       status = await CountPre().getStatus();
       print("status:$status");
 
-      if (status == 0) {
+      if (status == 1) {
         context.read<SwitchProvider>().changSwitch(true);
       } else {
         context.read<SwitchProvider>().changSwitch(false);
@@ -79,15 +79,15 @@ class _TableBodyState extends State<TableBody> {
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_)=>SearchTable()));
-            
-            },
-            icon: const Icon(
-              Icons.search_sharp,
-            ),
-          ),
+          // IconButton(
+          //   onPressed: () {
+          //     Navigator.of(context).push(MaterialPageRoute(builder: (_)=>SearchTable()));
+
+          //   },
+          //   icon: const Icon(
+          //     Icons.search_sharp,
+          //   ),
+          // ),
           IconButton(
             onPressed: () {
               Mystyle().showDialogSignOut(context);
@@ -151,7 +151,9 @@ class _TableBodyState extends State<TableBody> {
               height: 7.h,
             ),
             !isWitch
-                ? Expanded(child: ListViewTable())
+                ? Expanded(
+                    child: ListViewTable(),
+                  )
                 : Padding(
                     padding: const EdgeInsets.only(top: 150),
                     child: Text(

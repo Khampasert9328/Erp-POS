@@ -26,8 +26,7 @@ import 'package:erp_pos/constant/routes.dart' as custom_route;
 import '../../../constant/theme.dart';
 
 class ListViewTable extends StatefulWidget {
-  
-   ListViewTable({
+  ListViewTable({
     Key? key,
   }) : super(key: key);
 
@@ -44,7 +43,6 @@ class _ListViewTableState extends State<ListViewTable> {
   void initState() {
     CountPre().getAreaId().then((value) {
       String? id = CountPre().getAreaId().toString();
-      context.read<AreaProvider>().getZone();
       context.read<GetTableProvider>().gettablebyid(context, id);
     });
     super.initState();
@@ -52,7 +50,7 @@ class _ListViewTableState extends State<ListViewTable> {
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
@@ -158,7 +156,7 @@ class _ListViewTableState extends State<ListViewTable> {
                     return GridView.count(
                       crossAxisCount: 2,
                       physics: ScrollPhysics(),
-                    childAspectRatio: (0.8.w / .5.h),
+                      childAspectRatio: (0.8.w / .5.h),
                       shrinkWrap: true,
                       crossAxisSpacing: 20.0,
                       mainAxisSpacing: 10.0,
@@ -167,7 +165,8 @@ class _ListViewTableState extends State<ListViewTable> {
                           onTap: (() {
                             bool clicktable = true;
                             CountPre().setClickTable(clicktable);
-                            CountPre().setTableName(snapshot.data![index].name!);
+                            CountPre()
+                                .setTableName(snapshot.data![index].name!);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -201,10 +200,11 @@ class _ListViewTableState extends State<ListViewTable> {
                                       height: 50.h,
                                       width: 10.w,
                                       decoration: BoxDecoration(
-                                          color: AppTheme.GREEN_COLOR,
-                                          border: Border.all(
-                                              color: AppTheme.BASE_COLOR),
-                                          borderRadius: BorderRadius.circular(10)),
+                                        color: AppTheme.GREEN_COLOR,
+                                        border: Border.all(
+                                            color: AppTheme.BASE_COLOR),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
                                     ),
                                     SizedBox(
                                       width: 3.w,
@@ -252,7 +252,8 @@ class _ListViewTableState extends State<ListViewTable> {
                                       decoration: BoxDecoration(
                                           border: Border.all(
                                               color: AppTheme.BASE_COLOR),
-                                          borderRadius: BorderRadius.circular(10)),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
                                     ),
                                   ],
                                 ),
@@ -263,8 +264,8 @@ class _ListViewTableState extends State<ListViewTable> {
                                   height: 10.h,
                                   width: 120.w,
                                   decoration: BoxDecoration(
-                                      border:
-                                          Border.all(color: AppTheme.BASE_COLOR),
+                                      border: Border.all(
+                                          color: AppTheme.BASE_COLOR),
                                       borderRadius: BorderRadius.circular(10)),
                                 ),
                               ],

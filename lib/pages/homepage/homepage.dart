@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
             color: AppTheme.BASE_COLOR,
             activeColor: AppTheme.WHITE_COLOR,
             iconSize: 28,
-            textStyle: TextStyle(
+            textStyle: const TextStyle(
               color: Colors.white,
               fontFamily: 'Phetsarath-OT',
             ),
@@ -58,6 +58,10 @@ class _HomePageState extends State<HomePage> {
               GButton(
                 icon: Icons.local_dining,
                 text: 'ເມນູ',
+              ),
+              GButton(
+                icon: Icons.local_grocery_store,
+                text: "ອໍເດີ",
               ),
               GButton(
                 icon: Icons.blinds_closed,

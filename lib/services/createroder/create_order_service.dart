@@ -19,7 +19,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-Future<CreateOrderModels?> createOrder(BuildContext context, String dateexpired, String datesup) async {
+Future<CreateOrderModels?> createOrder(
+    BuildContext context, String dateexpired, String datesup) async {
   try {
     var str = "$dateexpired";
     var parts = str.split(' ');
@@ -33,8 +34,6 @@ Future<CreateOrderModels?> createOrder(BuildContext context, String dateexpired,
     var rmDate = prefixsup.replaceAll("-", ''); // prefix: "date"
     var dateSup = partsup.sublist(0).join('').trim();
 
-   
-
     String? idtoken = await CountPre().getToken();
     //ວິທີການເເຕກເອົາຂໍ້ມູນໃນ token
     String yourToken = idtoken!;
@@ -43,7 +42,6 @@ Future<CreateOrderModels?> createOrder(BuildContext context, String dateexpired,
     String userid = decodedToken['sub'];
     String domain = decodedToken['domain'];
 ////////////////////////////////////////////////////////////////////////////
-
 
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
@@ -55,14 +53,12 @@ Future<CreateOrderModels?> createOrder(BuildContext context, String dateexpired,
     var ipA = IpAddress(type: RequestType.json);
     dynamic data = await ipA.getIpAddress();
     String ipaddress = data["ip"];
-    String ipc = ipaddress.replaceAll(".","");
-
-
-    print("ipaddress:$ipc");
-    
+    String ipc = ipaddress.replaceAll(".", "");
 
     DateTime time = DateTime.now();
-    String formattime = DateFormat('yyyyMMdd').format(time);
+    String issueDate = DateFormat('yyyyMMdd').format(time);
+    String date = DateFormat('dd-MM-yyyy HH:mm:ss').format(time);
+
     for (var item in context.read<GetFoodMenuProvider>().getFoodMenuModel) {
       products.add({
         "productId": "${item.data.id}",
@@ -84,63 +80,61 @@ Future<CreateOrderModels?> createOrder(BuildContext context, String dateexpired,
     }
     var url = "${APIPath.CREATE_ORDER}";
     String payload = jsonEncode({
-      
-        "order": {
-          "id": "none",
-          "issueDate": "$formattime",
-          "date": formattime,
-          "billId": "none",
-          "tableId": tableid ?? 'none',
-          "product": products,
-          "userId": "$username",
-          "description": {
-            "customerName": "none",
-            "contact": ["none"],
-            "village": "none",
-            "district": "none",
-            "province": "none"
-          },
-          "status": 0,
-          "domain": "$domain",
-          "metaData": {
-            "modified": 0,
-            "modifiedID": "$userid",
-            "ipAddress": ipc,
-            "createID": "$userid",
-            "created": 0,
-            "computer": "$computer",
-            "note": "none",
-            "jobId": "none"
-          }
+      "order": {
+        "id": "none",
+        "issueDate": "$issueDate",
+        "date": date,
+        "billId": "none",
+        "tableId": tableid ?? 'none',
+        "product": products,
+        "userId": "$username",
+        "description": {
+          "customerName": "none",
+          "contact": ["none"],
+          "village": "none",
+          "district": "none",
+          "province": "none"
         },
-        "bill": {
-          "id": "none",
-          "prefixid": "none",
-          "issuedate": "$formattime",
-          "date": "$formattime",
-          "discount": 0,
-          "total_price": 0,
-          "paid": 0,
-          "credit": 0,
-          "customerid": "none",
-          "paymentMethod": 0,
-          "timeReport": "none",
-          "time": "none",
-          "domain": "$domain",
-          "metaData": {
-            "modified": 0,
-            "modifiedID": "$userid",
-            "ipAddress": ipc,
-            "createID": "$userid",
-            "created": 0,
-            "computer": "$computer",
-            "note": "none",
-            "jobId": "none"
-          }
-        },
-        "packageDateStart": "$rmDate",
-        "packageDateEnd": "$rmDash"
-      
+        "status": 0,
+        "domain": "$domain",
+        "metaData": {
+          "modified": 0,
+          "modifiedID": "$userid",
+          "ipAddress": ipc,
+          "createID": "$userid",
+          "created": 0,
+          "computer": "$computer",
+          "note": "none",
+          "jobId": "none"
+        }
+      },
+      "bill": {
+        "id": "none",
+        "prefixid": "none",
+        "issuedate": "$issueDate",
+        "date": date,
+        "discount": 0,
+        "total_price": 0,
+        "paid": 0,
+        "credit": 0,
+        "customerid": "none",
+        "paymentMethod": 0,
+        "timeReport": "none",
+        "time": "none",
+        "domain": "$domain",
+        "metaData": {
+          "modified": 0,
+          "modifiedID": "$userid",
+          "ipAddress": ipc,
+          "createID": "$userid",
+          "created": 0,
+          "computer": "$computer",
+          "note": "none",
+          "jobId": "none"
+        }
+      },
+      "packageDateStart": "$rmDate",
+      "packageDateEnd": "$rmDash"
     });
     var respones = await http.post(
       Uri.parse(url),

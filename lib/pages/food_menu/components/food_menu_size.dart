@@ -9,30 +9,37 @@ class FoodMenuSize extends StatelessWidget {
   String title;
   int size;
   int index;
+  int mainsize;
+  VoidCallback onPressed;
 
-  FoodMenuSize({required this.size, required this.title, required this.index});
+  FoodMenuSize({
+    required this.size,
+    required this.title,
+    required this.index,
+    required this.mainsize,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Consumer<GetFoodMenuProvider>(builder: (context, model, _) {
       return GestureDetector(
-        onTap: () {
-          
-        },
+        onTap: onPressed,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(3.r),
-              color: model.getlistProduct[index].size == size ? AppTheme.YELLOW_COLOR : Colors.white,
+              color: mainsize == size ? AppTheme.YELLOW_COLOR : Colors.white,
               border: Border.all(
-                  color:
-                  model.getlistProduct[index].size == size ? AppTheme.YELLOW_COLOR : Color(0xFFD9D9D9))),
+                  color: mainsize == size
+                      ? AppTheme.YELLOW_COLOR
+                      : Color(0xFFD9D9D9))),
           child: Text(
             title,
             style: TextStyle(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w700,
-                color: model.getlistProduct[index].size == size ? Colors.white : Color(0xFFD9D9D9)),
+                color: mainsize == size ? Colors.white : Color(0xFFD9D9D9)),
           ),
         ),
       );

@@ -59,8 +59,8 @@ class _paycashState extends State<paycash> {
                 borderRadius: BorderRadius.circular(10),
               ),
               onPressed: () {
-                String mmoney = money.text.replaceAll(',', '');
-                int intMoney = int.parse(mmoney);
+                String? mmoney = money.text.replaceAll(',', '');
+                int? intMoney = int.parse(mmoney);
                 PaymentCashProvider()
                     .createpaymentcashprovider(context, intMoney);
               },
@@ -86,7 +86,7 @@ class _paycashState extends State<paycash> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "ຈ່່າຍເງິນສົດ",
+                      "ຈ່າຍເງິນສົດ",
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,

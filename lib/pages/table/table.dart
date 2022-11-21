@@ -14,13 +14,11 @@ class POSTable extends StatefulWidget {
 }
 
 class _POSTableState extends State<POSTable> {
-  
   @override
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
     return Scaffold(
       body: const TableBody(),
-   
     );
   }
 }

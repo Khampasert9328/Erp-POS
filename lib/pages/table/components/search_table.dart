@@ -164,7 +164,7 @@ class _SearchTableState extends State<SearchTable> {
               FutureBuilder<List<GetTable>>(
                 future: context
                     .read<GetTableProvider>()
-                    .gettablebyid(context, idtable),
+                    .gettablebyid(context, idtable!),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Consumer<GetTableProvider>(
