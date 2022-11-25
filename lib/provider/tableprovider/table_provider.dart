@@ -15,6 +15,7 @@ class GetTableProvider extends ChangeNotifier {
       _tablelist = models.table!;
       for (var item in models.table!) {
         CountPre().setTableId(item.id!);
+        CountPre().setStatusTable(item.status!);
       }
       notifyListeners();
     }

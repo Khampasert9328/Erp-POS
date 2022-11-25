@@ -33,14 +33,25 @@ class CountPre {
   String merchname = 'merchname';
   String accountnumber = 'accountnumber';
   String password = 'password';
+  String statusTable = 'statusTable';
+
+  Future<void> setStatusTable(int val) async {
+    preferences = await SharedPreferences.getInstance();
+    preferences.setInt(statusTable, val);
+  }
+
+  Future<int?> getStatusTable()async{
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getInt(statusTable);
+  }
 
   String sumnumber = 'sumnumber';
-  Future<void> setSumnumber(int val)async{
+  Future<void> setSumnumber(int val) async {
     preferences = await SharedPreferences.getInstance();
     preferences.setInt(sumnumber, val);
   }
 
-  Future<int?> getSumnumber()async{
+  Future<int?> getSumnumber() async {
     preferences = await SharedPreferences.getInstance();
     preferences.getInt(sumnumber);
   }

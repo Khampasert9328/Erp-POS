@@ -39,12 +39,17 @@ int? selectIndex = 0;
 String? idtable;
 int selectTable = 0;
 
+int? statusTable;
+
 class _ListViewTableState extends State<ListViewTable> {
   @override
   void initState() {
-    CountPre().getAreaId().then((value) {
-      String? id = CountPre().getAreaId().toString();
-      context.read<GetTableProvider>().gettablebyid(context, id);
+    CountPre().getStatusTable().then((value) async{
+      statusTable = (await CountPre().getStatusTable())!;
+
+      if (statusTable==1) {
+        checkStatus(Colors.red);
+      }
     });
     super.initState();
   }
@@ -82,7 +87,6 @@ class _ListViewTableState extends State<ListViewTable> {
                                         setState(() {
                                           selectIndex = index;
                                           idtable = id;
-                                          
                                         });
                                       },
                                       child: Column(
