@@ -13,6 +13,7 @@ import 'package:erp_pos/pages/table/components/navbar_status_booking_next.dart';
 import 'package:erp_pos/pages/table_detail/components/table_detail_body.dart';
 import 'package:erp_pos/provider/areaprovider/area_provider.dart';
 import 'package:erp_pos/provider/areaprovider/insert_area_provider.dart';
+import 'package:erp_pos/provider/listtable/list_table_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/services/getArea/get_area.dart';
 import 'package:erp_pos/utils/check_status.dart';
@@ -81,6 +82,7 @@ class _ListViewTableState extends State<ListViewTable> {
                                         setState(() {
                                           selectIndex = index;
                                           idtable = id;
+                                          
                                         });
                                       },
                                       child: Column(
@@ -176,6 +178,7 @@ class _ListViewTableState extends State<ListViewTable> {
                             );
                             setState(() {
                               selectTable = index;
+                              context.read<ListTableProvider>().addTable(snapshot.data![index].name!);
                             });
                           }),
                           child: SingleChildScrollView(

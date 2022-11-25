@@ -42,4 +42,5 @@ class ERPImages {
   static const onepay = 'images/onepay.png';
   static const qrcode = 'images/qrcode.png';
   static const iconerrorbcel = 'images/icon-error.gif';
+  static const logotokitchen = 'images/logo-animation.gif';
 }

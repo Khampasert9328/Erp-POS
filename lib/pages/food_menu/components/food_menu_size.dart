@@ -8,18 +8,18 @@ import 'package:provider/provider.dart';
 class FoodMenuSize extends StatelessWidget {
   String title;
   int size;
-  int index;
   int mainsize;
+  bool select;
   VoidCallback onPressed;
 
   FoodMenuSize({
     required this.size,
     required this.title,
-    required this.index,
     required this.mainsize,
+    required this.select,
     required this.onPressed,
   });
-
+  List<Size?> sizedata=[];
   @override
   Widget build(BuildContext context) {
     return Consumer<GetFoodMenuProvider>(builder: (context, model, _) {

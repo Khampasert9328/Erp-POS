@@ -33,12 +33,15 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
   List<Product> listdata = [];
 
   final _refresh = GlobalKey<RefreshIndicatorState>();
-
+  int index = 0;
+  bool selectone = false;
+   bool selecttwo = false;
+    bool selectree = false;
   int add = 0;
   int mainsize = 0;
   int smalsize = 0;
-  int meduimsize = 1;
-  int largesize = 2;
+  int meduimsize = 0;
+  int largesize = 0;
   @override
   @override
   Widget build(BuildContext context) {
@@ -54,6 +57,9 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                 itemCount: getFoodModel.listProduct.length,
                 itemBuilder: (context, index) {
                   final data = getFoodModel.listProduct[index];
+                  // for (var size in data.data.size!) {
+                  //   print("sizesmall:${size.size}");
+                  // }
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 5.h),
                     child: Column(
@@ -128,7 +134,9 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                 ),
                                               )
                                             ])),
-                                        AddAmount(index: index,)
+                                        AddAmount(
+                                          index: index,
+                                        )
                                       ],
                                     ),
                                   ),
@@ -160,10 +168,8 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                       int? amount = context
                                           .read<FoodMenuProvider>()
                                           .counter;
-                                      CountPre().setCount(amount!);
                                       int totalAmount =
-                                          data.data.pricesale! * amount;
-                                      //addOrder(index);
+                                          data.data.pricesale! * amount!;
                                       getFoodModel.setFoodMenuData(
                                           data.data, amount, totalAmount);
                                       foodModel.increment(add);
@@ -183,44 +189,47 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             FoodMenuSize(
+                             select: !selectone,
                               onPressed: (() {
                                 setState(() {
+                                  index = 0;
                                   mainsize = smalsize;
                                 });
                               }),
-                              mainsize: mainsize,
+                              mainsize: smalsize,
                               size: smalsize,
                               title: setSize(0),
-                              index: index,
                             ),
                             SizedBox(
                               width: 7.w,
                             ),
                             FoodMenuSize(
+                             select: !selecttwo,
                               onPressed: () {
                                 setState(() {
+                                  index = 1;
                                   mainsize = meduimsize;
                                 });
-                               
                               },
-                              mainsize: mainsize,
+                              mainsize: meduimsize,
                               size: meduimsize,
                               title: setSize(1),
-                              index: index,
                             ),
                             SizedBox(
                               width: 7.w,
                             ),
                             FoodMenuSize(
+                             select: !selectree,
                               onPressed: () {
                                 setState(() {
+                                  index = 2;
                                   mainsize = largesize;
+                                  print("index:$index");
                                 });
                               },
-                              mainsize: mainsize,
+                              mainsize: largesize,
                               size: largesize,
                               title: setSize(2),
-                              index: index,
                             ),
                           ],
                         )

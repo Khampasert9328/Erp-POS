@@ -83,7 +83,7 @@ class ConfirmPaymentByBCELONE extends ChangeNotifier {
                 ),
               );
             });
-             await Future.delayed(Duration(seconds: 1));
+             await Future.delayed(Duration(seconds: 3));
              Navigator.pop(context);
           
       }

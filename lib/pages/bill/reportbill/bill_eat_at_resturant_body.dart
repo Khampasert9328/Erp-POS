@@ -51,9 +51,6 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                 for (var i in value.getOrderByListId!.bill!) {
                   if (i.id == value.order!.order![index].billid) {
                     prefix.add(i.prefixid!);
-                    // print("value:${value.order!.order![index].billid}");
-                    // print("itemId:${i.id}");
-                    // print("prefix:${i.prefixid}");
                   }
                 }
                 List<String> table =[];
@@ -72,7 +69,7 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => BodyDetailBill(dataorder: value.order,)
+                              builder: (_) => BodyDetailBill(dataorder: value.order!,)
                             ),
                           );
                         },

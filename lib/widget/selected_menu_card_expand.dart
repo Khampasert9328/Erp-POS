@@ -14,7 +14,6 @@ import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
-import 'package:erp_pos/utils/sqliteERP/sqlite_erp_pos.dart';
 import 'package:erp_pos/widget/add_amount.dart';
 import 'package:erp_pos/widget/calculate_money.dart';
 import 'package:erp_pos/widget/style.dart';
@@ -39,33 +38,8 @@ class SelectedMenuCardExpand extends StatefulWidget {
 }
 
 class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
-  // int count = 0;
-  // void setNumber(bool isAdd) {
-  //   if (isAdd) {
-  //     setState(() {
-  //       count++;
-  //     });
-  //   } else {
-  //     if (count > 0) {
-  //       setState(() {
-  //         count--;
-  //       });
-  //     }
-  //   }
-  // }
-
-  int? sumnumber;
-
-  @override
-  void initState() {
-    CountPre().getSumnumber().then((value) async {
-      sumnumber = await CountPre().getSumnumber();
-    });
-    super.initState();
-  }
-
   bool? clicktable = false;
-
+  int amountData = 0;
   Widget build(BuildContext context) {
     return Scaffold(
       body: StatefulBuilder(
@@ -112,22 +86,21 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                           void setNumber(bool isAdd) {
                             if (isAdd) {
                               setState(() {
-                                value.getFoodMenuModel[index].number++;
-                                int number =
-                                    value.getFoodMenuModel[index].number;
-                                int amountsumall = context
+                                amountData =
+                                    value.getFoodMenuModel[index].totalAmount;
+                                context
                                     .read<GetFoodMenuProvider>()
-                                    .totalamont;
-                                sumnumber = number * amountsumall;
-                                // CountPre().setSumnumber(summ);
-                                // print("number: $number");
-                                // print("amountsumall: $amountsumall");
-                                // print("summ: $sumnumber");
+                                    .addTotalAmount(amountData);
                               });
                             } else {
                               if (value.getFoodMenuModel[index].number > 1) {
                                 setState(() {
-                                  value.getFoodMenuModel[index].number -= 1;
+                                  amountData =
+                                      value.getFoodMenuModel[index].totalAmount;
+
+                                  context
+                                      .read<GetFoodMenuProvider>()
+                                      .deleteTotalAmount(amountData);
                                 });
                               }
                             }
@@ -225,10 +198,12 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                                   setNumber(true);
                                                   context
                                                       .read<FoodMenuProvider>()
-                                                      .increment(value
-                                                          .getFoodMenuModel[
-                                                              index]
-                                                          .number);
+                                                      .increment(
+                                                        value
+                                                            .getFoodMenuModel[
+                                                                index]
+                                                            .number++,
+                                                      );
                                                   //CountPre().setCount(count);
                                                 },
                                                 child: FoodMenuButton(
@@ -264,13 +239,15 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                               ),
                                               GestureDetector(
                                                 onTap: () async {
-                                                  //setNumber(false);
+                                                  setNumber(false);
                                                   context
                                                       .read<FoodMenuProvider>()
-                                                      .remove(value
-                                                          .getFoodMenuModel[
-                                                              index]
-                                                          .number);
+                                                      .remove(
+                                                        value
+                                                            .getFoodMenuModel[
+                                                                index]
+                                                            .number--,
+                                                      );
                                                   //CountPre().setamount(count);
                                                 },
                                                 child: FoodMenuButton(
@@ -294,16 +271,12 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                             onPressed: () async {
                                               context
                                                   .read<GetFoodMenuProvider>()
-                                                  .deleteTotalAmount(value
-                                                      .getFoodMenuModel[index]
-                                                      .totalAmount);
-                                              context
-                                                  .read<GetFoodMenuProvider>()
-                                                  .deleteData(index);
-
-                                              context
-                                                  .read<GetFoodMenuProvider>()
-                                                  .clearKitchenData();
+                                                  .deleteData(
+                                                      index,
+                                                      value
+                                                          .getFoodMenuModel[
+                                                              index]
+                                                          .totalAmount);
                                             },
                                             icon: Image.asset(
                                               ERPImages.icondelete,
@@ -355,7 +328,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                           width: 20.w,
                         ),
                         Text(
-                          'ລວມລາຄາ: ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(sumnumber ?? context.read<GetFoodMenuProvider>().totalamont)} ',
+                          'ລວມລາຄາ: ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ',
                           style: TextStyle(
                             fontFamily: 'Phetsarath-OT',
                             fontSize: 15.sp,
@@ -435,19 +408,48 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                       Mystyle().showDialogCheckData(
                           context, "ກາລຸນາກວດສອບອໍເດີຂອງທ່ານກ່ອນ");
                     } else {
+                      showDialog(
+                          context: context,
+                          builder: (_) {
+                            return Dialog(
+                              child: SizedBox(
+                                height: 200.h,
+                                width: 100.w,
+                                child: Center(
+                                    child: Column(
+                                  children: [
+                                    Image.asset(
+                                      ERPImages.logotokitchen,
+                                      height: 104.h,
+                                      width: 104.w,
+                                    ),
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
+                                    Text(
+                                      "ອໍເດີກຳລັງສົ່ງໄປຫ້ອງຄົວ",
+                                      style: TextStyle(
+                                          fontSize: 18.sp,
+                                          color: AppTheme.BASE_COLOR),
+                                    ),
+                                  ],
+                                )),
+                              ),
+                            );
+                          });
+                      await Future.delayed(Duration(seconds: 15));
+                      Navigator.pop(context);
                       String? tablename = await CountPre().getTableName();
 
                       await CheckExpiredPackage()
                           .getCheckExpiredPackage(context)
                           .then((value) async {
                         PrintBillKitchenProvider().getprint();
-                        SharedPreferences preferences =
-                            await SharedPreferences.getInstance();
-                        String? getzone =
-                            preferences.getString(CountPre().idzone);
-                        SharedPreferences pri =
-                            await SharedPreferences.getInstance();
-                        String? billNo = pri.getString(CountPre().billNo);
+
+                        String? getzone = await CountPre().getAreaId();
+                        //preferences.getString(CountPre().idzone);
+
+                        String? billNo = await CountPre().getBillNo();
 
                         try {
                           await SunmiPrinter.startTransactionPrint();
@@ -484,7 +486,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                           await SunmiPrinter.printRow(cols: [
                             ColumnMaker(text: 'ເລກໂຕະ', width: 6),
                             ColumnMaker(
-                                text: '${tablename ?? "ສັ່ງກັບບ້ານ"}',
+                                text: '${tablename ?? "none"}',
                                 width: 6,
                                 align: SunmiPrintAlign.RIGHT),
                           ]);
@@ -522,7 +524,6 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                           print("error:$e");
                         }
                       });
-
                       await Navigator.push(
                         context,
                         MaterialPageRoute(

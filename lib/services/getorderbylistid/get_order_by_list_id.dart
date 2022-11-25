@@ -6,17 +6,17 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<GetOrderByListId?> getorderbylistid(List<String?> id, int limit,
+Future<GetOrderByListId?> getorderbylistid( List<String>id, int limit,
     int page, String? startdate, String? endDate) async {
   String? idtoken = await CountPre().getToken();
   try {
     var url = "${APIPath.GET_ORDER_BY_LIST_ID}";
     var payload = jsonEncode({
-      "id": [id],
+      "id": id,
       "limit": limit,
       "page": page,
-      "packagestartdate": startdate,
-      "packageenddate": endDate
+      "packagestartdate": "$startdate",
+      "packageenddate": "$endDate"
     });
     var respones = await http.post(Uri.parse(url), body: payload, headers: {
       "accept": "text/plain",

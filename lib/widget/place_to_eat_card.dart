@@ -76,7 +76,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                               fontSize: 16.sp,
                               fontWeight: FontWeight.bold,
                               color: AppTheme.BASE_COLOR,
-                               fontFamily: 'Phetsarath-OT',
+                              fontFamily: 'Phetsarath-OT',
                             ),
                           ),
                         ],
@@ -93,9 +93,38 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                         Mystyle().showDialogCheckData(
                             context, "ກາລຸນາກວດສອບອໍເດີຂອງທ່ານກ່ອນ");
                       } else {
+                        showDialog(
+                            context: context,
+                            builder: (_) {
+                              return Dialog(
+                                child: SizedBox(
+                                  height: 200.h,
+                                  width: 100.w,
+                                  child: Center(
+                                      child: Column(
+                                    children: [
+                                      Image.asset(
+                                        ERPImages.logotokitchen,
+                                        height: 104.h,
+                                        width: 104.w,
+                                      ),
+                                      SizedBox(
+                                        height: 10.h,
+                                      ),
+                                      Text(
+                                        "ອໍເດີກຳລັງສົ່ງໄປຫ້ອງຄົວ",
+                                        style: TextStyle(
+                                            fontSize: 18.sp,
+                                            color: AppTheme.BASE_COLOR),
+                                      ),
+                                    ],
+                                  )),
+                                ),
+                              );
+                            });
+                        await Future.delayed(Duration(seconds: 5));
+                        Navigator.pop(context);
                         String? tablename = await CountPre().getTableName();
-                            
-
                         await CheckExpiredPackage()
                             .getCheckExpiredPackage(context)
                             .then((value) async {
@@ -147,7 +176,6 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                   width: 6,
                                   align: SunmiPrintAlign.RIGHT),
                             ]);
-
                             await SunmiPrinter.line();
                             await SunmiPrinter.printText('ລາຍການອາຫານ',
                                 style: SunmiStyle(
@@ -207,7 +235,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                           Text(
                             "ສົ່ງຫ້ອງຄົວ",
                             style: TextStyle(
-                               fontFamily: 'Phetsarath-OT',
+                                fontFamily: 'Phetsarath-OT',
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.bold,
                                 color: AppTheme.WHITE_COLOR),
@@ -235,7 +263,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                 labelColor: Colors.black,
                 labelStyle: TextStyle(
                   fontSize: 18.sp,
-                   fontFamily: 'Phetsarath-OT',
+                  fontFamily: 'Phetsarath-OT',
                 ),
                 tabs: const [
                   Tab(
@@ -249,13 +277,8 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
               SizedBox(
                 height: 10.h,
               ),
-              SizedBox(
-                height: 10.h,
-              ),
               Expanded(
                 child: TabBarView(
-                  controller: controller,
-                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     EatResturant(),
                     OrderToTakeHome(),
