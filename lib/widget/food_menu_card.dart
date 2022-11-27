@@ -38,10 +38,9 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
    bool selecttwo = false;
     bool selectree = false;
   int add = 0;
-  int mainsize = 0;
   int smalsize = 0;
-  int meduimsize = 0;
-  int largesize = 0;
+  int meduimsize = 1;
+  int largesize = 2;
   @override
   @override
   Widget build(BuildContext context) {
@@ -57,6 +56,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                 itemCount: getFoodModel.listProduct.length,
                 itemBuilder: (context, index) {
                   final data = getFoodModel.listProduct[index];
+                  int mainsize = data.size;
                   // for (var size in data.data.size!) {
                   //   print("sizesmall:${size.size}");
                   // }
@@ -191,12 +191,9 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                             FoodMenuSize(
                              select: !selectone,
                               onPressed: (() {
-                                setState(() {
-                                  index = 0;
-                                  mainsize = smalsize;
-                                });
-                              }),
-                              mainsize: smalsize,
+                                context.read<GetFoodMenuProvider>().setProductSize(smalsize, index);    
+                             }),
+                              mainsize: mainsize,
                               size: smalsize,
                               title: setSize(0),
                             ),
@@ -206,12 +203,9 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                             FoodMenuSize(
                              select: !selecttwo,
                               onPressed: () {
-                                setState(() {
-                                  index = 1;
-                                  mainsize = meduimsize;
-                                });
+                                 context.read<GetFoodMenuProvider>().setProductSize(meduimsize, index);
                               },
-                              mainsize: meduimsize,
+                              mainsize: mainsize,
                               size: meduimsize,
                               title: setSize(1),
                             ),
@@ -221,13 +215,9 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                             FoodMenuSize(
                              select: !selectree,
                               onPressed: () {
-                                setState(() {
-                                  index = 2;
-                                  mainsize = largesize;
-                                  print("index:$index");
-                                });
+                                  context.read<GetFoodMenuProvider>().setProductSize(largesize, index);
                               },
-                              mainsize: largesize,
+                              mainsize: mainsize,
                               size: largesize,
                               title: setSize(2),
                             ),

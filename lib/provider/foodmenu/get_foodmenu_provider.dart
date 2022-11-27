@@ -81,4 +81,9 @@ class GetFoodMenuProvider extends ChangeNotifier {
     foodMenuModel = [];
     notifyListeners();
   }
+
+  void setProductSize(int size, int index){
+    listProduct[index].size = size;
+    notifyListeners();
+  }
 }
