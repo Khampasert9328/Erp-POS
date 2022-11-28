@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 class AddAmount extends StatefulWidget {
   String? title;
   int index;
-  AddAmount({this.title,required this.index});
+  AddAmount({this.title, required this.index});
 
   @override
   State<AddAmount> createState() => _AddAmountState();
@@ -27,7 +27,7 @@ class _AddAmountState extends State<AddAmount> {
         count += 1;
       });
     } else {
-      if (count > 1) {
+      if (count > 0) {
         setState(() {
           count -= 1;
         });
@@ -53,12 +53,12 @@ class _AddAmountState extends State<AddAmount> {
         Expanded(
           child: GestureDetector(
             onTap: () async {
-              setNumber(true);
-              context.read<FoodMenuProvider>().increment(count);
-              CountPre().setCount(count);
+              setNumber(false);
+              context.read<FoodMenuProvider>().remove(count);
+              CountPre().setamount(count);
             },
             child: FoodMenuButton(
-              title: '+',
+              title: '-',
             ),
           ),
         ),
@@ -81,12 +81,12 @@ class _AddAmountState extends State<AddAmount> {
         Expanded(
           child: GestureDetector(
             onTap: () async {
-              setNumber(false);
-              context.read<FoodMenuProvider>().remove(count);
-              CountPre().setamount(count);
+              setNumber(true);
+              context.read<FoodMenuProvider>().increment(count);
+              CountPre().setCount(count);
             },
             child: FoodMenuButton(
-              title: '-',
+              title: '+',
             ),
           ),
         ),

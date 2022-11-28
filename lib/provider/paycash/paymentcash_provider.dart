@@ -1,7 +1,9 @@
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/paymentcash/paymentcash_models.dart';
+import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/pages/table/components/textdate.dart';
+import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/getorderbyissuedate/get_order_by_issuedate_provider.dart';
 import 'package:erp_pos/provider/offsession/create_off_session_provider.dart';
 import 'package:erp_pos/provider/sessoin/get_session_provider.dart';
@@ -84,6 +86,7 @@ class PaymentCashProvider extends ChangeNotifier {
             });
             await Future.delayed(Duration(seconds: 3));
             Navigator.pop(context);
+           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>HomePage()), (route) => false);
       }
     } catch (e) {
     

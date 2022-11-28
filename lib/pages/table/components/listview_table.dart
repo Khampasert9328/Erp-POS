@@ -43,16 +43,6 @@ int? statusTable;
 
 class _ListViewTableState extends State<ListViewTable> {
   @override
-  void initState() {
-    CountPre().getStatusTable().then((value) async{
-      statusTable = (await CountPre().getStatusTable())!;
-
-      if (statusTable==1) {
-        checkStatus(Colors.red);
-      }
-    });
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

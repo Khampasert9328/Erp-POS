@@ -18,10 +18,14 @@ class _OrderState extends State<Order> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title:  Text(
           "ລາຍການອໍເດີ",
           style: TextStyle(
             fontFamily: "Phetsarath-OT",
+            color: AppTheme.BASE_COLOR,
+            fontWeight: FontWeight.bold
           ),
         ),
       ),

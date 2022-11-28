@@ -30,4 +30,9 @@ class FoodMenuProvider extends ChangeNotifier {
     count = re;
     notifyListeners();
   }
+
+  void clearAmount(){
+    count = 0;
+    notifyListeners();
+  }
 }

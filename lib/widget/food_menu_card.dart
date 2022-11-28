@@ -10,6 +10,7 @@ import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/utils/set_size.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/add_amount.dart';
+import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -35,8 +36,8 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
   final _refresh = GlobalKey<RefreshIndicatorState>();
   int index = 0;
   bool selectone = false;
-   bool selecttwo = false;
-    bool selectree = false;
+  bool selecttwo = false;
+  bool selectree = false;
   int add = 0;
   int smalsize = 0;
   int meduimsize = 1;
@@ -57,9 +58,6 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                 itemBuilder: (context, index) {
                   final data = getFoodModel.listProduct[index];
                   int mainsize = data.size;
-                  // for (var size in data.data.size!) {
-                  //   print("sizesmall:${size.size}");
-                  // }
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 5.h),
                     child: Column(
@@ -168,12 +166,17 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                       int? amount = context
                                           .read<FoodMenuProvider>()
                                           .counter;
-                                      int totalAmount =
+                                      if (amount == 0) {
+                                        Mystyle().showDialogCheckData(context, "ກາລຸນາກົດເພື່ອເພີ່ມຈຳນວນອາຫານ");
+                                      }else{
+                                        int totalAmount =
                                           data.data.pricesale! * amount!;
                                       getFoodModel.setFoodMenuData(
                                           data.data, amount, totalAmount);
                                       foodModel.increment(add);
                                       getFoodModel.addTotalAmount(totalAmount);
+                                      }
+                                     
                                       return !isLiked;
                                     }),
                                   )
@@ -189,10 +192,12 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             FoodMenuSize(
-                             select: !selectone,
+                              select: !selectone,
                               onPressed: (() {
-                                context.read<GetFoodMenuProvider>().setProductSize(smalsize, index);    
-                             }),
+                                context
+                                    .read<GetFoodMenuProvider>()
+                                    .setProductSize(smalsize, index);
+                              }),
                               mainsize: mainsize,
                               size: smalsize,
                               title: setSize(0),
@@ -201,9 +206,11 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                               width: 7.w,
                             ),
                             FoodMenuSize(
-                             select: !selecttwo,
+                              select: !selecttwo,
                               onPressed: () {
-                                 context.read<GetFoodMenuProvider>().setProductSize(meduimsize, index);
+                                context
+                                    .read<GetFoodMenuProvider>()
+                                    .setProductSize(meduimsize, index);
                               },
                               mainsize: mainsize,
                               size: meduimsize,
@@ -213,9 +220,11 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                               width: 7.w,
                             ),
                             FoodMenuSize(
-                             select: !selectree,
+                              select: !selectree,
                               onPressed: () {
-                                  context.read<GetFoodMenuProvider>().setProductSize(largesize, index);
+                                context
+                                    .read<GetFoodMenuProvider>()
+                                    .setProductSize(largesize, index);
                               },
                               mainsize: mainsize,
                               size: largesize,
