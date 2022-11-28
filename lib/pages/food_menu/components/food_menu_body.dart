@@ -175,7 +175,7 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
                           child: Icon(
                             Icons.shopping_cart,
                             size: 55,
-                            color: AppTheme.GREY_COLOR,
+                            color: AppTheme.BASE_COLOR,
                           ),
                         ),
                       ),
@@ -221,14 +221,15 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
       context: context,
       removeTop: true,
       child: isSelectedMenuCard
-          ? SelectedMenuCardExpand(
-              onNext: () async {
-                setState(() {
-                  isSelectedMenuCard = !isSelectedMenuCard;
-                });
-              },
-              selectMenu: isSelectedMenuCard,
-            )
+          ?  SelectedMenuCardExpand(
+                onNext: () async {
+                  setState(() {
+                    isSelectedMenuCard = !isSelectedMenuCard;
+                  });
+                },
+                selectMenu: isSelectedMenuCard,
+              )
+            
           : PlaceToEatCard(
               onback: () {
                 setState(() {

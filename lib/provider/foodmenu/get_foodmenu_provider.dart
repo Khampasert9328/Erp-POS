@@ -59,8 +59,8 @@ class GetFoodMenuProvider extends ChangeNotifier {
   /// ຜົນບວກລາຄາທັງໝົດ
   void addTotalAmount(int totalamount) {
     _totalamount += totalamount;
-
     notifyListeners();
+
   }
 
   //ຜົນລົບລາຄາທັງໝົດ
@@ -70,19 +70,20 @@ class GetFoodMenuProvider extends ChangeNotifier {
   }
 
   //ລົບຂໍ້ມູນອອກຈາກ provider
-  void deleteData(int index) {
-    foodMenuModel.removeAt(index);
+  void deleteData(int? index, int amount) {
+    foodMenuModel.removeAt(index!);
+    _totalamount -= amount;
     notifyListeners();
   }
 
-  void changmoney(int chang) {
-    chang - totalamont;
-    notifyListeners();
-  }
-
-  void clearKitchenData(){
+  void clearKitchenData() {
     _totalamount = 0;
     foodMenuModel = [];
+    notifyListeners();
+  }
+
+  void setProductSize(int size, int index){
+    listProduct[index].size = size;
     notifyListeners();
   }
 }

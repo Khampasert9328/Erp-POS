@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<CreatePaymentCashModels?> createpaymentcash(
     String billid,
-    int number,
+    int total,
     String sessionid,
     String packagestart,
     String packageend,
@@ -17,7 +17,7 @@ Future<CreatePaymentCashModels?> createpaymentcash(
   String? idtoken = await CountPre().getToken();
   try {
     var url =
-        "${APIPath.PAYMENT_CASH}/$billid/$number/$sessionid/$packagestart/$packageend/$paymenttype";
+        "${APIPath.PAYMENT_CASH}/$billid/$total/$sessionid/$packagestart/$packageend/$paymenttype";
 
     var respones = await http.post(
       Uri.parse(url),

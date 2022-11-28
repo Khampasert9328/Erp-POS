@@ -1,6 +1,7 @@
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/paymentcash/paymentcash_models.dart';
+import 'package:erp_pos/pages/table/components/textdate.dart';
 import 'package:erp_pos/provider/getorderbyissuedate/get_order_by_issuedate_provider.dart';
 import 'package:erp_pos/provider/offsession/create_off_session_provider.dart';
 import 'package:erp_pos/provider/sessoin/get_session_provider.dart';
@@ -21,17 +22,35 @@ class PaymentCashProvider extends ChangeNotifier {
 
   Future<void> createpaymentcashprovider(
       BuildContext context, int number) async {
-    String? startDate = await CountPre().getDateSupscribe();
-    String? endDate = await CountPre().getDateExpired();
-    String? billid = context.read<GetOrderByIssueDateProvider>().billid;
+    
+    String? billid = await CountPre().getBillId();
     String? sessionid = await CountPre().getSessionId();
     int paymenttype = 0;
+    //////////////////////////////////////////////////////
+    String? startDate = await CountPre().getDateSupscribe();
+    var std = "$startDate";
+    var stdS = std.split(' ');
+    var stdSS = stdS[0].trim();
+    var rStd = stdSS.replaceAll("-", "");
+    /////////////////////////////////////////////
+    String? endDate = await CountPre().getDateExpired();
+    var ed = '$endDate';
+    var edX = ed.split(' ');
+    var edXX = edX[0].trim();
+    var redX = edXX.replaceAll("-", "");
+
+    // print("billid:$billid");
+    // print("number:$number");
+    // print("session:$sessionid");
+    // print("startDate:$rStd");
+    // print("endDate:$redX");
+    // print("payment:$paymenttype");
 
     try {
       isload = true;
       _createPaymentCashModels = await createpaymentcash(
-          billid!, number, sessionid!, startDate!, endDate!, paymenttype);
-    
+          billid!, number, sessionid!, rStd, redX, paymenttype);
+
       if (_createPaymentCashModels != null) {
         showDialog(
             context: context,
@@ -63,11 +82,11 @@ class PaymentCashProvider extends ChangeNotifier {
                 ),
               );
             });
-     
-         
+            await Future.delayed(Duration(seconds: 3));
+            Navigator.pop(context);
       }
     } catch (e) {
-      print("error1:$e");
+    
       return showDialog(
           context: context,
           builder: (_) {
@@ -97,12 +116,9 @@ class PaymentCashProvider extends ChangeNotifier {
                 )),
               ),
             );
-          }).then((value) async{
-            await Future.delayed(Duration(seconds: 3));
-            Navigator.pop(context);
-
           });
-         
+           await Future.delayed(Duration(seconds: 3));
+            Navigator.pop(context);
     }
     isload = false;
     notifyListeners();

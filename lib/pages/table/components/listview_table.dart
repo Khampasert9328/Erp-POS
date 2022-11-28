@@ -13,6 +13,7 @@ import 'package:erp_pos/pages/table/components/navbar_status_booking_next.dart';
 import 'package:erp_pos/pages/table_detail/components/table_detail_body.dart';
 import 'package:erp_pos/provider/areaprovider/area_provider.dart';
 import 'package:erp_pos/provider/areaprovider/insert_area_provider.dart';
+import 'package:erp_pos/provider/listtable/list_table_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/services/getArea/get_area.dart';
 import 'package:erp_pos/utils/check_status.dart';
@@ -26,8 +27,7 @@ import 'package:erp_pos/constant/routes.dart' as custom_route;
 import '../../../constant/theme.dart';
 
 class ListViewTable extends StatefulWidget {
-  
-   ListViewTable({
+  ListViewTable({
     Key? key,
   }) : super(key: key);
 
@@ -39,20 +39,24 @@ int? selectIndex = 0;
 String? idtable;
 int selectTable = 0;
 
+int? statusTable;
+
 class _ListViewTableState extends State<ListViewTable> {
   @override
   void initState() {
-    CountPre().getAreaId().then((value) {
-      String? id = CountPre().getAreaId().toString();
-      context.read<GetTableProvider>().gettablebyid(context, id);
+    CountPre().getStatusTable().then((value) async{
+      statusTable = (await CountPre().getStatusTable())!;
+
+      if (statusTable==1) {
+        checkStatus(Colors.red);
+      }
     });
- 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
@@ -158,7 +162,7 @@ class _ListViewTableState extends State<ListViewTable> {
                     return GridView.count(
                       crossAxisCount: 2,
                       physics: ScrollPhysics(),
-                    childAspectRatio: (0.8.w / .6.h),
+                      childAspectRatio: (0.8.w / .5.h),
                       shrinkWrap: true,
                       crossAxisSpacing: 20.0,
                       mainAxisSpacing: 10.0,
@@ -167,7 +171,8 @@ class _ListViewTableState extends State<ListViewTable> {
                           onTap: (() {
                             bool clicktable = true;
                             CountPre().setClickTable(clicktable);
-                            CountPre().setTableName(snapshot.data![index].name!);
+                            CountPre()
+                                .setTableName(snapshot.data![index].name!);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -177,6 +182,7 @@ class _ListViewTableState extends State<ListViewTable> {
                             );
                             setState(() {
                               selectTable = index;
+                              context.read<ListTableProvider>().addTable(snapshot.data![index].name!);
                             });
                           }),
                           child: SingleChildScrollView(
@@ -201,10 +207,11 @@ class _ListViewTableState extends State<ListViewTable> {
                                       height: 50.h,
                                       width: 10.w,
                                       decoration: BoxDecoration(
-                                          color: AppTheme.GREEN_COLOR,
-                                          border: Border.all(
-                                              color: AppTheme.BASE_COLOR),
-                                          borderRadius: BorderRadius.circular(10)),
+                                        color: AppTheme.GREEN_COLOR,
+                                        border: Border.all(
+                                            color: AppTheme.BASE_COLOR),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
                                     ),
                                     SizedBox(
                                       width: 3.w,
@@ -252,19 +259,20 @@ class _ListViewTableState extends State<ListViewTable> {
                                       decoration: BoxDecoration(
                                           border: Border.all(
                                               color: AppTheme.BASE_COLOR),
-                                          borderRadius: BorderRadius.circular(10)),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
                                     ),
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 3.h,
+                                  height: 5.h,
                                 ),
                                 Container(
                                   height: 10.h,
                                   width: 120.w,
                                   decoration: BoxDecoration(
-                                      border:
-                                          Border.all(color: AppTheme.BASE_COLOR),
+                                      border: Border.all(
+                                          color: AppTheme.BASE_COLOR),
                                       borderRadius: BorderRadius.circular(10)),
                                 ),
                               ],

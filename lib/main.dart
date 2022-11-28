@@ -1,4 +1,6 @@
+
 import 'dart:io';
+
 import 'package:erp_pos/bussiness%20logic/authentication.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/generateqrmmoney/generateqrmmoney.dart';
@@ -12,6 +14,7 @@ import 'package:erp_pos/provider/bill/print_bill_customers_provider.dart';
 import 'package:erp_pos/provider/bill/print_bill_provider.dart';
 import 'package:erp_pos/provider/checkexpiredpackage/check_exp_package_provider.dart';
 import 'package:erp_pos/provider/confirmpaymentbybcel/confirmpaymentbybcel_provider.dart';
+import 'package:erp_pos/provider/createorder/create_order_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/provider/generateQR/generate_qr_bcelone_provider.dart';
@@ -19,6 +22,7 @@ import 'package:erp_pos/provider/generateqrmmoney/generate_qr_mmoney_provider.da
 import 'package:erp_pos/provider/getaccount/getaccount_provider.dart';
 import 'package:erp_pos/provider/getorderbyissuedate/get_order_by_issuedate_provider.dart';
 import 'package:erp_pos/provider/gettableall/get_table_all_provider.dart';
+import 'package:erp_pos/provider/listtable/list_table_provider.dart';
 import 'package:erp_pos/provider/offsession/create_off_session_provider.dart';
 import 'package:erp_pos/provider/paycash/paymentcash_provider.dart';
 import 'package:erp_pos/provider/printbill/print_bill.dart';
@@ -68,6 +72,7 @@ class MyApp extends StatelessWidget {
                 create: (_) => GetOrderByIssueDateProvider()),
             ChangeNotifierProvider(create: (_) => SessionProvoder()),
             ChangeNotifierProvider(create: (_)=>CreateOffSessionProvider()),
+            ChangeNotifierProvider(create: (_)=>CreateOrderProvider()),
             ChangeNotifierProvider(create: (_)=>SwitchProvider()),
             ChangeNotifierProvider(create: (_)=>GetTableAllProvider()),
             ChangeNotifierProvider(create: (_)=>PaymentCashProvider()),
@@ -75,6 +80,7 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (_)=>PrintBill()),
             ChangeNotifierProvider(create: (_)=>GenerateQrMmoneyProvider()),
             ChangeNotifierProvider(create: (_)=>GetAccountProvider()),
+            ChangeNotifierProvider(create: ((_) => ListTableProvider()))
           ],
           child: MaterialApp(
             theme: ThemeData(

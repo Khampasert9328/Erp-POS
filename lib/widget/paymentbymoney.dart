@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/provider/confirmpaymentbybcel/confirmpaymentbybcel_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
+import 'package:erp_pos/provider/generateqrmmoney/generate_qr_mmoney_provider.dart';
+import 'package:erp_pos/utils/formattime.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -9,19 +13,41 @@ import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class PaymentMmoney extends StatefulWidget {
-  final tablename;
+  final String tablename;
   final qrdata;
-  const PaymentMmoney({Key? key, required this.tablename, required this.qrdata})
+  final username;
+  final walletid;
+  const PaymentMmoney(
+      {Key? key,
+      required this.tablename,
+      required this.qrdata,
+      required this.username,
+      required this.walletid})
       : super(key: key);
 
   @override
   State<PaymentMmoney> createState() => _PaymentMmoneyState();
 }
 
-DateTime time = DateTime.now();
-final timenow = DateFormat('HH:mm').format(time);
-
 class _PaymentMmoneyState extends State<PaymentMmoney> {
+  bool _isloading = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Timer(Duration(milliseconds: 500), () {
+      setState(() {
+        _isloading = false;
+      });
+    });
+    Future.delayed(Duration(milliseconds: 500), (() {
+      setState(() {
+        _isloading = false;
+      });
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,28 +114,24 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
                             ? const Center(
                                 child: CircularProgressIndicator(),
                               )
-                            : QrImage(
-                                data: widget.qrdata,
-                                version: QrVersions.auto,
-                                size: 200.0,
-                              ),
+                            : _isloading
+                                ? CircularProgressIndicator(
+                                    color: AppTheme.BASE_COLOR,
+                                  )
+                                : QrImage(
+                                        eyeStyle: QrEyeStyle(
+                                          color: AppTheme.BASE_COLOR,
+                                        ),
+                                        data: widget.qrdata,
+                                        version: QrVersions.auto,
+                                        size: 200.0,
+                                      ),
+                       
+                  
                       ],
                     ),
                   ),
                   ///////////////////////////////////////////
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 15,
-                      bottom: 15,
-                    ),
-                    child: Text(
-                      timenow,
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
                 ],
               ),
             ),

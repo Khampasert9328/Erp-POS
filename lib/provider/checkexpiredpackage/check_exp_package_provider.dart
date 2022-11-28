@@ -14,9 +14,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CheckExpiredPackage extends ChangeNotifier {
   List<CheckExpiredPackageMedels> checkList = [];
   List<CheckExpiredPackageMedels> get getchecklist => checkList;
+  CreateOrderModels? _createOrderModels;
+  CreateOrderModels? get createOrderModels =>_createOrderModels;
 
   Future<List<CheckExpiredPackageMedels>?> getCheckExpiredPackage(
       BuildContext context) async {
+        
     CheckExpiredPackageMedels? package = await checkExpiredPackage();
 
     if (package != null) {
@@ -28,11 +31,12 @@ class CheckExpiredPackage extends ChangeNotifier {
    
       CountPre().setDateSupscribe(package.dateSubscribe.toString());
       if (getPackageModels != null) {
-        CreateOrderModels? createOrderModels = await createOrder(context);
-        print("create order:$createOrderModels");
-        if (createOrderModels != null) {
-          CountPre().setBillNo(createOrderModels.billNo!);
-          CountPre().setBillId(createOrderModels.billId!);
+      
+       _createOrderModels = await createOrder(context, package.dateExpired.toString(), package.dateSubscribe.toString());
+      
+        if (_createOrderModels != null) {
+          CountPre().setBillNo(_createOrderModels!.billNo!);
+          CountPre().setBillId(_createOrderModels!.billId!);
         }
       }
     }

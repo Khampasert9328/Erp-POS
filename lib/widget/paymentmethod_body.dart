@@ -98,7 +98,7 @@ class _PaymentBodyState extends State<PaymentBody> {
                 child: Row(
                   children: [
                     Image.asset(
-                      ERPImages.bcelone,
+                      ERPImages.onepay,
                       height: 63.h,
                       width: 63.w,
                     ),

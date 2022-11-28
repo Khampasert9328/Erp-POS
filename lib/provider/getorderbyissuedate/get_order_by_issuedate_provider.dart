@@ -26,12 +26,23 @@ class GetOrderByIssueDateProvider extends ChangeNotifier {
   Future<void> getorderfromservice(BuildContext context) async {
     _isload = true;
     SharedPreferences pre = await SharedPreferences.getInstance();
-    String? startDate = await CountPre().getDateSupscribe();
-    String? endDate = await CountPre().getDateExpired();
+    
+    
     String? idToken = await CountPre().getToken();
     DateTime time = DateTime.now();
     String? startdate = '20221006';
     String? startend = '20221006';
+
+String? startDate = await CountPre().getDateSupscribe();
+    var startD = "$startDate";
+    var stD = startD.split(" ");
+    var staD = stD[0].trim();
+    var tstaD = staD.replaceAll("-", "");
+    String? endDate = await CountPre().getDateExpired();
+    var endD = "$endDate";
+    var senD = endD.split(" ");
+    var end1D = senD[0].trim();
+    var tendD = end1D.replaceAll("-", "");
 
     _order = await getorderbyissuedate(
         -1, 0, idToken!, startdate, startend, context);
@@ -43,7 +54,7 @@ class GetOrderByIssueDateProvider extends ChangeNotifier {
         CountPre().setBillId(item.billid.toString());
       }
       _getOrderByListId =
-          await getorderbylistid(listID, -1, 0, startDate, endDate);
+          await getorderbylistid(listID, -1, 0, tstaD, tendD);
     }
     _isload = false;
     notifyListeners();

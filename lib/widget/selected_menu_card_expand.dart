@@ -6,6 +6,7 @@ import 'package:devla_sunmi/flutter_sunmi_printer.dart';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/model/category/category_models.dart';
 import 'package:erp_pos/model/food_menu_model.dart';
+import 'package:erp_pos/pages/food_menu/components/food_menu_button.dart';
 import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/provider/bill/print_bill_provider.dart';
 import 'package:erp_pos/provider/checkexpiredpackage/check_exp_package_provider.dart';
@@ -13,7 +14,6 @@ import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
-import 'package:erp_pos/utils/sqliteERP/sqlite_erp_pos.dart';
 import 'package:erp_pos/widget/add_amount.dart';
 import 'package:erp_pos/widget/calculate_money.dart';
 import 'package:erp_pos/widget/style.dart';
@@ -38,35 +38,8 @@ class SelectedMenuCardExpand extends StatefulWidget {
 }
 
 class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
-  // int count = 0;
-  // void setNumber(bool isAdd) {
-  //   if (isAdd) {
-  //     setState(() {
-  //       count++;
-  //     });
-  //   } else {
-  //     if (count > 0) {
-  //       setState(() {
-  //         count--;
-  //       });
-  //     }
-  //   }
-  // }
-
   bool? clicktable = false;
-  int? getCount;
-
-  @override
-  void initState() {
-    CountPre().getClickTable().then((value) async {
-      clicktable = await CountPre().getClickTable();
-    });
-    CountPre().getCount().then((value) async {
-      getCount = await CountPre().getCount();
-    });
-    super.initState();
-  }
-
+  int amountData = 0;
   Widget build(BuildContext context) {
     return Scaffold(
       body: StatefulBuilder(
@@ -74,6 +47,13 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
           padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
+              Container(
+                height: 10.h,
+                width: 30.w,
+                decoration: BoxDecoration(
+                    color: AppTheme.GREY_COLOR,
+                    borderRadius: BorderRadius.circular(5)),
+              ),
               clicktable == true
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -103,6 +83,29 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                     return ListView.builder(
                         itemCount: value.getFoodMenuModel.length,
                         itemBuilder: ((context, index) {
+                          void setNumber(bool isAdd) {
+                            if (isAdd) {
+                              setState(() {
+                                amountData =
+                                    value.getFoodMenuModel[index].totalAmount;
+                                context
+                                    .read<GetFoodMenuProvider>()
+                                    .addTotalAmount(amountData);
+                              });
+                            } else {
+                              if (value.getFoodMenuModel[index].number > 1) {
+                                setState(() {
+                                  amountData =
+                                      value.getFoodMenuModel[index].totalAmount;
+
+                                  context
+                                      .read<GetFoodMenuProvider>()
+                                      .deleteTotalAmount(amountData);
+                                });
+                              }
+                            }
+                          }
+
                           return Stack(
                             children: [
                               Container(
@@ -114,26 +117,30 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                     borderRadius: BorderRadius.circular(7.r)),
                                 child: Row(
                                   children: [
-                                    CachedNetworkImage(
-                                      height: 63.h,
-                                      width: 69.w,
-                                      imageBuilder: (context, imageProvider) =>
-                                          Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            image: DecorationImage(
-                                                image: imageProvider)),
-                                      ),
-                                      errorWidget: (context, url, error) =>
-                                          Icon(Icons.image_outlined,
-                                              size: 70,
-                                              color: AppTheme.GREY_COLOR),
-                                      imageUrl: value.getFoodMenuModel[index]
-                                          .data.thumbnails!.first.uri!,
-                                      placeholder: (context, url) => Center(
-                                        child: CircularProgressIndicator(
-                                          color: AppTheme.BASE_COLOR,
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: CachedNetworkImage(
+                                        height: 63.h,
+                                        width: 69.w,
+                                        imageBuilder:
+                                            (context, imageProvider) =>
+                                                Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              image: DecorationImage(
+                                                  image: imageProvider)),
+                                        ),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.image_outlined,
+                                                size: 70,
+                                                color: AppTheme.GREY_COLOR),
+                                        imageUrl: value.getFoodMenuModel[index]
+                                            .data.thumbnails!.first.uri!,
+                                        placeholder: (context, url) => Center(
+                                          child: CircularProgressIndicator(
+                                            color: AppTheme.BASE_COLOR,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -164,74 +171,91 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                                     text:
                                                         '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(value.getFoodMenuModel[index].totalAmount)} ກີບ',
                                                     style: TextStyle(
-                                                        fontFamily:
-                                                            'Phetsarath-OT',
-                                                        fontSize: 14.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                      fontFamily:
+                                                          'Phetsarath-OT',
+                                                      fontSize: 14.sp,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
                                                   )
                                                 ]),
                                           ),
-                                          SizedBox(
-                                            child: Row(
-                                              children: [
-                                                const Text("ຈຳນວນ"),
-                                                SizedBox(
-                                                  width: 5.w,
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'ຈຳນວນ',
+                                                style: TextStyle(
+                                                  fontFamily: 'Phetsarath-OT',
+                                                  fontSize: 14.sp,
+                                                  color: AppTheme.BASE_COLOR,
                                                 ),
-                                                Container(
-                                                  height: 30.h,
-                                                  width: 30.w,
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: AppTheme.WHITE_COLOR,
-                                                    border: Border.all(
-                                                      color:
-                                                          AppTheme.BASE_COLOR,
-                                                    ),
-                                                  ),
-                                                  child: Center(
-                                                      child: Text(
-                                                    "+",
-                                                    style: TextStyle(
-                                                      fontSize: 20.sp,
-                                                    ),
-                                                  )),
+                                              ),
+                                              SizedBox(
+                                                width: 10.w,
+                                              ),
+                                              GestureDetector(
+                                                onTap: () async {
+                                                  setNumber(true);
+                                                  context
+                                                      .read<FoodMenuProvider>()
+                                                      .increment(
+                                                        value
+                                                            .getFoodMenuModel[
+                                                                index]
+                                                            .number++,
+                                                      );
+                                                  //CountPre().setCount(count);
+                                                },
+                                                child: FoodMenuButton(
+                                                  title: '+',
                                                 ),
-                                                SizedBox(
-                                                  width: 5.w,
-                                                ),
-                                                Consumer<FoodMenuProvider>(
-                                                  builder: (context, value,
-                                                          child) =>
-                                                      Text("${value.counter}"),
-                                                ),
-                                                SizedBox(
-                                                  width: 5.w,
-                                                ),
-                                                Container(
-                                                  height: 30.h,
-                                                  width: 30.w,
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: AppTheme.WHITE_COLOR,
-                                                    border: Border.all(
-                                                      color:
-                                                          AppTheme.BASE_COLOR,
-                                                    ),
-                                                  ),
-                                                  child: Center(
-                                                    child: Text(
-                                                      "-",
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 5.w),
+                                                child: Column(
+                                                  children: [
+                                                    Text(
+                                                      value
+                                                          .getFoodMenuModel[
+                                                              index]
+                                                          .number
+                                                          .toString(),
                                                       style: TextStyle(
-                                                        fontSize: 20.sp,
-                                                      ),
+                                                          color: AppTheme
+                                                              .BASE_COLOR,
+                                                          fontSize: 14.sp),
                                                     ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
+                                                    Container(
+                                                      width: 20.w,
+                                                      height: 3.h,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                              color: Color(
+                                                                  0xFFD9D9D9)),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              GestureDetector(
+                                                onTap: () async {
+                                                  setNumber(false);
+                                                  context
+                                                      .read<FoodMenuProvider>()
+                                                      .remove(
+                                                        value
+                                                            .getFoodMenuModel[
+                                                                index]
+                                                            .number--,
+                                                      );
+                                                  //CountPre().setamount(count);
+                                                },
+                                                child: FoodMenuButton(
+                                                  title: '-',
+                                                ),
+                                              ),
+                                            ],
+                                          )
                                         ],
                                       ),
                                     ),
@@ -245,15 +269,14 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                         children: [
                                           IconButton(
                                             onPressed: () async {
-                                              print("count:$getCount");
                                               context
                                                   .read<GetFoodMenuProvider>()
-                                                  .deleteTotalAmount(value
-                                                      .getFoodMenuModel[index]
-                                                      .totalAmount);
-                                              context
-                                                  .read<GetFoodMenuProvider>()
-                                                  .deleteData(index);
+                                                  .deleteData(
+                                                      index,
+                                                      value
+                                                          .getFoodMenuModel[
+                                                              index]
+                                                          .totalAmount);
                                             },
                                             icon: Image.asset(
                                               ERPImages.icondelete,
@@ -295,11 +318,12 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                     Row(
                       children: [
                         IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.shopping_cart,
-                              size: (30.w + 30.h) / 2,
-                            )),
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.shopping_cart,
+                            size: (30.w + 30.h) / 2,
+                          ),
+                        ),
                         SizedBox(
                           width: 20.w,
                         ),
@@ -369,8 +393,9 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
               ? const Text("")
               : ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 30.w),
-                      primary: AppTheme.BASE_COLOR),
+                    padding: EdgeInsets.symmetric(horizontal: 30.w),
+                    primary: AppTheme.BASE_COLOR,
+                  ),
                   onPressed: () async {
                     SharedPreferences pre =
                         await SharedPreferences.getInstance();
@@ -383,19 +408,48 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                       Mystyle().showDialogCheckData(
                           context, "ກາລຸນາກວດສອບອໍເດີຂອງທ່ານກ່ອນ");
                     } else {
+                      showDialog(
+                          context: context,
+                          builder: (_) {
+                            return Dialog(
+                              child: SizedBox(
+                                height: 200.h,
+                                width: 100.w,
+                                child: Center(
+                                    child: Column(
+                                  children: [
+                                    Image.asset(
+                                      ERPImages.logotokitchen,
+                                      height: 104.h,
+                                      width: 104.w,
+                                    ),
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
+                                    Text(
+                                      "ອໍເດີກຳລັງສົ່ງໄປຫ້ອງຄົວ",
+                                      style: TextStyle(
+                                          fontSize: 18.sp,
+                                          color: AppTheme.BASE_COLOR),
+                                    ),
+                                  ],
+                                )),
+                              ),
+                            );
+                          });
+                      await Future.delayed(Duration(seconds: 15));
+                      Navigator.pop(context);
                       String? tablename = await CountPre().getTableName();
 
                       await CheckExpiredPackage()
                           .getCheckExpiredPackage(context)
                           .then((value) async {
                         PrintBillKitchenProvider().getprint();
-                        SharedPreferences preferences =
-                            await SharedPreferences.getInstance();
-                        String? getzone =
-                            preferences.getString(CountPre().idzone);
-                        SharedPreferences pri =
-                            await SharedPreferences.getInstance();
-                        String? billNo = pri.getString(CountPre().billNo);
+
+                        String? getzone = await CountPre().getAreaId();
+                        //preferences.getString(CountPre().idzone);
+
+                        String? billNo = await CountPre().getBillNo();
 
                         try {
                           await SunmiPrinter.startTransactionPrint();
@@ -432,7 +486,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                           await SunmiPrinter.printRow(cols: [
                             ColumnMaker(text: 'ເລກໂຕະ', width: 6),
                             ColumnMaker(
-                                text: '${tablename ?? "ສັ່ງກັບບ້ານ"}',
+                                text: '${tablename ?? "none"}',
                                 width: 6,
                                 align: SunmiPrintAlign.RIGHT),
                           ]);
@@ -470,7 +524,6 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                           print("error:$e");
                         }
                       });
-
                       await Navigator.push(
                         context,
                         MaterialPageRoute(

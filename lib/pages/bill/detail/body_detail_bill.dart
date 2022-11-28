@@ -14,11 +14,9 @@ import 'package:intl/intl.dart';
 
 class BodyDetailBill extends StatefulWidget {
   GetOrderByIssuedateModels? dataorder;
+  
 
-  BodyDetailBill({
-    super.key,
-    required this.dataorder,
-  });
+  BodyDetailBill({super.key, required this.dataorder,});
 
   @override
   State<BodyDetailBill> createState() => _BodyDetailBillState();
@@ -31,18 +29,22 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
   int? price;
   String? nameTable;
   @override
-  void initState() async {
-    nameTable = await CountPre().getNameTable();
+  void initState() {
+    CountPre().getNameTable().then((value) async {
+      nameTable = await CountPre().getNameTable();
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    for (var item in widget.dataorder!.order!.first.product!) {
-      name = item.name;
-      size = item.size;
-      amount = item.amount;
-      price = item.pricesale;
+    for (var item in widget.dataorder!.order!) {
+    for (var data in item.product!) {
+      name = data.name;
+      size = data.size;
+      amount = data.amount;
+      price = data.pricesale;
+    }
     }
 
     return Scaffold(
