@@ -16,7 +16,7 @@ import 'package:erp_pos/provider/checkexpiredpackage/check_exp_package_provider.
 import 'package:erp_pos/provider/confirmpaymentbybcel/confirmpaymentbybcel_provider.dart';
 import 'package:erp_pos/provider/createorder/create_order_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
-import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
+import 'package:erp_pos/provider/foodmenu/foodmenu_provider.dart';
 import 'package:erp_pos/provider/generateQR/generate_qr_bcelone_provider.dart';
 import 'package:erp_pos/provider/generateqrmmoney/generate_qr_mmoney_provider.dart';
 import 'package:erp_pos/provider/getaccount/getaccount_provider.dart';
@@ -28,7 +28,9 @@ import 'package:erp_pos/provider/paycash/paymentcash_provider.dart';
 import 'package:erp_pos/provider/printbill/print_bill.dart';
 import 'package:erp_pos/provider/sessoin/get_session_provider.dart';
 import 'package:erp_pos/provider/switch/switch_provider.dart';
+import 'package:erp_pos/provider/tableprovider/click_table_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
+import 'package:erp_pos/provider/updatetable/update_table_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -80,7 +82,9 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (_)=>PrintBill()),
             ChangeNotifierProvider(create: (_)=>GenerateQrMmoneyProvider()),
             ChangeNotifierProvider(create: (_)=>GetAccountProvider()),
-            ChangeNotifierProvider(create: ((_) => ListTableProvider()))
+            ChangeNotifierProvider(create: ((_) => ListTableProvider())),
+            ChangeNotifierProvider(create: (_)=>UpdateTableProvider()),
+            ChangeNotifierProvider(create: (_)=>ClickTableProvider()),
           ],
           child: MaterialApp(
             theme: ThemeData(

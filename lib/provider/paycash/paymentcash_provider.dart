@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class PaymentCashProvider extends ChangeNotifier {
   CreatePaymentCashModels? _createPaymentCashModels;
@@ -24,7 +25,6 @@ class PaymentCashProvider extends ChangeNotifier {
 
   Future<void> createpaymentcashprovider(
       BuildContext context, int number) async {
-    
     String? billid = await CountPre().getBillId();
     String? sessionid = await CountPre().getSessionId();
     int paymenttype = 0;
@@ -77,19 +77,23 @@ class PaymentCashProvider extends ChangeNotifier {
                       Text(
                         "ຊຳລະເງິນສຳເລັດແລ້ວ",
                         style: TextStyle(
-                            fontSize: 18.sp, color: AppTheme.BASE_COLOR),
+                          fontSize: 18.sp,
+                          color: AppTheme.BASE_COLOR,
+                        ),
                       ),
                     ],
                   )),
                 ),
               );
             });
-            await Future.delayed(Duration(seconds: 3));
-            Navigator.pop(context);
-           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>HomePage()), (route) => false);
+
+        await Future.delayed(Duration(seconds: 3));
+        Navigator.pop(context);
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (_) => HomePage()), (route) => false);
+        context.read<GetFoodMenuProvider>().clearKitchenData();
       }
     } catch (e) {
-    
       return showDialog(
           context: context,
           builder: (_) {
@@ -115,14 +119,28 @@ class PaymentCashProvider extends ChangeNotifier {
                       style: TextStyle(
                           fontSize: 18.sp, color: AppTheme.BASE_COLOR),
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          height: 40.h,
+                          width: 60.w,
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text("ຕົກລົງ"),
+                          ),
+                        ),
+                      ],
+                    )
                   ],
                 )),
               ),
             );
           });
-           await Future.delayed(Duration(seconds: 3));
-            Navigator.pop(context);
     }
+
     isload = false;
     notifyListeners();
   }

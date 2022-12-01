@@ -107,7 +107,7 @@ class _TableBodyState extends State<TableBody> {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    !switcstatus
+                    switcstatus
                         ? Text(
                             "ປິດຮ້ານ",
                             style: TextStyle(

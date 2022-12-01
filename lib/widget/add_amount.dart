@@ -2,7 +2,7 @@ import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/foodmenu/food_menu_models.dart';
 import 'package:erp_pos/pages/food_menu/components/food_menu_button.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
-import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
+import 'package:erp_pos/provider/foodmenu/foodmenu_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,14 +12,19 @@ import 'package:provider/provider.dart';
 class AddAmount extends StatefulWidget {
   String? title;
   int index;
-  AddAmount({this.title, required this.index});
+  
+  AddAmount({
+    this.title,
+    required this.index,
+   
+  });
 
   @override
   State<AddAmount> createState() => _AddAmountState();
 }
 
 class _AddAmountState extends State<AddAmount> {
-  int count = 0;
+  int count =0;
   bool show = false;
   void setNumber(bool isAdd) {
     if (isAdd) {
@@ -34,6 +39,7 @@ class _AddAmountState extends State<AddAmount> {
       }
     }
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +61,6 @@ class _AddAmountState extends State<AddAmount> {
             onTap: () async {
               setNumber(false);
               context.read<FoodMenuProvider>().remove(count);
-              CountPre().setamount(count);
             },
             child: FoodMenuButton(
               title: '-',
@@ -83,7 +88,6 @@ class _AddAmountState extends State<AddAmount> {
             onTap: () async {
               setNumber(true);
               context.read<FoodMenuProvider>().increment(count);
-              CountPre().setCount(count);
             },
             child: FoodMenuButton(
               title: '+',

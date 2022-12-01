@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:erp_pos/model/category/category_models.dart';
 import 'package:erp_pos/model/food_menu_model.dart';
 import 'package:erp_pos/model/foodmenu/food_menu_models.dart';
@@ -60,7 +62,6 @@ class GetFoodMenuProvider extends ChangeNotifier {
   void addTotalAmount(int totalamount) {
     _totalamount += totalamount;
     notifyListeners();
-
   }
 
   //ຜົນລົບລາຄາທັງໝົດ
@@ -70,9 +71,9 @@ class GetFoodMenuProvider extends ChangeNotifier {
   }
 
   //ລົບຂໍ້ມູນອອກຈາກ provider
-  void deleteData(int? index, int amount) {
-    foodMenuModel.removeAt(index!);
+  void deleteData(int index, int amount) {
     _totalamount -= amount;
+    foodMenuModel.removeAt(index);
     notifyListeners();
   }
 
@@ -81,9 +82,12 @@ class GetFoodMenuProvider extends ChangeNotifier {
     foodMenuModel = [];
     notifyListeners();
   }
-
-  void setProductSize(int size, int index){
-    listProduct[index].size = size;
+//ສຳລັບການ ດຶງຂໍ້ມູນຂອງ ຂະໜາດອາຫານມາໂຊຢູ່ UI
+int _size =0;
+int get size =>_size;
+  void setProductSize(int addsize, int index) {
+    listProduct[index].size = addsize;
+    _size = addsize;
     notifyListeners();
   }
 }

@@ -9,7 +9,7 @@ import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/foodmenu/food_menu_models.dart';
 import 'package:erp_pos/pages/food_menu/components/search_food_menu.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
-import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
+import 'package:erp_pos/provider/foodmenu/foodmenu_provider.dart';
 import 'package:erp_pos/provider/switch/switch_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/add_amount.dart';

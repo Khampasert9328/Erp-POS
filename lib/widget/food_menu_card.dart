@@ -6,7 +6,7 @@ import 'package:erp_pos/model/foodmenu/food_menu_models.dart';
 import 'package:erp_pos/pages/food_menu/components/food_menu_size.dart';
 import 'package:erp_pos/pages/food_menu_detail/components/food_menu_detail_body.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
-import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
+import 'package:erp_pos/provider/foodmenu/foodmenu_provider.dart';
 import 'package:erp_pos/utils/set_size.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/add_amount.dart';
@@ -34,23 +34,21 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
   List<Product> listdata = [];
 
   final _refresh = GlobalKey<RefreshIndicatorState>();
-  int index = 0;
-  bool selectone = false;
-  bool selecttwo = false;
-  bool selectree = false;
+
   int add = 0;
-  int smalsize = 0;
-  int meduimsize = 1;
-  int largesize = 2;
+  int? count = 0;
   @override
   @override
   Widget build(BuildContext context) {
+    count = context.read<FoodMenuProvider>().counter;
     return Consumer2<FoodMenuProvider, GetFoodMenuProvider>(
       builder: (context, foodModel, getFoodModel, child) {
         return Scrollbar(
           child: RefreshIndicator(
             onRefresh: () async {
-              context.read<GetFoodMenuProvider>().getProduct(true);
+              setState(() {
+                context.read<GetFoodMenuProvider>().getProduct(true);
+              });
             },
             key: _refresh,
             child: ListView.builder(
@@ -58,6 +56,8 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                 itemBuilder: (context, index) {
                   final data = getFoodModel.listProduct[index];
                   int mainsize = data.size;
+                  int specialPrice = data.data.size![data.size].specialPrice!;
+                  int pricesale = data.data.pricesale!;
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 5.h),
                     child: Column(
@@ -124,7 +124,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                             children: <InlineSpan>[
                                               TextSpan(
                                                 text:
-                                                    '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.data.pricesale)} ກີບ',
+                                                    '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(pricesale + specialPrice)} ກີບ',
                                                 style: TextStyle(
                                                   fontFamily: 'Phetsarath-OT',
                                                   fontSize: 14.sp,
@@ -134,10 +134,12 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                             ])),
                                         AddAmount(
                                           index: index,
+                                  
                                         )
                                       ],
                                     ),
                                   ),
+                                  // if(amount! > 0)
                                   LikeButton(
                                     size: 55,
                                     animationDuration: Duration(seconds: 1),
@@ -167,16 +169,23 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                           .read<FoodMenuProvider>()
                                           .counter;
                                       if (amount == 0) {
-                                        Mystyle().showDialogCheckData(context, "ກາລຸນາກົດເພື່ອເພີ່ມຈຳນວນອາຫານ");
-                                      }else{
+                                        Mystyle().showDialogCheckData(context,
+                                            "ກາລຸນາກົດເພື່ອເພີ່ມຈຳນວນອາຫານ");
+                                      } else {
                                         int totalAmount =
-                                          data.data.pricesale! * amount!;
-                                      getFoodModel.setFoodMenuData(
-                                          data.data, amount, totalAmount);
-                                      foodModel.increment(add);
-                                      getFoodModel.addTotalAmount(totalAmount);
+                                            (pricesale + specialPrice) *
+                                                amount;
+                                        getFoodModel.setFoodMenuData(
+                                            data.data, amount, totalAmount);
+                                        //foodModel.increment(add);
+                                        getFoodModel
+                                            .addTotalAmount(totalAmount);
+                                            count = 0;
+                                    
+                                        //  int? number = context.read<FoodMenuProvider>().count;
+                                        //  print("number:$number");
                                       }
-                                     
+
                                       return !isLiked;
                                     }),
                                   )
@@ -191,45 +200,22 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            FoodMenuSize(
-                              select: !selectone,
-                              onPressed: (() {
-                                context
-                                    .read<GetFoodMenuProvider>()
-                                    .setProductSize(smalsize, index);
-                              }),
-                              mainsize: mainsize,
-                              size: smalsize,
-                              title: setSize(0),
-                            ),
-                            SizedBox(
-                              width: 7.w,
-                            ),
-                            FoodMenuSize(
-                              select: !selecttwo,
-                              onPressed: () {
-                                context
-                                    .read<GetFoodMenuProvider>()
-                                    .setProductSize(meduimsize, index);
-                              },
-                              mainsize: mainsize,
-                              size: meduimsize,
-                              title: setSize(1),
-                            ),
-                            SizedBox(
-                              width: 7.w,
-                            ),
-                            FoodMenuSize(
-                              select: !selectree,
-                              onPressed: () {
-                                context
-                                    .read<GetFoodMenuProvider>()
-                                    .setProductSize(largesize, index);
-                              },
-                              mainsize: mainsize,
-                              size: largesize,
-                              title: setSize(2),
-                            ),
+                            for (var i in data.data.size!)
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  right: 7.w,
+                                ),
+                                child: FoodMenuSize(
+                                  onPressed: (() {
+                                    context
+                                        .read<GetFoodMenuProvider>()
+                                        .setProductSize(i.size ?? 0, index);
+                                  }),
+                                  mainsize: mainsize,
+                                  size: i.size ?? 0,
+                                  title: setSize(i.size ?? 0),
+                                ),
+                              ),
                           ],
                         )
                       ],

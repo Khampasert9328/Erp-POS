@@ -34,6 +34,17 @@ class CountPre {
   String accountnumber = 'accountnumber';
   String password = 'password';
   String statusTable = 'statusTable';
+  String area = 'area';
+Future<void> setArea(String areaname)async{
+  preferences = await SharedPreferences.getInstance();
+  preferences.setString(area, areaname);
+}
+Future<String?> getArea()async{
+  preferences = await SharedPreferences.getInstance();
+ return preferences.getString(area);
+
+
+}
 
   Future<void> setStatusTable(int val) async {
     preferences = await SharedPreferences.getInstance();

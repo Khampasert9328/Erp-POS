@@ -14,9 +14,11 @@ import 'package:erp_pos/pages/table_detail/components/table_detail_body.dart';
 import 'package:erp_pos/provider/areaprovider/area_provider.dart';
 import 'package:erp_pos/provider/areaprovider/insert_area_provider.dart';
 import 'package:erp_pos/provider/listtable/list_table_provider.dart';
+import 'package:erp_pos/provider/tableprovider/click_table_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/services/getArea/get_area.dart';
 import 'package:erp_pos/utils/check_status.dart';
+import 'package:erp_pos/utils/set_size.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +39,8 @@ class ListViewTable extends StatefulWidget {
 
 int? selectIndex = 0;
 String? idtable;
+String? idarea;
+String? area;
 int selectTable = 0;
 
 int? statusTable;
@@ -64,8 +68,6 @@ class _ListViewTableState extends State<ListViewTable> {
                         scrollDirection: Axis.horizontal,
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
-                          String? id = snapshot.data![index].id ?? "";
-                          CountPre().setAreaId(id);
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -76,7 +78,14 @@ class _ListViewTableState extends State<ListViewTable> {
                                       onTap: () {
                                         setState(() {
                                           selectIndex = index;
-                                          idtable = id;
+                                          idtable = snapshot.data![index].id;
+                                          idarea = snapshot.data![index].id;
+                                          area = snapshot.data![index].area!;
+                                          CountPre().setAreaId(idarea!);
+                                          CountPre().setArea(area!);
+
+                                          print("idarea:$idarea");
+
                                         });
                                       },
                                       child: Column(
@@ -157,10 +166,11 @@ class _ListViewTableState extends State<ListViewTable> {
                       crossAxisSpacing: 20.0,
                       mainAxisSpacing: 10.0,
                       children: List.generate(snapshot.data!.length, (index) {
+                       
                         return GestureDetector(
                           onTap: (() {
                             bool clicktable = true;
-                            CountPre().setClickTable(clicktable);
+                            context.read<ClickTableProvider>().clickTableProvider(clicktable);
                             CountPre()
                                 .setTableName(snapshot.data![index].name!);
                             Navigator.push(
@@ -197,7 +207,7 @@ class _ListViewTableState extends State<ListViewTable> {
                                       height: 50.h,
                                       width: 10.w,
                                       decoration: BoxDecoration(
-                                        color: AppTheme.GREEN_COLOR,
+                                        color: checkStatus(snapshot.data![index].status!),
                                         border: Border.all(
                                             color: AppTheme.BASE_COLOR),
                                         borderRadius: BorderRadius.circular(10),

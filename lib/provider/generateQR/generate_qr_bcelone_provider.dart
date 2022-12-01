@@ -3,7 +3,9 @@
 import 'package:codecamp_onepay/codecamp_onepay.dart';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
+import 'package:erp_pos/provider/updatetable/update_table_provider.dart';
 import 'package:erp_pos/services/generateqrBCEL/generate_qr_bcelone.dart';
 import 'package:erp_pos/utils/transaction/transaction.dart';
 import 'package:erp_pos/widget/style.dart';
@@ -74,6 +76,9 @@ class GenerateQRBCELONE extends ChangeNotifier {
               ),
             );
           });
+          await Future.delayed(Duration(seconds: 3));
+          Navigator.pop(context);
+          context.read<UpdateTableProvider>().updateTableProvider(context);
     });
     notifyListeners();
     return qrData;
