@@ -5,7 +5,8 @@ class FoodMenuModel {
   Product data;
   int number;
   int totalAmount;
+  int size;
 
   FoodMenuModel(
-      {required this.data, required this.number, required this.totalAmount});
+      {required this.data, required this.number, required this.totalAmount, required this.size});
 }

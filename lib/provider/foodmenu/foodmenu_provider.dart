@@ -10,7 +10,6 @@ class FoodMenuProvider extends ChangeNotifier {
   int count = 0;
   int _totalAmount = 0;
   bool get show => _show;
-
   int get counter => count;
   int get getTotalAmount => _totalAmount;
 

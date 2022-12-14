@@ -2,6 +2,8 @@
 import 'dart:async';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/model/ordertable/order_table_models.dart';
+import 'package:erp_pos/pages/table/components/textdate.dart';
 import 'package:erp_pos/provider/confirmpaymentbybcel/confirmpaymentbybcel_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/generateQR/generate_qr_bcelone_provider.dart';
@@ -17,12 +19,13 @@ class PaymentBcelone extends StatefulWidget {
   final tablename;
   final mcid;
   final shopcode;
+  List<Product>? data;
 
-  const PaymentBcelone(
+   PaymentBcelone(
       {Key? key,
       required this.tablename,
       required this.mcid,
-      required this.shopcode})
+      required this.shopcode, required this.data})
       : super(key: key);
 
   @override
@@ -66,7 +69,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
     startTimer();
     super.initState();
     GenerateQRBCELONE()
-        .getGenerateQR(context, widget.mcid, widget.shopcode)
+        .getGenerateQR(context, widget.mcid, widget.shopcode, widget.data)
         .then((value) {
       setState(() {
         qrData = value;
@@ -84,9 +87,19 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
       });
     }));
   }
+  
 
   @override
   Widget build(BuildContext context) {
+    int sum =0;
+    int total =0;
+    for(var i in widget.data!){
+      int? amout = i.amount;
+      int pricesale = int.parse(i.pricesale.toString());
+      sum = pricesale * amout!;
+      total += sum;
+
+    }
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -129,10 +142,12 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
               ),
               child: Column(
                 children: [
+              
+                  
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
-                      "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ",
+                      "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(total)} ກີບ",
                       style: TextStyle(
                           fontFamily: 'Phetsarath-OT',
                           fontSize: 20.sp,
@@ -188,7 +203,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                       onPressed: () async {
                         await GenerateQRBCELONE()
                             .getGenerateQR(
-                                context, widget.mcid, widget.shopcode)
+                                context, widget.mcid, widget.shopcode,widget.data)
                             .then((value) {
                           setState(() {
                             qrData = value;

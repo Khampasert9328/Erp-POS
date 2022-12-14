@@ -1,4 +1,5 @@
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/model/area/area_models.dart';
 import 'package:erp_pos/pages/table/components/buttom_dialog.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../constant/images.dart';
 
 class NavBarStatusBooking extends StatefulWidget {
-  const NavBarStatusBooking({Key? key}) : super(key: key);
+
+   NavBarStatusBooking({Key? key,}) : super(key: key);
 
   @override
   State<NavBarStatusBooking> createState() => _NavBarStatusBookingState();

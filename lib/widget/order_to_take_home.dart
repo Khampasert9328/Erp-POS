@@ -4,6 +4,7 @@ import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/pages/food_menu/components/food_menu_button.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/foodmenu_provider.dart';
+import 'package:erp_pos/utils/set_size.dart';
 import 'package:erp_pos/widget/add_amount.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,6 +30,8 @@ class _OrderToTakeHomeState extends State<OrderToTakeHome> {
         return ListView.builder(
             itemCount: value.getFoodMenuModel.length,
             itemBuilder: ((context, index) {
+              int size = value.getFoodMenuModel[index].size;
+              String numsize = setSize(size);
               void setNumber(bool isAdd) {
                 if (isAdd) {
                   setState(() {
@@ -117,10 +120,9 @@ class _OrderToTakeHomeState extends State<OrderToTakeHome> {
                                       context
                                           .read<GetFoodMenuProvider>()
                                           .deleteData(
-                                            index,value
-                                              .getFoodMenuModel[index]
-                                              .totalAmount
-                                          );
+                                              index,
+                                              value.getFoodMenuModel[index]
+                                                  .totalAmount);
                                     },
                                     icon: Image.asset(
                                       ERPImages.icondelete,
@@ -166,7 +168,7 @@ class _OrderToTakeHomeState extends State<OrderToTakeHome> {
                                           .read<FoodMenuProvider>()
                                           .increment(
                                             value.getFoodMenuModel[index]
-                                                .number++, 
+                                                .number++,
                                           );
                                       //CountPre().setCount(count);
                                     },
@@ -225,7 +227,7 @@ class _OrderToTakeHomeState extends State<OrderToTakeHome> {
                                         borderRadius: BorderRadius.circular(2)),
                                     child: Center(
                                       child: Text(
-                                        "S",
+                                        numsize,
                                         style: TextStyle(
                                             color: AppTheme.WHITE_COLOR,
                                             fontWeight: FontWeight.bold),
@@ -235,39 +237,7 @@ class _OrderToTakeHomeState extends State<OrderToTakeHome> {
                                   SizedBox(
                                     width: 5.w,
                                   ),
-                                  Container(
-                                    height: 22.h,
-                                    width: 22.w,
-                                    decoration: BoxDecoration(
-                                        color: AppTheme.BASE_COLOR,
-                                        borderRadius: BorderRadius.circular(2)),
-                                    child: Center(
-                                      child: Text(
-                                        "M",
-                                        style: TextStyle(
-                                            color: AppTheme.WHITE_COLOR,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 5.w,
-                                  ),
-                                  Container(
-                                    height: 22.h,
-                                    width: 22.w,
-                                    decoration: BoxDecoration(
-                                        color: AppTheme.BASE_COLOR,
-                                        borderRadius: BorderRadius.circular(2)),
-                                    child: Center(
-                                      child: Text(
-                                        "L",
-                                        style: TextStyle(
-                                            color: AppTheme.WHITE_COLOR,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ),
+                                
                                 ],
                               ),
                             ],

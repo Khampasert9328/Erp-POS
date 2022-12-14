@@ -20,6 +20,7 @@ class _SearchDataMuneState extends State<SearchDataMune> {
   TextEditingController search = TextEditingController();
 
   int add = 0;
+  bool clic =false;
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +131,7 @@ class _SearchDataMuneState extends State<SearchDataMune> {
                                                       ),
                                                     )
                                                   ])),
-                                              AddAmount(index: index,)
+                                              AddAmount(index: index,),
                                             ],
                                           ),
                                         ),
@@ -163,7 +164,7 @@ class _SearchDataMuneState extends State<SearchDataMune> {
                                                 getFoodModel.setFoodMenuData(
                                                     data.data,
                                                     amount,
-                                                    totalAmount);
+                                                    totalAmount, data.size);
                                                 foodModel.increment(add);
                                                 getFoodModel.addTotalAmount(
                                                     totalAmount);

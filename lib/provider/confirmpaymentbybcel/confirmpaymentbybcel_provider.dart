@@ -10,6 +10,7 @@ import 'package:erp_pos/provider/getorderbyissuedate/get_order_by_issuedate_prov
 import 'package:erp_pos/provider/offsession/create_off_session_provider.dart';
 import 'package:erp_pos/provider/sessoin/get_session_provider.dart';
 import 'package:erp_pos/services/paymentcash/paymentcash_service.dart';
+import 'package:erp_pos/utils/setdata/id_table_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class ConfirmPaymentByBCELONE extends ChangeNotifier {
 
         Timer time;
     
-    String? billid = await CountPre().getBillId();
+    String? billid = context.read<SetIdTable>().billid;
     String? sessionid = await CountPre().getSessionId();
     int paymenttype = 0;
     //////////////////////////////////////////////////////
@@ -50,7 +51,7 @@ class ConfirmPaymentByBCELONE extends ChangeNotifier {
     try {
       isload = true;
       _createPaymentCashModels = await createpaymentcash(
-          billid!, total, sessionid!, rStd, redX, paymenttype);
+          billid, total, sessionid!, rStd, redX, paymenttype);
 
       if (_createPaymentCashModels != null) {
        

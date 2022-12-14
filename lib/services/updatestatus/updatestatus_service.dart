@@ -1,18 +1,19 @@
 import 'dart:convert';
+
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:erp_pos/constant/api_path.dart';
+import 'package:erp_pos/model/updatestatus/updatestatus_models.dart';
 import 'package:erp_pos/utils/setdata/id_table_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get_ip_address/get_ip_address.dart';
-import 'package:http/http.dart' as http;
-import 'package:erp_pos/constant/api_path.dart';
-import 'package:erp_pos/model/updatetable/update_table_models.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
-Future<TableUpdateModels?> updateTableService(BuildContext context) async {
+Future<UpdateStatusModels?> updateStatus(BuildContext context)async{
   String? idToken = await CountPre().getToken();
-  String? tableId = context.read<SetIdTable>().getidTable;
+  String tableId = context.read<SetIdTable>().getidTable;
   String? tableName = context.read<SetIdTable>().gettableName;
   String? areaId = context.read<SetIdTable>().idarea;
   String? areaname = context.read<SetIdTable>().getareaname;
@@ -37,7 +38,7 @@ Future<TableUpdateModels?> updateTableService(BuildContext context) async {
     String playload = jsonEncode({
       "id": "$tableId",
       "name": "$tableName",
-      "status": 0,
+      "status": 1,
       "status_av": 0,
       "mergeTable": {
         "tableId": "none",
@@ -71,9 +72,9 @@ Future<TableUpdateModels?> updateTableService(BuildContext context) async {
       body: playload,
     );
     if (respones.statusCode == 200) {
-      return tableUpdateModelsFromJson(respones.body);
+      return updateStatusModelsFromJson(respones.body);
     }
   } catch (e) {
-    print("errorUpdatetable:$e");
+    print("errorUpDateStatus:$e");
   }
 }

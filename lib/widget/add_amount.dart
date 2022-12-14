@@ -1,6 +1,7 @@
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/foodmenu/food_menu_models.dart';
 import 'package:erp_pos/pages/food_menu/components/food_menu_button.dart';
+import 'package:erp_pos/pages/food_menu/models/food_menu_data_model.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/foodmenu_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
@@ -12,24 +13,19 @@ import 'package:provider/provider.dart';
 class AddAmount extends StatefulWidget {
   String? title;
   int index;
-  
-  AddAmount({
-    this.title,
-    required this.index,
-   
-  });
+
+  AddAmount({this.title, required this.index});
 
   @override
   State<AddAmount> createState() => _AddAmountState();
 }
 
 class _AddAmountState extends State<AddAmount> {
-  int count =0;
-  bool show = false;
+  int count = 0;
   void setNumber(bool isAdd) {
     if (isAdd) {
       setState(() {
-        count += 1;
+        count ++;
       });
     } else {
       if (count > 0) {
@@ -39,7 +35,6 @@ class _AddAmountState extends State<AddAmount> {
       }
     }
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -54,17 +49,19 @@ class _AddAmountState extends State<AddAmount> {
           ),
         ),
         SizedBox(
-          width: 10.w,
+          width: 20.w,
         ),
-        Expanded(
-          child: GestureDetector(
-            onTap: () async {
-              setNumber(false);
-              context.read<FoodMenuProvider>().remove(count);
-            },
-            child: FoodMenuButton(
-              title: '-',
-            ),
+        GestureDetector(
+          onTap: () async {
+            
+            setNumber(false);
+            context.read<FoodMenuProvider>().remove(count);
+            if (count<1) {
+               context.read<GetFoodMenuProvider>().addtochartbutton(widget.index, false);
+            }
+          },
+          child: FoodMenuButton(
+            title: '-',
           ),
         ),
         Padding(
@@ -83,15 +80,18 @@ class _AddAmountState extends State<AddAmount> {
             ],
           ),
         ),
-        Expanded(
-          child: GestureDetector(
-            onTap: () async {
-              setNumber(true);
-              context.read<FoodMenuProvider>().increment(count);
-            },
-            child: FoodMenuButton(
-              title: '+',
-            ),
+        GestureDetector(
+          onTap: () async {
+            print("conut:$count");
+           
+            setNumber(true);
+            context.read<FoodMenuProvider>().increment(count);
+             if (count >0) {
+            context.read<GetFoodMenuProvider>().addtochartbutton(widget.index, true);
+            }
+          },
+          child: FoodMenuButton(
+            title: '+',
           ),
         ),
       ],

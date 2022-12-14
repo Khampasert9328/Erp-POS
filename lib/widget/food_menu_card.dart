@@ -25,22 +25,10 @@ class FoodMenuCard extends StatefulWidget {
 }
 
 class _FoodMenuCardState extends State<FoodMenuCard> {
-  int? number;
-
-  Product data = Product();
-
-  ERPFoodSize erpFoodSize = ERPFoodSize.Small;
-
-  List<Product> listdata = [];
-
   final _refresh = GlobalKey<RefreshIndicatorState>();
 
-  int add = 0;
-  int? count = 0;
-  @override
   @override
   Widget build(BuildContext context) {
-    count = context.read<FoodMenuProvider>().counter;
     return Consumer2<FoodMenuProvider, GetFoodMenuProvider>(
       builder: (context, foodModel, getFoodModel, child) {
         return Scrollbar(
@@ -132,63 +120,112 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                 ),
                                               )
                                             ])),
-                                        AddAmount(
-                                          index: index,
-                                  
-                                        )
+                                        AddAmount(index: index),
                                       ],
                                     ),
                                   ),
-                                  // if(amount! > 0)
-                                  LikeButton(
-                                    size: 55,
-                                    animationDuration: Duration(seconds: 1),
-                                    likeBuilder: ((isLiked) {
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                            color: AppTheme.YELLOW_COLOR,
-                                            shape: BoxShape.circle,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  color: Colors.grey
-                                                      .withOpacity(0.5),
-                                                  spreadRadius: 5,
-                                                  blurRadius: 7,
-                                                  offset: Offset(0, 3))
-                                            ]),
-                                        child: Image.asset(
-                                          ERPImages.categcory,
-                                          color: AppTheme.WHITE_COLOR,
-                                          cacheHeight: 30,
-                                          cacheWidth: 30,
-                                        ),
-                                      );
-                                    }),
-                                    onTap: ((isLiked) async {
-                                      int? amount = context
-                                          .read<FoodMenuProvider>()
-                                          .counter;
-                                      if (amount == 0) {
-                                        Mystyle().showDialogCheckData(context,
-                                            "ກາລຸນາກົດເພື່ອເພີ່ມຈຳນວນອາຫານ");
-                                      } else {
-                                        int totalAmount =
-                                            (pricesale + specialPrice) *
-                                                amount;
-                                        getFoodModel.setFoodMenuData(
-                                            data.data, amount, totalAmount);
-                                        //foodModel.increment(add);
-                                        getFoodModel
-                                            .addTotalAmount(totalAmount);
-                                            count = 0;
-                                    
-                                        //  int? number = context.read<FoodMenuProvider>().count;
-                                        //  print("number:$number");
-                                      }
-
-                                      return !isLiked;
-                                    }),
-                                  )
+                                  //if(data.isaddtochart)
+                               data.isaddtochart? LikeButton(
+                                          size: 55,
+                                          animationDuration:
+                                              Duration(seconds: 1),
+                                          likeBuilder: ((isLiked) {
+                                            return Container(
+                                              decoration: BoxDecoration(
+                                                  color: AppTheme.YELLOW_COLOR,
+                                                  shape: BoxShape.circle,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color: Colors.grey
+                                                            .withOpacity(0.5),
+                                                        spreadRadius: 5,
+                                                        blurRadius: 7,
+                                                        offset: Offset(0, 3))
+                                                  ]),
+                                              child: Image.asset(
+                                                ERPImages.categcory,
+                                                color: AppTheme.WHITE_COLOR,
+                                                cacheHeight: 30,
+                                                cacheWidth: 30,
+                                              ),
+                                            );
+                                          }),
+                                          onTap: ((isLiked) async {
+                                           
+                                            int? amount = context
+                                                .read<FoodMenuProvider>()
+                                                .counter;
+                                            if (amount == 0) {
+                                              Mystyle().showDialogCheckData(
+                                                  context,
+                                                  "ກາລຸນາກົດເພື່ອເພີ່ມຈຳນວນອາຫານ");
+                                            } else { 
+                                              int totalAmount =
+                                                  (pricesale + specialPrice) *
+                                                      amount;
+                                              getFoodModel.setFoodMenuData(
+                                                  data.data,
+                                                  amount,
+                                                  totalAmount,data.size);
+                                              getFoodModel
+                                                  .addTotalAmount(totalAmount);
+                                              context
+                                                  .read<FoodMenuProvider>()
+                                                  .count;
+                                            }
+                                            return !isLiked;
+                                          }),
+                                        ): LikeButton(
+                                          size: 55,
+                                          animationDuration:
+                                              Duration(seconds: 1),
+                                          likeBuilder: ((isLiked) {
+                                            return Container(
+                                              decoration: BoxDecoration(
+                                                  color: AppTheme.GREY_COLOR,
+                                                  shape: BoxShape.circle,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color: Colors.grey
+                                                            .withOpacity(0.5),
+                                                        spreadRadius: 5,
+                                                        blurRadius: 7,
+                                                        offset: Offset(0, 3))
+                                                  ]),
+                                              child: Image.asset(
+                                                ERPImages.categcory,
+                                                color: AppTheme.WHITE_COLOR,
+                                                cacheHeight: 30,
+                                                cacheWidth: 30,
+                                              ),
+                                            );
+                                          }),
+                                          onTap: ((isLiked) async {
+                                           
+                                            int? amount = context
+                                                .read<FoodMenuProvider>()
+                                                .counter;
+                                            if (amount == 0) {
+                                              Mystyle().showDialogCheckData(
+                                                  context,
+                                                  "ກາລຸນາກົດເພື່ອເພີ່ມຈຳນວນອາຫານ");
+                                            } else { 
+                                              int totalAmount =
+                                                  (pricesale + specialPrice) *
+                                                      amount;
+                                              getFoodModel.setFoodMenuData(
+                                                  data.data,
+                                                  amount,
+                                                  totalAmount,data.size);
+                                              getFoodModel
+                                                  .addTotalAmount(totalAmount);
+                                              context
+                                                  .read<FoodMenuProvider>()
+                                                  .count;
+                                            }
+                                            return !isLiked;
+                                          }),
+                                        )
                                 ],
                               ),
                             ),

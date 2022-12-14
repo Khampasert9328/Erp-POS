@@ -3,56 +3,39 @@ import 'package:devla_sunmi/flutter_sunmi_printer.dart';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/getorderbyissuedate/get_order_by_isuedatemodels.dart';
-import 'package:erp_pos/model/gettableall/gettable_all_models.dart';
-import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
+
+import 'package:erp_pos/utils/set_size.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
-import 'package:erp_pos/widget/bottombar_of_bill.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-class BodyDetailBill extends StatefulWidget {
-  GetOrderByIssuedateModels? dataorder;
-  
-
-  BodyDetailBill({super.key, required this.dataorder,});
-
+class DetailOrderBackHome extends StatefulWidget {
+  GetOrder? data;
+  int index;
+  DetailOrderBackHome({super.key, required this.data, required this.index});
   @override
-  State<BodyDetailBill> createState() => _BodyDetailBillState();
+  State<DetailOrderBackHome> createState() => _DetailOrderBackHomeState();
 }
 
-class _BodyDetailBillState extends State<BodyDetailBill> {
-  String? name;
-  int? size;
-  int? amount;
-  int? price;
-  String? nameTable;
-  @override
-  void initState() {
-    CountPre().getNameTable().then((value) async {
-      nameTable = await CountPre().getNameTable();
-    });
-    super.initState();
-  }
-
+class _DetailOrderBackHomeState extends State<DetailOrderBackHome> {
   @override
   Widget build(BuildContext context) {
-    for (var item in widget.dataorder!.order!) {
-    for (var data in item.product!) {
-      name = data.name;
-      size = data.size;
-      amount = data.amount;
-      price = data.pricesale;
+    int? sum = 0;
+    int total = 0;
+    for (var i in widget.data!.product!) {
+      int pricesal = int.parse(i.pricesale.toString());
+      int? amount = i.amount;
+      sum = pricesal * amount!;
+      total += sum;
     }
-    }
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppTheme.WHITE_COLOR,
         elevation: 0,
         centerTitle: true,
         title: Text(
-          "ເລກໂຕະ",
+          "${widget.data!.billid}",
           style: TextStyle(
             color: AppTheme.BASE_COLOR,
             fontWeight: FontWeight.bold,
@@ -79,7 +62,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                     children: [
                       Badge(
                         badgeContent: Text(
-                          "0",
+                          "${widget.data}",
                           style: TextStyle(
                             color: AppTheme.WHITE_COLOR,
                           ),
@@ -113,7 +96,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                       Row(
                         children: [
                           Text(
-                            "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(price)} ກີບ",
+                            "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(total)}ກີບ",
                             style: TextStyle(
                               fontFamily: 'Phetsarath-OT',
                               fontSize: 18.sp,
@@ -128,7 +111,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                 ),
                 GestureDetector(
                   onTap: () async {
-        
+                    String? billNo =await CountPre().getBillNo();
                     try {
                       await SunmiPrinter.startTransactionPrint();
                       await SunmiPrinter.printText('ໃບບິນ',
@@ -141,7 +124,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                       await SunmiPrinter.printRow(cols: [
                         ColumnMaker(text: 'ໃບບິນເລກທີ', width: 6),
                         ColumnMaker(
-                            text: 'none',
+                            text: '$billNo',
                             width: 6,
                             align: SunmiPrintAlign.RIGHT),
                       ]);
@@ -168,11 +151,23 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                               bold: true,
                               fontSize: SunmiFontSize.MD));
 
+                      for (var i in widget.data!.product!) {
+                        String size = setSize(i.size!);
+                        await SunmiPrinter.printRow(cols: [
+                          ColumnMaker(text: '${i.name}', width: 6),
+                          ColumnMaker(
+                              text:
+                                  '${i.amount} $size ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(i.pricesale)}',
+                              width: 6,
+                              align: SunmiPrintAlign.RIGHT),
+                        ]);
+                      }
+                      await SunmiPrinter.line();
                       await SunmiPrinter.printRow(cols: [
-                        ColumnMaker(text: '${name}', width: 6),
+                        ColumnMaker(text: 'ລາຄາລວມ:', width: 6),
                         ColumnMaker(
                             text:
-                                '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(amount)} $size ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(price)}',
+                                '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(total)}',
                             width: 6,
                             align: SunmiPrintAlign.RIGHT),
                       ]);
@@ -249,7 +244,6 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text("# Order ${widget.dataorder!.prefix}"),
               ],
             ),
             const Divider(),
@@ -310,60 +304,60 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
               ],
             ),
             const Divider(),
-            Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Text(
-                    "1",
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold,
+            for (var i in widget.data!.product!)
+              SingleChildScrollView(
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Text(
+                        "${widget.index += 1}",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Text(
-                    "$name",
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold,
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        "${i.name}",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Text(
-                    "$size",
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Text(
+                        "${setSize(i.size!)}",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Text(
-                    "$amount",
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Text(
+                        "${i.amount}",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Text(
-                    "$price",
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Text(
+                        "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(i.pricesale)}",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              ),
             const Divider(),
           ],
         ),

@@ -53,148 +53,172 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                     prefix.add(i.prefixid!);
                   }
                 }
-                List<String> table =[];
-                for (var item in context.read<GetTableAllProvider>().tableModels!.table!) {
+                String? firstname;
+                for (var item in context
+                    .read<GetTableAllProvider>()
+                    .tableModels!
+                    .table!) {
                   if (item.id == value.order!.order![index].tableid) {
-                    table.add(item.name!);
+                    firstname = item.name;
                     CountPre().setNameTable(item.name!);
                   }
                 }
-                return Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => BodyDetailBill(dataorder: value.order!,)
-                            ),
-                          );
-                        },
-                        child: Container(
-                          height: 81.h,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Row(
+                return Consumer<GetTableAllProvider>(
+                    builder: ((context, model, child) {
+                  return model.tableModels!.table == null
+                      ? const Center(
+                          child: Text("ບໍ່ມີຂໍ້ມູນ"),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      height: 4.h,
-                                      width: 42.w,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: AppTheme.BASE_COLOR),
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                    ),
-                                    SizedBox(
-                                      height: 2.h,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Container(
-                                          height: 26.h,
-                                          width: 4.w,
-                                          decoration: BoxDecoration(
-                                          //  color: AppTheme.GREEN_COLOR,
-                                              border: Border.all(
-                                                  color: AppTheme.BASE_COLOR),
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => BodyDetailBill(
+                                            dataorder: value.order)),
+                                  );
+                                },
+                                child: Container(
+                                  height: 81.h,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius: BorderRadius.circular(5)),
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              height: 4.h,
+                                              width: 42.w,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color:
+                                                          AppTheme.BASE_COLOR),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                            ),
+                                            SizedBox(
+                                              height: 2.h,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  height: 26.h,
+                                                  width: 4.w,
+                                                  decoration: BoxDecoration(
+                                                      //  color: AppTheme.GREEN_COLOR,
+                                                      border: Border.all(
+                                                          color: AppTheme
+                                                              .BASE_COLOR),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                ),
+                                                SizedBox(
+                                                  width: 2.h,
+                                                ),
+                                                Container(
+                                                  height: 36.h,
+                                                  width: 57.w,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: AppTheme
+                                                              .BASE_COLOR),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                  child: Center(
+                                                    child: Text("${firstname}"),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 2.h,
+                                                ),
+                                                Container(
+                                                  height: 26.h,
+                                                  width: 4.w,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: AppTheme
+                                                              .BASE_COLOR),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 2.h,
+                                            ),
+                                            Container(
+                                              height: 4.h,
+                                              width: 42.w,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color:
+                                                          AppTheme.BASE_COLOR),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                            ),
+                                          ],
                                         ),
-                                        SizedBox(
-                                          width: 2.h,
-                                        ),
-                                        Container(
-                                          height: 36.h,
-                                          width: 57.w,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: AppTheme.BASE_COLOR),
-                                              borderRadius:
-                                                  BorderRadius.circular(5)),
-                                          child:  Center(
-                                            child: Text("${table.first}"),
+                                      ),
+                                      Expanded(
+                                        child: ListTile(
+                                          title: Text(
+                                            "ໂຕະ ${firstname}",
+                                            style: TextStyle(
+                                                fontSize: 18.sp,
+                                                color: AppTheme.BASE_COLOR,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          subtitle: Text(
+                                            "# Order ${prefix.first}",
+                                            style: TextStyle(
+                                              fontSize: 13.sp,
+                                              color: AppTheme.BASE_COLOR,
+                                            ),
                                           ),
                                         ),
-                                        SizedBox(
-                                          width: 2.h,
-                                        ),
-                                        Container(
-                                          height: 26.h,
-                                          width: 4.w,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: AppTheme.BASE_COLOR),
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 2.h,
-                                    ),
-                                    Container(
-                                      height: 4.h,
-                                      width: 42.w,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: AppTheme.BASE_COLOR),
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: ListTile(
-                                  title: Text(
-                                    "ໂຕະ ${table.first}",
-                                    style: TextStyle(
-                                      fontSize: 18.sp,
-                                      color: AppTheme.BASE_COLOR,
-                                      fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                  subtitle:  Text("# Order ${prefix.first}",
-                                    style: TextStyle(
-                                      fontSize: 13.sp,
-                                      color: AppTheme.BASE_COLOR,
-                              
-                                    ),),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 5),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Image.asset(
-                                        ERPImages.iconforbill,
-                                        height: 9.h,
-                                        width: 18.w,
                                       ),
-                                    ),
-                                  ],
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 5),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            IconButton(
+                                              onPressed: () {},
+                                              icon: Image.asset(
+                                                ERPImages.iconforbill,
+                                                height: 9.h,
+                                                width: 18.w,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
+                        );
+                }));
               },
             );
           }

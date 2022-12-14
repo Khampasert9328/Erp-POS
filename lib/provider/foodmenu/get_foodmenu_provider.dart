@@ -29,22 +29,29 @@ class GetFoodMenuProvider extends ChangeNotifier {
       if (modelsProduct != null) {
         listProduct.clear();
         for (Product i in modelsProduct!.product!) {
-          listProduct.add(FoodMenuDataModel(data: i, size: 0));
+          listProduct.add(FoodMenuDataModel(data: i, size: 0, isaddtochart: false));
         }
       }
     }
     notifyListeners();
   }
 
+  void addtochartbutton(int index, bool val){
+    listProduct[index].isaddtochart =val;
+    notifyListeners();
+  }
+    
+  
+
   // ໃຊ້ຕອນເພີ່ມເມນູ
-  void setFoodMenuData(Product data, int number, int totalAmount) {
+  void setFoodMenuData(Product data, int number, int totalAmount, int size) {
     List<FoodMenuModel> foodData =
         foodMenuModel.where((element) => element.data.id == data.id).toList();
 
     ///  ຖ້າຍັງບໍ່ມີເມນູດັ່ງກ່າວ
     if (foodData.isEmpty) {
       foodMenuModel.add(
-          FoodMenuModel(data: data, number: number, totalAmount: totalAmount));
+          FoodMenuModel(data: data, number: number, totalAmount: totalAmount, size: size));
     } else {
       for (var i in foodMenuModel) {
         if (i.data.id == data.id) {

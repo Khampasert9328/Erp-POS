@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/model/ordertable/order_table_models.dart';
 import 'package:erp_pos/model/paymentcash/paymentcash_models.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/paycash/paymentcash_provider.dart';
@@ -12,7 +13,8 @@ import 'package:provider/provider.dart';
 
 class paycash extends StatefulWidget {
   final tablename;
-  paycash({Key? key, required this.tablename}) : super(key: key);
+   List<Product>? data;
+  paycash({Key? key, required this.tablename, required this.data}) : super(key: key);
 
   @override
   State<paycash> createState() => _paycashState();
@@ -62,7 +64,7 @@ class _paycashState extends State<paycash> {
                 String? mmoney = money.text.replaceAll(',', '');
                 int? intMoney = int.parse(mmoney);
                 PaymentCashProvider()
-                    .createpaymentcashprovider(context, intMoney);
+                    .createpaymentcashprovider(context, intMoney, widget.data);
               },
               child: Text(
                 "ຊຳລະເງິນ",

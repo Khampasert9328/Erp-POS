@@ -10,8 +10,7 @@ import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/pages/onboardingscreen/onboardingscreen.dart';
 import 'package:erp_pos/provider/areaprovider/area_provider.dart';
 import 'package:erp_pos/provider/areaprovider/insert_area_provider.dart';
-import 'package:erp_pos/provider/bill/print_bill_customers_provider.dart';
-import 'package:erp_pos/provider/bill/print_bill_provider.dart';
+
 import 'package:erp_pos/provider/checkexpiredpackage/check_exp_package_provider.dart';
 import 'package:erp_pos/provider/confirmpaymentbybcel/confirmpaymentbybcel_provider.dart';
 import 'package:erp_pos/provider/createorder/create_order_provider.dart';
@@ -21,16 +20,18 @@ import 'package:erp_pos/provider/generateQR/generate_qr_bcelone_provider.dart';
 import 'package:erp_pos/provider/generateqrmmoney/generate_qr_mmoney_provider.dart';
 import 'package:erp_pos/provider/getaccount/getaccount_provider.dart';
 import 'package:erp_pos/provider/getorderbyissuedate/get_order_by_issuedate_provider.dart';
+import 'package:erp_pos/provider/getordertable/get_ordertable_provider.dart';
 import 'package:erp_pos/provider/gettableall/get_table_all_provider.dart';
 import 'package:erp_pos/provider/listtable/list_table_provider.dart';
 import 'package:erp_pos/provider/offsession/create_off_session_provider.dart';
 import 'package:erp_pos/provider/paycash/paymentcash_provider.dart';
-import 'package:erp_pos/provider/printbill/print_bill.dart';
+
 import 'package:erp_pos/provider/sessoin/get_session_provider.dart';
 import 'package:erp_pos/provider/switch/switch_provider.dart';
 import 'package:erp_pos/provider/tableprovider/click_table_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/provider/updatetable/update_table_provider.dart';
+import 'package:erp_pos/utils/setdata/id_table_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,10 +46,8 @@ void main() async {
 
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -61,14 +60,12 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(
                 create: ((context) => AuthenticationProvider())),
             ChangeNotifierProvider(create: (context) => AreaProvider()),
-            ChangeNotifierProvider(create: (context) => GetTableProvider()),
+            //ChangeNotifierProvider(create: (context) => GetTableProvider()),
             ChangeNotifierProvider(create: (context) => FoodMenuProvider()),
             ChangeNotifierProvider(create: (context) => GetFoodMenuProvider()),
             ChangeNotifierProvider(
                 create: ((context) => CheckExpiredPackage())),
-            ChangeNotifierProvider(
-                create: (context) => PrintBillKitchenProvider()),
-            ChangeNotifierProvider(create: (_) => PrintBillCustomers()),
+
             ChangeNotifierProvider(create: (_) => GenerateQRBCELONE()),
             ChangeNotifierProvider(
                 create: (_) => GetOrderByIssueDateProvider()),
@@ -76,15 +73,16 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (_)=>CreateOffSessionProvider()),
             ChangeNotifierProvider(create: (_)=>CreateOrderProvider()),
             ChangeNotifierProvider(create: (_)=>SwitchProvider()),
-            ChangeNotifierProvider(create: (_)=>GetTableAllProvider()),
+           ChangeNotifierProvider(create: (_)=>GetTableAllProvider()),
             ChangeNotifierProvider(create: (_)=>PaymentCashProvider()),
             ChangeNotifierProvider(create: (_)=>ConfirmPaymentByBCELONE()),
-            ChangeNotifierProvider(create: (_)=>PrintBill()),
             ChangeNotifierProvider(create: (_)=>GenerateQrMmoneyProvider()),
             ChangeNotifierProvider(create: (_)=>GetAccountProvider()),
             ChangeNotifierProvider(create: ((_) => ListTableProvider())),
             ChangeNotifierProvider(create: (_)=>UpdateTableProvider()),
             ChangeNotifierProvider(create: (_)=>ClickTableProvider()),
+            ChangeNotifierProvider(create: (_)=>SetIdTable()),
+            ChangeNotifierProvider(create: (_)=>GetOrderTableProvider())
           ],
           child: MaterialApp(
             theme: ThemeData(
