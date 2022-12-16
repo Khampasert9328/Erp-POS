@@ -12,7 +12,6 @@ class SignUp extends StatelessWidget {
   TextEditingController company = TextEditingController();
   TextEditingController firstName = TextEditingController();
   TextEditingController lastName = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -32,8 +31,6 @@ class SignUp extends StatelessWidget {
                   style: TextStyle(color: AppTheme.BASE_COLOR, fontSize: 14.sp),
                 ),
                 AppTextField(
-                  onEditing: (() => TextInput.finishAutofillContext()),
-                  autofillHints: [AutofillHints.email],
                   keyboardType: TextInputType.emailAddress,
                   controller: email,
                   hintText: 'ອີເມວ',
@@ -48,8 +45,6 @@ class SignUp extends StatelessWidget {
                   style: TextStyle(color: AppTheme.BASE_COLOR, fontSize: 14.sp),
                 ),
                 AppTextField(
-                  onEditing: (() => TextInput.finishAutofillContext()),
-                    autofillHints: [AutofillHints.countryName],
                     controller: company,
                     hintText: 'ຊື່ຮ້ານ/ບໍລິສັດ',
                     validator: RequiredValidator(
@@ -62,8 +57,6 @@ class SignUp extends StatelessWidget {
                   style: TextStyle(color: AppTheme.BASE_COLOR, fontSize: 14.sp),
                 ),
                 AppTextField(
-                    onEditing: (() => TextInput.finishAutofillContext()),
-                    autofillHints: [AutofillHints.familyName],
                     controller: firstName,
                     hintText: 'ຊື່',
                     validator: RequiredValidator(errorText: 'ກະລຸນາປ້ອນຊື່')),
@@ -75,8 +68,6 @@ class SignUp extends StatelessWidget {
                   style: TextStyle(color: AppTheme.BASE_COLOR, fontSize: 14.sp),
                 ),
                 AppTextField(
-                  onEditing: (() => TextInput.finishAutofillContext()),
-                  autofillHints: [AutofillHints.familyName],
                   controller: lastName,
                   hintText: 'ນາມສະກຸນ',
                   validator: EmailValidator(errorText: 'ກະລຸນາປ້ອນນາມສະກຸນ'),

@@ -54,8 +54,7 @@ class _SignInState extends State<SignIn> {
                     height: 41.h,
                   ),
                   AppTextField(
-                      onEditing: (() => TextInput.finishAutofillContext()),
-                      autofillHints: [AutofillHints.email],
+                      
                       controller: email,
                       hintText: 'ອີເມວ',
                       prefixIcon: Icon(
@@ -72,8 +71,6 @@ class _SignInState extends State<SignIn> {
                     height: 10.h,
                   ),
                   AppTextField(
-                      onEditing: (() => TextInput.finishAutofillContext()),
-                      autofillHints: [AutofillHints.password],
                       obscureText: true,
                       keyboardType: TextInputType.text,
                       controller: password,

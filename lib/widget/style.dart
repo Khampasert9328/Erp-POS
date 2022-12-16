@@ -569,7 +569,7 @@ class Mystyle {
                               style: TextStyle(
                                   fontFamily: 'Phetsarath-OT',
                                   fontSize: 18.sp,
-                                  color: AppTheme.GREY_COLOR,
+                                  color: AppTheme.BASE_COLOR,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
