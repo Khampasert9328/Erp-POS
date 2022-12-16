@@ -54,7 +54,6 @@ class _ListViewTableState extends State<ListViewTable> {
     super.initState();
     context.read<AreaProvider>().getZone(context);
   }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<AreaProvider>(builder: ((context, value, child) {

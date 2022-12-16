@@ -29,19 +29,18 @@ class GetFoodMenuProvider extends ChangeNotifier {
       if (modelsProduct != null) {
         listProduct.clear();
         for (Product i in modelsProduct!.product!) {
-          listProduct.add(FoodMenuDataModel(data: i, size: 0, isaddtochart: false));
+          listProduct
+              .add(FoodMenuDataModel(data: i, size: 0, isaddtochart: false));
         }
       }
     }
     notifyListeners();
   }
 
-  void addtochartbutton(int index, bool val){
-    listProduct[index].isaddtochart =val;
+  void addtochartbutton(int index, bool val) {
+    listProduct[index].isaddtochart = val;
     notifyListeners();
   }
-    
-  
 
   // ໃຊ້ຕອນເພີ່ມເມນູ
   void setFoodMenuData(Product data, int number, int totalAmount, int size) {
@@ -50,8 +49,8 @@ class GetFoodMenuProvider extends ChangeNotifier {
 
     ///  ຖ້າຍັງບໍ່ມີເມນູດັ່ງກ່າວ
     if (foodData.isEmpty) {
-      foodMenuModel.add(
-          FoodMenuModel(data: data, number: number, totalAmount: totalAmount, size: size));
+      foodMenuModel.add(FoodMenuModel(
+          data: data, number: number, totalAmount: totalAmount, size: size));
     } else {
       for (var i in foodMenuModel) {
         if (i.data.id == data.id) {
@@ -78,20 +77,23 @@ class GetFoodMenuProvider extends ChangeNotifier {
   }
 
   //ລົບຂໍ້ມູນອອກຈາກ provider
-  void deleteData(int index, int amount) {
+  void deleteData(int index, int amount, int number) {
+    int sum = 0;
+    int sumamount = int.parse(amount.toString());
+    sum = number * sumamount;
     _totalamount -= amount;
     foodMenuModel.removeAt(index);
     notifyListeners();
   }
-
   void clearKitchenData() {
     _totalamount = 0;
     foodMenuModel = [];
     notifyListeners();
   }
+
 //ສຳລັບການ ດຶງຂໍ້ມູນຂອງ ຂະໜາດອາຫານມາໂຊຢູ່ UI
-int _size =0;
-int get size =>_size;
+  int _size = 0;
+  int get size => _size;
   void setProductSize(int addsize, int index) {
     listProduct[index].size = addsize;
     _size = addsize;

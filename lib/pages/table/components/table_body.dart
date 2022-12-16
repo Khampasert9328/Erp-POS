@@ -50,8 +50,6 @@ class _TableBodyState extends State<TableBody> {
   void initState() {
     CountPre().getStatus().then((value) async {
       status = await CountPre().getStatus();
-      print("status:$status");
-
       if (status == 1) {
         context.read<SwitchProvider>().changSwitch(true);
       } else {

@@ -122,7 +122,7 @@ class _OrderToTakeHomeState extends State<OrderToTakeHome> {
                                           .deleteData(
                                               index,
                                               value.getFoodMenuModel[index]
-                                                  .totalAmount);
+                                                  .totalAmount, value.getFoodMenuModel[index].number);
                                     },
                                     icon: Image.asset(
                                       ERPImages.icondelete,

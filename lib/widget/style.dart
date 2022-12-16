@@ -608,7 +608,7 @@ class Mystyle {
               insetAnimationDuration: Duration(milliseconds: 5),
               insetAnimationCurve: Curves.bounceOut,
               child: Container(
-                height: 230.h,
+                height: 210.h,
                 width: 310.w,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 10, left: 10),
@@ -618,6 +618,14 @@ class Mystyle {
                         ERPImages.iconerror,
                         height: 90.h,
                         width: 90.w,
+                      ),
+                      Text(
+                        "ຂໍອາໄພ",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.sp,
+                          fontFamily: "Phetsarath-OT",
+                        ),
                       ),
                       Center(
                         child: Text(
@@ -634,12 +642,12 @@ class Mystyle {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Container(
-                            height: 50.h,
+                            height: 40.h,
                             width: 70.w,
                             decoration: BoxDecoration(
-                              border: Border.all(color: AppTheme.BASE_COLOR),
-                              
-                                borderRadius: BorderRadius.circular(10)),
+                                color: AppTheme.BASE_COLOR,
+                                border: Border.all(color: AppTheme.BASE_COLOR),
+                                borderRadius: BorderRadius.circular(5)),
                             child: TextButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
@@ -648,8 +656,8 @@ class Mystyle {
                                 "ຕົກລົງ",
                                 style: TextStyle(
                                     fontFamily: "Phetsarath-OT",
-                                    fontSize: 18.sp,
-                                    color: AppTheme.BASE_COLOR,
+                                    fontSize: 16.sp,
+                                    color: AppTheme.WHITE_COLOR,
                                     fontWeight: FontWeight.bold),
                               ),
                             ),

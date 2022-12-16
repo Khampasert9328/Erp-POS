@@ -253,20 +253,21 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                         SizedBox(
                                           width: 10.w,
                                         ),
-                                        GestureDetector(
+                                         GestureDetector(
                                           onTap: () async {
-                                            setNumber(true);
+                                            setNumber(false);
                                             context
                                                 .read<FoodMenuProvider>()
-                                                .increment(
+                                                .remove(
                                                   value.getFoodMenuModel[index]
-                                                      .number++,
+                                                      .number--,
                                                 );
                                           },
                                           child: FoodMenuButton(
-                                            title: '+',
+                                            title: '-',
                                           ),
                                         ),
+                                       
                                         Padding(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 5.w),
@@ -291,16 +292,16 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                         ),
                                         GestureDetector(
                                           onTap: () async {
-                                            setNumber(false);
+                                            setNumber(true);
                                             context
                                                 .read<FoodMenuProvider>()
-                                                .remove(
+                                                .increment(
                                                   value.getFoodMenuModel[index]
-                                                      .number--,
+                                                      .number++,
                                                 );
                                           },
                                           child: FoodMenuButton(
-                                            title: '-',
+                                            title: '+',
                                           ),
                                         ),
                                       ],
@@ -321,7 +322,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                             .deleteData(
                                                 index,
                                                 value.getFoodMenuModel[index]
-                                                    .totalAmount);
+                                                    .totalAmount, value.getFoodMenuModel[index].number);
                                       }),
                                       child: Padding(
                                         padding:
