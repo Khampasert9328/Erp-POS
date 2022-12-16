@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:erp_pos/model/category/category_models.dart';
 import 'package:erp_pos/model/food_menu_model.dart';
 import 'package:erp_pos/model/foodmenu/food_menu_models.dart';
@@ -27,22 +29,28 @@ class GetFoodMenuProvider extends ChangeNotifier {
       if (modelsProduct != null) {
         listProduct.clear();
         for (Product i in modelsProduct!.product!) {
-          listProduct.add(FoodMenuDataModel(data: i, size: 0));
+          listProduct
+              .add(FoodMenuDataModel(data: i, size: 0, isaddtochart: false));
         }
       }
     }
     notifyListeners();
   }
 
+  void addtochartbutton(int index, bool val) {
+    listProduct[index].isaddtochart = val;
+    notifyListeners();
+  }
+
   // ໃຊ້ຕອນເພີ່ມເມນູ
-  void setFoodMenuData(Product data, int number, int totalAmount) {
+  void setFoodMenuData(Product data, int number, int totalAmount, int size) {
     List<FoodMenuModel> foodData =
         foodMenuModel.where((element) => element.data.id == data.id).toList();
 
     ///  ຖ້າຍັງບໍ່ມີເມນູດັ່ງກ່າວ
     if (foodData.isEmpty) {
-      foodMenuModel.add(
-          FoodMenuModel(data: data, number: number, totalAmount: totalAmount));
+      foodMenuModel.add(FoodMenuModel(
+          data: data, number: number, totalAmount: totalAmount, size: size));
     } else {
       for (var i in foodMenuModel) {
         if (i.data.id == data.id) {
@@ -60,7 +68,6 @@ class GetFoodMenuProvider extends ChangeNotifier {
   void addTotalAmount(int totalamount) {
     _totalamount += totalamount;
     notifyListeners();
-
   }
 
   //ຜົນລົບລາຄາທັງໝົດ
@@ -70,20 +77,26 @@ class GetFoodMenuProvider extends ChangeNotifier {
   }
 
   //ລົບຂໍ້ມູນອອກຈາກ provider
-  void deleteData(int? index, int amount) {
-    foodMenuModel.removeAt(index!);
+  void deleteData(int index, int amount, int number) {
+    int sum = 0;
+    int sumamount = int.parse(amount.toString());
+    sum = number * sumamount;
     _totalamount -= amount;
+    foodMenuModel.removeAt(index);
     notifyListeners();
   }
-
   void clearKitchenData() {
     _totalamount = 0;
     foodMenuModel = [];
     notifyListeners();
   }
 
-  void setProductSize(int size, int index){
-    listProduct[index].size = size;
+//ສຳລັບການ ດຶງຂໍ້ມູນຂອງ ຂະໜາດອາຫານມາໂຊຢູ່ UI
+  int _size = 0;
+  int get size => _size;
+  void setProductSize(int addsize, int index) {
+    listProduct[index].size = addsize;
+    _size = addsize;
     notifyListeners();
   }
 }

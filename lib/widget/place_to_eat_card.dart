@@ -12,11 +12,14 @@ import 'package:erp_pos/pages/table/components/listview_table.dart';
 import 'package:erp_pos/pages/table/components/navbar_status_booking_next.dart';
 import 'package:erp_pos/pages/table_detail/components/table_detail_body.dart';
 import 'package:erp_pos/provider/areaprovider/area_provider.dart';
-import 'package:erp_pos/provider/bill/print_bill_provider.dart';
+
 import 'package:erp_pos/provider/checkexpiredpackage/check_exp_package_provider.dart';
 import 'package:erp_pos/provider/createorder/create_order_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
+import 'package:erp_pos/provider/updatetable/update_table_provider.dart';
+import 'package:erp_pos/services/checkexpiredpackage/check_expired_package_service.dart';
+import 'package:erp_pos/utils/set_size.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/calculate_money.dart';
 import 'package:erp_pos/widget/eat_resturant.dart';
@@ -31,7 +34,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PlaceToEatCard extends StatefulWidget {
-  // ScrollController scrollController;
+
   VoidCallback onback;
 
   PlaceToEatCard({required this.onback});
@@ -43,6 +46,39 @@ class PlaceToEatCard extends StatefulWidget {
 class _PlaceToEatCardState extends State<PlaceToEatCard> {
   FoodMenuModel? model;
   TabController? controller;
+  PrinterStatus? _printerStatus;
+  PrinterMode? _printerMode;
+  @override
+  void initState() {
+    super.initState();
+
+    _bindingPrinter().then((bool isBind) async => {
+          if (isBind)
+            {
+              _getPrinterStatus(),
+              _printerMode = await _getPrinterMode(),
+            }
+        });
+  }
+
+  /// must binding ur printer at first init in app
+  Future<bool> _bindingPrinter() async {
+    final bool result = await SunmiPrinter.bindingPrinter();
+    return result;
+  }
+
+  /// you can get printer status
+  Future<void> _getPrinterStatus() async {
+    final PrinterStatus result = await SunmiPrinter.getPrinterStatus();
+    setState(() {
+      _printerStatus = result;
+    });
+  }
+
+  Future<PrinterMode> _getPrinterMode() async {
+    final PrinterMode mode = await SunmiPrinter.getPrinterMode();
+    return mode;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +94,10 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: widget.onback,
+                    onTap: () {
+                      widget.onback;
+                      context.read<GetFoodMenuProvider>().clearKitchenData();
+                    },
                     child: Container(
                       height: 50.h,
                       width: 150.w,
@@ -122,100 +161,21 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                 ),
                               );
                             });
+                        context
+                            .read<CheckExpiredPackage>()
+                            .getCheckExpiredPackage(context);
+                            context.read<UpdateTableProvider>().updateTableProvider(context);
                         await Future.delayed(Duration(seconds: 5));
                         Navigator.pop(context);
                         String? tablename = await CountPre().getTableName();
-                        await CheckExpiredPackage()
-                            .getCheckExpiredPackage(context)
-                            .then((value) async {
-                          PrintBillKitchenProvider().getprint();
-                          SharedPreferences preferences =
-                              await SharedPreferences.getInstance();
-                          String? getzone =
-                              preferences.getString(CountPre().idzone);
-                          SharedPreferences pri =
-                              await SharedPreferences.getInstance();
-                          String? billNo = pri.getString(CountPre().billNo);
-
-                          try {
-                            await SunmiPrinter.startTransactionPrint();
-                            await SunmiPrinter.printText('ໃບບິນຫ້ອງຄົວ',
-                                style: SunmiStyle(
-                                    align: SunmiPrintAlign.CENTER,
-                                    bold: true,
-                                    fontSize: SunmiFontSize.LG));
-                            await SunmiPrinter.line();
-
-                            await SunmiPrinter.printRow(cols: [
-                              ColumnMaker(text: 'ໃບບິນເລກທີ', width: 6),
-                              ColumnMaker(
-                                  text: '$billNo',
-                                  width: 6,
-                                  align: SunmiPrintAlign.RIGHT),
-                            ]);
-
-                            await SunmiPrinter.printRow(cols: [
-                              ColumnMaker(text: 'ວັນເວລາ', width: 6),
-                              ColumnMaker(
-                                  text:
-                                      '${DateFormat("yyy-MM-dd HH:mm").format(DateTime.now())}',
-                                  width: 6,
-                                  align: SunmiPrintAlign.RIGHT),
-                            ]);
-                            await SunmiPrinter.printRow(cols: [
-                              ColumnMaker(text: 'ໂຊນ ຫຼື ພື້ນທີ່', width: 6),
-                              ColumnMaker(
-                                  text: '${getzone ?? "ສັ່ງກັບບ້ານ"}',
-                                  width: 6,
-                                  align: SunmiPrintAlign.RIGHT),
-                            ]);
-                            await SunmiPrinter.printRow(cols: [
-                              ColumnMaker(text: 'ເລກໂຕະ', width: 6),
-                              ColumnMaker(
-                                  text: '${tablename ?? "ສັ່ງກັບບ້ານ"}',
-                                  width: 6,
-                                  align: SunmiPrintAlign.RIGHT),
-                            ]);
-                            await SunmiPrinter.line();
-                            await SunmiPrinter.printText('ລາຍການອາຫານ',
-                                style: SunmiStyle(
-                                    align: SunmiPrintAlign.CENTER,
-                                    bold: true,
-                                    fontSize: SunmiFontSize.MD));
-
-                            for (var data in context
-                                .read<GetFoodMenuProvider>()
-                                .getFoodMenuModel) {
-                              await SunmiPrinter.printRow(cols: [
-                                ColumnMaker(
-                                    text: '${data.data.name}', width: 6),
-                                ColumnMaker(
-                                    text:
-                                        '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.number)} x ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.totalAmount)}',
-                                    width: 6,
-                                    align: SunmiPrintAlign.RIGHT),
-                              ]);
-                            }
-                            await SunmiPrinter.line();
-
-                            await SunmiPrinter.printText('ຂໍຂອບໃຈ',
-                                style: SunmiStyle(
-                                    align: SunmiPrintAlign.CENTER,
-                                    bold: true,
-                                    fontSize: SunmiFontSize.MD));
-                            await SunmiPrinter.lineWrap(3);
-                            await SunmiPrinter.submitTransactionPrint();
-                            await SunmiPrinter.exitTransactionPrint();
-                          } catch (e) {
-                            print("error:$e");
-                          }
-                        });
+                     
 
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (_) => CalculateMoney(
                               tablename: tablename ?? "ບໍ່ມີໂຕະ",
+                             
                             ),
                           ),
                         );

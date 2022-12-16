@@ -21,7 +21,6 @@ class GetTableAllProvider extends ChangeNotifier {
     String? idToken = await CountPre().getToken();
 
     _tableModels = await getTable(context, idToken, -1, 0);
-    print("_tableModels:$_tableModels");
     if (_tableModels != null) {
       for (var item in _tableModels!.table!) {
         _idtable.add(item.id!);

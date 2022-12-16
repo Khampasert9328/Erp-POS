@@ -608,22 +608,24 @@ class Mystyle {
               insetAnimationDuration: Duration(milliseconds: 5),
               insetAnimationCurve: Curves.bounceOut,
               child: Container(
-                height: 250.h,
+                height: 210.h,
                 width: 310.w,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 10, left: 10),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 19.h,
-                      ),
                       Image.asset(
                         ERPImages.iconerror,
-                        height: 100.h,
-                        width: 100.w,
+                        height: 90.h,
+                        width: 90.w,
                       ),
-                      SizedBox(
-                        height: 19.h,
+                      Text(
+                        "ຂໍອາໄພ",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.sp,
+                          fontFamily: "Phetsarath-OT",
+                        ),
                       ),
                       Center(
                         child: Text(
@@ -636,25 +638,31 @@ class Mystyle {
                       SizedBox(
                         height: 15.h,
                       ),
-                      Container(
-                        height: 50.h,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: AppTheme.BASE_COLOR,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            "ຕົກລົງ",
-                            style: TextStyle(
-                                fontFamily: "Phetsarath-OT",
-                                fontSize: 18.sp,
-                                color: AppTheme.WHITE_COLOR,
-                                fontWeight: FontWeight.bold),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Container(
+                            height: 40.h,
+                            width: 70.w,
+                            decoration: BoxDecoration(
+                                color: AppTheme.BASE_COLOR,
+                                border: Border.all(color: AppTheme.BASE_COLOR),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text(
+                                "ຕົກລົງ",
+                                style: TextStyle(
+                                    fontFamily: "Phetsarath-OT",
+                                    fontSize: 16.sp,
+                                    color: AppTheme.WHITE_COLOR,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),

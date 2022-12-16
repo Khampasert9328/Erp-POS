@@ -6,14 +6,18 @@ import 'package:erp_pos/constant/api_path.dart';
 import 'package:erp_pos/model/area/area_models.dart';
 import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/provider/areaprovider/area_provider.dart';
+import 'package:erp_pos/utils/setdata/id_table_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
+import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-Future<GetTableModels?> getTable(BuildContext context, String? id) async {
+Future<GetTableModels?> getTablebyid(BuildContext context, String id) async {
  String? idtoken = await CountPre().getToken();
+ 
+
   try {
     String url = "${APIPath.GET_TABLE_BY_AREAID}/$id";
 
@@ -28,4 +32,7 @@ Future<GetTableModels?> getTable(BuildContext context, String? id) async {
       return getTableModelsFromJson(respones.body);
     }
   } catch (e) {}
+   
+
+  
 }

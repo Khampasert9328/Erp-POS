@@ -5,7 +5,6 @@ import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/getorderbyissuedate/get_order_by_isuedatemodels.dart';
 import 'package:erp_pos/model/gettableall/gettable_all_models.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
-import 'package:erp_pos/provider/printbill/print_bill.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/bottombar_of_bill.dart';
 import 'package:flutter/material.dart';
@@ -129,7 +128,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    PrintBill().getprint();
+        
                     try {
                       await SunmiPrinter.startTransactionPrint();
                       await SunmiPrinter.printText('ໃບບິນ',

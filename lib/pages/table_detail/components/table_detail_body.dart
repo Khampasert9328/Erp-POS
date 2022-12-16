@@ -16,7 +16,7 @@ import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 
 class TableDetail extends StatefulWidget {
-  GetTable? data;
+  GetTable data;
   TableDetail({
     Key? key,
     required this.data,
@@ -37,7 +37,7 @@ class _TableDetailState extends State<TableDetail> {
         backgroundColor: AppTheme.WHITE_COLOR,
         elevation: 0,
         title: Text(
-          "${widget.data!.name}",
+          "${widget.data.name}",
           style: TextStyle(color: AppTheme.BLACK_COLOR),
         ),
       ),
@@ -162,7 +162,7 @@ class _TableDetailState extends State<TableDetail> {
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
                                       child: Text(
-                                    widget.data!.name!,
+                                    widget.data.name!,
                                     style: TextStyle(
                                       fontSize: 18.sp,
                                     ),
@@ -206,7 +206,7 @@ class _TableDetailState extends State<TableDetail> {
                             ),
                           ),
                           Text(
-                            widget.data!.name!,
+                            widget.data.name!,
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -228,7 +228,7 @@ class _TableDetailState extends State<TableDetail> {
                             ),
                           ),
                           Text(
-                            widget.data!.tablearea!.area!,
+                            widget.data.tablearea!.area!,
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

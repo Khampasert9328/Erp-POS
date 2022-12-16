@@ -28,5 +28,6 @@ class APIPath {
   static const String GETSESSION_BY_STATUS = BASE_URL + 'SessionService/GetByUserStatus';
    static const String GENERATE_MMONEY = BASE_URL + 'LaoTelPoint/GenerateMmoney';
    static const String GET_ACCOUNT = BASE_URL + 'PaymentIssuer/GetPayment';
-
+   static const String UPDATE_TABLE = BASE_URL + 'TableService/UpdateTable';
+   static const String GET_ORDER_TABLE = BASE_URL + 'OrderService/GetOrderTableId';
 }

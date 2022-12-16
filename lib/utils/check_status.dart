@@ -1,12 +1,13 @@
+import 'package:erp_pos/constant/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-String checkStatus(Color color){
-  if (color == Colors.red) {
-    return 'ບໍ່ວ່າງ';
-  }else if(color == Color(0xFFFCE00D2)){
-    return 'ຈອງແລ້ວ';
+Color checkStatus(int status){
+  if (status == 0) {
+    return Colors.green;
+  }else if(status == 1){
+    return Colors.red;
   }else{
-    return 'ວ່າງ';
+    return AppTheme.PINK_COLOR;
   }
 }

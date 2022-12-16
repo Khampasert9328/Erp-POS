@@ -4,127 +4,200 @@ import 'package:badges/badges.dart';
 import 'package:devla_sunmi/flutter_sunmi_printer.dart';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/pages/food_menu/food_menu.dart';
-import 'package:erp_pos/provider/bill/print_bill_customers_provider.dart';
-import 'package:erp_pos/provider/bill/print_bill_provider.dart';
+import 'package:erp_pos/pages/homepage/homepage.dart';
+import 'package:erp_pos/pages/order/order.dart';
 import 'package:erp_pos/provider/checkexpiredpackage/check_exp_package_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
+import 'package:erp_pos/utils/loading.dart';
+import 'package:erp_pos/utils/set_size.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/paymentmethod.dart';
+import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CalculateMoney extends StatelessWidget {
+class CalculateMoney extends StatefulWidget {
   final tablename;
-  const CalculateMoney({
+  
+   CalculateMoney({
     Key? key,
     required this.tablename,
+   
   }) : super(key: key);
 
   @override
+  State<CalculateMoney> createState() => _CalculateMoneyState();
+}
+
+class _CalculateMoneyState extends State<CalculateMoney> {
+  @override
+  PrinterStatus? _printerStatus;
+  PrinterMode? _printerMode;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _bindingPrinter().then((bool isBind) async => {
+          if (isBind)
+            {
+              _getPrinterStatus(),
+              _printerMode = await _getPrinterMode(),
+            }
+        });
+  }
+
+  /// must binding ur printer at first init in app
+  Future<bool> _bindingPrinter() async {
+    final bool result = await SunmiPrinter.bindingPrinter();
+    return result;
+  }
+
+  /// you can get printer status
+  Future<void> _getPrinterStatus() async {
+    final PrinterStatus result = await SunmiPrinter.getPrinterStatus();
+    setState(() {
+      _printerStatus = result;
+    });
+  }
+
+  Future<PrinterMode> _getPrinterMode() async {
+    final PrinterMode mode = await SunmiPrinter.getPrinterMode();
+    return mode;
+  }
   Widget build(BuildContext context) {
-    return Consumer<GetFoodMenuProvider>(builder: ((context, value, child) {
-      return Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            backgroundColor: AppTheme.WHITE_COLOR,
-            elevation: 0,
-            title: Text(
-              tablename ?? 'ບໍ່ມີໂຕະ',
-              style: TextStyle(
-                  color: AppTheme.BASE_COLOR, fontWeight: FontWeight.bold),
+    return Consumer<GetFoodMenuProvider>(
+      builder: ((context, value, child) {
+        return Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              backgroundColor: AppTheme.WHITE_COLOR,
+              elevation: 0,
+              title: Text(
+                widget.tablename ?? 'ບໍ່ມີໂຕະ',
+                style: TextStyle(
+                    color: AppTheme.BASE_COLOR, fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          bottomNavigationBar: Container(
-            height: 145.h,
-            child: BottomAppBar(
-              notchMargin: 5,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      height: 60.h,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(5),
+            bottomNavigationBar: Container(
+              height: 145.h,
+              child: BottomAppBar(
+                notchMargin: 5,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: 60.h,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Row(
+                          children: [
+                            Badge(
+                              badgeContent: Text(
+                                context
+                                    .watch<GetFoodMenuProvider>()
+                                    .getFoodMenuModel
+                                    .length
+                                    .toString(),
+                                style: TextStyle(
+                                  color: AppTheme.WHITE_COLOR,
+                                ),
+                              ),
+                              child: Image.asset(
+                                ERPImages.cart,
+                                height: 45.h,
+                                width: 45.w,
+                                color: AppTheme.BASE_COLOR,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "ລາຄາລວມ:",
+                                  style: TextStyle(
+                                    fontSize: 18.sp,
+                                    color: AppTheme.BASE_COLOR,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 15.w,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ",
+                                  style: TextStyle(
+                                    fontFamily: 'Phetsarath-OT',
+                                    fontSize: 18.sp,
+                                    color: AppTheme.RED_COLOR,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                      child: Row(
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Badge(
-                            badgeContent: Text(
-                              context
-                                  .watch<GetFoodMenuProvider>()
-                                  .getFoodMenuModel
-                                  .length
-                                  .toString(),
-                              style: TextStyle(
-                                color: AppTheme.WHITE_COLOR,
+                          Container(
+                            height: 60.h,
+                            width: 150.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: AppTheme.BASE_COLOR,
                               ),
                             ),
-                            child: Image.asset(
-                              ERPImages.cart,
-                              height: 45.h,
-                              width: 45.w,
-                              color: AppTheme.GREY_COLOR,
+                            child: Center(
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => HomePage()),
+                                      (route) => false);
+                                },
+                                child: Text(
+                                  "ປິດ",
+                                  style: TextStyle(
+                                    fontSize: 18.sp,
+                                    color: AppTheme.BASE_COLOR,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Phetsarath-OT',
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                          SizedBox(
-                            width: 10.w,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                "ລາຄາລວມ:",
-                                style: TextStyle(
-                                  fontSize: 18.sp,
-                                  color: AppTheme.BASE_COLOR,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: 15.w,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ",
-                                style: TextStyle(
-                                  fontFamily: 'Phetsarath-OT',
-                                  fontSize: 18.sp,
-                                  color: AppTheme.RED_COLOR,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () async {
-                            SharedPreferences pre =
-                                await SharedPreferences.getInstance();
-                            String? getidtable =
-                                pre.getString(CountPre().tablename);
+                          GestureDetector(
+                            onTap: () async {
+                              SharedPreferences pre =
+                                  await SharedPreferences.getInstance();
+                              String? getidtable =
+                                  pre.getString(CountPre().tablename);
 
-                            CheckExpiredPackage()
-                                .getCheckExpiredPackage(context)
-                                .then((value) async {
-                              PrintBillCustomers().getbillCustomers(context);
-
+                              CheckExpiredPackage()
+                                  .getCheckExpiredPackage(context);
                               SharedPreferences preferences =
                                   await SharedPreferences.getInstance();
                               String? getzone =
@@ -134,331 +207,329 @@ class CalculateMoney extends StatelessWidget {
                               String? billNo = pri.getString(CountPre().billNo);
 
                               try {
-                                await SunmiPrinter.startTransactionPrint();
-                                await SunmiPrinter.printText('ໃບຈ່າຍເງິນ',
-                                    style: SunmiStyle(
-                                        align: SunmiPrintAlign.CENTER,
-                                        bold: true,
-                                        fontSize: SunmiFontSize.LG));
-                                await SunmiPrinter.line();
-
-                                await SunmiPrinter.printRow(cols: [
-                                  ColumnMaker(text: 'ໃບບິນເລກທີ', width: 6),
-                                  ColumnMaker(
-                                      text: '$billNo',
-                                      width: 6,
-                                      align: SunmiPrintAlign.RIGHT),
-                                ]);
-
-                                await SunmiPrinter.printRow(cols: [
-                                  ColumnMaker(text: 'ວັນເວລາ', width: 6),
-                                  ColumnMaker(
-                                      text:
-                                          '${DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now())}',
-                                      width: 6,
-                                      align: SunmiPrintAlign.RIGHT),
-                                ]);
-                                await SunmiPrinter.printRow(cols: [
-                                  ColumnMaker(
-                                      text: 'ໂຊນ ຫຼື ພື້ນທີ່', width: 6),
-                                  ColumnMaker(
-                                      text: '${getzone ?? "none"}',
-                                      width: 6,
-                                      align: SunmiPrintAlign.RIGHT),
-                                ]);
-                                await SunmiPrinter.printRow(cols: [
-                                  ColumnMaker(text: 'ເລກໂຕະ', width: 6),
-                                  ColumnMaker(
-                                      text: '${getidtable ?? "none"}',
-                                      width: 6,
-                                      align: SunmiPrintAlign.RIGHT),
-                                ]);
-
-                                await SunmiPrinter.line();
-                                await SunmiPrinter.printText('ລາຍການອາຫານ',
-                                    style: SunmiStyle(
-                                        align: SunmiPrintAlign.CENTER,
-                                        bold: true,
-                                        fontSize: SunmiFontSize.MD));
-
-                                for (var data in context
+                                if (context
                                     .read<GetFoodMenuProvider>()
-                                    .getFoodMenuModel) {
-                                  /////////////////////////
+                                    .getFoodMenuModel
+                                    .isEmpty) {
+                                  Mystyle().showDialogCheckData(
+                                      context, "ບໍ່ມີຂໍ້ມູນໃບບິນ");
+                                } else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Center(
+                                        child: ShowLoading(
+                                          title: "ກຳລັງພິມໃບບິນ...",
+                                        ),
+                                      );
+                                    },
+                                  );
+                                  await Future.delayed(Duration(seconds: 2));
+                                  Navigator.of(context).pop();
+                                  await SunmiPrinter.startTransactionPrint();
+                                  await SunmiPrinter.printText('ໃບຈ່າຍເງິນ',
+                                      style: SunmiStyle(
+                                          align: SunmiPrintAlign.CENTER,
+                                          bold: true,
+                                          fontSize: SunmiFontSize.LG));
+                                  await SunmiPrinter.line();
+
                                   await SunmiPrinter.printRow(cols: [
+                                    ColumnMaker(text: 'ໃບບິນເລກທີ', width: 6),
                                     ColumnMaker(
-                                        text: '${data.data.name}', width: 6),
-                                    ColumnMaker(
-                                        text:
-                                            '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.number)} x ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(data.totalAmount)}',
+                                        text: '$billNo',
                                         width: 6,
                                         align: SunmiPrintAlign.RIGHT),
                                   ]);
+
+                                  await SunmiPrinter.printRow(cols: [
+                                    ColumnMaker(text: 'ວັນເວລາ', width: 6),
+                                    ColumnMaker(
+                                        text:
+                                            '${DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now())}',
+                                        width: 6,
+                                        align: SunmiPrintAlign.RIGHT),
+                                  ]);
+                                  await SunmiPrinter.printRow(cols: [
+                                    ColumnMaker(
+                                        text: 'ໂຊນ ຫຼື ພື້ນທີ່', width: 6),
+                                    ColumnMaker(
+                                        text: '${getzone ?? "none"}',
+                                        width: 6,
+                                        align: SunmiPrintAlign.RIGHT),
+                                  ]);
+                                  await SunmiPrinter.printRow(cols: [
+                                    ColumnMaker(text: 'ເລກໂຕະ', width: 6),
+                                    ColumnMaker(
+                                        text: '${widget.tablename ?? "none"}',
+                                        width: 6,
+                                        align: SunmiPrintAlign.RIGHT),
+                                  ]);
+
+                                  await SunmiPrinter.line();
+                                  await SunmiPrinter.printText('ລາຍການອາຫານ',
+                                      style: SunmiStyle(
+                                          align: SunmiPrintAlign.CENTER,
+                                          bold: true,
+                                          fontSize: SunmiFontSize.MD));
+
+                                  for (var i in context
+                                      .read<GetFoodMenuProvider>()
+                                      .getFoodMenuModel) {
+                                    String size = setSize(i.size);
+                                    await SunmiPrinter.printRow(cols: [
+                                      ColumnMaker(
+                                          text: '${i.data.name}', width: 6),
+                                      ColumnMaker(
+                                          text:
+                                              '${i.number}x $size  ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(i.totalAmount)}',
+                                          width: 6,
+                                          align: SunmiPrintAlign.RIGHT),
+                                    ]);
+                                  }
+                                  await SunmiPrinter.line();
+                                  await SunmiPrinter.printRow(cols: [
+                                    ColumnMaker(text: 'ລາຄາລວມ:', width: 6),
+                                    ColumnMaker(
+                                        text:
+                                            '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ',
+                                        width: 6,
+                                        align: SunmiPrintAlign.RIGHT),
+                                  ]);
+
+                                  await SunmiPrinter.line();
+                                  await SunmiPrinter.printText('ຂໍຂອບໃຈ',
+                                      style: SunmiStyle(
+                                          align: SunmiPrintAlign.CENTER,
+                                          bold: true,
+                                          fontSize: SunmiFontSize.MD));
+                                  await SunmiPrinter.lineWrap(3);
+                                  await SunmiPrinter.submitTransactionPrint();
+                                  await SunmiPrinter.exitTransactionPrint();
+
+                                  context
+                                      .read<GetFoodMenuProvider>()
+                                      .clearKitchenData();
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => HomePage()),
+                                      (route) => false);
                                 }
-                                await SunmiPrinter.line();
-                                await SunmiPrinter.printRow(cols: [
-                                  ColumnMaker(text: 'ລາຄາລວມ:', width: 6),
-                                  ColumnMaker(
-                                      text:
-                                          '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ',
-                                      width: 6,
-                                      align: SunmiPrintAlign.RIGHT),
-                                ]);
-
-                                await SunmiPrinter.line();
-                                await SunmiPrinter.printText('ຂໍຂອບໃຈ',
-                                    style: SunmiStyle(
-                                        align: SunmiPrintAlign.CENTER,
-                                        bold: true,
-                                        fontSize: SunmiFontSize.MD));
-                                await SunmiPrinter.lineWrap(3);
-                                await SunmiPrinter.submitTransactionPrint();
-                                await SunmiPrinter.exitTransactionPrint();
-
-                                context
-                                    .read<GetFoodMenuProvider>()
-                                    .clearKitchenData();
                               } catch (e) {
-                                throw Exception("ບໍ່ມີປິ່ນເຕີ");
+                                throw Exception("ບໍ່ມີປິ່ນເຕີ$e");
                               }
-                            });
-                          },
-                          child: Container(
-                            height: 60.h,
-                            width: 150.w,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
+                            },
+                            child: Container(
+                              height: 60.h,
+                              width: 170.w,
+                              decoration: BoxDecoration(
                                   color: AppTheme.BASE_COLOR,
-                                )),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(ERPImages.printbill),
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                Center(
-                                  child: Text(
-                                    "ພິມໃບບິນ",
-                                    style: TextStyle(
-                                      fontSize: 18.sp,
-                                      color: AppTheme.BASE_COLOR,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Phetsarath-OT',
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: AppTheme.BASE_COLOR,
+                                  )),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    ERPImages.printbill,
+                                    color: AppTheme.WHITE_COLOR,
+                                  ),
+                                  SizedBox(
+                                    width: 10.w,
+                                  ),
+                                  Center(
+                                    child: Text(
+                                      "ພິມໃບບິນຫ້ອງຄົວ",
+                                      style: TextStyle(
+                                        fontSize: 18.sp,
+                                        color: AppTheme.WHITE_COLOR,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Phetsarath-OT',
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 60.h,
-                          width: 150.w,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: AppTheme.BASE_COLOR,
-                              border: Border.all(
-                                color: AppTheme.BASE_COLOR,
-                              )),
-                          child: Center(
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => PayMentMethod(
-                                      tablename: tablename,
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                "ຄິດໄລ່ເງິນ",
-                                style: TextStyle(
-                                  fontSize: 18.sp,
-                                  color: AppTheme.WHITE_COLOR,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Phetsarath-OT',
-                                ),
+                                ],
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => FoodMenu()));
-                      },
-                      child: Container(
-                        height: 35.h,
-                        width: 80.w,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: AppTheme.BASE_COLOR),
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Row(
-                          children: [
-                            Image.asset(
-                              ERPImages.addcart,
-                              height: 22.h,
-                              width: 22.w,
-                            ),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            Text(
-                              "ສັ່ງຕື່ມ",
-                              style: TextStyle(
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Phetsarath-OT',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      "ລາຍການອໍເດີ",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        color: AppTheme.BASE_COLOR,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Phetsarath-OT',
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
-                Divider(),
-                Container(
-                  decoration: BoxDecoration(color: AppTheme.BASE_COLOR),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Text(
-                          "ລ/ດ",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: AppTheme.WHITE_COLOR,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Phetsarath-OT',
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          "ລາຍການ",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: AppTheme.WHITE_COLOR,
-                            fontWeight: FontWeight.bold,
-                             fontFamily: 'Phetsarath-OT',
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Text(
-                          "ຂະໜາດ",
-                          style: TextStyle(
-                             fontFamily: 'Phetsarath-OT',
-                              fontSize: 14.sp,
-                              color: AppTheme.WHITE_COLOR,
-                              fontWeight: FontWeight.bold),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Text(
-                          "ຈ/ນ",
-                          style: TextStyle(
-                             fontFamily: 'Phetsarath-OT',
-                              fontSize: 14.sp,
-                              color: AppTheme.WHITE_COLOR,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          "ລາຄາ",
-                          style: TextStyle(
-                             fontFamily: 'Phetsarath-OT',
-                              fontSize: 14.sp,
-                              color: AppTheme.WHITE_COLOR,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-                Divider(),
-                Expanded(child: Consumer<GetFoodMenuProvider>(
-                  builder: (context, value, child) {
-                    return ListView.builder(
-                        itemCount: value.getFoodMenuModel.length,
-                        itemBuilder: ((context, index) {
-                          return Row(
+              ),
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => FoodMenu()));
+                        },
+                        child: Container(
+                          height: 35.h,
+                          width: 80.w,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: AppTheme.BASE_COLOR),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Row(
                             children: [
-                              Expanded(
-                                flex: 1,
-                                child: Text("${index + 1}"),
+                              Image.asset(
+                                ERPImages.addcart,
+                                height: 22.h,
+                                width: 22.w,
                               ),
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                    "${value.getFoodMenuModel[index].data.name}"),
+                              SizedBox(
+                                width: 10.w,
                               ),
-                              Expanded(
-                                flex: 1,
-                                child: Center(child: Text("0")),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Center(
-                                  child: Text(
-                                      "${value.getFoodMenuModel[index].number}"),
+                              Text(
+                                "ສັ່ງຕື່ມ",
+                                style: TextStyle(
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Phetsarath-OT',
                                 ),
                               ),
-                              Expanded(
-                                flex: 1,
-                                child: Text(
-                                    "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(value.getFoodMenuModel[index].totalAmount)}"),
-                              ),
                             ],
-                          );
-                        }));
-                  },
-                )),
-                Divider(),
-              ],
-            ),
-          ));
-    }));
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "ລາຍການອໍເດີ",
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          color: AppTheme.BASE_COLOR,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Phetsarath-OT',
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  Divider(),
+                  Container(
+                    decoration: BoxDecoration(color: AppTheme.BASE_COLOR),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            "ລ/ດ",
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: AppTheme.WHITE_COLOR,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Phetsarath-OT',
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            "ລາຍການ",
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: AppTheme.WHITE_COLOR,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Phetsarath-OT',
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            "ຂະໜາດ",
+                            style: TextStyle(
+                                fontFamily: 'Phetsarath-OT',
+                                fontSize: 14.sp,
+                                color: AppTheme.WHITE_COLOR,
+                                fontWeight: FontWeight.bold),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            "ຈ/ນ",
+                            style: TextStyle(
+                                fontFamily: 'Phetsarath-OT',
+                                fontSize: 14.sp,
+                                color: AppTheme.WHITE_COLOR,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            "ລາຄາ",
+                            style: TextStyle(
+                                fontFamily: 'Phetsarath-OT',
+                                fontSize: 14.sp,
+                                color: AppTheme.WHITE_COLOR,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Divider(),
+                  Expanded(child: Consumer<GetFoodMenuProvider>(
+                    builder: (context, value, child) {
+                      return ListView.builder(
+                          itemCount: value.getFoodMenuModel.length,
+                          itemBuilder: ((context, index) {
+                            int numsize = value.getFoodMenuModel[index].size;
+                            String size = setSize(numsize);
+                            return Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Text("${index + 1}"),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                      "${value.getFoodMenuModel[index].data.name}"),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Center(child: Text("$size")),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Center(
+                                    child: Text(
+                                        "${value.getFoodMenuModel[index].number}"),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                      "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(value.getFoodMenuModel[index].totalAmount)}"),
+                                ),
+                              ],
+                            );
+                          }));
+                    },
+                  )),
+                  Divider(),
+                ],
+              ),
+            ));
+      }),
+    );
   }
 }

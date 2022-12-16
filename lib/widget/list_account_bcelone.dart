@@ -1,6 +1,7 @@
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/getaccount/getaccount_models.dart';
+import 'package:erp_pos/model/ordertable/order_table_models.dart';
 import 'package:erp_pos/provider/generateqrmmoney/generate_qr_mmoney_provider.dart';
 import 'package:erp_pos/provider/getaccount/getaccount_provider.dart';
 import 'package:erp_pos/widget/paymentbybcel.dart';
@@ -10,7 +11,8 @@ import 'package:provider/provider.dart';
 
 class ListAccountBCELONE extends StatelessWidget {
   final tablename;
-  const ListAccountBCELONE({super.key, required this.tablename});
+  List<Product>? data;
+   ListAccountBCELONE({super.key, required this.tablename, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,7 @@ class ListAccountBCELONE extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) => PaymentBcelone(
+                                    data: data,
                                     tablename: tablename,
                                     mcid: snapshot.data![index].merchid,
                                     shopcode: snapshot.data![index].shopcode,

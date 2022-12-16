@@ -51,7 +51,7 @@ class _SearchTableState extends State<SearchTable> {
                 height: 50.h,
                 width: double.infinity,
                 child: FutureBuilder<List<Area>>(
-                  future: context.read<AreaProvider>().getZone(),
+                  //future: context.read<AreaProvider>().getZone(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return Consumer<AreaProvider>(
@@ -137,7 +137,7 @@ class _SearchTableState extends State<SearchTable> {
                                             ],
                                           ),
                                         ),
-                                        const NavBarStatusBooking(),
+                                         NavBarStatusBooking(),
                                         SizedBox(
                                           height: 10.h,
                                         ),
@@ -161,169 +161,169 @@ class _SearchTableState extends State<SearchTable> {
               SizedBox(
                 height: 10.h,
               ),
-              FutureBuilder<List<GetTable>>(
-                future: context
-                    .read<GetTableProvider>()
-                    .gettablebyid(context, idtable!),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Consumer<GetTableProvider>(
-                      builder: ((context, model, _) {
-                        return GridView.count(
-                          crossAxisCount: 2,
-                          physics: ScrollPhysics(),
-                          childAspectRatio: (0.8 / .5),
-                          shrinkWrap: true,
-                          crossAxisSpacing: 20.0,
-                          // mainAxisSpacing: .0,
-                          children:
-                              List.generate(snapshot.data!.length, (index) {
-                            if (searchtable.text.isEmpty) {
-                              return Container();
-                            } else {
-                              if (snapshot.data![index].name!
-                                  .contains(searchtable.text)) {
-                                return GestureDetector(
-                                  onTap: (() {
-                                    bool clicktable = true;
-                                    CountPre().setClickTable(clicktable);
-                                    CountPre().setTableName(
-                                        snapshot.data![index].name!);
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: ((context) => TableDetail(
-                                            data: snapshot.data![index])),
-                                      ),
-                                    );
-                                    setState(() {
-                                      selectTable = index;
-                                    });
-                                  }),
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          height: 10.h,
-                                          width: 120.w,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppTheme.BASE_COLOR,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                        ),
-                                        SizedBox(
-                                          height: 5.h,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Container(
-                                              height: 50.h,
-                                              width: 10.w,
-                                              decoration: BoxDecoration(
-                                                  color: AppTheme.GREEN_COLOR,
-                                                  border: Border.all(
-                                                      color:
-                                                          AppTheme.BASE_COLOR),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                            ),
-                                            SizedBox(
-                                              width: 3.w,
-                                            ),
-                                            Container(
-                                                height: 70.h,
-                                                width: 130.w,
-                                                decoration: BoxDecoration(
-                                                    color: selectTable == index
-                                                        ? AppTheme.BASE_COLOR
-                                                        : AppTheme.GREY_COLOR,
-                                                    border: Border.all(
-                                                        color: AppTheme
-                                                            .BASE_COLOR),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10)),
-                                                child: Stack(
-                                                  alignment: Alignment.topRight,
-                                                  children: [
-                                                    selectTable == index
-                                                        ? Icon(
-                                                            Icons.check_circle,
-                                                            color: AppTheme
-                                                                .WHITE_COLOR,
-                                                          )
-                                                        : SizedBox(),
-                                                    Center(
-                                                      child: Text(
-                                                        snapshot
-                                                            .data![index].name!,
-                                                        style: TextStyle(
-                                                          color: selectTable ==
-                                                                  index
-                                                              ? AppTheme
-                                                                  .WHITE_COLOR
-                                                              : AppTheme
-                                                                  .BASE_COLOR,
-                                                          fontSize: 14.sp,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                )),
-                                            SizedBox(
-                                              width: 3.w,
-                                            ),
-                                            Container(
-                                              height: 50.h,
-                                              width: 10.w,
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color:
-                                                          AppTheme.BASE_COLOR),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 3.h,
-                                        ),
-                                        Container(
-                                          height: 10.h,
-                                          width: 120.w,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: AppTheme.BASE_COLOR),
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              }
-                            }
-                            return Container();
-                          }),
-                        );
-                      }),
-                    );
-                  }
-                  return Center(
-                    child: CircularProgressIndicator(
-                      color: AppTheme.BASE_COLOR,
-                    ),
-                  );
-                },
-              )
+              // FutureBuilder<List<GetTable>>(
+              //   future: context
+              //       .read<GetTableProvider>()
+              //       .gettablebyid(context,),
+              //   builder: (context, snapshot) {
+              //     if (snapshot.hasData) {
+              //       return Consumer<GetTableProvider>(
+              //         builder: ((context, model, _) {
+              //           return GridView.count(
+              //             crossAxisCount: 2,
+              //             physics: ScrollPhysics(),
+              //             childAspectRatio: (0.8 / .5),
+              //             shrinkWrap: true,
+              //             crossAxisSpacing: 20.0,
+              //             // mainAxisSpacing: .0,
+              //             children:
+              //                 List.generate(snapshot.data!.length, (index) {
+              //               if (searchtable.text.isEmpty) {
+              //                 return Container();
+              //               } else {
+              //                 if (snapshot.data![index].name!
+              //                     .contains(searchtable.text)) {
+              //                   return GestureDetector(
+              //                     onTap: (() {
+              //                       bool clicktable = true;
+              //                       CountPre().setClickTable(clicktable);
+              //                       CountPre().setTableName(
+              //                           snapshot.data![index].name!);
+              //                       Navigator.push(
+              //                         context,
+              //                         MaterialPageRoute(
+              //                           builder: ((context) => TableDetail(
+              //                               data: snapshot.data![index])),
+              //                         ),
+              //                       );
+              //                       setState(() {
+              //                         selectTable = index;
+              //                       });
+              //                     }),
+              //                     child: SingleChildScrollView(
+              //                       child: Column(
+              //                         mainAxisAlignment:
+              //                             MainAxisAlignment.center,
+              //                         children: [
+              //                           Container(
+              //                             height: 10.h,
+              //                             width: 120.w,
+              //                             decoration: BoxDecoration(
+              //                                 border: Border.all(
+              //                                   color: AppTheme.BASE_COLOR,
+              //                                 ),
+              //                                 borderRadius:
+              //                                     BorderRadius.circular(10)),
+              //                           ),
+              //                           SizedBox(
+              //                             height: 5.h,
+              //                           ),
+              //                           Row(
+              //                             children: [
+              //                               Container(
+              //                                 height: 50.h,
+              //                                 width: 10.w,
+              //                                 decoration: BoxDecoration(
+              //                                     color: AppTheme.GREEN_COLOR,
+              //                                     border: Border.all(
+              //                                         color:
+              //                                             AppTheme.BASE_COLOR),
+              //                                     borderRadius:
+              //                                         BorderRadius.circular(
+              //                                             10)),
+              //                               ),
+              //                               SizedBox(
+              //                                 width: 3.w,
+              //                               ),
+              //                               Container(
+              //                                   height: 70.h,
+              //                                   width: 130.w,
+              //                                   decoration: BoxDecoration(
+              //                                       color: selectTable == index
+              //                                           ? AppTheme.BASE_COLOR
+              //                                           : AppTheme.GREY_COLOR,
+              //                                       border: Border.all(
+              //                                           color: AppTheme
+              //                                               .BASE_COLOR),
+              //                                       borderRadius:
+              //                                           BorderRadius.circular(
+              //                                               10)),
+              //                                   child: Stack(
+              //                                     alignment: Alignment.topRight,
+              //                                     children: [
+              //                                       selectTable == index
+              //                                           ? Icon(
+              //                                               Icons.check_circle,
+              //                                               color: AppTheme
+              //                                                   .WHITE_COLOR,
+              //                                             )
+              //                                           : SizedBox(),
+              //                                       Center(
+              //                                         child: Text(
+              //                                           snapshot
+              //                                               .data![index].name!,
+              //                                           style: TextStyle(
+              //                                             color: selectTable ==
+              //                                                     index
+              //                                                 ? AppTheme
+              //                                                     .WHITE_COLOR
+              //                                                 : AppTheme
+              //                                                     .BASE_COLOR,
+              //                                             fontSize: 14.sp,
+              //                                             fontWeight:
+              //                                                 FontWeight.bold,
+              //                                           ),
+              //                                         ),
+              //                                       ),
+              //                                     ],
+              //                                   )),
+              //                               SizedBox(
+              //                                 width: 3.w,
+              //                               ),
+              //                               Container(
+              //                                 height: 50.h,
+              //                                 width: 10.w,
+              //                                 decoration: BoxDecoration(
+              //                                     border: Border.all(
+              //                                         color:
+              //                                             AppTheme.BASE_COLOR),
+              //                                     borderRadius:
+              //                                         BorderRadius.circular(
+              //                                             10)),
+              //                               ),
+              //                             ],
+              //                           ),
+              //                           SizedBox(
+              //                             height: 3.h,
+              //                           ),
+              //                           Container(
+              //                             height: 10.h,
+              //                             width: 120.w,
+              //                             decoration: BoxDecoration(
+              //                                 border: Border.all(
+              //                                     color: AppTheme.BASE_COLOR),
+              //                                 borderRadius:
+              //                                     BorderRadius.circular(10)),
+              //                           ),
+              //                         ],
+              //                       ),
+              //                     ),
+              //                   );
+              //                 }
+              //               }
+              //               return Container();
+              //             }),
+              //           );
+              //         }),
+              //       );
+              //     }
+              //     return Center(
+              //       child: CircularProgressIndicator(
+              //         color: AppTheme.BASE_COLOR,
+              //       ),
+              //     );
+              //   },
+              // )
             ],
           ),
         ),

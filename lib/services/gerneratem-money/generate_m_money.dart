@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:erp_pos/constant/api_path.dart';
 import 'package:erp_pos/model/generateqrmmoney/generateqrmmoney.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
-import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
+import 'package:erp_pos/provider/foodmenu/foodmenu_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;

@@ -1,4 +1,5 @@
 import 'package:erp_pos/constant/images.dart';
+import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/pages/Bill/bill.dart';
 import 'package:erp_pos/pages/Dasboard/dasboard1.dart';
 import 'package:erp_pos/pages/Order/order.dart';
@@ -7,7 +8,8 @@ import 'package:flutter/material.dart';
 import '../Table/table.dart';
 
 class Dasboard extends StatefulWidget {
-  const Dasboard({Key? key}) : super(key: key);
+  GetTable data;
+   Dasboard({Key? key, required this.data}) : super(key: key);
   @override
   State<Dasboard> createState() => _DasboardState();
 }
@@ -91,12 +93,12 @@ class _DasboardState extends State<Dasboard> {
             ),
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
             Dasboard1(),
             POSTable(),
             FoodMenu(),
-            Order(),
+          
             Bill(),
           ],
         ),

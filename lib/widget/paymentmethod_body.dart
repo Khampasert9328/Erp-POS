@@ -1,5 +1,6 @@
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/model/ordertable/order_table_models.dart';
 import 'package:erp_pos/provider/generateqrmmoney/generate_qr_mmoney_provider.dart';
 import 'package:erp_pos/widget/list_account_bcelone.dart';
 import 'package:erp_pos/widget/list_account_mmoney.dart';
@@ -12,7 +13,8 @@ import 'package:provider/provider.dart';
 
 class PaymentBody extends StatefulWidget {
   final tablename;
-  const PaymentBody({Key? key, required this.tablename}) : super(key: key);
+   List<Product>? data;
+   PaymentBody({Key? key, required this.tablename, required this.data}) : super(key: key);
 
   @override
   State<PaymentBody> createState() => _PaymentBodyState();
@@ -31,6 +33,7 @@ class _PaymentBodyState extends State<PaymentBody> {
                   context,
                   MaterialPageRoute(
                       builder: (_) => paycash(
+                        data: widget.data,
                             tablename: widget.tablename,
                           )));
             },
@@ -82,7 +85,7 @@ class _PaymentBodyState extends State<PaymentBody> {
                           fontSize: 16.sp
                         ),
                       ),
-                      content: ListAccountBCELONE(tablename: widget.tablename,),
+                      content: ListAccountBCELONE(tablename: widget.tablename,data: widget.data,),
                     );
                   });
               
@@ -135,7 +138,7 @@ class _PaymentBodyState extends State<PaymentBody> {
                           fontSize: 16.sp
                         ),
                       ),
-                      content: ListAccountMmoney(),
+                      content: ListAccountMmoney(data: widget.data,),
                     );
                   });
               

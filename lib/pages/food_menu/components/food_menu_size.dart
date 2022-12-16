@@ -9,14 +9,14 @@ class FoodMenuSize extends StatelessWidget {
   String title;
   int size;
   int mainsize;
-  bool select;
+
   VoidCallback onPressed;
 
   FoodMenuSize({
     required this.size,
     required this.title,
     required this.mainsize,
-    required this.select,
+
     required this.onPressed,
   });
   List<Size?> sizedata=[];

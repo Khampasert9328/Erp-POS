@@ -1,15 +1,23 @@
 // ignore_for_file: unused_field, unused_import, use_key_in_widget_constructors, unnecessary_import, prefer_final_fields
-
 import 'dart:ui';
 
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
+
 import 'package:erp_pos/constant/images.dart';
+import 'package:erp_pos/constant/routes.dart' as custom_route;
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/foodmenu/food_menu_models.dart';
+import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/pages/food_menu/components/search_food_menu.dart';
+import 'package:erp_pos/provider/foodmenu/foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
-import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
 import 'package:erp_pos/provider/switch/switch_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/add_amount.dart';
@@ -19,16 +27,13 @@ import 'package:erp_pos/widget/food_menu_card.dart';
 import 'package:erp_pos/widget/place_to_eat_card.dart';
 import 'package:erp_pos/widget/selected_menu_card.dart';
 import 'package:erp_pos/widget/selected_menu_card_expand.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'package:erp_pos/constant/routes.dart' as custom_route;
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class FoodMenuBody extends StatefulWidget {
+  
+   FoodMenuBody({
+    Key? key,
+  
+  }) : super(key: key);
   @override
   State<FoodMenuBody> createState() => _FoodMenuBodyState();
 }
@@ -222,6 +227,7 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
       removeTop: true,
       child: isSelectedMenuCard
           ?  SelectedMenuCardExpand(
+           
                 onNext: () async {
                   setState(() {
                     isSelectedMenuCard = !isSelectedMenuCard;
@@ -231,6 +237,7 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
               )
             
           : PlaceToEatCard(
+           
               onback: () {
                 setState(() {
                   isSelectedMenuCard = !isSelectedMenuCard;

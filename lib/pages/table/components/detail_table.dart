@@ -159,15 +159,15 @@ class _DetailTableState extends State<DetailTable> {
                             SizedBox(
                               width: 10.w,
                             ),
-                            Text(
-                              checkStatus(
-                                widget.color,
-                              ),
-                              style: TextStyle(
-                                fontFamily: 'Phetsarath-OT',
-                                fontSize: 15.sp,
-                              ),
-                            ),
+                            // Text(
+                            //   checkStatus(
+                            //     widget.color,
+                            //   ),
+                            //   style: TextStyle(
+                            //     fontFamily: 'Phetsarath-OT',
+                            //     fontSize: 15.sp,
+                            //   ),
+                            // ),
                           ],
                         ),
                         SizedBox(

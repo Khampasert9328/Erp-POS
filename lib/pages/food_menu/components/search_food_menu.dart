@@ -3,7 +3,7 @@ import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/foodmenu/food_menu_models.dart';
 import 'package:erp_pos/pages/food_menu/components/food_menu_size.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
-import 'package:erp_pos/provider/foodmenu/sqlite_food_menu.dart';
+import 'package:erp_pos/provider/foodmenu/foodmenu_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/add_amount.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +20,7 @@ class _SearchDataMuneState extends State<SearchDataMune> {
   TextEditingController search = TextEditingController();
 
   int add = 0;
+  bool clic =false;
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +131,7 @@ class _SearchDataMuneState extends State<SearchDataMune> {
                                                       ),
                                                     )
                                                   ])),
-                                              AddAmount(index: index,)
+                                              AddAmount(index: index,),
                                             ],
                                           ),
                                         ),
@@ -155,7 +156,7 @@ class _SearchDataMuneState extends State<SearchDataMune> {
                                                 int? amount = context
                                                     .read<FoodMenuProvider>()
                                                     .counter;
-                                                CountPre().setCount(amount!);
+                                                CountPre().setCount(amount);
                                                 int totalAmount =
                                                     data.data.pricesale! *
                                                         amount;
@@ -163,7 +164,7 @@ class _SearchDataMuneState extends State<SearchDataMune> {
                                                 getFoodModel.setFoodMenuData(
                                                     data.data,
                                                     amount,
-                                                    totalAmount);
+                                                    totalAmount, data.size);
                                                 foodModel.increment(add);
                                                 getFoodModel.addTotalAmount(
                                                     totalAmount);
@@ -184,23 +185,7 @@ class _SearchDataMuneState extends State<SearchDataMune> {
                               SizedBox(
                                 height: 5.h,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  // FoodMenuSize(
-                                  //     size: 0, title: 'S', index: index),
-                                  // SizedBox(
-                                  //   width: 7.w,
-                                  // ),
-                                  // FoodMenuSize(
-                                  //     size: 1, title: 'M', index: index),
-                                  // SizedBox(
-                                  //   width: 7.w,
-                                  // ),
-                                  // FoodMenuSize(
-                                  //     size: 2, title: 'L', index: index),
-                                ],
-                              )
+                             
                             ],
                           ),
                         );
@@ -217,66 +202,3 @@ class _SearchDataMuneState extends State<SearchDataMune> {
   }
 }
 
-// class SearchDataMune extends SearchDelegate {
-//   List<Product> product = [];
-//   @override
-//   List<Widget>? buildActions(BuildContext context) {
-//     return [
-//       IconButton(
-//         onPressed: () {
-//           query = '';
-//           close(context, null);
-//         },
-//         icon: Icon(
-//           Icons.clear,
-//         ),
-//       ),
-//     ];
-//   }
-
-//   @override
-//   Widget buildLeading(BuildContext context) {
-//     return IconButton(
-//       onPressed: () {
-//         close(context, null);
-//       },
-//       icon: Icon(
-//         Icons.arrow_back,
-//       ),
-//     );
-//   }
-
-//   @override
-//   Widget buildResults(BuildContext context) {
-//     List<String> matchquery = [];
-//     for (var data in product) {
-//       if (data.toJson().containsValue(query.toLowerCase())) {
-//         matchquery.add(data.toString());
-//       }
-//     }
-//     return ListView.builder(
-//       itemCount: matchquery.length,
-//       itemBuilder: ((context, index) {
-//         var result = matchquery[index];
-//         return Text("data");
-//       }),
-//     );
-//   }
-
-//   @override
-//   Widget buildSuggestions(BuildContext context) {
-//     List<String> matchquery = [];
-//     for (var data in product) {
-//       if (data.toJson().containsValue(query.toLowerCase())) {
-//         matchquery.add(data.toString());
-//       }
-//     }
-//     return ListView.builder(
-//       itemCount: matchquery.length,
-//       itemBuilder: ((context, index) {
-//         var result = matchquery[index];
-//         return Text("data");
-//       }),
-//     );
-//   }
-// }

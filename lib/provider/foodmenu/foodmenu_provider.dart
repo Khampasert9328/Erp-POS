@@ -6,12 +6,17 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FoodMenuProvider extends ChangeNotifier {
-  bool _show = false;
-  bool get show => _show;
-
+  bool _show = true;
+  int count = 0;
   int _totalAmount = 0;
-
+  bool get show => _show;
+  int get counter => count;
   int get getTotalAmount => _totalAmount;
+
+  void showbutton(bool isshow) {
+    _show = isshow;
+    notifyListeners();
+  }
 
   ///ເພີ່ມຄ່າລາຄາລວມ
   void addTotalamount(int amount) async {
@@ -19,8 +24,6 @@ class FoodMenuProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int? count = 0;
-  int? get counter => count;
   void increment(int add) async {
     count = add;
     notifyListeners();
@@ -31,8 +34,8 @@ class FoodMenuProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void clearAmount(){
-    count = 0;
+  void clearAmount(int number) async {
+    count = number;
     notifyListeners();
   }
 }
