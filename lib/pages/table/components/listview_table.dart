@@ -98,6 +98,10 @@ class _ListViewTableState extends State<ListViewTable> {
                                         context.read<SetIdTable>().setAreaName(
                                             value.areaModels!.area![index]
                                                 .area!);
+
+                                                print("idarea:${value.areaModels!.area![index].id!}");
+                                                print("area:${ value.areaModels!.area![index]
+                                                .area!}");
                                       });
                                     },
                                     child: Column(

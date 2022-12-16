@@ -13,7 +13,7 @@ import 'package:http/http.dart' as http;
 
 Future<UpdateStatusModels?> updateStatus(BuildContext context)async{
   String? idToken = await CountPre().getToken();
-  String tableId = context.read<SetIdTable>().getidTable;
+  String? tableId = context.read<SetIdTable>().getidTable;
   String? tableName = context.read<SetIdTable>().gettableName;
   String? areaId = context.read<SetIdTable>().idarea;
   String? areaname = context.read<SetIdTable>().getareaname;
