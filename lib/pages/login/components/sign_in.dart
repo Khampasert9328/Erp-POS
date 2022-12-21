@@ -28,12 +28,16 @@ class _SignInState extends State<SignIn> {
   @override
   void initState() {
     CountPre().getemail().then((firstemail) async {
-      firstemail = await CountPre().getemail();
-      email.text = firstemail.toString();
+      if (firstemail != null) {
+        email.text = firstemail.toString();
+      }
+      //firstemail = await CountPre().getemail();
     });
     CountPre().getPassword().then((firstPassword) async {
-      firstPassword = await CountPre().getPassword();
-      password.text = firstPassword.toString();
+      if (firstPassword != null) {
+        password.text = firstPassword.toString();
+      }
+      //firstPassword = await CountPre().getPassword();
     });
 
     super.initState();
@@ -54,7 +58,6 @@ class _SignInState extends State<SignIn> {
                     height: 41.h,
                   ),
                   AppTextField(
-                      
                       controller: email,
                       hintText: 'ອີເມວ',
                       prefixIcon: Icon(

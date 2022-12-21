@@ -5,6 +5,7 @@ import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/getsesion/get_sessoin_models.dart';
 import 'package:erp_pos/model/table/table_models.dart';
+import 'package:erp_pos/pages/login/login.dart';
 import 'package:erp_pos/pages/table/components/buttom_dialog.dart';
 import 'package:erp_pos/pages/table/components/card_item.dart';
 import 'package:erp_pos/pages/table/components/dropdown.dart';
@@ -56,6 +57,8 @@ class _TableBodyState extends State<TableBody> {
         context.read<SwitchProvider>().changSwitch(false);
       }
     });
+
+   
 
     super.initState();
   }

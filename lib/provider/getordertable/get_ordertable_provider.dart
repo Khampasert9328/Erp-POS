@@ -9,15 +9,19 @@ class GetOrderTableProvider extends ChangeNotifier {
   GetOrderTableModels? get orderTableModels => _orderTableModels;
   List<GetOrderTable?> _ordertable = [];
   List<GetOrderTable?> get order => _ordertable;
+  bool isloading = false;
+  bool get loading => isloading;
   
 
   Future<List<GetOrderTable?>> getordertableprovider(
-      BuildContext context) async {
-    _orderTableModels = await getordertableidservice(context);
+      BuildContext context, String idtable) async {
+        isloading = true;
+    _orderTableModels = await getordertableidservice(context, idtable);
     if (_orderTableModels != null) {
       _ordertable = _orderTableModels!.order!;
 
     }
+    isloading = false;
     notifyListeners();
     return _ordertable;
   }

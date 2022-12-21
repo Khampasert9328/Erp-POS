@@ -11,11 +11,9 @@ class UpdateTableProvider extends ChangeNotifier {
   int? _status;
   int? get status => _status;
 
-  Future<void> updateTableProvider(BuildContext context)async{
-    _tableUpdateModels = await updateTableService(context);
-    if (_tableUpdateModels !=null) {
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>const HomePage()), (route) => false); 
-    }
+  Future<void> updateTableProvider(BuildContext context, String tableid,String tablename,String idarea,String areaname)async{
+    _tableUpdateModels = await updateTableService(context, tableid, tablename, idarea, areaname);
+ 
 
   }
   

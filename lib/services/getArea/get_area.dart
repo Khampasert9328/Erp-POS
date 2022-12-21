@@ -18,7 +18,6 @@ Future<AreaModels?> getArea() async {
         'Authorization': 'Bearer $idtoken',
       },
     );
-   
     if (respones.statusCode == 200) {
       AreaModels areaModels = AreaModels.fromJson(json.decode(respones.body));
       return areaModels;

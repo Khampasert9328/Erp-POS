@@ -96,27 +96,29 @@ class _OnboardBodyState extends State<OnboardBody> {
               if (currenIndex == content.length - 1) {
                 bool firstTime = true;
                 CountPre().setLogin(firstTime);
-                if (AuthenticationProvider().tokenManagement(context) == null) {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: ((context) => Login())),
-                      (route) => false);
-                } else {
-                  bool? rember = await CountPre().getRememberPass();
-                  if (rember == true) {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => const HomePage())),
-                        (route) => false);
-                  } else {
+                bool? rember = await CountPre().getRememberPass();
+                AuthenticationProvider().tokenManagement(context).then((value) {
+                  if (value == null) {
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: ((context) => Login())),
                         (route) => false);
                   }
+                });
+                if (rember == true) {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => const HomePage())),
+                      (route) => false);
+                } else {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: ((context) => Login())),
+                      (route) => false);
                 }
               }
+
               pagecontroller!.nextPage(
                 duration: const Duration(milliseconds: 100),
                 curve: Curves.bounceIn,

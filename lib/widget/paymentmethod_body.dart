@@ -1,6 +1,7 @@
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/ordertable/order_table_models.dart';
+import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/provider/generateqrmmoney/generate_qr_mmoney_provider.dart';
 import 'package:erp_pos/widget/list_account_bcelone.dart';
 import 'package:erp_pos/widget/list_account_mmoney.dart';
@@ -12,9 +13,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class PaymentBody extends StatefulWidget {
-  final tablename;
-   List<Product>? data;
-   PaymentBody({Key? key, required this.tablename, required this.data}) : super(key: key);
+  GetTable datatable;
+  String id;
+  String areaname;
+  String tablename;
+  List<Product>? data;
+  int tatal;
+  PaymentBody(
+      {Key? key,
+      required this.tablename,
+      required this.data,
+      required this.datatable,
+      required this.id,
+      required this.areaname,
+      required this.tatal
+      })
+      : super(key: key);
 
   @override
   State<PaymentBody> createState() => _PaymentBodyState();
@@ -33,8 +47,12 @@ class _PaymentBodyState extends State<PaymentBody> {
                   context,
                   MaterialPageRoute(
                       builder: (_) => paycash(
-                        data: widget.data,
+                            data: widget.data,
                             tablename: widget.tablename,
+                            datatable: widget.datatable,
+                            id: widget.id,
+                            areaname: widget.areaname,
+                            tatal: widget.tatal,
                           )));
             },
             child: Container(
@@ -73,22 +91,26 @@ class _PaymentBodyState extends State<PaymentBody> {
           ),
           GestureDetector(
             onTap: () {
-               showDialog(
+              showDialog(
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
                       title: Text(
                         'ເລືອກບັນຊີ',
                         style: TextStyle(
-                          fontFamily: 'Phetsarath-OT',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.sp
-                        ),
+                            fontFamily: 'Phetsarath-OT',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.sp),
                       ),
-                      content: ListAccountBCELONE(tablename: widget.tablename,data: widget.data,),
+                      content: ListAccountBCELONE(
+                        tablename: widget.tablename,
+                        data: widget.data,
+                        datatable: widget.datatable,
+                        id: widget.id,
+                        areaname: widget.areaname,
+                      ),
                     );
                   });
-              
             },
             child: Container(
               height: 81.h,
@@ -133,15 +155,15 @@ class _PaymentBodyState extends State<PaymentBody> {
                       title: Text(
                         'ເລືອກບັນຊີ',
                         style: TextStyle(
-                          fontFamily: 'Phetsarath-OT',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.sp
-                        ),
+                            fontFamily: 'Phetsarath-OT',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.sp),
                       ),
-                      content: ListAccountMmoney(data: widget.data,),
+                      content: ListAccountMmoney(
+                        data: widget.data,
+                      ),
                     );
                   });
-              
             },
             child: Container(
               height: 81.h,

@@ -10,6 +10,7 @@ import 'package:erp_pos/model/food_menu_model.dart';
 import 'package:erp_pos/pages/onboardingscreen/models/content_models.dart';
 import 'package:erp_pos/pages/table/components/textdatetime.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
+import 'package:erp_pos/utils/setdata/id_table_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_ip_address/get_ip_address.dart';
@@ -20,7 +21,7 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 Future<CreateOrderModels?> createOrder(
-    BuildContext context, String dateexpired, String datesup) async {
+    BuildContext context, String dateexpired, String datesup, String tableid) async {
   try {
     var str = "$dateexpired";
     var parts = str.split(' ');
@@ -47,7 +48,7 @@ Future<CreateOrderModels?> createOrder(
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
     String? computer = await androidInfo.model;
     // String? billNo = await CountPre().getBillNo();
-    String? tableid = await CountPre().getTableId();
+    String? tableid = context.read<SetIdTable>().getidTable;
     List<Map<String, dynamic>> products = [];
 
     var ipA = IpAddress(type: RequestType.json);
@@ -64,7 +65,7 @@ Future<CreateOrderModels?> createOrder(
         "productId": "${item.data.id}",
         "name": "${item.data.name}",
         "size": 0,
-        "amount": item.totalAmount,
+        "amount": item.amount,
         "priceSale": item.data.pricesale,
         "priceImport": item.data.priceimport,
         "discount": 0,
@@ -85,7 +86,7 @@ Future<CreateOrderModels?> createOrder(
         "issueDate": "$issueDate",
         "date": date,
         "billId": "none",
-        "tableId": tableid ?? 'none',
+        "tableId": tableid,
         "product": products,
         "userId": "$username",
         "description": {

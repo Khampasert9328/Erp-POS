@@ -6,7 +6,7 @@ class FoodMenuModel {
   int number;
   int totalAmount;
   int size;
-
+  int amount;
   FoodMenuModel(
-      {required this.data, required this.number, required this.totalAmount, required this.size});
+      {required this.data, required this.number, required this.totalAmount, required this.size, required this.amount});
 }

@@ -35,6 +35,7 @@ class CountPre {
   String password = 'password';
   String statusTable = 'statusTable';
   String area = 'area';
+  String connectTokenResponse = 'connectTokenResponse';
 Future<void> setArea(String areaname)async{
   preferences = await SharedPreferences.getInstance();
   preferences.setString(area, areaname);
@@ -207,7 +208,7 @@ Future<String?> getArea()async{
     return preferences.getString(email);
   }
 
-  Future<void> setToken(String token) async {
+  Future<void> setModelsToken(String token) async {
     preferences = await SharedPreferences.getInstance();
     preferences.setString(idToken, token);
   }
@@ -216,6 +217,18 @@ Future<String?> getArea()async{
     preferences = await SharedPreferences.getInstance();
     return preferences.getString(idToken);
   }
+
+
+  Future<void> setConnectTokenResponse(String tokenresponse)async{
+    preferences = await SharedPreferences.getInstance();
+    preferences.setString(connectTokenResponse, tokenresponse);
+  }
+
+    Future<String?> getConnectTokenResponse()async{
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getString(connectTokenResponse);
+      } 
+
 
   Future<void> setTableId(String idTable) async {
     preferences = await SharedPreferences.getInstance();
@@ -306,4 +319,6 @@ Future<String?> getArea()async{
     preferences = await SharedPreferences.getInstance();
     return preferences.getString(dateSubscribe);
   }
+
+
 }

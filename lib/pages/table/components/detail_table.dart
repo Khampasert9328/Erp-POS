@@ -179,8 +179,8 @@ class _DetailTableState extends State<DetailTable> {
                             Mystyle().subtiTle1("ເລກໂຕະ"),
                             Row(
                               children: [
-                                Mystyle().tiTle1(widget.title),
-                                Mystyle().tiTle1(widget.id),
+                                Mystyle().tabbar(widget.title),
+                                Mystyle().tabbar(widget.id),
                               ],
                             )
                           ],
@@ -192,7 +192,7 @@ class _DetailTableState extends State<DetailTable> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Mystyle().subtiTle1("ຊື່ໂຊນ ຫຼື ພື້ນທີ່"),
-                            Mystyle().tiTle1("ຊັ້ນ 1")
+                            Mystyle().tabbar("ຊັ້ນ 1")
                           ],
                         ),
                         SizedBox(
@@ -205,7 +205,7 @@ class _DetailTableState extends State<DetailTable> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Mystyle().tiTle1("ຂໍ້ມູນການຈອງ")
+                                      Mystyle().tabbar("ຂໍ້ມູນການຈອງ")
                                     ],
                                   ),
                                   SizedBox(

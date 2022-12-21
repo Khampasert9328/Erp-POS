@@ -11,25 +11,30 @@ import 'package:erp_pos/constant/routes.dart' as custom_route;
 import 'package:provider/provider.dart';
 
 class FoodMenu extends StatefulWidget {
- 
-  
-   FoodMenu({Key? key}) : super(key: key);
+  FoodMenu({Key? key}) : super(key: key);
 
   @override
   State<FoodMenu> createState() => _FoodMenuState();
 }
 
 class _FoodMenuState extends State<FoodMenu> {
-
+  GetTable? data;
+  String? id;
+  String? name;
   @override
   void initState() {
     super.initState();
     context.read<GetFoodMenuProvider>().getProduct(true);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FoodMenuBody(),
+      body: FoodMenuBody(
+        data: data,
+        id: id,
+        areaname: name,
+      ),
     );
   }
 }

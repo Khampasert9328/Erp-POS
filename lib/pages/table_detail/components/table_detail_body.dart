@@ -2,12 +2,14 @@
 
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/model/area/area_models.dart';
 import 'package:erp_pos/pages/food_menu/components/food_menu_body.dart';
 import 'package:erp_pos/pages/food_menu/food_menu.dart';
 import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/pages/table/components/textdate.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/food_menu_card.dart';
+import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -17,9 +19,13 @@ import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 
 class TableDetail extends StatefulWidget {
   GetTable data;
+  String id;
+  String areaname;
   TableDetail({
     Key? key,
     required this.data,
+    required this.id,
+    required this.areaname
   }) : super(key: key);
 
   @override
@@ -57,20 +63,15 @@ class _TableDetailState extends State<TableDetail> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => FoodMenu(),
+                        builder: (_) => FoodMenuBody(data: widget.data,id: widget.id,areaname: widget.areaname,),
                       ),
                     );
                   },
-                  label: Text(
-                    "ສັ່ງອາຫານ",
-                    style: TextStyle(
-                        fontFamily: 'Phetsarath-OT',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.sp),
-                  ),
+                  label: Mystyle()
+                      .syleText("ສັ່ງອາຫານ", AppTheme.WHITE_COLOR, 18.sp),
                   backgroundColor: AppTheme.BASE_COLOR,
                   elevation: 5,
-                  splashColor: Colors.grey,
+                  // splashColor: Colors.grey,
                 ),
               ),
       ),

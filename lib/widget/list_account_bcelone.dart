@@ -2,6 +2,7 @@ import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/getaccount/getaccount_models.dart';
 import 'package:erp_pos/model/ordertable/order_table_models.dart';
+import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/provider/generateqrmmoney/generate_qr_mmoney_provider.dart';
 import 'package:erp_pos/provider/getaccount/getaccount_provider.dart';
 import 'package:erp_pos/widget/paymentbybcel.dart';
@@ -10,9 +11,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class ListAccountBCELONE extends StatelessWidget {
+  GetTable datatable;
+  String id;
+  String areaname;
   final tablename;
   List<Product>? data;
-   ListAccountBCELONE({super.key, required this.tablename, required this.data});
+  ListAccountBCELONE({
+    super.key,
+    required this.tablename,
+    required this.data,
+    required this.datatable,
+    required this.id,
+    required this.areaname
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +57,9 @@ class ListAccountBCELONE extends StatelessWidget {
                                     tablename: tablename,
                                     mcid: snapshot.data![index].merchid,
                                     shopcode: snapshot.data![index].shopcode,
+                                    datatable: datatable,
+                                    id: id,
+                                    areaname: areaname,
                                   ),
                                 ),
                               );

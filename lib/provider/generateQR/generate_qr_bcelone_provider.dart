@@ -39,7 +39,7 @@ class GenerateQRBCELONE extends ChangeNotifier {
   String token =
       '${double.parse("${getTime() - 15 * 60 * 10000000}").toInt()}0000';
   Future<String> getGenerateQR(BuildContext context, String mcid,
-      String shopcode, List<Product>? data) async {
+      String shopcode, List<Product>? data, String idtable, String tablename, String idarea, String areaname) async {
     transaction = token;
     qrData = CodecampOnepay.initQR(
       mcid,
@@ -194,7 +194,7 @@ class GenerateQRBCELONE extends ChangeNotifier {
                                 await SunmiPrinter.lineWrap(3);
                                 await SunmiPrinter.submitTransactionPrint();
                                 await SunmiPrinter.exitTransactionPrint();
-
+                                context.read<UpdateTableProvider>().updateTableProvider(context, idtable, tablename, idarea, areaname);
                                 await Future.delayed(Duration(seconds: 2));
                                 Navigator.pushAndRemoveUntil(
                                     context,

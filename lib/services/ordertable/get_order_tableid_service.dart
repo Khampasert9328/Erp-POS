@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 Future<GetOrderTableModels?> getordertableidservice(
-    BuildContext context) async {
-  String idtable = context.read<SetIdTable>().getidTable;
+    BuildContext context, String idtable) async {
+  // String idtable = context.read<SetIdTable>().getidTable;
   String? idtoken = await CountPre().getToken();
   try {
     var url = '${APIPath.GET_ORDER_TABLE}/$idtable';

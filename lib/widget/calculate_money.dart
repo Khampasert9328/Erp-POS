@@ -86,6 +86,7 @@ class _CalculateMoneyState extends State<CalculateMoney> {
             ),
             bottomNavigationBar: Container(
               height: 145.h,
+              width: double.infinity,
               child: BottomAppBar(
                 notchMargin: 5,
                 child: Padding(
@@ -196,8 +197,8 @@ class _CalculateMoneyState extends State<CalculateMoney> {
                               String? getidtable =
                                   pre.getString(CountPre().tablename);
 
-                              CheckExpiredPackage()
-                                  .getCheckExpiredPackage(context);
+                              // CheckExpiredPackage()
+                              //     .getCheckExpiredPackage(context);
                               SharedPreferences preferences =
                                   await SharedPreferences.getInstance();
                               String? getzone =

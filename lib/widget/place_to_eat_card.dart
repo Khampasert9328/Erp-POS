@@ -34,10 +34,18 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PlaceToEatCard extends StatefulWidget {
+  GetTable? data;
+  String? id;
+  String? areaname;
 
   VoidCallback onback;
 
-  PlaceToEatCard({required this.onback});
+  PlaceToEatCard({
+    required this.onback,
+    required this.data,
+    required this.id,
+    required this.areaname,
+  });
 
   @override
   State<PlaceToEatCard> createState() => _PlaceToEatCardState();
@@ -161,21 +169,24 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                 ),
                               );
                             });
-                        context
-                            .read<CheckExpiredPackage>()
-                            .getCheckExpiredPackage(context);
-                            context.read<UpdateTableProvider>().updateTableProvider(context);
+                        // context
+                        //     .read<CheckExpiredPackage>()
+                        //     .getCheckExpiredPackage(context);
+                        context.read<UpdateTableProvider>().updateTableProvider(
+                            context,
+                            widget.data!.id!,
+                            widget.data!.name!,
+                            widget.id!,
+                            widget.areaname!);
                         await Future.delayed(Duration(seconds: 5));
                         Navigator.pop(context);
                         String? tablename = await CountPre().getTableName();
-                     
 
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (_) => CalculateMoney(
                               tablename: tablename ?? "ບໍ່ມີໂຕະ",
-                             
                             ),
                           ),
                         );

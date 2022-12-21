@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, unused_import, unnecessary_import, sized_box_for_whitespace, body_might_complete_normally_nullable, unused_local_variable
 
 import 'dart:convert';
-
 import 'package:erp_pos/constant/data.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/area/area_models.dart';
@@ -24,6 +23,7 @@ import 'package:erp_pos/services/connect/validate_user.dart';
 import 'package:erp_pos/services/getArea/get_area.dart';
 import 'package:erp_pos/services/getsession/get_sesion.dart';
 import 'package:erp_pos/services/refreshtoken/refresh_token_service.dart';
+import 'package:erp_pos/utils/loading.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,22 +48,15 @@ class AuthenticationProvider extends ChangeNotifier {
       bool rememberpass) async {
     try {
       showDialog(
-          context: context,
-          builder: (_) {
-            return Dialog(
-              insetAnimationDuration: const Duration(milliseconds: 5),
-              insetAnimationCurve: Curves.bounceOut,
-              child: Container(
-                height: 100.h,
-                width: 100.w,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: AppTheme.BASE_COLOR,
-                  ),
-                ),
-              ),
-            );
-          });
+        context: context,
+        builder: (BuildContext context) {
+          return Center(
+            child: ShowLoading(
+              title: "ກຳລັງເຂົ້າສູ່ລະບົບ...",
+            ),
+          );
+        },
+      );
       ConnectValidateModels? connectValidateModels =
           await connectvalidateuser(email, context, name, lastname);
 
@@ -75,7 +68,7 @@ class AuthenticationProvider extends ChangeNotifier {
         if (connectTokenModels != null) {
           //Mystyle().showAlertloadingsuccess(context, "ແຈ້ງເຕືອນ", "ກຳລັງເຂົ້າສູ່ລະບົບ");
           CountPre().setRememberPassword(rememberpass);
-          CountPre().setToken(connectTokenModels.content!.accessToken!);
+          CountPre().setModelsToken(connectTokenModels.content!.accessToken!);
           _sessoin = await getsessionservice();
           if (_sessoin != null) {
             for (var item in _sessoin!.sessionItems!) {
@@ -154,8 +147,9 @@ class AuthenticationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+/////////////////////////////////////////////////////////////////////////////////
   Future<ConnectTokenModels?> tokenManagement(BuildContext context) async {
-    String? connectTokenPref = await CountPre().getconnectToken();
+    String? connectTokenPref = await CountPre().getConnectTokenResponse();
 
     /// ຖ້າມີ Connect token
     if (connectTokenPref != null) {
@@ -199,7 +193,12 @@ class AuthenticationProvider extends ChangeNotifier {
     /// ຖ້າບໍ່ມີ Connect token
     else {
       return null;
-      // return showDialog(context: context, builder: (context)=>AlertDialog(title: Text('please input again'),),);
+      // return showDialog(
+      //   context: context,
+      //   builder: (context) => const AlertDialog(
+      //     title: Text('please input again'),
+      //   ),
+      // );
     }
     notifyListeners();
   }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/ordertable/order_table_models.dart';
+import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/pages/table/components/textdate.dart';
 import 'package:erp_pos/provider/confirmpaymentbybcel/confirmpaymentbybcel_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
@@ -16,17 +17,24 @@ import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class PaymentBcelone extends StatefulWidget {
+  GetTable datatable;
+  String id;
+  String areaname;
   final tablename;
   final mcid;
   final shopcode;
   List<Product>? data;
 
-   PaymentBcelone(
-      {Key? key,
-      required this.tablename,
-      required this.mcid,
-      required this.shopcode, required this.data})
-      : super(key: key);
+  PaymentBcelone({
+    Key? key,
+    required this.tablename,
+    required this.mcid,
+    required this.shopcode,
+    required this.data,
+    required this.datatable,
+    required this.id,
+    required this.areaname
+  }) : super(key: key);
 
   @override
   State<PaymentBcelone> createState() => _PaymentBceloneState();
@@ -69,7 +77,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
     startTimer();
     super.initState();
     GenerateQRBCELONE()
-        .getGenerateQR(context, widget.mcid, widget.shopcode, widget.data)
+        .getGenerateQR(context, widget.mcid, widget.shopcode, widget.data, widget.datatable.id!, widget.datatable.name!, widget.id, widget.areaname)
         .then((value) {
       setState(() {
         qrData = value;
@@ -87,18 +95,16 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
       });
     }));
   }
-  
 
   @override
   Widget build(BuildContext context) {
-    int sum =0;
-    int total =0;
-    for(var i in widget.data!){
+    int sum = 0;
+    int total = 0;
+    for (var i in widget.data!) {
       int? amout = i.amount;
       int pricesale = int.parse(i.pricesale.toString());
       sum = pricesale * amout!;
       total += sum;
-
     }
     return Scaffold(
       appBar: AppBar(
@@ -142,8 +148,6 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
               ),
               child: Column(
                 children: [
-              
-                  
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
@@ -202,8 +206,8 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                     TextButton(
                       onPressed: () async {
                         await GenerateQRBCELONE()
-                            .getGenerateQR(
-                                context, widget.mcid, widget.shopcode,widget.data)
+                            .getGenerateQR(context, widget.mcid,
+                                widget.shopcode, widget.data,widget.datatable.id!, widget.datatable.name!, widget.id, widget.areaname)
                             .then((value) {
                           setState(() {
                             qrData = value;
@@ -217,10 +221,9 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                         height: 30.h,
                         width: 70.w,
                         decoration: BoxDecoration(
-                          color: AppTheme.RED_COLOR,
-                          border: Border.all(color: AppTheme.BASE_COLOR),
-                          borderRadius: BorderRadius.circular(5)
-                        ),
+                            color: AppTheme.RED_COLOR,
+                            border: Border.all(color: AppTheme.BASE_COLOR),
+                            borderRadius: BorderRadius.circular(5)),
                         child: Text(
                           "ຣີເຟສ QR",
                           style: TextStyle(

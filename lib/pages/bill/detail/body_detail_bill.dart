@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'package:badges/badges.dart';
 import 'package:devla_sunmi/flutter_sunmi_printer.dart';
 import 'package:erp_pos/constant/images.dart';
@@ -276,7 +278,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                   ),
                 ),
                 Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: Text(
                     "ຂະໜາດ",
                     style: TextStyle(
@@ -286,7 +288,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                   ),
                 ),
                 Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: Text(
                     "ຈຳນວນ",
                     style: TextStyle(
@@ -333,7 +335,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                   ),
                 ),
                 Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: Text(
                     "$size",
                     style: TextStyle(
@@ -343,7 +345,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                   ),
                 ),
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Text(
                     "$amount",
                     style: TextStyle(
@@ -353,9 +355,9 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                   ),
                 ),
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Text(
-                    "$price",
+                    "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(price)}",
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,

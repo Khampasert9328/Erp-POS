@@ -22,7 +22,7 @@ class CheckExpiredPackage extends ChangeNotifier {
   CreateOrderModels? get createOrderModels => _createOrderModels;
 
   Future<List<CheckExpiredPackageMedels>?> getCheckExpiredPackage(
-      BuildContext context) async {
+      BuildContext context, String idarea, String area, String idtable, String tablename) async {
     CheckExpiredPackageMedels? package = await checkExpiredPackage();
 
     if (package != null) {
@@ -34,10 +34,10 @@ class CheckExpiredPackage extends ChangeNotifier {
       CountPre().setDateSupscribe(package.dateSubscribe.toString());
       if (getPackageModels != null) {
         _createOrderModels = await createOrder(context,
-            package.dateExpired.toString(), package.dateSubscribe.toString());
+            package.dateExpired.toString(), package.dateSubscribe.toString(), idtable);
 
         if (_createOrderModels != null) {
-          updateStatus(context);
+          updateStatus(context, idarea, area, idtable, tablename);
           CountPre().setBillId(_createOrderModels!.billId!);
           CountPre().setBillNo(_createOrderModels!.billNo!);
         }

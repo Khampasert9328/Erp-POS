@@ -30,7 +30,7 @@ class GetFoodMenuProvider extends ChangeNotifier {
         listProduct.clear();
         for (Product i in modelsProduct!.product!) {
           listProduct
-              .add(FoodMenuDataModel(data: i, size: 0, isaddtochart: false));
+              .add(FoodMenuDataModel(data: i, size: 0, isaddtochart: false, ));
         }
       }
     }
@@ -43,20 +43,21 @@ class GetFoodMenuProvider extends ChangeNotifier {
   }
 
   // ໃຊ້ຕອນເພີ່ມເມນູ
-  void setFoodMenuData(Product data, int number, int totalAmount, int size) {
+  void setFoodMenuData(Product data, int number, int totalAmount, int size, int amount) {
     List<FoodMenuModel> foodData =
         foodMenuModel.where((element) => element.data.id == data.id).toList();
 
     ///  ຖ້າຍັງບໍ່ມີເມນູດັ່ງກ່າວ
     if (foodData.isEmpty) {
       foodMenuModel.add(FoodMenuModel(
-          data: data, number: number, totalAmount: totalAmount, size: size));
+          data: data, number: number, totalAmount: totalAmount, size: size, amount: amount));
     } else {
       for (var i in foodMenuModel) {
         if (i.data.id == data.id) {
           i.data = data;
           i.number = number;
           i.totalAmount = totalAmount;
+          i.amount = amount;
         }
       }
     }
@@ -99,4 +100,6 @@ class GetFoodMenuProvider extends ChangeNotifier {
     _size = addsize;
     notifyListeners();
   }
+
+
 }

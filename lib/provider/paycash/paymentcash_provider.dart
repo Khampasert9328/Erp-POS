@@ -32,7 +32,7 @@ class PaymentCashProvider extends ChangeNotifier {
   bool get isloading => isload;
 
   Future<void> createpaymentcashprovider(
-      BuildContext context, int number, List<Product>? data) async {
+      BuildContext context, int number, List<Product>? data, String idtable, String tablename, String idarea, String areaname) async {
     String? billid = await CountPre().getBillId();
     String? sessionid = await CountPre().getSessionId();
     int paymenttype = 0;
@@ -213,7 +213,7 @@ class PaymentCashProvider extends ChangeNotifier {
                               } catch (e) {
                                 print("error:$e");
                               }
-                              context.read<UpdateTableProvider>().updateTableProvider(context);  
+                              context.read<UpdateTableProvider>().updateTableProvider(context, idtable, tablename, idarea, areaname);  
                               },
                               child: Text(
                                 "ພິມໃບບິນ",

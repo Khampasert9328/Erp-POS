@@ -29,11 +29,13 @@ import 'package:erp_pos/widget/selected_menu_card.dart';
 import 'package:erp_pos/widget/selected_menu_card_expand.dart';
 
 class FoodMenuBody extends StatefulWidget {
-  
-   FoodMenuBody({
-    Key? key,
-  
-  }) : super(key: key);
+  GetTable? data;
+  String? id;
+  String? areaname;
+
+  FoodMenuBody(
+      {Key? key, required this.data, required this.id, required this.areaname})
+      : super(key: key);
   @override
   State<FoodMenuBody> createState() => _FoodMenuBodyState();
 }
@@ -226,18 +228,21 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
       context: context,
       removeTop: true,
       child: isSelectedMenuCard
-          ?  SelectedMenuCardExpand(
-           
-                onNext: () async {
-                  setState(() {
-                    isSelectedMenuCard = !isSelectedMenuCard;
-                  });
-                },
-                selectMenu: isSelectedMenuCard,
-              )
-            
+          ? SelectedMenuCardExpand(
+              data: widget.data,
+              id: widget.id,
+              areaname: widget.areaname,
+              onNext: () async {
+                setState(() {
+                  isSelectedMenuCard = !isSelectedMenuCard;
+                });
+              },
+              selectMenu: isSelectedMenuCard,
+            )
           : PlaceToEatCard(
-           
+              data: widget.data,
+              id: widget.id,
+              areaname: widget.areaname,
               onback: () {
                 setState(() {
                   isSelectedMenuCard = !isSelectedMenuCard;

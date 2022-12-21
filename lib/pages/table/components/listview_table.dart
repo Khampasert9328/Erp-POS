@@ -7,6 +7,7 @@ import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/model/area/area_models.dart';
 import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/pages/detailordertable/detail_order_table.dart';
+import 'package:erp_pos/pages/login/login.dart';
 import 'package:erp_pos/pages/table/components/buttom_dialog.dart';
 import 'package:erp_pos/pages/table/components/dropdown.dart';
 import 'package:erp_pos/pages/table/components/dropdown_status.dart';
@@ -51,108 +52,113 @@ int? statusTable;
 class _ListViewTableState extends State<ListViewTable> {
   @override
   void initState() {
-    super.initState();
-    context.read<AreaProvider>().getZone(context);
-  }
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<AreaProvider>(builder: ((context, value, child) {
-      if (value.isloading) {
-        return const Center(
-          child: CircularProgressIndicator(),
+    AuthenticationProvider().tokenManagement(context).then((value) {
+      if (value == null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: ((context) => Login())),
         );
       } else {
-        if (value.areaModels == null) {
-          return Text("ບໍ່ມີຂໍ້ມູນ");
-        } else {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                  height: 50.h,
-                  width: double.infinity,
-                  child: ListView.builder(
-                      physics: const ScrollPhysics(),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: value.areaModels!.area!.length,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () async {
-                                      setState(() {
-                                        selectIndex = index;
-                                        context
-                                            .read<AreaProvider>()
-                                            .callAPITable(
-                                                context,
-                                                value.areaModels!.area![index]
-                                                    .id!);
-                                        context.read<SetIdTable>().setIdArea(
-                                            value.areaModels!.area![index].id!);
-                                        context.read<SetIdTable>().setAreaName(
-                                            value.areaModels!.area![index]
-                                                .area!);
+        context.read<AreaProvider>().getZone(context);
+      }
+    });
+    super.initState();
+  }
 
-                                                print("idarea:${value.areaModels!.area![index].id!}");
-                                                print("area:${ value.areaModels!.area![index]
-                                                .area!}");
-                                      });
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            right: 8,
-                                          ),
-                                          child: Container(
-                                            height: 40.h,
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: 15.w,
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<AreaProvider>(
+      builder: ((context, value, child) {
+        if (value.isloading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          if (value.areaModels == null) {
+            return Text("ບໍ່ມີຂໍ້ມູນ");
+          } else {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                    height: 50.h,
+                    width: double.infinity,
+                    child: ListView.builder(
+                        physics: const ScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: value.areaModels!.area!.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () async {
+                                        setState(() {
+                                          selectIndex = index;
+                                          context
+                                              .read<AreaProvider>()
+                                              .callAPITable(
+                                                  context,
+                                                  value.areaModels!.area![index]
+                                                      .id!);
+                                          context.read<SetIdTable>().setIdArea(
+                                              value.areaModels!.area![index]
+                                                  .id!);
+                                          context
+                                              .read<SetIdTable>()
+                                              .setAreaName(value.areaModels!
+                                                  .area![index].area!);
+                                        });
+                                      },
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              right: 8,
                                             ),
-                                            decoration: BoxDecoration(
-                                              color: selectIndex == index
-                                                  ? AppTheme.BASE_COLOR
-                                                  : AppTheme.WHITE_COLOR,
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              border: Border.all(
-                                                  color: AppTheme.BASE_COLOR),
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                "${value.areaModels!.area![index].area}",
-                                                style: TextStyle(
-                                                  fontFamily: 'Phetsarath-OT',
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 18.sp,
-                                                  color: selectIndex == index
-                                                      ? AppTheme.WHITE_COLOR
-                                                      : Colors.grey,
-                                                ),
+                                            child: Container(
+                                              height: 40.h,
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 15.w,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: selectIndex == index
+                                                    ? AppTheme.BASE_COLOR
+                                                    : AppTheme.WHITE_COLOR,
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                border: Border.all(
+                                                    color: AppTheme.BASE_COLOR),
+                                              ),
+                                              child: Center(
+                                                child: Mystyle().syleText(
+                                                    value.areaModels!
+                                                        .area![index].area!,
+                                                    selectIndex == index
+                                                        ? AppTheme.WHITE_COLOR
+                                                        : Colors.grey,
+                                                    18.sp),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        );
-                      })),
-              NavBarStatusBooking(),
-              SizedBox(
-                height: 10.h,
-              ),
-              Expanded(
+                            ],
+                          );
+                        })),
+                NavBarStatusBooking(),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Expanded(
                   child: value.gettablelist == null
                       ? const Center(
                           child: Text("ບໍ່ມີໂຕະ"),
@@ -174,11 +180,6 @@ class _ListViewTableState extends State<ListViewTable> {
                                       if (value.gettablelist!.table![index]
                                               .status ==
                                           1) {
-                                            print("id:${value.gettablelist!
-                                                          .table![index].id}");
-                                        context.read<SetIdTable>().setIdTable(
-                                            value.gettablelist!.table![index]
-                                                .id!);
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
@@ -190,6 +191,12 @@ class _ListViewTableState extends State<ListViewTable> {
                                                           .gettablelist!
                                                           .table![index]
                                                           .name!,
+                                                      id: value.areaModels!
+                                                          .area![index].id!,
+                                                      areaname: value
+                                                          .areaModels!
+                                                          .area![index]
+                                                          .area!,
                                                     )));
                                       } else {
                                         context.read<SetIdTable>().setIdTable(
@@ -209,8 +216,13 @@ class _ListViewTableState extends State<ListViewTable> {
                                           context,
                                           MaterialPageRoute(
                                             builder: ((context) => TableDetail(
-                                                data: value.gettablelist!
-                                                    .table![index])),
+                                                  data: value.gettablelist!
+                                                      .table![index],
+                                                  id: value.areaModels!
+                                                      .area![index].id!,
+                                                  areaname: value.areaModels!
+                                                      .area![index].area!,
+                                                )),
                                           ),
                                         );
                                         setState(() {
@@ -314,12 +326,14 @@ class _ListViewTableState extends State<ListViewTable> {
                                                 height: 50.h,
                                                 width: 10.w,
                                                 decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: AppTheme
-                                                            .BASE_COLOR),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10)),
+                                                  border: Border.all(
+                                                      color:
+                                                          AppTheme.BASE_COLOR),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                    10,
+                                                  ),
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -330,10 +344,11 @@ class _ListViewTableState extends State<ListViewTable> {
                                             height: 10.h,
                                             width: 120.w,
                                             decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: AppTheme.BASE_COLOR),
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
+                                              border: Border.all(
+                                                  color: AppTheme.BASE_COLOR),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -343,11 +358,13 @@ class _ListViewTableState extends State<ListViewTable> {
                               ),
                             ],
                           ),
-                        ))
-            ],
-          );
+                        ),
+                )
+              ],
+            );
+          }
         }
-      }
-    }));
+      }),
+    );
   }
 }

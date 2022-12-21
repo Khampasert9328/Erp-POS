@@ -164,7 +164,7 @@ class _SearchDataMuneState extends State<SearchDataMune> {
                                                 getFoodModel.setFoodMenuData(
                                                     data.data,
                                                     amount,
-                                                    totalAmount, data.size);
+                                                    totalAmount, data.size, amount);
                                                 foodModel.increment(add);
                                                 getFoodModel.addTotalAmount(
                                                     totalAmount);

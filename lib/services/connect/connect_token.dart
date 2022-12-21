@@ -1,14 +1,12 @@
 import 'dart:convert';
-
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:erp_pos/constant/api_path.dart';
 import 'package:erp_pos/constant/data.dart';
 import 'package:erp_pos/model/connect/connect_token_models.dart';
 import 'package:erp_pos/widget/style.dart';
-
 import 'package:flutter/cupertino.dart';
-
 Future<ConnectTokenModels?> connectToken(
     String email, String password, BuildContext context) async {
   try {
@@ -31,12 +29,13 @@ Future<ConnectTokenModels?> connectToken(
         'Content-Type': 'application/json',
       },
     );
-    //print('body: ${respones.body}');
     if (respones.statusCode == 200) {
-     
+      CountPre().setConnectTokenResponse(respones.body);
       return connectTokenModelsFromJson(respones.body);
     } else {
-      Navigator.pop(context);
+      
     }
-  } catch (e) {}
+  } catch (e) {
+   rethrow;
+  }
 }

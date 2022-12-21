@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:erp_pos/pages/table/components/listview_table.dart';
 import 'package:erp_pos/utils/setdata/id_table_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +11,9 @@ import 'package:erp_pos/model/updatetable/update_table_models.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 
-Future<TableUpdateModels?> updateTableService(BuildContext context) async {
+Future<TableUpdateModels?> updateTableService(BuildContext context, String tableid,String tablename,String idarea,String areaname) async {
   String? idToken = await CountPre().getToken();
-  String? tableId = context.read<SetIdTable>().getidTable;
-  String? tableName = context.read<SetIdTable>().gettableName;
-  String? areaId = context.read<SetIdTable>().idarea;
-  String? areaname = context.read<SetIdTable>().getareaname;
+
 
   ///ແຕກຂໍ້ມູນໃນ Token
   String yourToken = idToken!;
@@ -35,8 +33,8 @@ Future<TableUpdateModels?> updateTableService(BuildContext context) async {
   try {
     var url = "${APIPath.UPDATE_TABLE}";
     String playload = jsonEncode({
-      "id": "$tableId",
-      "name": "$tableName",
+      "id": "$tableid",
+      "name": "$tablename",
       "status": 0,
       "status_av": 0,
       "mergeTable": {
@@ -44,7 +42,7 @@ Future<TableUpdateModels?> updateTableService(BuildContext context) async {
         "tableName": "none",
       },
       "tableArea": {
-        "id": "$areaId",
+        "id": "$idarea",
         "area": "$areaname",
       },
       "metaData": {

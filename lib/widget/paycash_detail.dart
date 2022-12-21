@@ -3,6 +3,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/ordertable/order_table_models.dart';
 import 'package:erp_pos/model/paymentcash/paymentcash_models.dart';
+import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/paycash/paymentcash_provider.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +13,22 @@ import 'package:pattern_formatter/numeric_formatter.dart';
 import 'package:provider/provider.dart';
 
 class paycash extends StatefulWidget {
-  final tablename;
-   List<Product>? data;
-  paycash({Key? key, required this.tablename, required this.data}) : super(key: key);
+  GetTable datatable;
+  String id;
+  String areaname;
+  String tablename;
+  List<Product>? data;
+  int tatal;
+  paycash(
+      {Key? key,
+      required this.tablename,
+      required this.datatable,
+      required this.id,
+      required this.areaname,
+      required this.data,
+      required this.tatal
+      })
+      : super(key: key);
 
   @override
   State<paycash> createState() => _paycashState();
@@ -22,7 +36,7 @@ class paycash extends StatefulWidget {
 
 class _paycashState extends State<paycash> {
   TextEditingController money = TextEditingController();
-  int totalamount = 0;
+  //int totalamount = 0;
   ////////ວິທີການເຮັດການທ້ອນເງິນຢູ່ໜ້າ ການຈ່າຍເງິນສົດ
   int sumall = 0;
   final FocusNode _focusNode = FocusNode();
@@ -31,9 +45,9 @@ class _paycashState extends State<paycash> {
   void initState() {
     super.initState();
     setState(() {
-      totalamount = context.read<GetFoodMenuProvider>().totalamont;
+     // totalamount = context.read<GetFoodMenuProvider>().totalamont;
       money.text = NumberFormat.currency(symbol: '', decimalDigits: 0)
-          .format(totalamount);
+          .format(widget.tatal);
     });
   }
 
@@ -63,8 +77,14 @@ class _paycashState extends State<paycash> {
               onPressed: () {
                 String? mmoney = money.text.replaceAll(',', '');
                 int? intMoney = int.parse(mmoney);
-                PaymentCashProvider()
-                    .createpaymentcashprovider(context, intMoney, widget.data);
+                PaymentCashProvider().createpaymentcashprovider(
+                    context,
+                    intMoney,
+                    widget.data,
+                    widget.datatable.id!,
+                    widget.datatable.name!,
+                    widget.id,
+                    widget.areaname);
               },
               child: Text(
                 "ຊຳລະເງິນ",
@@ -109,7 +129,7 @@ class _paycashState extends State<paycash> {
                         suffixIcon: Padding(
                           padding: const EdgeInsets.only(top: 15, right: 5),
                           child: Text(
-                            '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(value.totalamont)} ກີບ',
+                            '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(widget.tatal)} ກີບ',
                             style: TextStyle(
                                 fontFamily: 'Phetsarath-OT',
                                 color: AppTheme.RED_COLOR),
@@ -148,9 +168,9 @@ class _paycashState extends State<paycash> {
                         if (money.text.isNotEmpty) {
                           String myMoney = money.text.replaceAll(',', '');
                           int myMoney1 = int.parse(myMoney);
-                          if (myMoney1 >= totalamount) {
+                          if (myMoney1 >= widget.tatal) {
                             setState(() {
-                              sumall = myMoney1 - totalamount;
+                              sumall = myMoney1 - widget.tatal;
                             });
                           }
                         } else {

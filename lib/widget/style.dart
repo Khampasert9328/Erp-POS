@@ -45,6 +45,19 @@ class Mystyle {
     );
   }
 
+   Widget syleText(String string,Color color, double size){
+    return Text(
+      string,
+      style:  TextStyle(
+        fontWeight: FontWeight.bold,
+        fontFamily: "Phetsarath-OT",
+        fontSize: size,
+        color: color,
+      ),
+    );
+  }
+
+
   Widget sent() {
     return Container(
       height: 2,
@@ -53,7 +66,7 @@ class Mystyle {
     );
   }
 
-  Widget tiTle1(String message) {
+  Widget tabbar(String message) {
     return Text(
       message,
       style: const TextStyle(
@@ -83,7 +96,7 @@ class Mystyle {
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Mystyle().tiTle1("ການກັ່ນຕອງ"),
+                Mystyle().tabbar("ການກັ່ນຕອງ"),
                 Mystyle().subtiTle1("ໂຊນ ຫຼື ພື້ນທີ່"),
                 ERPDropdown(),
                 SizedBox(
@@ -135,7 +148,7 @@ class Mystyle {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Mystyle().tiTle1("ເປີດກະ"),
+                          Mystyle().tabbar("ເປີດກະ"),
                           CircleAvatar(
                             backgroundColor: AppTheme.GREY_COLOR,
                             radius: 20,
@@ -234,7 +247,7 @@ class Mystyle {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Mystyle().tiTle1("ປີດກະ"),
+                        Mystyle().tabbar("ປີດກະ"),
                         CircleAvatar(
                           backgroundColor: AppTheme.GREY_COLOR,
                           radius: 20,
@@ -300,7 +313,7 @@ class Mystyle {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Mystyle().tiTle1("ຜິດດ່ຽງ"),
+                        Mystyle().tabbar("ຜິດດ່ຽງ"),
                         Mystyle().texttitle(
                           "30,000 ກີບ",
                         ),
@@ -344,7 +357,7 @@ class Mystyle {
                 SizedBox(
                   height: 10.h,
                 ),
-                Mystyle().tiTle1("ເລກໂຕະ"),
+                Mystyle().tabbar("ເລກໂຕະ"),
                 TextContainer(
                   inputFormatters: ThousandsFormatter(),
                   keyboardType: TextInputType.text,
