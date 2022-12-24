@@ -31,13 +31,16 @@ class _SignInState extends State<SignIn> {
       if (firstemail != null) {
         email.text = firstemail.toString();
       }
-      //firstemail = await CountPre().getemail();
     });
     CountPre().getPassword().then((firstPassword) async {
       if (firstPassword != null) {
         password.text = firstPassword.toString();
       }
-      //firstPassword = await CountPre().getPassword();
+    });
+    CountPre().getRadioRememberPassword().then((value) {
+      if (value != null) {
+        rememberpassword = value;
+      }
     });
 
     super.initState();
@@ -95,7 +98,11 @@ class _SignInState extends State<SignIn> {
                         value: rememberpassword,
                         onChanged: (value) {
                           setState(() {
-                            rememberpassword = value!;
+                            CountPre().getRadioRememberPassword().then((value) {
+                              if (value != null) {
+                                rememberpassword = value;
+                              }
+                            });
                           });
                         },
                       ),
@@ -122,6 +129,7 @@ class _SignInState extends State<SignIn> {
                               rememberpassword);
                           CountPre().setEmail(email.text);
                           CountPre().setPassword(password.text);
+                          CountPre().setRadioRememberPassword(rememberpassword);
                         }
                       })
                 ],

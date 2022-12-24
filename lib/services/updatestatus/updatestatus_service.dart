@@ -13,10 +13,6 @@ import 'package:http/http.dart' as http;
 
 Future<UpdateStatusModels?> updateStatus(BuildContext context, String idarea, String area, String idtable, String tablename)async{
   String? idToken = await CountPre().getToken();
-  // String? tableId = context.read<SetIdTable>().getidTable;
-  // String? tableName = context.read<SetIdTable>().gettableName;
-  // String? areaId = context.read<SetIdTable>().idarea;
-  // String? areaname = context.read<SetIdTable>().getareaname;
   ///ແຕກຂໍ້ມູນໃນ Token
   String yourToken = idToken!;
   Map<String, dynamic> decodedToken = JwtDecoder.decode(yourToken);
@@ -55,7 +51,7 @@ Future<UpdateStatusModels?> updateStatus(BuildContext context, String idarea, St
         "created": 0,
         "computer": "$computer",
         "note": "none",
-        "jobId": "none",
+        "jobId": "string",
         "domain": "$domain"
       },
       "domain": "$domain",
@@ -68,12 +64,15 @@ Future<UpdateStatusModels?> updateStatus(BuildContext context, String idarea, St
         'Authorization': 'Bearer $idToken',
         'Content-Type': 'application/json'
       },
+    
       body: playload,
+      
     );
     if (respones.statusCode == 200) {
+     // UpdateStatusModels updateStatusModels = UpdateStatusModels.fromJson(json.decode(respones.body));
       return updateStatusModelsFromJson(respones.body);
     }
   } catch (e) {
-    print("errorUpDateStatus:$e");
+   rethrow;
   }
 }

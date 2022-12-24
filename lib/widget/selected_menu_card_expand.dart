@@ -56,41 +56,6 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
   int amountData = 0;
   int? index;
   bool checkerror = false;
-  // PrinterStatus? _printerStatus;
-  // PrinterMode? _printerMode;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   _bindingPrinter().then((bool isBind) async => {
-  //         if (isBind)
-  //           {
-  //             _getPrinterStatus(),
-  //             _printerMode = await _getPrinterMode(),
-  //           }
-  //       });
-  // }
-
-  // /// must binding ur printer at first init in app
-  // Future<bool> _bindingPrinter() async {
-  //   final bool result = await SunmiPrinter.bindingPrinter();
-  //   return result;
-  // }
-
-  // /// you can get printer status
-  // Future<void> _getPrinterStatus() async {
-  //   final PrinterStatus result = await SunmiPrinter.getPrinterStatus();
-  //   setState(() {
-  //     _printerStatus = result;
-  //   });
-  // }
-
-  // Future<PrinterMode> _getPrinterMode() async {
-  //   final PrinterMode mode = await SunmiPrinter.getPrinterMode();
-  //   return mode;
-  // }
-
   Widget build(BuildContext context) {
     bool showClickTable = context.read<ClickTableProvider>().click;
 
@@ -516,10 +481,13 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                       context
                           .read<CheckExpiredPackage>()
                           .getCheckExpiredPackage(
-                            context,
-                            widget.id!,widget.areaname!, widget.data!.id!, widget.data!.name!
-                          );
+                              context,
+                              widget.id!,
+                              widget.areaname!,
+                              widget.data!.id!,
+                              widget.data!.name!);
 
+                     
                       String? tablename = await CountPre().getTableName();
                       await Navigator.push(
                         context,

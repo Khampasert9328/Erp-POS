@@ -83,7 +83,6 @@ class AuthenticationProvider extends ChangeNotifier {
         }
       }
     } catch (e) {
-      print("Error:$e");
       Mystyle()
           .dialogError(context, "ເເຈ້ງເຕືອນ", "ກາລຸນາກວດສອບອິນເຕີເນັດຂອງທ່ານ");
     }
@@ -128,6 +127,7 @@ class AuthenticationProvider extends ChangeNotifier {
     bool? clearFristTime = await CountPre().getLogin();
     String? saveEmail = await CountPre().getemail();
     String? savePassword = await CountPre().getPassword();
+    bool? getRedioPassword = await CountPre().getRadioRememberPassword();
     await pre.clear();
     if ((clearFristTime != null)) {
       if (clearFristTime) {
@@ -139,6 +139,9 @@ class AuthenticationProvider extends ChangeNotifier {
       }
       if (savePassword != null) {
         await CountPre().setPassword(savePassword);
+      }
+      if (getRedioPassword != null) {
+        await CountPre().setRadioRememberPassword(getRedioPassword);
       }
     }
     Navigator.pushAndRemoveUntil(

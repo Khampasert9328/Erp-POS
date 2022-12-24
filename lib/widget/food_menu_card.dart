@@ -33,237 +33,303 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
       padding: const EdgeInsets.only(bottom: 95),
       child: Consumer2<FoodMenuProvider, GetFoodMenuProvider>(
         builder: (context, foodModel, getFoodModel, child) {
-          return Scrollbar(
-            child: RefreshIndicator(
-              onRefresh: () async {
-                setState(() {
-                  context.read<GetFoodMenuProvider>().getProduct(true);
-                });
-              },
-              key: _refresh,
-              child: ListView.builder(
-                  itemCount: getFoodModel.listProduct.length,
-                  itemBuilder: (context, index) {
-                    final data = getFoodModel.listProduct[index];
-                    int mainsize = data.size;
-                    int specialPrice = data.data.size![data.size].specialPrice!;
-                    int pricesale = data.data.pricesale!;
-                    return Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5.h),
-                      child: Column(
-                        children: [
-                          Stack(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10.h, horizontal: 10.w),
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFF4F5F6),
-                                  borderRadius: BorderRadius.circular(10.r),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+          return getFoodModel.isloading
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: AppTheme.BASE_COLOR,
+                  ),
+                )
+              : getFoodModel.listProduct == null
+                  ? const Center(
+                      child: Text("ບໍ່ມີຂໍ້ມູນລາຍການອາຫານ"),
+                    )
+                  : Scrollbar(
+                      child: RefreshIndicator(
+                        onRefresh: () async {
+                          setState(() {
+                            context
+                                .read<GetFoodMenuProvider>()
+                                .getProduct(true);
+                          });
+                        },
+                        key: _refresh,
+                        child: ListView.builder(
+                            itemCount: getFoodModel.listProduct.length,
+                            itemBuilder: (context, index) {
+                              final data = getFoodModel.listProduct[index];
+                              int mainsize = data.size;
+                              int specialPrice =
+                                  data.data.size![data.size].specialPrice!;
+                              int pricesale = data.data.pricesale!;
+                              return Padding(
+                                padding: EdgeInsets.symmetric(vertical: 5.h),
+                                child: Column(
                                   children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: CachedNetworkImage(
-                                        memCacheHeight: 63,
-                                        memCacheWidth: 69,
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons.image_outlined,
-                                                size: 70,
-                                                color: AppTheme.GREY_COLOR),
-                                        imageUrl:
-                                            data.data.thumbnails!.first.uri!,
-                                        placeholder: (context, url) => Center(
-                                          child: CircularProgressIndicator(
-                                            color: AppTheme.BASE_COLOR,
+                                    Stack(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10.h, horizontal: 10.w),
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFFF4F5F6),
+                                            borderRadius:
+                                                BorderRadius.circular(10.r),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                ),
+                                                child: CachedNetworkImage(
+                                                  memCacheHeight: 63,
+                                                  memCacheWidth: 69,
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      Icon(Icons.image_outlined,
+                                                          size: 70,
+                                                          color: AppTheme
+                                                              .GREY_COLOR),
+                                                  imageUrl: data.data
+                                                      .thumbnails!.first.uri!,
+                                                  placeholder: (context, url) =>
+                                                      Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      color:
+                                                          AppTheme.BASE_COLOR,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 11.w,
+                                              ),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      data.data.name!,
+                                                      style: TextStyle(
+                                                        fontFamily:
+                                                            'Phetsarath-OT',
+                                                        fontSize: 16.sp,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        color:
+                                                            AppTheme.BASE_COLOR,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5.h,
+                                                    ),
+                                                    Text.rich(TextSpan(
+                                                        text: 'ລາຄາ ',
+                                                        style: TextStyle(
+                                                          fontSize: 14.sp,
+                                                          color: AppTheme
+                                                              .BASE_COLOR,
+                                                          fontFamily:
+                                                              'Phetsarath-OT',
+                                                        ),
+                                                        children: <InlineSpan>[
+                                                          TextSpan(
+                                                            text:
+                                                                '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(pricesale + specialPrice)} ກີບ',
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  'Phetsarath-OT',
+                                                              fontSize: 14.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          )
+                                                        ])),
+                                                    AddAmount(index: index),
+                                                  ],
+                                                ),
+                                              ),
+                                              //if(data.isaddtochart)
+                                              data.isaddtochart
+                                                  ? LikeButton(
+                                                      size: 55,
+                                                      animationDuration:
+                                                          Duration(seconds: 1),
+                                                      likeBuilder: ((isLiked) {
+                                                        return Container(
+                                                          decoration: BoxDecoration(
+                                                              color: AppTheme
+                                                                  .YELLOW_COLOR,
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              boxShadow: [
+                                                                BoxShadow(
+                                                                    color: Colors
+                                                                        .grey
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    spreadRadius:
+                                                                        5,
+                                                                    blurRadius:
+                                                                        7,
+                                                                    offset:
+                                                                        Offset(
+                                                                            0,
+                                                                            3))
+                                                              ]),
+                                                          child: Image.asset(
+                                                            ERPImages.categcory,
+                                                            color: AppTheme
+                                                                .WHITE_COLOR,
+                                                            cacheHeight: 30,
+                                                            cacheWidth: 30,
+                                                          ),
+                                                        );
+                                                      }),
+                                                      onTap: ((isLiked) async {
+                                                        int? amount = context
+                                                            .read<
+                                                                FoodMenuProvider>()
+                                                            .counter;
+                                                        if (amount == 0) {
+                                                          Mystyle()
+                                                              .showDialogCheckData(
+                                                                  context,
+                                                                  "ກາລຸນາກົດເພື່ອເພີ່ມຈຳນວນອາຫານ");
+                                                        } else {
+                                                          int totalAmount =
+                                                              (pricesale +
+                                                                      specialPrice) *
+                                                                  amount;
+                                                          getFoodModel
+                                                              .setFoodMenuData(
+                                                                  data.data,
+                                                                  amount,
+                                                                  totalAmount,
+                                                                  data.size,
+                                                                  amount);
+                                                          getFoodModel
+                                                              .addTotalAmount(
+                                                                  totalAmount);
+                                                          context
+                                                              .read<
+                                                                  FoodMenuProvider>()
+                                                              .count;
+                                                        }
+                                                        return !isLiked;
+                                                      }),
+                                                    )
+                                                  : LikeButton(
+                                                      size: 55,
+                                                      animationDuration:
+                                                          Duration(seconds: 1),
+                                                      likeBuilder: ((isLiked) {
+                                                        return Container(
+                                                          decoration: BoxDecoration(
+                                                              color: AppTheme
+                                                                  .GREY_COLOR,
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              boxShadow: [
+                                                                BoxShadow(
+                                                                    color: Colors
+                                                                        .grey
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    spreadRadius:
+                                                                        5,
+                                                                    blurRadius:
+                                                                        7,
+                                                                    offset:
+                                                                        Offset(
+                                                                            0,
+                                                                            3))
+                                                              ]),
+                                                          child: Image.asset(
+                                                            ERPImages.categcory,
+                                                            color: AppTheme
+                                                                .WHITE_COLOR,
+                                                            cacheHeight: 30,
+                                                            cacheWidth: 30,
+                                                          ),
+                                                        );
+                                                      }),
+                                                      onTap: ((isLiked) async {
+                                                        int? amount = context
+                                                            .read<
+                                                                FoodMenuProvider>()
+                                                            .counter;
+                                                        if (amount == 0) {
+                                                          Mystyle()
+                                                              .showDialogCheckData(
+                                                                  context,
+                                                                  "ກາລຸນາກົດເພື່ອເພີ່ມຈຳນວນອາຫານ");
+                                                        } else {
+                                                          int totalAmount =
+                                                              (pricesale +
+                                                                      specialPrice) *
+                                                                  amount;
+                                                          getFoodModel
+                                                              .setFoodMenuData(
+                                                                  data.data,
+                                                                  amount,
+                                                                  totalAmount,
+                                                                  data.size,
+                                                                  amount);
+                                                          getFoodModel
+                                                              .addTotalAmount(
+                                                                  totalAmount);
+                                                          context
+                                                              .read<
+                                                                  FoodMenuProvider>()
+                                                              .count;
+                                                        }
+                                                        return !isLiked;
+                                                      }),
+                                                    )
+                                            ],
                                           ),
                                         ),
-                                      ),
+                                      ],
                                     ),
                                     SizedBox(
-                                      width: 11.w,
+                                      height: 5.h,
                                     ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            data.data.name!,
-                                            style: TextStyle(
-                                              fontFamily: 'Phetsarath-OT',
-                                              fontSize: 16.sp,
-                                              fontWeight: FontWeight.w700,
-                                              color: AppTheme.BASE_COLOR,
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        for (var i in data.data.size!)
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                              right: 7.w,
+                                            ),
+                                            child: FoodMenuSize(
+                                              onPressed: (() {
+                                                context
+                                                    .read<GetFoodMenuProvider>()
+                                                    .setProductSize(
+                                                        i.size ?? 0, index);
+                                              }),
+                                              mainsize: mainsize,
+                                              size: i.size ?? 0,
+                                              title: setSize(i.size ?? 0),
                                             ),
                                           ),
-                                          SizedBox(
-                                            height: 5.h,
-                                          ),
-                                          Text.rich(TextSpan(
-                                              text: 'ລາຄາ ',
-                                              style: TextStyle(
-                                                fontSize: 14.sp,
-                                                color: AppTheme.BASE_COLOR,
-                                                fontFamily: 'Phetsarath-OT',
-                                              ),
-                                              children: <InlineSpan>[
-                                                TextSpan(
-                                                  text:
-                                                      '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(pricesale + specialPrice)} ກີບ',
-                                                  style: TextStyle(
-                                                    fontFamily: 'Phetsarath-OT',
-                                                    fontSize: 14.sp,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                )
-                                              ])),
-                                          AddAmount(index: index),
-                                        ],
-                                      ),
+                                      ],
                                     ),
-                                    //if(data.isaddtochart)
-                                 data.isaddtochart? LikeButton(
-                                            size: 55,
-                                            animationDuration:
-                                                Duration(seconds: 1),
-                                            likeBuilder: ((isLiked) {
-                                              return Container(
-                                                decoration: BoxDecoration(
-                                                    color: AppTheme.YELLOW_COLOR,
-                                                    shape: BoxShape.circle,
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                          color: Colors.grey
-                                                              .withOpacity(0.5),
-                                                          spreadRadius: 5,
-                                                          blurRadius: 7,
-                                                          offset: Offset(0, 3))
-                                                    ]),
-                                                child: Image.asset(
-                                                  ERPImages.categcory,
-                                                  color: AppTheme.WHITE_COLOR,
-                                                  cacheHeight: 30,
-                                                  cacheWidth: 30,
-                                                ),
-                                              );
-                                            }),
-                                            onTap: ((isLiked) async {
-                                             
-                                              int? amount = context
-                                                  .read<FoodMenuProvider>()
-                                                  .counter;
-                                              if (amount == 0) {
-                                                Mystyle().showDialogCheckData(
-                                                    context,
-                                                    "ກາລຸນາກົດເພື່ອເພີ່ມຈຳນວນອາຫານ");
-                                              } else { 
-                                                int totalAmount =
-                                                    (pricesale + specialPrice) *
-                                                        amount;
-                                                getFoodModel.setFoodMenuData(
-                                                    data.data,
-                                                    amount,
-                                                    totalAmount,data.size, amount);
-                                                getFoodModel
-                                                    .addTotalAmount(totalAmount);
-                                                context
-                                                    .read<FoodMenuProvider>()
-                                                    .count;
-                                              }
-                                              return !isLiked;
-                                            }),
-                                          ): LikeButton(
-                                            size: 55,
-                                            animationDuration:
-                                                Duration(seconds: 1),
-                                            likeBuilder: ((isLiked) {
-                                              return Container(
-                                                decoration: BoxDecoration(
-                                                    color: AppTheme.GREY_COLOR,
-                                                    shape: BoxShape.circle,
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                          color: Colors.grey
-                                                              .withOpacity(0.5),
-                                                          spreadRadius: 5,
-                                                          blurRadius: 7,
-                                                          offset: Offset(0, 3))
-                                                    ]),
-                                                child: Image.asset(
-                                                  ERPImages.categcory,
-                                                  color: AppTheme.WHITE_COLOR,
-                                                  cacheHeight: 30,
-                                                  cacheWidth: 30,
-                                                ),
-                                              );
-                                            }),
-                                            onTap: ((isLiked) async {
-                                             
-                                              int? amount = context
-                                                  .read<FoodMenuProvider>()
-                                                  .counter;
-                                              if (amount == 0) {
-                                                Mystyle().showDialogCheckData(
-                                                    context,
-                                                    "ກາລຸນາກົດເພື່ອເພີ່ມຈຳນວນອາຫານ");
-                                              } else { 
-                                                int totalAmount =
-                                                    (pricesale + specialPrice) *
-                                                        amount;
-                                                getFoodModel.setFoodMenuData(
-                                                    data.data,
-                                                    amount,
-                                                    totalAmount,data.size, amount);
-                                                getFoodModel
-                                                    .addTotalAmount(totalAmount);
-                                                context
-                                                    .read<FoodMenuProvider>()
-                                                    .count;
-                                              }
-                                              return !isLiked;
-                                            }),
-                                          )
                                   ],
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 5.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              for (var i in data.data.size!)
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    right: 7.w,
-                                  ),
-                                  child: FoodMenuSize(
-                                    onPressed: (() {
-                                      context
-                                          .read<GetFoodMenuProvider>()
-                                          .setProductSize(i.size ?? 0, index);
-                                    }),
-                                    mainsize: mainsize,
-                                    size: i.size ?? 0,
-                                    title: setSize(i.size ?? 0),
-                                  ),
-                                ),
-                            ],
-                          ),
-                          
-                        ],
+                              );
+                            }),
                       ),
                     );
-                  }),
-            ),
-          );
         },
       ),
     );

@@ -23,11 +23,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CalculateMoney extends StatefulWidget {
   final tablename;
-  
-   CalculateMoney({
+
+  CalculateMoney({
     Key? key,
     required this.tablename,
-   
   }) : super(key: key);
 
   @override
@@ -70,6 +69,7 @@ class _CalculateMoneyState extends State<CalculateMoney> {
     final PrinterMode mode = await SunmiPrinter.getPrinterMode();
     return mode;
   }
+
   Widget build(BuildContext context) {
     return Consumer<GetFoodMenuProvider>(
       builder: ((context, value, child) {
@@ -172,6 +172,9 @@ class _CalculateMoneyState extends State<CalculateMoney> {
                             child: Center(
                               child: TextButton(
                                 onPressed: () {
+                                  context
+                                      .read<GetFoodMenuProvider>()
+                                      .clearKitchenData();
                                   Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
@@ -192,21 +195,8 @@ class _CalculateMoneyState extends State<CalculateMoney> {
                           ),
                           GestureDetector(
                             onTap: () async {
-                              SharedPreferences pre =
-                                  await SharedPreferences.getInstance();
-                              String? getidtable =
-                                  pre.getString(CountPre().tablename);
-
-                              // CheckExpiredPackage()
-                              //     .getCheckExpiredPackage(context);
-                              SharedPreferences preferences =
-                                  await SharedPreferences.getInstance();
-                              String? getzone =
-                                  preferences.getString(CountPre().idzone);
-                              SharedPreferences pri =
-                                  await SharedPreferences.getInstance();
-                              String? billNo = pri.getString(CountPre().billNo);
-
+                              String? getzone = await CountPre().getArea();
+                              String? billNo = await CountPre().getBillId();
                               try {
                                 if (context
                                     .read<GetFoodMenuProvider>()
@@ -248,7 +238,7 @@ class _CalculateMoneyState extends State<CalculateMoney> {
                                     ColumnMaker(
                                         text:
                                             '${DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now())}',
-                                        width: 6,
+                                        width: 3,
                                         align: SunmiPrintAlign.RIGHT),
                                   ]);
                                   await SunmiPrinter.printRow(cols: [

@@ -59,16 +59,14 @@ Future<ConnectValidateModels?> connectvalidateuser(
         AuthenticationProvider().registerUser(context, email, name, lastname);
 
       } else {
-        Navigator.pop(context);
+        //Navigator.pop(context);
         Mystyle().showAlertloadingError(context,"ແຈ້ງເຕືອນ!", "ກາລຸນາລອງໃໝ່ອີກຄັ້ງ");
         
       }
       return null;
     } else {
-      Navigator.pop(context);
-
-      /// show errr dialog
-      return null;
+     // Navigator.pop(context);
+Mystyle().showAlertloadingError(context,"ແຈ້ງເຕືອນ!", "ກາລຸນາລອງໃໝ່ອີກຄັ້ງ");
     }
   } catch (e) {
     // Navigator.pop(context);

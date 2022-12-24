@@ -117,10 +117,8 @@ class PaymentCashProvider extends ChangeNotifier {
                             ),
                             child: TextButton(
                               onPressed: () async{
-
-
-                                 String? billNo =
-                                  context.read<SetIdTable>().billNo;
+                                
+                              String? billNo = await CountPre().getBillNo();
                               int total = 0;
 
                               try {
@@ -144,7 +142,15 @@ class PaymentCashProvider extends ChangeNotifier {
                                   ColumnMaker(text: 'ວັນເວລາ', width: 6),
                                   ColumnMaker(
                                       text:
-                                          '${DateFormat("yyy-MM-dd HH:mm").format(DateTime.now())}',
+                                          '${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now())}',
+                                      width: 6,
+                                      align: SunmiPrintAlign.RIGHT),
+                                ]);
+
+                                await SunmiPrinter.printRow(cols: [
+                                  ColumnMaker(text: 'ຊັ້ນ', width: 6),
+                                  ColumnMaker(
+                                      text: '$areaname',
                                       width: 6,
                                       align: SunmiPrintAlign.RIGHT),
                                 ]);
@@ -152,7 +158,7 @@ class PaymentCashProvider extends ChangeNotifier {
                                 await SunmiPrinter.printRow(cols: [
                                   ColumnMaker(text: 'ເລກໂຕະ', width: 6),
                                   ColumnMaker(
-                                      text: '',
+                                      text: '$tablename',
                                       width: 6,
                                       align: SunmiPrintAlign.RIGHT),
                                 ]);

@@ -18,9 +18,12 @@ class GetFoodMenuProvider extends ChangeNotifier {
   GetFoodMenuModels? get getModelsProduct => modelsProduct;
   int get totalamont => _totalamount;
   List<FoodMenuModel> get getFoodMenuModel => foodMenuModel;
+  bool isload = false;
+  bool get isloading => isload;
 
   /// ດຶງລາຍການສິນຄ້າໃນເມນູອາຫານ
   Future<void> getProduct(bool forceReload) async {
+    isload = true;
     if (forceReload) {
       modelsProduct = null;
     }
@@ -34,6 +37,7 @@ class GetFoodMenuProvider extends ChangeNotifier {
         }
       }
     }
+    isload = false;
     notifyListeners();
   }
 

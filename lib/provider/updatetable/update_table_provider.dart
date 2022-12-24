@@ -13,8 +13,6 @@ class UpdateTableProvider extends ChangeNotifier {
 
   Future<void> updateTableProvider(BuildContext context, String tableid,String tablename,String idarea,String areaname)async{
     _tableUpdateModels = await updateTableService(context, tableid, tablename, idarea, areaname);
- 
-
   }
   
 }

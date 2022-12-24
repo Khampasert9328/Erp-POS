@@ -36,23 +36,34 @@ class CountPre {
   String statusTable = 'statusTable';
   String area = 'area';
   String connectTokenResponse = 'connectTokenResponse';
-Future<void> setArea(String areaname)async{
-  preferences = await SharedPreferences.getInstance();
-  preferences.setString(area, areaname);
-}
-Future<String?> getArea()async{
-  preferences = await SharedPreferences.getInstance();
- return preferences.getString(area);
+  String clickradio = 'clickradio';
 
+  Future<void> setRadioRememberPassword(bool val) async {
+    preferences = await SharedPreferences.getInstance();
+    preferences.setBool(clickradio, val);
+  }
 
-}
+  Future<bool?> getRadioRememberPassword() async {
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getBool(clickradio);
+  }
+
+  Future<void> setArea(String areaname) async {
+    preferences = await SharedPreferences.getInstance();
+    preferences.setString(area, areaname);
+  }
+
+  Future<String?> getArea() async {
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getString(area);
+  }
 
   Future<void> setStatusTable(int val) async {
     preferences = await SharedPreferences.getInstance();
     preferences.setInt(statusTable, val);
   }
 
-  Future<int?> getStatusTable()async{
+  Future<int?> getStatusTable() async {
     preferences = await SharedPreferences.getInstance();
     return preferences.getInt(statusTable);
   }
@@ -218,17 +229,15 @@ Future<String?> getArea()async{
     return preferences.getString(idToken);
   }
 
-
-  Future<void> setConnectTokenResponse(String tokenresponse)async{
+  Future<void> setConnectTokenResponse(String tokenresponse) async {
     preferences = await SharedPreferences.getInstance();
     preferences.setString(connectTokenResponse, tokenresponse);
   }
 
-    Future<String?> getConnectTokenResponse()async{
+  Future<String?> getConnectTokenResponse() async {
     preferences = await SharedPreferences.getInstance();
     return preferences.getString(connectTokenResponse);
-      } 
-
+  }
 
   Future<void> setTableId(String idTable) async {
     preferences = await SharedPreferences.getInstance();
@@ -319,6 +328,4 @@ Future<String?> getArea()async{
     preferences = await SharedPreferences.getInstance();
     return preferences.getString(dateSubscribe);
   }
-
-
 }

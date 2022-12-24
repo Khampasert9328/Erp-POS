@@ -34,7 +34,6 @@ class TableDetail extends StatefulWidget {
 
 class _TableDetailState extends State<TableDetail> {
   bool isWitch = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,44 +79,6 @@ class _TableDetailState extends State<TableDetail> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            // SizedBox(
-            //   height: 25.h,
-            // ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.end,
-            //   children: [
-            //     isWitch == true
-            //         ? const Text(
-            //             "ເປິດໂຕະ",
-            //             style: TextStyle(
-            //               fontSize: 18,
-            //               fontWeight: FontWeight.bold,
-            //             ),
-            //           )
-            //         : const Text(
-            //             "ປິດໂຕະ",
-            //             style: TextStyle(
-            //               fontSize: 18,
-            //               fontWeight: FontWeight.bold,
-            //             ),
-            //           ),
-            //     Switch(
-            //       activeColor: AppTheme.GREEN_COLOR,
-            //       value: isWitch,
-            //       onChanged: (vale) {
-            //         if (isWitch == true) {
-            //           setState(() {
-            //             isWitch = vale;
-            //           });
-            //         } else {
-            //           setState(() {
-            //             isWitch = vale;
-            //           });
-            //         }
-            //       },
-            //     ),
-            //   ],
-            // ),
             SizedBox(
               height: 25.h,
             ),
