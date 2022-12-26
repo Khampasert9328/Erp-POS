@@ -14,17 +14,14 @@ import 'package:provider/provider.dart';
 
 class paycash extends StatefulWidget {
   GetTable datatable;
-  String id;
-  String areaname;
-  String tablename;
+  
   List<Product>? data;
   int tatal;
   paycash(
       {Key? key,
-      required this.tablename,
+     
       required this.datatable,
-      required this.id,
-      required this.areaname,
+    
       required this.data,
       required this.tatal
       })
@@ -60,7 +57,7 @@ class _paycashState extends State<paycash> {
           backgroundColor: AppTheme.WHITE_COLOR,
           elevation: 0,
           title: Text(
-            widget.tablename,
+            widget.datatable.name!,
             style: TextStyle(color: AppTheme.BASE_COLOR),
           ),
         ),
@@ -83,8 +80,8 @@ class _paycashState extends State<paycash> {
                     widget.data,
                     widget.datatable.id!,
                     widget.datatable.name!,
-                    widget.id,
-                    widget.areaname);
+                    widget.datatable.tablearea!.id!,
+                    widget.datatable.tablearea!.area!);
               },
               child: Text(
                 "ຊຳລະເງິນ",

@@ -19,8 +19,6 @@ class FoodMenu extends StatefulWidget {
 
 class _FoodMenuState extends State<FoodMenu> {
   GetTable? data;
-  String? id;
-  String? name;
   @override
   void initState() {
     super.initState();
@@ -32,8 +30,6 @@ class _FoodMenuState extends State<FoodMenu> {
     return Scaffold(
       body: FoodMenuBody(
         data: data,
-        id: id,
-        areaname: name,
       ),
     );
   }

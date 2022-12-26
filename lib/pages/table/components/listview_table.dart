@@ -66,307 +66,325 @@ class _ListViewTableState extends State<ListViewTable> {
     super.initState();
   }
 
-  int areaindex = 0;
+  // int areaindex = 0;
+  final _refresh = GlobalKey<RefreshIndicatorState>();
+  bool isloading = false;
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AreaProvider>(
-      builder: ((context, value, child) {
-        if (value.areaModels == null) {
-          return Text("ບໍ່ມີຂໍ້ມູນ");
-        } else {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                  height: 50.h,
-                  width: double.infinity,
-                  child: ListView.builder(
-                      physics: const ScrollPhysics(),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: value.areaModels!.area!.length,
-                      itemBuilder: (context, index) {
-                        String? idname = value.areaModels!.area![index].id;
-                        String? areaname = value.areaModels!.area![index].area!;
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Column(
+    return isloading
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : Consumer<AreaProvider>(
+            builder: ((context, value, child) {
+              if (value.areaModels == null) {
+                return Text("ບໍ່ມີຂໍ້ມູນ");
+              } else {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                        height: 50.h,
+                        width: double.infinity,
+                        child: ListView.builder(
+                            physics: const ScrollPhysics(),
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: value.areaModels!.area!.length,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  GestureDetector(
-                                    onTap: () async {
-                                      setState(() {
-                                        areaindex = index;
-                                        selectIndex = index;
-                                        context
-                                            .read<AreaProvider>()
-                                            .callAPITable(
-                                                context,
-                                                value.areaModels!.area![index]
-                                                    .id!);
-                                      });
-                                    },
+                                  Expanded(
                                     child: Column(
                                       children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            right: 8,
-                                          ),
-                                          child: Container(
-                                            height: 40.h,
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: 15.w,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color: selectIndex == index
-                                                  ? AppTheme.BASE_COLOR
-                                                  : AppTheme.WHITE_COLOR,
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              border: Border.all(
-                                                  color: AppTheme.BASE_COLOR),
-                                            ),
-                                            child: Center(
-                                              child: Mystyle().syleText(
-                                                  value.areaModels!.area![index]
-                                                      .area!,
-                                                  selectIndex == index
-                                                      ? AppTheme.WHITE_COLOR
-                                                      : Colors.grey,
-                                                  18.sp),
-                                            ),
+                                        GestureDetector(
+                                          onTap: () async {
+                                            setState(() {
+                                              //  areaindex = index;
+                                              selectIndex = index;
+                                              context
+                                                  .read<AreaProvider>()
+                                                  .callAPITable(
+                                                      context,
+                                                      value.areaModels!
+                                                          .area![index].id!);
+                                            });
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                  right: 8,
+                                                ),
+                                                child: Container(
+                                                  height: 40.h,
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: 15.w,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    color: selectIndex == index
+                                                        ? AppTheme.BASE_COLOR
+                                                        : AppTheme.WHITE_COLOR,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    border: Border.all(
+                                                        color: AppTheme
+                                                            .BASE_COLOR),
+                                                  ),
+                                                  child: Center(
+                                                    child: Mystyle().syleText(
+                                                        value.areaModels!
+                                                            .area![index].area!,
+                                                        selectIndex == index
+                                                            ? AppTheme
+                                                                .WHITE_COLOR
+                                                            : Colors.grey,
+                                                        18.sp),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
                                 ],
+                              );
+                            })),
+                    NavBarStatusBooking(),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Expanded(
+                      child: value.isloading
+                          ? Center(
+                              child: CircularProgressIndicator(
+                                color: AppTheme.BASE_COLOR,
                               ),
-                            ),
-                          ],
-                        );
-                      })),
-              NavBarStatusBooking(),
-              SizedBox(
-                height: 10.h,
-              ),
-              Expanded(
-                child: value.isloading
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          color: AppTheme.BASE_COLOR,
-                        ),
-                      )
-                    : value.gettablelist == null
-                        ? const Center(
-                            child: Text("ບໍ່ມີຂໍ້ມູນໂຕະ"),
-                          )
-                        : SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                GridView.count(
-                                  crossAxisCount: 2,
-                                  physics: ScrollPhysics(),
-                                  childAspectRatio: (0.8.w / .5.h),
-                                  shrinkWrap: true,
-                                  crossAxisSpacing: 20.0,
-                                  mainAxisSpacing: 10.0,
-                                  children: List.generate(
-                                      value.gettablelist!.table!.length,
-                                      (index) {
-                                    return GestureDetector(
-                                      onTap: (() {
-                                        String? idarea = value
-                                            .areaModels!.area![areaindex].id;
-                                        String? areaname = value
-                                            .areaModels!.area![areaindex].area!;
-                                        if (value.gettablelist!.table![index]
-                                                .status ==
-                                            1) {
-                                              updateTableService(context, value.gettablelist!.table![index].id!, value.gettablelist!.table![index].name!, idarea!, areaname);
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      DetailOrderTable(
-                                                        data: value
-                                                            .gettablelist!
-                                                            .table![index],
-                                                        tablename: value
-                                                            .gettablelist!
-                                                            .table![index]
-                                                            .name!,
-                                                        id: value.areaModels!
-                                                            .area![index].id!,
-                                                        areaname: value
-                                                            .areaModels!
-                                                            .area![index]
-                                                            .area!,
-                                                      )));
-                                        } else {
-                                          bool clicktable = true;
-                                          context
-                                              .read<ClickTableProvider>()
-                                              .clickTableProvider(clicktable);
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: ((context) =>
-                                                  TableDetail(
-                                                    data: value.gettablelist!
-                                                        .table![index],
-                                                    id: idarea!,
-                                                    areaname: areaname,
-                                                  )),
-                                            ),
-                                          );
-                                          setState(() {
-                                            selectTable = index;
-                                            context
-                                                .read<ListTableProvider>()
-                                                .addTable(value.gettablelist!
-                                                    .table![index].name!);
-                                          });
-                                        }
-                                      }),
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              height: 10.h,
-                                              width: 120.w,
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: AppTheme.BASE_COLOR,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5.h,
-                                            ),
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  height: 50.h,
-                                                  width: 10.w,
-                                                  decoration: BoxDecoration(
-                                                    color: checkStatus(
-                                                      value
+                            )
+                          : value.gettablelist == null
+                              ? const Center(
+                                  child: Text("ບໍ່ມີຂໍ້ມູນໂຕະ"),
+                                )
+                              : SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      GridView.count(
+                                        crossAxisCount: 2,
+                                        physics: ScrollPhysics(),
+                                        childAspectRatio: (0.8.w / .5.h),
+                                        shrinkWrap: true,
+                                        crossAxisSpacing: 20.0,
+                                        mainAxisSpacing: 10.0,
+                                        children: List.generate(
+                                            value.gettablelist!.table!.length,
+                                            (index) {
+                                          return GestureDetector(
+                                            onTap: (() {
+                                              if (value.gettablelist!
+                                                      .table![index].statusAv ==
+                                                  1) {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (_) =>
+                                                            DetailOrderTable(
+                                                              data: value
+                                                                  .gettablelist!
+                                                                  .table![index],
+                                                              tablename: value
+                                                                  .gettablelist!
+                                                                  .table![index]
+                                                                  .name!,
+                                                              id: value
+                                                                  .areaModels!
+                                                                  .area![index]
+                                                                  .id!,
+                                                              areaname: value
+                                                                  .areaModels!
+                                                                  .area![index]
+                                                                  .area!,
+                                                            )));
+                                              } else {
+                                                bool clicktable = true;
+                                                context
+                                                    .read<ClickTableProvider>()
+                                                    .clickTableProvider(
+                                                        clicktable);
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: ((context) =>
+                                                        TableDetail(
+                                                          data: value
+                                                              .gettablelist!
+                                                              .table![index],
+                                                        )),
+                                                  ),
+                                                );
+                                                setState(() {
+                                                  selectTable = index;
+                                                  context
+                                                      .read<ListTableProvider>()
+                                                      .addTable(value
                                                           .gettablelist!
                                                           .table![index]
-                                                          .status!,
-                                                    ),
-                                                    border: Border.all(
-                                                        color: AppTheme
-                                                            .BASE_COLOR),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 3.w,
-                                                ),
-                                                Container(
-                                                    height: 70.h,
-                                                    width: 130.w,
+                                                          .name!);
+                                                });
+                                              }
+                                            }),
+                                            child: SingleChildScrollView(
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    height: 10.h,
+                                                    width: 120.w,
                                                     decoration: BoxDecoration(
+                                                      border: Border.all(
                                                         color:
-                                                            selectTable == index
-                                                                ? AppTheme
-                                                                    .BASE_COLOR
-                                                                : AppTheme
-                                                                    .GREY_COLOR,
-                                                        border: Border.all(
-                                                            color: AppTheme
-                                                                .BASE_COLOR),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10)),
-                                                    child: Stack(
-                                                      alignment:
-                                                          Alignment.topRight,
-                                                      children: [
-                                                        selectTable == index
-                                                            ? Icon(
-                                                                Icons
-                                                                    .check_circle,
-                                                                color: AppTheme
-                                                                    .WHITE_COLOR,
-                                                              )
-                                                            : SizedBox(),
-                                                        Center(
-                                                          child: Text(
+                                                            AppTheme.BASE_COLOR,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5.h,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Container(
+                                                        height: 50.h,
+                                                        width: 10.w,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: checkStatus(
                                                             value
                                                                 .gettablelist!
                                                                 .table![index]
-                                                                .name!,
-                                                            style: TextStyle(
+                                                                .statusAv!,
+                                                          ),
+                                                          border: Border.all(
+                                                              color: AppTheme
+                                                                  .BASE_COLOR),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 3.w,
+                                                      ),
+                                                      Container(
+                                                          height: 70.h,
+                                                          width: 130.w,
+                                                          decoration: BoxDecoration(
                                                               color: selectTable == index
                                                                   ? AppTheme
-                                                                      .WHITE_COLOR
+                                                                      .BASE_COLOR
                                                                   : AppTheme
-                                                                      .BASE_COLOR,
-                                                              fontSize: 14.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
+                                                                      .GREY_COLOR,
+                                                              border: Border.all(
+                                                                  color: AppTheme
+                                                                      .BASE_COLOR),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
+                                                          child: Stack(
+                                                            alignment: Alignment
+                                                                .topRight,
+                                                            children: [
+                                                              selectTable ==
+                                                                      index
+                                                                  ? Icon(
+                                                                      Icons
+                                                                          .check_circle,
+                                                                      color: AppTheme
+                                                                          .WHITE_COLOR,
+                                                                    )
+                                                                  : SizedBox(),
+                                                              Center(
+                                                                child: Text(
+                                                                  value
+                                                                      .gettablelist!
+                                                                      .table![
+                                                                          index]
+                                                                      .name!,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: selectTable ==
+                                                                            index
+                                                                        ? AppTheme
+                                                                            .WHITE_COLOR
+                                                                        : AppTheme
+                                                                            .BASE_COLOR,
+                                                                    fontSize:
+                                                                        14.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          )),
+                                                      SizedBox(
+                                                        width: 3.w,
+                                                      ),
+                                                      Container(
+                                                        height: 50.h,
+                                                        width: 10.w,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          border: Border.all(
+                                                              color: AppTheme
+                                                                  .BASE_COLOR),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                            10,
                                                           ),
                                                         ),
-                                                      ],
-                                                    )),
-                                                SizedBox(
-                                                  width: 3.w,
-                                                ),
-                                                Container(
-                                                  height: 50.h,
-                                                  width: 10.w,
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: AppTheme
-                                                            .BASE_COLOR),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                      10,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5.h,
+                                                  ),
+                                                  Container(
+                                                    height: 10.h,
+                                                    width: 120.w,
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: AppTheme
+                                                              .BASE_COLOR),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 5.h,
-                                            ),
-                                            Container(
-                                              height: 10.h,
-                                              width: 120.w,
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: AppTheme.BASE_COLOR),
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
+                                                ],
                                               ),
                                             ),
-                                          ],
-                                        ),
+                                          );
+                                        }),
                                       ),
-                                    );
-                                  }),
+                                    ],
+                                  ),
                                 ),
-                              ],
-                            ),
-                          ),
-              )
-            ],
+                    )
+                  ],
+                );
+              }
+            }),
           );
-        }
-      }),
-    );
   }
 }

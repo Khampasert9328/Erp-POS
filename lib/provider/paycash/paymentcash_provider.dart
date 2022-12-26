@@ -97,7 +97,8 @@ class PaymentCashProvider extends ChangeNotifier {
                             ),
                             child: TextButton(
                               onPressed: () {
-                                
+                                UpdateTableProvider().updateTableProvider(context, idtable, tablename, idarea, areaname);
+                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>HomePage()), (route) => false);
                               },
                               child: Text(
                                 "ປິດໜ້ານີ້",
@@ -239,9 +240,6 @@ class PaymentCashProvider extends ChangeNotifier {
               );
             });
 
-        // Navigator.pushAndRemoveUntil(context,
-        //     MaterialPageRoute(builder: (_) => HomePage()), (route) => false);
-        // context.read<GetFoodMenuProvider>().clearKitchenData();
       }
     } catch (e) {
       return showDialog(

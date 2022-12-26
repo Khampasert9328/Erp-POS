@@ -7,9 +7,11 @@ import 'package:erp_pos/model/order/order_models.dart';
 
 import 'package:erp_pos/services/getorderbyissuedate/get_order_by_issuedate_service.dart';
 import 'package:erp_pos/services/getorderbylistid/get_order_by_list_id.dart';
+import 'package:erp_pos/utils/setdata/id_table_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GetOrderByIssueDateProvider extends ChangeNotifier {
@@ -30,8 +32,9 @@ class GetOrderByIssueDateProvider extends ChangeNotifier {
     
     String? idToken = await CountPre().getToken();
     DateTime time = DateTime.now();
-    String? startdate = '20221006';
-    String? startend = '20221006';
+    String? startdate =await CountPre().getDateTimebill();
+    String? startend =await CountPre().getDateTimebill();
+   
 
 String? startDate = await CountPre().getDateSupscribe();
     var startD = "$startDate";
@@ -45,7 +48,7 @@ String? startDate = await CountPre().getDateSupscribe();
     var tendD = end1D.replaceAll("-", "");
 
     _order = await getorderbyissuedate(
-        -1, 0, idToken!, startdate, startend, context);
+        -1, 0, idToken!, startdate!, startend!, context);
 
     if (_order != null) {
       for (var item in _order!.order!) {

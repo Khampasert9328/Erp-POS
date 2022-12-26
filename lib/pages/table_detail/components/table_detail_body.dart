@@ -19,13 +19,10 @@ import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 
 class TableDetail extends StatefulWidget {
   GetTable data;
-  String id;
-  String areaname;
   TableDetail({
     Key? key,
     required this.data,
-    required this.id,
-    required this.areaname
+    
   }) : super(key: key);
 
   @override
@@ -62,7 +59,7 @@ class _TableDetailState extends State<TableDetail> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => FoodMenuBody(data: widget.data,id: widget.id,areaname: widget.areaname,),
+                        builder: (_) => FoodMenuBody(data: widget.data),
                       ),
                     );
                   },

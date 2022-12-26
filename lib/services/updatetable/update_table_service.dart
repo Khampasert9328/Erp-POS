@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:erp_pos/model/updatestatus/updatestatus_models.dart';
 import 'package:erp_pos/pages/table/components/listview_table.dart';
 import 'package:erp_pos/utils/setdata/id_table_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
@@ -11,7 +12,7 @@ import 'package:erp_pos/model/updatetable/update_table_models.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 
-Future<TableUpdateModels?> updateTableService(BuildContext context, String tableid,String tablename,String idarea,String areaname) async {
+Future<UpdateStatusModels?> updateTableService(BuildContext context, String tableid,String tablename,String idarea,String areaname) async {
   String? idToken = await CountPre().getToken();
 
 
@@ -35,7 +36,7 @@ Future<TableUpdateModels?> updateTableService(BuildContext context, String table
     String playload = jsonEncode({
       "id": "$tableid",
       "name": "$tablename",
-      "status": 0,
+      "status": 1,
       "status_av": 0,
       "mergeTable": {
         "tableId": "none",
@@ -71,10 +72,7 @@ Future<TableUpdateModels?> updateTableService(BuildContext context, String table
     // print("playload:${playload}");
     // print("url:${url}");
     if (respones.statusCode == 200) {
-  
-      TableUpdateModels tableUpdateModels = TableUpdateModels.fromJson(jsonDecode(respones.body));
-      
-      return tableUpdateModels;
+      return updateStatusModelsFromJson(respones.body);
     }
   } catch (e) {
     rethrow;

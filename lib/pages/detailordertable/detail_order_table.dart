@@ -196,12 +196,11 @@ class _DetailOrderTableState extends State<DetailOrderTable> {
                                               MaterialPageRoute(
                                                 builder: (_) => PayMentMethod(
                                                   tatal: total,
-                                                  tablename: widget.tablename,
+                                                 
                                                   data: model
                                                       .order[index]!.product,
                                                   datatable: widget.data,
-                                                  id: widget.id,
-                                                  areaname: widget.areaname,
+                                                 
                                                 ),
                                               ),
                                             );
@@ -374,7 +373,6 @@ class _DetailOrderTableState extends State<DetailOrderTable> {
                 if (snapshot.hasData) {
                   return Consumer<GetOrderTableProvider>(
                     builder: ((context, model, _) {
-                      print("idorder:${widget.data.id}");
                       return ListView.builder(
                           shrinkWrap: true,
                           itemCount: model.order.length,

@@ -12,17 +12,14 @@ import 'package:provider/provider.dart';
 
 class ListAccountBCELONE extends StatelessWidget {
   GetTable datatable;
-  String id;
-  String areaname;
-  final tablename;
+
   List<Product>? data;
   ListAccountBCELONE({
     super.key,
-    required this.tablename,
+
     required this.data,
     required this.datatable,
-    required this.id,
-    required this.areaname
+   
   });
 
   @override
@@ -54,12 +51,11 @@ class ListAccountBCELONE extends StatelessWidget {
                                 MaterialPageRoute(
                                   builder: (_) => PaymentBcelone(
                                     data: data,
-                                    tablename: tablename,
+                            
                                     mcid: snapshot.data![index].merchid,
                                     shopcode: snapshot.data![index].shopcode,
                                     datatable: datatable,
-                                    id: id,
-                                    areaname: areaname,
+                               
                                   ),
                                 ),
                               );

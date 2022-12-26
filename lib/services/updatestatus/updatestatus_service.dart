@@ -34,7 +34,7 @@ Future<UpdateStatusModels?> updateStatus(BuildContext context, String idarea, St
       "id": "$idtable",
       "name": "$tablename",
       "status": 1,
-      "status_av": 0,
+      "status_av": 1,
       "mergeTable": {
         "tableId": "none",
         "tableName": "none",

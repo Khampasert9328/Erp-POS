@@ -35,16 +35,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class PlaceToEatCard extends StatefulWidget {
   GetTable? data;
-  String? id;
-  String? areaname;
+
 
   VoidCallback onback;
 
   PlaceToEatCard({
     required this.onback,
     required this.data,
-    required this.id,
-    required this.areaname,
+ 
   });
 
   @override
@@ -176,8 +174,8 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                             context,
                             widget.data!.id!,
                             widget.data!.name!,
-                            widget.id!,
-                            widget.areaname!);
+                            widget.data!.tablearea!.id!,
+                            widget.data!.tablearea!.area!);
                         await Future.delayed(Duration(seconds: 5));
                         Navigator.pop(context);
                         String? tablename = await CountPre().getTableName();

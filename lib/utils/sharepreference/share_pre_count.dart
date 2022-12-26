@@ -37,6 +37,15 @@ class CountPre {
   String area = 'area';
   String connectTokenResponse = 'connectTokenResponse';
   String clickradio = 'clickradio';
+  String dateTime = 'DateTime';
+  Future<void> setDateTime(String date)async{
+    preferences = await SharedPreferences.getInstance();
+    preferences.setString(dateTime, date);
+  }
+  Future<String?> getDateTimebill()async{
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getString(dateTime);
+  }
 
   Future<void> setRadioRememberPassword(bool val) async {
     preferences = await SharedPreferences.getInstance();

@@ -12,9 +12,8 @@ import 'package:provider/provider.dart';
 class ListAccountMmoney extends StatelessWidget {
   List<Product>? data;
   GetTable table;
-  String idarea;
-  String areaname;
-   ListAccountMmoney({super.key, required this.data, required this.table, required this.areaname, required this.idarea});
+  
+   ListAccountMmoney({super.key, required this.data, required this.table,});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,7 @@ class ListAccountMmoney extends StatelessWidget {
                           SizedBox(height: 10.h,),
                           GestureDetector(
                             onTap: (() {
-                              context.read<GenerateQrMmoneyProvider>().getqrmmoney(context, snapshot.data![index].accountnumber!, snapshot.data![index].merchid!, data,areaname, idarea, table.id!, table.name! );
+                              context.read<GenerateQrMmoneyProvider>().getqrmmoney(context, snapshot.data![index].accountnumber!, snapshot.data![index].merchid!, data,table.tablearea!.area!, table.tablearea!.id!, table.id!, table.name! );
                             }),
                             child: Container(
                               height: 50.h,

@@ -15,6 +15,11 @@ class SetIdTable extends ChangeNotifier {
   String get getidTable => _idTable;
   String get gettableName => _tablename;
   String get getareaname => areaname;
+  String dateTime = 'dateTime';
+  void setDateTime(String date)async{
+    dateTime = date;
+    notifyListeners();
+  }
 
   void setTableName(String name) async {
      SharedPreferences preferences =await SharedPreferences.getInstance();

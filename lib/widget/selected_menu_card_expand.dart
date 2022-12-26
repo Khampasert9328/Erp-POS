@@ -36,17 +36,12 @@ import '../constant/theme.dart';
 class SelectedMenuCardExpand extends StatefulWidget {
   VoidCallback onNext;
   GetTable? data;
-  String? id;
-  String? areaname;
-
   bool selectMenu = false;
-
   SelectedMenuCardExpand(
       {required this.onNext,
       required this.selectMenu,
       required this.data,
-      required this.id,
-      required this.areaname});
+      });
 
   @override
   State<SelectedMenuCardExpand> createState() => _SelectedMenuCardExpandState();
@@ -482,8 +477,8 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                           .read<CheckExpiredPackage>()
                           .getCheckExpiredPackage(
                               context,
-                              widget.id!,
-                              widget.areaname!,
+                              widget.data!.tablearea!.id!,
+                              widget.data!.tablearea!.area!,
                               widget.data!.id!,
                               widget.data!.name!);
 

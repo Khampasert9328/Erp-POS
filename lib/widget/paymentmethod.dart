@@ -6,18 +6,12 @@ import 'package:flutter/material.dart';
 
 class PayMentMethod extends StatelessWidget {
   GetTable datatable;
-  String id;
-  String areaname;
-  String tablename;
   List<Product>? data;
   int tatal;
   PayMentMethod(
       {Key? key,
-      required this.tablename,
       required this.data,
       required this.datatable,
-      required this.id,
-      required this.areaname,
       required this.tatal
       })
       : super(key: key);
@@ -30,7 +24,7 @@ class PayMentMethod extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          tablename,
+          datatable.name!,
           style: TextStyle(
             color: AppTheme.BASE_COLOR,
             fontWeight: FontWeight.bold,
@@ -39,11 +33,10 @@ class PayMentMethod extends StatelessWidget {
       ),
       body: PaymentBody(
         tatal: tatal,
-        tablename: tablename,
+     
         data: data,
         datatable: datatable,
-        id: id,
-        areaname: areaname,
+      
       ),
     );
   }
