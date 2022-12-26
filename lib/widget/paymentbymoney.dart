@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/model/ordertable/order_table_models.dart';
+import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/provider/confirmpaymentbybcel/confirmpaymentbybcel_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/generateqrmmoney/generate_qr_mmoney_provider.dart';
+import 'package:erp_pos/provider/paycash/paymentcash_provider.dart';
 import 'package:erp_pos/utils/formattime.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,16 +16,27 @@ import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class PaymentMmoney extends StatefulWidget {
-  final String tablename;
+ 
   final qrdata;
   final username;
   final walletid;
-  const PaymentMmoney(
+   List<Product>? data;
+  String idtable;
+  String tablename;
+  String id;
+  String areaname;
+   PaymentMmoney(
       {Key? key,
-      required this.tablename,
+      
       required this.qrdata,
       required this.username,
-      required this.walletid})
+      required this.walletid,
+      required this.data,
+      required this.id,
+      required this.areaname,
+      required this.idtable,
+      required this.tablename
+      })
       : super(key: key);
 
   @override
@@ -148,7 +162,7 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
                     borderRadius: BorderRadius.circular(10)),
                 child: TextButton(
                   onPressed: () {
-                    ConfirmPaymentByBCELONE().confirmbcelone(context);
+                    PaymentCashProvider().createpaymentcashprovider(context, context.read<GetFoodMenuProvider>().totalamont, widget.data, widget.idtable, widget.tablename, widget.id, widget.areaname);
                   },
                   child: Text(
                     "ຢືນຢັນການຊຳລະ",

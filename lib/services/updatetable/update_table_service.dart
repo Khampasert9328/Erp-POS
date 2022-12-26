@@ -68,8 +68,12 @@ Future<TableUpdateModels?> updateTableService(BuildContext context, String table
       },
       body: playload,
     );
+    // print("playload:${playload}");
+    // print("url:${url}");
     if (respones.statusCode == 200) {
+  
       TableUpdateModels tableUpdateModels = TableUpdateModels.fromJson(jsonDecode(respones.body));
+      
       return tableUpdateModels;
     }
   } catch (e) {

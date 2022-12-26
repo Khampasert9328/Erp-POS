@@ -20,6 +20,7 @@ import 'package:erp_pos/provider/tableprovider/click_table_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/provider/updatetable/update_table_provider.dart';
 import 'package:erp_pos/services/getArea/get_area.dart';
+import 'package:erp_pos/services/updatetable/update_table_service.dart';
 import 'package:erp_pos/utils/check_status.dart';
 import 'package:erp_pos/utils/set_size.dart';
 import 'package:erp_pos/utils/setdata/id_table_provider.dart';
@@ -65,6 +66,8 @@ class _ListViewTableState extends State<ListViewTable> {
     super.initState();
   }
 
+  int areaindex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AreaProvider>(
@@ -84,6 +87,8 @@ class _ListViewTableState extends State<ListViewTable> {
                       scrollDirection: Axis.horizontal,
                       itemCount: value.areaModels!.area!.length,
                       itemBuilder: (context, index) {
+                        String? idname = value.areaModels!.area![index].id;
+                        String? areaname = value.areaModels!.area![index].area!;
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -93,6 +98,7 @@ class _ListViewTableState extends State<ListViewTable> {
                                   GestureDetector(
                                     onTap: () async {
                                       setState(() {
+                                        areaindex = index;
                                         selectIndex = index;
                                         context
                                             .read<AreaProvider>()
@@ -100,11 +106,6 @@ class _ListViewTableState extends State<ListViewTable> {
                                                 context,
                                                 value.areaModels!.area![index]
                                                     .id!);
-                                        context.read<SetIdTable>().setIdArea(
-                                            value.areaModels!.area![index].id!);
-                                        context.read<SetIdTable>().setAreaName(
-                                            value.areaModels!.area![index]
-                                                .area!);
                                       });
                                     },
                                     child: Column(
@@ -177,12 +178,14 @@ class _ListViewTableState extends State<ListViewTable> {
                                       (index) {
                                     return GestureDetector(
                                       onTap: (() {
+                                        String? idarea = value
+                                            .areaModels!.area![areaindex].id;
+                                        String? areaname = value
+                                            .areaModels!.area![areaindex].area!;
                                         if (value.gettablelist!.table![index]
                                                 .status ==
                                             1) {
-                                          //  context.read<UpdateTableProvider>().updateTableProvider(context, value.gettablelist!.table![index].id!, value.gettablelist!.table![index].name!, value.areaModels!.area![index]
-                                          //       .id!, value.areaModels!.area![index]
-                                          //       .area!);
+                                              updateTableService(context, value.gettablelist!.table![index].id!, value.gettablelist!.table![index].name!, idarea!, areaname);
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -203,22 +206,10 @@ class _ListViewTableState extends State<ListViewTable> {
                                                             .area!,
                                                       )));
                                         } else {
-                                          context.read<SetIdTable>().setIdTable(
-                                              value.gettablelist!.table![index]
-                                                  .id!);
-                                          context
-                                              .read<SetIdTable>()
-                                              .setTableName(value.gettablelist!
-                                                  .table![index].name!);
-
                                           bool clicktable = true;
                                           context
                                               .read<ClickTableProvider>()
                                               .clickTableProvider(clicktable);
-                                          CountPre().setTableName(value
-                                              .gettablelist!
-                                              .table![index]
-                                              .name!);
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
@@ -226,10 +217,8 @@ class _ListViewTableState extends State<ListViewTable> {
                                                   TableDetail(
                                                     data: value.gettablelist!
                                                         .table![index],
-                                                    id: value.areaModels!
-                                                        .area![index].id!,
-                                                    areaname: value.areaModels!
-                                                        .area![index].area!,
+                                                    id: idarea!,
+                                                    areaname: areaname,
                                                   )),
                                             ),
                                           );

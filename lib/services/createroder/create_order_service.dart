@@ -48,7 +48,6 @@ Future<CreateOrderModels?> createOrder(
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
     String? computer = await androidInfo.model;
     // String? billNo = await CountPre().getBillNo();
-    String? tableid = context.read<SetIdTable>().getidTable;
     List<Map<String, dynamic>> products = [];
 
     var ipA = IpAddress(type: RequestType.json);

@@ -37,7 +37,7 @@ class TableUpdateModels {
         billNo: json["billNo"],
         totalBillCanPrint: json["totalBillCanPrint"],
         billId: json["billId"],
-        jobId: List<String>.from(json["jobId"].map((x) => x)),
+        jobId: List<String>.from(json["jobid"].map((x) => x)),
     );
 
     Map<String, dynamic> toJson() => {
@@ -48,6 +48,6 @@ class TableUpdateModels {
         "billNo": billNo,
         "totalBillCanPrint": totalBillCanPrint,
         "billId": billId,
-        "jobId": List<dynamic>.from(jobId!.map((x) => x)),
+        "jobid": List<dynamic>.from(jobId!.map((x) => x)),
     };
 }

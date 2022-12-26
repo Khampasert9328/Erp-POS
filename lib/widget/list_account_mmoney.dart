@@ -2,6 +2,7 @@ import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/getaccount/getaccount_models.dart';
 import 'package:erp_pos/model/ordertable/order_table_models.dart';
+import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/provider/generateqrmmoney/generate_qr_mmoney_provider.dart';
 import 'package:erp_pos/provider/getaccount/getaccount_provider.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,10 @@ import 'package:provider/provider.dart';
 
 class ListAccountMmoney extends StatelessWidget {
   List<Product>? data;
-   ListAccountMmoney({super.key, required this.data});
+  GetTable table;
+  String idarea;
+  String areaname;
+   ListAccountMmoney({super.key, required this.data, required this.table, required this.areaname, required this.idarea});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +38,7 @@ class ListAccountMmoney extends StatelessWidget {
                           SizedBox(height: 10.h,),
                           GestureDetector(
                             onTap: (() {
-                              context.read<GenerateQrMmoneyProvider>().getqrmmoney(context, snapshot.data![index].accountnumber!, snapshot.data![index].merchid!, data);
+                              context.read<GenerateQrMmoneyProvider>().getqrmmoney(context, snapshot.data![index].accountnumber!, snapshot.data![index].merchid!, data,areaname, idarea, table.id!, table.name! );
                             }),
                             child: Container(
                               height: 50.h,

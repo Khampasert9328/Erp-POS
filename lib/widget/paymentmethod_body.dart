@@ -160,6 +160,9 @@ class _PaymentBodyState extends State<PaymentBody> {
                             fontSize: 16.sp),
                       ),
                       content: ListAccountMmoney(
+                        idarea: widget.id,
+                        areaname: widget.areaname,
+                        table: widget.datatable,
                         data: widget.data,
                       ),
                     );

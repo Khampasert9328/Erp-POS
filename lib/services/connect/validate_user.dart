@@ -49,8 +49,6 @@ Future<ConnectValidateModels?> connectvalidateuser(
     } else if (response.statusCode == 400) {
       ConnectValidatModelBadRequest data =
           connectValidatModelBadRequestFromJson(response.body);
-          
-
       /// ຖ້າບໍ່ມີຜູ້ໃຊ້ໃນລະບົບ
       if (data.code == "USERNAME_NOT_FOUND") {
 

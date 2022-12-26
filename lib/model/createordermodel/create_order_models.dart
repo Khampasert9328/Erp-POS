@@ -17,6 +17,7 @@ class CreateOrderModels {
         this.billNo,
         this.totalBillCanPrint,
         this.billId,
+        this.jobId,
     });
 
     bool? isSuccess;
@@ -26,6 +27,7 @@ class CreateOrderModels {
     String? billNo;
     int? totalBillCanPrint;
     String? billId;
+    List<String>? jobId;
 
     factory CreateOrderModels.fromJson(Map<String, dynamic> json) => CreateOrderModels(
         isSuccess: json["isSuccess"],
@@ -35,6 +37,7 @@ class CreateOrderModels {
         billNo: json["billNo"],
         totalBillCanPrint: json["totalBillCanPrint"],
         billId: json["billId"],
+        jobId: List<String>.from(json["jobId"].map((x) => x)),
     );
 
     Map<String, dynamic> toJson() => {
@@ -45,5 +48,6 @@ class CreateOrderModels {
         "billNo": billNo,
         "totalBillCanPrint": totalBillCanPrint,
         "billId": billId,
+        "jobId": List<dynamic>.from(jobId!.map((x) => x)),
     };
 }

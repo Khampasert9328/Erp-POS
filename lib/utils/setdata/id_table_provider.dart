@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SetIdTable extends ChangeNotifier {
+ 
   String _idTable = '';
   String _tablename = '';
   String _billid = "";
@@ -15,17 +17,20 @@ class SetIdTable extends ChangeNotifier {
   String get getareaname => areaname;
 
   void setTableName(String name) async {
-    _tablename = name;
+     SharedPreferences preferences =await SharedPreferences.getInstance();
+    preferences.setString(_tablename, name);
     notifyListeners();
   }
 
-  void setIdArea(String id) {
-    _idarea = id;
+  void setIdArea(String id) async{
+    SharedPreferences preferences =await SharedPreferences.getInstance();
+    preferences.setString(_idarea, _idarea);
     notifyListeners();
   }
 
   void setAreaName(String nameArea) async {
-    areaname = nameArea;
+    SharedPreferences preferences =await SharedPreferences.getInstance();
+    preferences.setString(areaname, nameArea);
     notifyListeners();
   }
 
@@ -42,6 +47,17 @@ class SetIdTable extends ChangeNotifier {
 
   void setBillNo(String billNo) {
     _billNo = billNo;
+    notifyListeners();
+  }
+
+  Future<String?> getAreaname()async{
+    SharedPreferences preferences =await SharedPreferences.getInstance();
+    preferences.getString(areaname);
+    notifyListeners();
+  }
+  Future<String?> getAreaId()async{
+    SharedPreferences preferences =await SharedPreferences.getInstance();
+    preferences.getString(_idarea);
     notifyListeners();
   }
 }

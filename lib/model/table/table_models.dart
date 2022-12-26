@@ -16,6 +16,9 @@ class GetTableModels {
         this.detail,
         this.table,
         this.totalcount,
+        this.totalAvailiable,
+        this.totalUsed,
+        this.totalReserved,
     });
 
     String? code;
@@ -24,6 +27,9 @@ class GetTableModels {
     String? detail;
     List<GetTable>? table;
     int? totalcount;
+    int? totalAvailiable;
+    int? totalUsed;
+    int? totalReserved;
 
     factory GetTableModels.fromJson(Map<String, dynamic> json) => GetTableModels(
         code: json["code"],
@@ -32,6 +38,9 @@ class GetTableModels {
         detail: json["detail"],
         table: List<GetTable>.from(json["table"].map((x) => GetTable.fromJson(x))),
         totalcount: json["totalcount"],
+        totalAvailiable: json["totalAvailiable"],
+        totalUsed: json["totalUsed"],
+        totalReserved: json["totalReserved"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -41,6 +50,9 @@ class GetTableModels {
         "detail": detail,
         "table": List<dynamic>.from(table!.map((x) => x.toJson())),
         "totalcount": totalcount,
+        "totalAvailiable": totalAvailiable,
+        "totalUsed": totalUsed,
+        "totalReserved": totalReserved,
     };
 }
 

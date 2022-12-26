@@ -8,6 +8,7 @@ import 'package:erp_pos/pages/table/components/textdate.dart';
 import 'package:erp_pos/provider/confirmpaymentbybcel/confirmpaymentbybcel_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/generateQR/generate_qr_bcelone_provider.dart';
+import 'package:erp_pos/provider/paycash/paymentcash_provider.dart';
 import 'package:erp_pos/services/generateqrBCEL/generate_qr_bcelone.dart';
 import 'package:erp_pos/utils/formattime.dart';
 import 'package:flutter/material.dart';
@@ -252,7 +253,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                     borderRadius: BorderRadius.circular(10)),
                 child: TextButton(
                   onPressed: () {
-                    ConfirmPaymentByBCELONE().confirmbcelone(context);
+                    PaymentCashProvider().createpaymentcashprovider(context, total, widget.data, widget.datatable.id!, widget.datatable.name!, widget.id, widget.areaname);
                   },
                   child: Text(
                     "ຢືນຢັນການຊຳລະ",
