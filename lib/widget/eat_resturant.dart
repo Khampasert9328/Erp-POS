@@ -7,7 +7,7 @@ import 'package:erp_pos/provider/listtable/list_table_provider.dart';
 import 'package:erp_pos/provider/tableprovider/click_table_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/utils/check_status.dart';
-import 'package:erp_pos/utils/setdata/id_table_provider.dart';
+import 'package:erp_pos/utils/setdata/setdata_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
@@ -71,9 +71,9 @@ class _EatResturantState extends State<EatResturant> {
                                                 context,
                                                 value.areaModels!.area![index]
                                                     .id!);
-                                        context.read<SetIdTable>().setIdArea(
+                                        context.read<SetData>().setIdArea(
                                             value.areaModels!.area![index].id!);
-                                        context.read<SetIdTable>().setAreaName(
+                                        context.read<SetData>().setAreaName(
                                             value.areaModels!.area![index]
                                                 .area!);
                                       });
@@ -146,18 +146,18 @@ class _EatResturantState extends State<EatResturant> {
                                   return GestureDetector(
                                     onTap: (() {
                                       if (value.gettablelist!.table![index]
-                                              .status ==
+                                              .statusAv ==
                                           1) {
-                                        context.read<SetIdTable>().setIdTable(
+                                        context.read<SetData>().setIdTable(
                                             value.gettablelist!.table![index]
                                                 .id!);
                                         Mystyle().showDialogCheckData(
                                             context, "ໂຕະກຳລັງດຳເນີນການຢູ່");
                                       } else {
-                                        context.read<SetIdTable>().setIdTable(
+                                        context.read<SetData>().setIdTable(
                                             value.gettablelist!.table![index]
                                                 .id!);
-                                        context.read<SetIdTable>().setTableName(
+                                        context.read<SetData>().setTableName(
                                             value.gettablelist!.table![index]
                                                 .name!);
 
@@ -204,7 +204,7 @@ class _EatResturantState extends State<EatResturant> {
                                                 decoration: BoxDecoration(
                                                   color: checkStatus(
                                                     value.gettablelist!
-                                                        .table![index].status!,
+                                                        .table![index].statusAv!,
                                                   ),
                                                   border: Border.all(
                                                       color:

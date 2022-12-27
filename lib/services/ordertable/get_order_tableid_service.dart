@@ -1,6 +1,6 @@
 import 'package:erp_pos/constant/api_path.dart';
 import 'package:erp_pos/model/ordertable/order_table_models.dart';
-import 'package:erp_pos/utils/setdata/id_table_provider.dart';
+import 'package:erp_pos/utils/setdata/setdata_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';

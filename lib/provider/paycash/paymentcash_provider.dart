@@ -14,7 +14,7 @@ import 'package:erp_pos/provider/sessoin/get_session_provider.dart';
 import 'package:erp_pos/provider/updatetable/update_table_provider.dart';
 import 'package:erp_pos/services/paymentcash/paymentcash_service.dart';
 import 'package:erp_pos/utils/set_size.dart';
-import 'package:erp_pos/utils/setdata/id_table_provider.dart';
+
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

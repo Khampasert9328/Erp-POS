@@ -1,5 +1,3 @@
-
-
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/pages/bill/bill.dart';
@@ -10,28 +8,15 @@ import 'package:erp_pos/pages/table/table.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
+ 
 class HomePageData {
 
- 
   static List<Widget> pages = <Widget>[
-     
-    // Icon(
-    //   Icons.call,
-    //   size: 150,
-    // ),
-    POSTable(
-      ),
+    
+  
+    POSTable(),
     FoodMenu(),
     Bill(),
-    // Icon(
-    //   Icons.camera,
-    //   size: 150,
-    // ),
-    // Icon(
-    //   Icons.chat,
-    //   size: 150,
-    // ),
   ];
 
   static List<HomePageBottomBarModel> homePageBottomBar = [

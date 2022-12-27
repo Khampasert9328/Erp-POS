@@ -10,7 +10,7 @@ import 'package:erp_pos/model/food_menu_model.dart';
 import 'package:erp_pos/pages/onboardingscreen/models/content_models.dart';
 import 'package:erp_pos/pages/table/components/textdatetime.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
-import 'package:erp_pos/utils/setdata/id_table_provider.dart';
+
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_ip_address/get_ip_address.dart';

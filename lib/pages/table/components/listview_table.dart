@@ -23,7 +23,7 @@ import 'package:erp_pos/services/getArea/get_area.dart';
 import 'package:erp_pos/services/updatetable/update_table_service.dart';
 import 'package:erp_pos/utils/check_status.dart';
 import 'package:erp_pos/utils/set_size.dart';
-import 'package:erp_pos/utils/setdata/id_table_provider.dart';
+
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';

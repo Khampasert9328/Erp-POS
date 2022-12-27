@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:erp_pos/constant/api_path.dart';
 import 'package:erp_pos/model/updatestatus/updatestatus_models.dart';
-import 'package:erp_pos/utils/setdata/id_table_provider.dart';
+
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_ip_address/get_ip_address.dart';

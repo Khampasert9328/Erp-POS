@@ -9,7 +9,8 @@ import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/updatetable/update_table_provider.dart';
 import 'package:erp_pos/services/generateqrBCEL/generate_qr_bcelone.dart';
-import 'package:erp_pos/utils/setdata/id_table_provider.dart';
+
+import 'package:erp_pos/utils/setdata/setdata_provider.dart';
 import 'package:erp_pos/utils/transaction/transaction.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/cupertino.dart';
@@ -111,7 +112,7 @@ class GenerateQRBCELONE extends ChangeNotifier {
                           child: TextButton(
                             onPressed: () async {
                               String? billNo =
-                                  context.read<SetIdTable>().billNo;
+                                  context.read<SetData>().billNo;
                               int total = 0;
 
                               try {

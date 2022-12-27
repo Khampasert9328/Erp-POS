@@ -5,7 +5,7 @@ import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/services/getArea/get_area.dart';
 import 'package:erp_pos/services/gettable/get_table.dart';
 import 'package:erp_pos/services/gettable/getalltable/get_all_table.dart';
-import 'package:erp_pos/utils/setdata/id_table_provider.dart';
+import 'package:erp_pos/utils/setdata/setdata_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -44,5 +44,14 @@ class AreaProvider extends ChangeNotifier {
     _tablelist = await getTablebyid(context, id);
     isloading=false;
     notifyListeners();
+  }
+
+  //ຂໍຂໍ້ມູນໂຕະ
+  Future<void> callTable(BuildContext context)async{
+      isloading = true;
+    _tablelist = await getTablebyid(context, _areaModels!.area!.first.id!);
+     isloading=false;
+    notifyListeners();
+
   }
 }

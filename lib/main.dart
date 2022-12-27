@@ -31,7 +31,7 @@ import 'package:erp_pos/provider/switch/switch_provider.dart';
 import 'package:erp_pos/provider/tableprovider/click_table_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/provider/updatetable/update_table_provider.dart';
-import 'package:erp_pos/utils/setdata/id_table_provider.dart';
+import 'package:erp_pos/utils/setdata/setdata_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: ((_) => ListTableProvider())),
             ChangeNotifierProvider(create: (_)=>UpdateTableProvider()),
             ChangeNotifierProvider(create: (_)=>ClickTableProvider()),
-            ChangeNotifierProvider(create: (_)=>SetIdTable()),
+            ChangeNotifierProvider(create: (_)=>SetData()),
             ChangeNotifierProvider(create: (_)=>GetOrderTableProvider())
           ],
           child: MaterialApp(

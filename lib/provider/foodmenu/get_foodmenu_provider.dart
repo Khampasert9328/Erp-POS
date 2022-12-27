@@ -33,7 +33,7 @@ class GetFoodMenuProvider extends ChangeNotifier {
         listProduct.clear();
         for (Product i in modelsProduct!.product!) {
           listProduct
-              .add(FoodMenuDataModel(data: i, size: 0, isaddtochart: false, ));
+              .add(FoodMenuDataModel(data: i, size: 0, isaddtochart: false,));
         }
       }
     }
@@ -47,14 +47,14 @@ class GetFoodMenuProvider extends ChangeNotifier {
   }
 
   // ໃຊ້ຕອນເພີ່ມເມນູ
-  void setFoodMenuData(Product data, int number, int totalAmount, int size, int amount) {
+  void setFoodMenuData(Product data, int number, int totalAmount, int size, int amount, int specailprice) {
     List<FoodMenuModel> foodData =
         foodMenuModel.where((element) => element.data.id == data.id).toList();
 
     ///  ຖ້າຍັງບໍ່ມີເມນູດັ່ງກ່າວ
     if (foodData.isEmpty) {
       foodMenuModel.add(FoodMenuModel(
-          data: data, number: number, totalAmount: totalAmount, size: size, amount: amount));
+          data: data, number: number, totalAmount: totalAmount, size: size, amount: amount, specialprice: specailprice));
     } else {
       for (var i in foodMenuModel) {
         if (i.data.id == data.id) {
@@ -62,6 +62,7 @@ class GetFoodMenuProvider extends ChangeNotifier {
           i.number = number;
           i.totalAmount = totalAmount;
           i.amount = amount;
+          i.specialprice = specailprice;
         }
       }
     }
@@ -86,7 +87,7 @@ class GetFoodMenuProvider extends ChangeNotifier {
     int sum = 0;
     int sumamount = int.parse(amount.toString());
     sum = number * sumamount;
-    _totalamount -= amount;
+    _totalamount -= sum;
     foodMenuModel.removeAt(index);
     notifyListeners();
   }

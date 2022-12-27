@@ -8,7 +8,7 @@ import 'package:erp_pos/services/checkexpiredpackage/check_expired_package_servi
 import 'package:erp_pos/services/createroder/create_order_service.dart';
 import 'package:erp_pos/services/getpackage/getpackage.dart';
 import 'package:erp_pos/services/updatestatus/updatestatus_service.dart';
-import 'package:erp_pos/utils/setdata/id_table_provider.dart';
+
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_ip_address/get_ip_address.dart';

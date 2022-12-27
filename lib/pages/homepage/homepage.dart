@@ -2,6 +2,7 @@ import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/pages/homepage/data.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
+import 'package:erp_pos/provider/tableprovider/click_table_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -49,6 +50,7 @@ class _HomePageState extends State<HomePage> {
             onTabChange: (int index) {
               _onItemTapped(index);
             context.read<GetFoodMenuProvider>().clearKitchenData();
+            context.read<ClickTableProvider>().clearbool();
             },
             //style: text(
             //fontFamily: 'NotoSansLao-Regular',

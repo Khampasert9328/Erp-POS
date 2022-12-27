@@ -33,7 +33,6 @@ class PayMentMethod extends StatelessWidget {
       ),
       body: PaymentBody(
         tatal: tatal,
-     
         data: data,
         datatable: datatable,
       

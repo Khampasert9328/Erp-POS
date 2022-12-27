@@ -61,6 +61,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                               int specialPrice =
                                   data.data.size![data.size].specialPrice!;
                               int pricesale = data.data.pricesale!;
+
                               return Padding(
                                 padding: EdgeInsets.symmetric(vertical: 5.h),
                                 child: Column(
@@ -203,6 +204,8 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                                   context,
                                                                   "ກາລຸນາກົດເພື່ອເພີ່ມຈຳນວນອາຫານ");
                                                         } else {
+
+                                                         
                                                           int totalAmount =
                                                               (pricesale +
                                                                       specialPrice) *
@@ -213,7 +216,9 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                                   amount,
                                                                   totalAmount,
                                                                   data.size,
-                                                                  amount);
+                                                                  amount,
+                                                                  pricesale +
+                                                                      specialPrice);
                                                           getFoodModel
                                                               .addTotalAmount(
                                                                   totalAmount);
@@ -281,7 +286,9 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                                   amount,
                                                                   totalAmount,
                                                                   data.size,
-                                                                  amount);
+                                                                  amount,
+                                                                  pricesale +
+                                                                      specialPrice);
                                                           getFoodModel
                                                               .addTotalAmount(
                                                                   totalAmount);

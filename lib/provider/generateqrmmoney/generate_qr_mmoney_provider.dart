@@ -8,7 +8,7 @@ import 'package:erp_pos/model/ordertable/order_table_models.dart';
 import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/services/gerneratem-money/generate_m_money.dart';
 import 'package:erp_pos/utils/set_size.dart';
-import 'package:erp_pos/utils/setdata/id_table_provider.dart';
+import 'package:erp_pos/utils/setdata/setdata_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/paymentbymoney.dart';
 import 'package:flutter/cupertino.dart';
@@ -85,7 +85,7 @@ class GenerateQrMmoneyProvider extends ChangeNotifier {
                           child: TextButton(
                             onPressed: () async {
                               String? billNo =
-                                  context.read<SetIdTable>().billNo;
+                                  context.read<SetData>().billNo;
                               int total = 0;
 
                               try {

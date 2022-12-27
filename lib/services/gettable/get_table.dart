@@ -6,7 +6,7 @@ import 'package:erp_pos/constant/api_path.dart';
 import 'package:erp_pos/model/area/area_models.dart';
 import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/provider/areaprovider/area_provider.dart';
-import 'package:erp_pos/utils/setdata/id_table_provider.dart';
+import 'package:erp_pos/utils/setdata/setdata_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/cupertino.dart';

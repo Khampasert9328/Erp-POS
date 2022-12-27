@@ -1,7 +1,7 @@
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/pages/bill/reportbill/bill_eat_at_resturant.dart';
 import 'package:erp_pos/pages/bill/reportbill/bill_order_to_back_home.dart';
-import 'package:erp_pos/utils/setdata/id_table_provider.dart';
+import 'package:erp_pos/utils/setdata/setdata_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
