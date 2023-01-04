@@ -7,6 +7,7 @@ import 'package:erp_pos/model/ordertable/order_table_models.dart';
 import 'package:erp_pos/model/paymentcash/paymentcash_models.dart';
 import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/pages/table/components/textdate.dart';
+import 'package:erp_pos/provider/areaprovider/area_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/getorderbyissuedate/get_order_by_issuedate_provider.dart';
 import 'package:erp_pos/provider/offsession/create_off_session_provider.dart';
@@ -96,8 +97,10 @@ class PaymentCashProvider extends ChangeNotifier {
                               border: Border.all(color: AppTheme.BASE_COLOR),
                             ),
                             child: TextButton(
-                              onPressed: () {
+                              onPressed: () async{
+
                                 UpdateTableProvider().updateTableProvider(context, idtable, tablename, idarea, areaname);
+                               await context.read<AreaProvider>().callTable(context);
                                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>HomePage()), (route) => false);
                               },
                               child: Text(
@@ -211,16 +214,18 @@ class PaymentCashProvider extends ChangeNotifier {
                                 await SunmiPrinter.submitTransactionPrint();
                                 await SunmiPrinter.exitTransactionPrint();
 
-                                await Future.delayed(Duration(seconds: 2));
-                                Navigator.pushAndRemoveUntil(
+                                
+                                
+                              } catch (e) {
+                              }
+                               await Future.delayed(Duration(seconds: 2));
+                              context.read<UpdateTableProvider>().updateTableProvider(context, idtable, tablename, idarea, areaname);
+                             await context.read<AreaProvider>().callTable(context);
+                              Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
                                         builder: (_) => const HomePage()),
-                                    (route) => false);
-                              } catch (e) {
-                                print("error:$e");
-                              }
-                              context.read<UpdateTableProvider>().updateTableProvider(context, idtable, tablename, idarea, areaname);  
+                                    (route) => false); 
                               },
                               child: Text(
                                 "ພິມໃບບິນ",

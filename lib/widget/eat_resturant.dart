@@ -160,6 +160,8 @@ class _EatResturantState extends State<EatResturant> {
                                         context.read<SetData>().setTableName(
                                             value.gettablelist!.table![index]
                                                 .name!);
+                                        context.read<SetData>().setAreaName(value.gettablelist!.table![index].tablearea!.area!);
+                                        context.read<SetData>().setIdArea(value.gettablelist!.table![index].tablearea!.id!);
 
                                         bool clicktable = true;
                                         context

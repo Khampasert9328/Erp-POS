@@ -2,9 +2,11 @@ import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:erp_pos/constant/enum.dart';
 import 'package:erp_pos/constant/images.dart';
+import 'package:erp_pos/model/category/category_models.dart';
 import 'package:erp_pos/model/foodmenu/food_menu_models.dart';
 import 'package:erp_pos/pages/food_menu/components/food_menu_size.dart';
 import 'package:erp_pos/pages/food_menu_detail/components/food_menu_detail_body.dart';
+import 'package:erp_pos/provider/category/category_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/foodmenu_provider.dart';
 import 'package:erp_pos/utils/set_size.dart';
@@ -26,6 +28,10 @@ class FoodMenuCard extends StatefulWidget {
 
 class _FoodMenuCardState extends State<FoodMenuCard> {
   final _refresh = GlobalKey<RefreshIndicatorState>();
+  void initState() {
+    super.initState();
+    context.read<GetFoodMenuProvider>().getProduct(true);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +64,21 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                             itemBuilder: (context, index) {
                               final data = getFoodModel.listProduct[index];
                               int mainsize = data.size;
+                              int counter = data.count;
+                          
                               int specialPrice =
                                   data.data.size![data.size].specialPrice!;
                               int pricesale = data.data.pricesale!;
+
+                              String categoryname = '';
+                              var category_models =
+                                  context.read<GetFoodMenuProvider>().category;
+                              for (var idcategory
+                                  in category_models!.category!) {
+                                if (data.data.categoryid == idcategory.id) {
+                                  categoryname = idcategory.cate!;
+                                }
+                              }
 
                               return Padding(
                                 padding: EdgeInsets.symmetric(vertical: 5.h),
@@ -194,38 +212,33 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                         );
                                                       }),
                                                       onTap: ((isLiked) async {
-                                                        int? amount = context
-                                                            .read<
-                                                                FoodMenuProvider>()
-                                                            .counter;
-                                                        if (amount == 0) {
+                                                        
+                                                        if (counter == 0) {
                                                           Mystyle()
                                                               .showDialogCheckData(
                                                                   context,
                                                                   "ກາລຸນາກົດເພື່ອເພີ່ມຈຳນວນອາຫານ");
                                                         } else {
-
-                                                         
+                                                          getFoodModel.addcount(index);
                                                           int totalAmount =
                                                               (pricesale +
                                                                       specialPrice) *
-                                                                  amount;
+                                                                  counter;
                                                           getFoodModel
                                                               .setFoodMenuData(
                                                                   data.data,
-                                                                  amount,
+                                                                  counter,
                                                                   totalAmount,
                                                                   data.size,
-                                                                  amount,
+                                                                  counter,
                                                                   pricesale +
-                                                                      specialPrice);
+                                                                      specialPrice,
+                                                                  categoryname);
+
                                                           getFoodModel
                                                               .addTotalAmount(
                                                                   totalAmount);
-                                                          context
-                                                              .read<
-                                                                  FoodMenuProvider>()
-                                                              .count;
+                                                         
                                                         }
                                                         return !isLiked;
                                                       }),
@@ -238,7 +251,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                         return Container(
                                                           decoration: BoxDecoration(
                                                               color: AppTheme
-                                                                  .GREY_COLOR,
+                                                                  .YELLOW_COLOR,
                                                               shape: BoxShape
                                                                   .circle,
                                                               boxShadow: [
@@ -266,11 +279,8 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                         );
                                                       }),
                                                       onTap: ((isLiked) async {
-                                                        int? amount = context
-                                                            .read<
-                                                                FoodMenuProvider>()
-                                                            .counter;
-                                                        if (amount == 0) {
+                                                      
+                                                        if (counter == 0) {
                                                           Mystyle()
                                                               .showDialogCheckData(
                                                                   context,
@@ -279,23 +289,24 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                           int totalAmount =
                                                               (pricesale +
                                                                       specialPrice) *
-                                                                  amount;
+                                                                  counter;
                                                           getFoodModel
                                                               .setFoodMenuData(
                                                                   data.data,
-                                                                  amount,
+                                                                  counter,
                                                                   totalAmount,
                                                                   data.size,
-                                                                  amount,
+                                                                  counter,
                                                                   pricesale +
-                                                                      specialPrice);
+                                                                      specialPrice,
+                                                                  categoryname);
                                                           getFoodModel
                                                               .addTotalAmount(
                                                                   totalAmount);
-                                                          context
-                                                              .read<
-                                                                  FoodMenuProvider>()
-                                                              .count;
+
+                                                                  getFoodModel.clearCount(index);
+
+                                                               
                                                         }
                                                         return !isLiked;
                                                       }),

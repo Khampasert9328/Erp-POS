@@ -23,15 +23,15 @@ class BilleatatresturantBody extends StatefulWidget {
 class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
   @override
   void initState() {
-    super.initState();
     context.read<GetOrderByIssueDateProvider>().getorderfromservice(context);
     context.read<GetTableAllProvider>().gettableall(context);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<GetOrderByIssueDateProvider>(
-      builder: ((context, value, _) {
+    return Consumer2<GetOrderByIssueDateProvider, GetTableAllProvider>(
+      builder: ((context, value, table, _) {
         //ຖ້າມັນໂຫຼດຢູ່
         if (value.isloading) {
           return const Center(
@@ -45,27 +45,29 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
             );
           } else {
             return ListView.builder(
-              itemCount: value.order!.totalcount,
+              itemCount: value.order!.order!.length,
               itemBuilder: (context, index) {
-                List<String> prefix = [];
-                for (var i in value.getOrderByListId!.bill!) {
-                  if (i.id == value.order!.order![index].billid) {
-                    prefix.add(i.prefixid!);
+                String tablename = 'ສັ່ງກັບບ້ານ';
+                String prefix = '';
+                for (var data in table.tableModels!.table!) {
+                  if (value.order!.order![index].tableid == data.id) {
+                    tablename = data.name ?? "ສັ່ງກັບບ້ານ";
                   }
                 }
-                String? firstname;
-                for (var item in context
-                    .read<GetTableAllProvider>()
-                    .tableModels!
-                    .table!) {
-                  if (item.id == value.order!.order![index].tableid) {
-                    firstname = item.name;
-                    CountPre().setNameTable(item.name!);
+                for (var data in value.getOrderByListId!.bill!) {
+                  if (value.billid == data.id) {
+                    prefix = data.prefixid!;
                   }
                 }
+
                 return Consumer<GetTableAllProvider>(
                     builder: ((context, model, child) {
-                  return model.tableModels!.table == null
+                  if (model.isloading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return model.tableModels! == null
                       ? const Center(
                           child: Text("ບໍ່ມີຂໍ້ມູນ"),
                         )
@@ -79,7 +81,8 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (_) => BodyDetailBill(
-                                            dataorder: value.order)),
+                                            data: value.order!.order![index]
+                                                .product!)),
                                   );
                                 },
                                 child: Container(
@@ -139,7 +142,7 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                                                           BorderRadius.circular(
                                                               5)),
                                                   child: Center(
-                                                    child: Text("${firstname}"),
+                                                    child: Text("$tablename"),
                                                   ),
                                                 ),
                                                 SizedBox(
@@ -178,14 +181,14 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                                       Expanded(
                                         child: ListTile(
                                           title: Text(
-                                            "ໂຕະ ${firstname}",
+                                            "ໂຕະ ${tablename}",
                                             style: TextStyle(
                                                 fontSize: 18.sp,
                                                 color: AppTheme.BASE_COLOR,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           subtitle: Text(
-                                            "# Order ${prefix.first}",
+                                            "# Order ${prefix}",
                                             style: TextStyle(
                                               fontSize: 13.sp,
                                               color: AppTheme.BASE_COLOR,

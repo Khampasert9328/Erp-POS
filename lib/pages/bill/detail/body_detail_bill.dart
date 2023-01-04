@@ -7,6 +7,7 @@ import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/getorderbyissuedate/get_order_by_isuedatemodels.dart';
 import 'package:erp_pos/model/gettableall/gettable_all_models.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
+import 'package:erp_pos/utils/set_size.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/bottombar_of_bill.dart';
 import 'package:flutter/material.dart';
@@ -14,39 +15,53 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class BodyDetailBill extends StatefulWidget {
-  GetOrderByIssuedateModels? dataorder;
+  List<Product> data;
   
 
-  BodyDetailBill({super.key, required this.dataorder,});
+  BodyDetailBill({super.key, required this.data,});
 
   @override
   State<BodyDetailBill> createState() => _BodyDetailBillState();
 }
 
 class _BodyDetailBillState extends State<BodyDetailBill> {
-  String? name;
-  int? size;
-  int? amount;
-  int? price;
-  String? nameTable;
-  @override
-  void initState() {
-    CountPre().getNameTable().then((value) async {
-      nameTable = await CountPre().getNameTable();
-    });
-    super.initState();
-  }
+  // String? name;
+  // int? size;
+  // int? amount;
+  // int? price;
+  // String? nameTable;
+  // @override
+  // void initState() {
+  //   CountPre().getNameTable().then((value) async {
+  //     nameTable = await CountPre().getNameTable();
+  //   });
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    for (var item in widget.dataorder!.order!) {
-    for (var data in item.product!) {
-      name = data.name;
-      size = data.size;
-      amount = data.amount;
-      price = data.pricesale;
+    // for (var item in widget.dataorder!.order!) {
+    // for (var data in item.product!) {
+    //   name = data.name;
+    //   size = data.size;
+    //   amount = data.amount;
+    //   price = data.pricesale;
+    // }
+    // }
+
+    int sum=0;
+    int total = 0;
+
+
+    for (var data in widget.data) {
+      int amount = data.amount!;
+      int price = int.parse(data.pricesale.toString());
+
+    sum = amount * price;
+    total += sum;
+      
     }
-    }
+   
 
     return Scaffold(
       appBar: AppBar(
@@ -79,6 +94,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                   ),
                   child: Row(
                     children: [
+                     
                       Badge(
                         badgeContent: Text(
                           "0",
@@ -114,8 +130,9 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                       ),
                       Row(
                         children: [
+                           for(var i in widget.data)
                           Text(
-                            "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(price)} ກີບ",
+                            "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(total)} ກີບ",
                             style: TextStyle(
                               fontFamily: 'Phetsarath-OT',
                               fontSize: 18.sp,
@@ -128,9 +145,10 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                     ],
                   ),
                 ),
+                  for(var i in widget.data)
                 GestureDetector(
                   onTap: () async {
-        
+                   String size = setSize(i.size!);
                     try {
                       await SunmiPrinter.startTransactionPrint();
                       await SunmiPrinter.printText('ໃບບິນ',
@@ -171,10 +189,10 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                               fontSize: SunmiFontSize.MD));
 
                       await SunmiPrinter.printRow(cols: [
-                        ColumnMaker(text: '${name}', width: 6),
+                        ColumnMaker(text: '${i.name}', width: 6),
                         ColumnMaker(
                             text:
-                                '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(amount)} $size ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(price)}',
+                                '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(i.amount)} $size ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(total)}',
                             width: 6,
                             align: SunmiPrintAlign.RIGHT),
                       ]);
@@ -190,7 +208,6 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                       await SunmiPrinter.submitTransactionPrint();
                       await SunmiPrinter.exitTransactionPrint();
                     } catch (e) {
-                      print("error:$e");
                     }
                   },
                   child: Container(
@@ -232,6 +249,8 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+           
+            
             Text(
               "ພະນັກງານຮັບອໍເດີ:",
               style: TextStyle(
@@ -251,7 +270,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text("# Order ${widget.dataorder!.prefix}"),
+                //Text("# Order ${widget.dataorder!.prefix}"),
               ],
             ),
             const Divider(),
@@ -312,8 +331,11 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
               ],
             ),
             const Divider(),
+             for(var i in widget.data)
+            
             Row(
               children: [
+                 
                 Expanded(
                   flex: 1,
                   child: Text(
@@ -324,10 +346,11 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                     ),
                   ),
                 ),
+               
                 Expanded(
                   flex: 3,
                   child: Text(
-                    "$name",
+                    "${i.name}",
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
@@ -337,7 +360,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                 Expanded(
                   flex: 3,
                   child: Text(
-                    "$size",
+                    "${setSize(i.size!)}",
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
@@ -347,7 +370,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                 Expanded(
                   flex: 2,
                   child: Text(
-                    "$amount",
+                    "${i.amount}",
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
@@ -357,7 +380,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                 Expanded(
                   flex: 2,
                   child: Text(
-                    "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(price)}",
+                    "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(i.pricesale)}",
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,

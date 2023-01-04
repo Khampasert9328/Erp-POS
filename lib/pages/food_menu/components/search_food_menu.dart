@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/model/category/category_models.dart';
 import 'package:erp_pos/model/foodmenu/food_menu_models.dart';
 import 'package:erp_pos/pages/food_menu/components/food_menu_size.dart';
+import 'package:erp_pos/provider/category/category_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/foodmenu_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
@@ -20,7 +22,7 @@ class _SearchDataMuneState extends State<SearchDataMune> {
   TextEditingController search = TextEditingController();
 
   int add = 0;
-  bool clic =false;
+  bool clic = false;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +50,15 @@ class _SearchDataMuneState extends State<SearchDataMune> {
                   itemCount: getFoodModel.listProduct.length,
                   itemBuilder: (context, index) {
                     final data = getFoodModel.listProduct[index];
+                    int counter = data.count;
+                    String categoryname = '';
+                    var category_models =
+                        context.read<GetFoodMenuProvider>().category;
+                    for (var idcategory in category_models!.category!) {
+                      if (data.data.categoryid == idcategory.id) {
+                        categoryname = idcategory.cate!;
+                      }
+                    }
                     if (search.text.isEmpty) {
                       return Container();
                     } else {
@@ -131,7 +142,9 @@ class _SearchDataMuneState extends State<SearchDataMune> {
                                                       ),
                                                     )
                                                   ])),
-                                              AddAmount(index: index,),
+                                              AddAmount(
+                                                index: index,
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -153,19 +166,20 @@ class _SearchDataMuneState extends State<SearchDataMune> {
                                                 horizontal: 2.w, vertical: 2.h),
                                             child: IconButton(
                                               onPressed: () async {
-                                                int? amount = context
-                                                    .read<FoodMenuProvider>()
-                                                    .counter;
-                                                CountPre().setCount(amount);
+                                               
                                                 int totalAmount =
                                                     data.data.pricesale! *
-                                                        amount;
+                                                        counter;
                                                 //addOrder(index);
                                                 getFoodModel.setFoodMenuData(
                                                     data.data,
-                                                    amount,
-                                                    totalAmount, data.size, amount, data.data.pricesale!);
-                                                foodModel.increment(add);
+                                                    counter,
+                                                    totalAmount,
+                                                    data.size,
+                                               counter,
+                                                    data.data.pricesale!,
+                                                    categoryname);
+                                                // foodModel.increment(add);
                                                 getFoodModel.addTotalAmount(
                                                     totalAmount);
                                               },
@@ -185,7 +199,6 @@ class _SearchDataMuneState extends State<SearchDataMune> {
                               SizedBox(
                                 height: 5.h,
                               ),
-                             
                             ],
                           ),
                         );
@@ -201,4 +214,3 @@ class _SearchDataMuneState extends State<SearchDataMune> {
     );
   }
 }
-

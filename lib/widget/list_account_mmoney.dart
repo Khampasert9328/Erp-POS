@@ -12,8 +12,12 @@ import 'package:provider/provider.dart';
 class ListAccountMmoney extends StatelessWidget {
   List<Product>? data;
   GetTable table;
-  
-   ListAccountMmoney({super.key, required this.data, required this.table,});
+
+  ListAccountMmoney({
+    super.key,
+    required this.data,
+    required this.table,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,23 +33,37 @@ class ListAccountMmoney extends StatelessWidget {
                 return ListView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
-                      if (snapshot.data![index].accounttype !=4) {
-                        return Container();  
+                      if (snapshot.data![index].accounttype != 4) {
+                        return Container();
                       }
                       return Column(
                         children: [
-                          SizedBox(height: 10.h,),
+                          SizedBox(
+                            height: 10.h,
+                          ),
                           GestureDetector(
                             onTap: (() {
-                              context.read<GenerateQrMmoneyProvider>().getqrmmoney(context, snapshot.data![index].accountnumber!, snapshot.data![index].merchid!, data,table.tablearea!.area!, table.tablearea!.id!, table.id!, table.name! );
+                           
+                              context
+                                  .read<GenerateQrMmoneyProvider>()
+                                  .getqrmmoney(
+                                      context,
+                                      snapshot.data![index].accountnumber!,
+                                      snapshot.data![index].merchid!,
+                                      data,
+                                      table.tablearea!.area!,
+                                      table.tablearea!.id!,
+                                      table.id!,
+                                      table.name!);
+
+                                    
                             }),
                             child: Container(
                               height: 50.h,
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                color: AppTheme.GREY_COLOR,
-                                borderRadius: BorderRadius.circular(5.0)
-                              ),
+                                  color: AppTheme.GREY_COLOR,
+                                  borderRadius: BorderRadius.circular(5.0)),
                               child: Row(
                                 children: [
                                   Container(
@@ -54,9 +72,8 @@ class ListAccountMmoney extends StatelessWidget {
                                     child: Image.asset(ERPImages.mmoney),
                                   ),
                                   Text(
-                                        snapshot.data![index].merchname!,
-                                      ),
-                                  
+                                    snapshot.data![index].merchname!,
+                                  ),
                                 ],
                               ),
                             ),

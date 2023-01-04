@@ -46,12 +46,12 @@ class ListAccountBCELONE extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: (() {
+                        
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) => PaymentBcelone(
                                     data: data,
-                            
                                     mcid: snapshot.data![index].merchid,
                                     shopcode: snapshot.data![index].shopcode,
                                     datatable: datatable,

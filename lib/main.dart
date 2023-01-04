@@ -10,6 +10,7 @@ import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/pages/onboardingscreen/onboardingscreen.dart';
 import 'package:erp_pos/provider/areaprovider/area_provider.dart';
 import 'package:erp_pos/provider/areaprovider/insert_area_provider.dart';
+import 'package:erp_pos/provider/category/category_provider.dart';
 
 import 'package:erp_pos/provider/checkexpiredpackage/check_exp_package_provider.dart';
 import 'package:erp_pos/provider/confirmpaymentbybcel/confirmpaymentbybcel_provider.dart';
@@ -82,7 +83,8 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (_)=>UpdateTableProvider()),
             ChangeNotifierProvider(create: (_)=>ClickTableProvider()),
             ChangeNotifierProvider(create: (_)=>SetData()),
-            ChangeNotifierProvider(create: (_)=>GetOrderTableProvider())
+            ChangeNotifierProvider(create: (_)=>GetOrderTableProvider()),
+            ChangeNotifierProvider(create: (_)=>CategoryProvider())
           ],
           child: MaterialApp(
             theme: ThemeData(

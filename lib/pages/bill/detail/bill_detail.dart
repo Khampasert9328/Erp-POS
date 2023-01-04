@@ -13,9 +13,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class BillDetail extends StatefulWidget {
- GetOrderByIssuedateModels? dataorder;
+ List<Product> data;
 
-   BillDetail({super.key, required this.dataorder});
+   BillDetail({super.key, required this.data});
 
   @override
   State<BillDetail> createState() => _BillDetailState();
@@ -40,7 +40,7 @@ class _BillDetailState extends State<BillDetail> {
         ),
       ),
       bottomNavigationBar: const BottomBarOfBill(),
-      body:  BodyDetailBill(dataorder:widget.dataorder ,)
+      body:  BodyDetailBill(data:widget.data ,)
     );
   }
 }

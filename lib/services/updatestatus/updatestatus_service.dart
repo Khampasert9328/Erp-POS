@@ -11,7 +11,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
-Future<UpdateStatusModels?> updateStatus(BuildContext context, String idarea, String area, String idtable, String tablename)async{
+Future<UpdateStatusModels?> updateStatus(BuildContext context, String? idarea, String? area, String? idtable, String? tablename)async{
   String? idToken = await CountPre().getToken();
   ///ແຕກຂໍ້ມູນໃນ Token
   String yourToken = idToken!;

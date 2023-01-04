@@ -12,7 +12,7 @@ import 'package:erp_pos/model/updatetable/update_table_models.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 
-Future<UpdateStatusModels?> updateTableService(BuildContext context, String tableid,String tablename,String idarea,String areaname) async {
+Future<UpdateStatusModels?> updateTableService(BuildContext context, String? tableid,String? tablename,String? idarea,String? areaname) async {
   String? idToken = await CountPre().getToken();
 
 
@@ -72,6 +72,7 @@ Future<UpdateStatusModels?> updateTableService(BuildContext context, String tabl
     // print("playload:${playload}");
     // print("url:${url}");
     if (respones.statusCode == 200) {
+      print("respone:${respones.body}");
       return updateStatusModelsFromJson(respones.body);
     }
   } catch (e) {

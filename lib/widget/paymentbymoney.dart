@@ -64,6 +64,14 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
 
   @override
   Widget build(BuildContext context) {
+     int sum = 0;
+    int total = 0;
+    for (var i in widget.data!) {
+      int? amout = i.amount;
+      int pricesale = int.parse(i.pricesale.toString());
+      sum = pricesale * amout!;
+      total += sum;
+    }
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -109,7 +117,7 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
-                      "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ກີບ",
+                      "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(total)} ກີບ",
                       style: TextStyle(
                           fontFamily: 'Phetsarath-OT',
                           fontSize: 20.sp,
@@ -162,7 +170,7 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
                     borderRadius: BorderRadius.circular(10)),
                 child: TextButton(
                   onPressed: () {
-                    PaymentCashProvider().createpaymentcashprovider(context, context.read<GetFoodMenuProvider>().totalamont, widget.data, widget.idtable, widget.tablename, widget.id, widget.areaname);
+                    PaymentCashProvider().createpaymentcashprovider(context, total, widget.data, widget.idtable, widget.tablename, widget.id, widget.areaname);
                   },
                   child: Text(
                     "ຢືນຢັນການຊຳລະ",

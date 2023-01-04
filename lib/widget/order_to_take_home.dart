@@ -32,6 +32,8 @@ class _OrderToTakeHomeState extends State<OrderToTakeHome> {
             itemBuilder: ((context, index) {
               int size = value.getFoodMenuModel[index].size;
               String numsize = setSize(size);
+              int specialprice = value.getFoodMenuModel[index].specialprice;
+              int count = value.getFoodMenuModel[index].amount;
               void setNumber(bool isAdd) {
                 if (isAdd) {
                   setState(() {
@@ -117,12 +119,12 @@ class _OrderToTakeHomeState extends State<OrderToTakeHome> {
                                           .deleteTotalAmount(value
                                               .getFoodMenuModel[index]
                                               .totalAmount);
-                                      context
-                                          .read<GetFoodMenuProvider>()
-                                          .deleteData(
-                                              index,
-                                              value.getFoodMenuModel[index]
-                                                  .totalAmount, value.getFoodMenuModel[index].number);
+                                      // context
+                                      //     .read<GetFoodMenuProvider>()
+                                      //     .deleteData(
+                                      //         index,
+                                      //         value.getFoodMenuModel[index]
+                                      //             .totalAmount, value.getFoodMenuModel[index].number);
                                     },
                                     icon: Image.asset(
                                       ERPImages.icondelete,
@@ -163,17 +165,11 @@ class _OrderToTakeHomeState extends State<OrderToTakeHome> {
                                   ),
                                   GestureDetector(
                                     onTap: () async {
-                                      setNumber(true);
-                                      context
-                                          .read<FoodMenuProvider>()
-                                          .increment(
-                                            value.getFoodMenuModel[index]
-                                                .number++,
-                                          );
-                                      //CountPre().setCount(count);
+                                      value.deletecountdetail(index);
+                                      value.deleteTotalAmount(specialprice);
                                     },
                                     child: FoodMenuButton(
-                                      title: '+',
+                                      title: '-',
                                     ),
                                   ),
                                   Padding(
@@ -182,8 +178,7 @@ class _OrderToTakeHomeState extends State<OrderToTakeHome> {
                                     child: Column(
                                       children: [
                                         Text(
-                                          value.getFoodMenuModel[index].number
-                                              .toString(),
+                                          count < 10 ? '0$count' : '$count',
                                           style: TextStyle(
                                               color: AppTheme.BASE_COLOR,
                                               fontSize: 14.sp),
@@ -199,15 +194,13 @@ class _OrderToTakeHomeState extends State<OrderToTakeHome> {
                                   ),
                                   GestureDetector(
                                     onTap: () async {
-                                      setNumber(false);
-                                      context.read<FoodMenuProvider>().remove(
-                                            value.getFoodMenuModel[index]
-                                                .number--,
-                                          );
-                                      //CountPre().setamount(count);
+                                      context
+                                          .read<GetFoodMenuProvider>()
+                                          .addcountdetailproduct(index);
+                                      value.addTotalAmount(specialprice);
                                     },
                                     child: FoodMenuButton(
-                                      title: '-',
+                                      title: '+',
                                     ),
                                   ),
                                 ],
@@ -237,7 +230,6 @@ class _OrderToTakeHomeState extends State<OrderToTakeHome> {
                                   SizedBox(
                                     width: 5.w,
                                   ),
-                                
                                 ],
                               ),
                             ],

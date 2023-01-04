@@ -21,13 +21,13 @@ class GetTableAllProvider extends ChangeNotifier {
     String? idToken = await CountPre().getToken();
 
     _tableModels = await getTable(context, idToken, -1, 0);
-    if (_tableModels != null) {
-      for (var item in _tableModels!.table!) {
-        _idtable.add(item.id!);
+    // if (_tableModels != null) {
+    //   for (var item in _tableModels!.table!) {
+    //     _idtable.add(item.id!);
         
-      }
+    //   }
       
-    }
+    // }
     _isload = false;
     notifyListeners();
   }

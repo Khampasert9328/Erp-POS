@@ -20,8 +20,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-Future<CreateOrderModels?> createOrder(
-    BuildContext context, String dateexpired, String datesup, String tableid) async {
+Future<CreateOrderModels?> createOrder(BuildContext context, String dateexpired,
+    String datesup, String tableid) async {
   try {
     var str = "$dateexpired";
     var parts = str.split(' ');
@@ -58,6 +58,7 @@ Future<CreateOrderModels?> createOrder(
     DateTime time = DateTime.now();
     String issueDate = DateFormat('yyyyMMdd').format(time);
     String date = DateFormat('dd-MM-yyyy HH:mm:ss').format(time);
+    
 
     for (var item in context.read<GetFoodMenuProvider>().getFoodMenuModel) {
       products.add({
@@ -74,7 +75,7 @@ Future<CreateOrderModels?> createOrder(
         "timeCooked": "none",
         "categoryOrder": {
           "categoryId": "${item.data.categoryid}",
-          "categoryName": "none"
+          "categoryName": "${item.categoryname}"
         }
       });
     }
@@ -146,6 +147,7 @@ Future<CreateOrderModels?> createOrder(
       body: payload,
     );
     if (respones.statusCode == 200) {
+      print("playload:${payload}");
       CreateOrderModels models = createOrderModelsFromJson(respones.body);
       return models;
     }

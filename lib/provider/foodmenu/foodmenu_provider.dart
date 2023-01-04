@@ -7,10 +7,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class FoodMenuProvider extends ChangeNotifier {
   bool _show = true;
-  int count = 0;
+ 
   int _totalAmount = 0;
   bool get show => _show;
-  int get counter => count;
+
   int get getTotalAmount => _totalAmount;
 
   void showbutton(bool isshow) {
@@ -24,18 +24,11 @@ class FoodMenuProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void increment(int add) async {
-    count = add;
-    notifyListeners();
-  }
+  
 
-  void remove(int re) async {
-    count = re;
-    notifyListeners();
-  }
 
-  void clearAmount(int number) async {
-    count = number;
-    notifyListeners();
-  }
+
+ 
+
+ 
 }

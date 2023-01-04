@@ -26,10 +26,11 @@ class _BillBodyState extends State<BillBody> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 15, left: 20),
+              padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
               child: Column(
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
                         onTap: () {
@@ -66,14 +67,11 @@ class _BillBodyState extends State<BillBody> {
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
+                      ),
                       Text(_dateTime == null ? "" : _dateTime.toString()),
                     ],
-                  )
+                  ),
+                
                 ],
               ),
             ),

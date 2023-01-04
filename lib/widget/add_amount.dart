@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 class AddAmount extends StatefulWidget {
   String? title;
   int index;
+  
 
   AddAmount({this.title, required this.index});
 
@@ -21,24 +22,26 @@ class AddAmount extends StatefulWidget {
 }
 
 class _AddAmountState extends State<AddAmount> {
-  int count = 0;
-  void setNumber(bool isAdd) {
-    if (isAdd) {
-      setState(() {
-        count ++;
-      });
-    } else {
-      if (count > 0) {
-        setState(() {
-          count -= 1;
-        });
-      }
-    }
-  }
+  // int count = 0;
+  // void setNumber(bool isAdd) {
+  //   if (isAdd) {
+  //     setState(() {
+  //       count ++;
+  //     });
+  //   } else {
+  //     if (count > 0) {
+  //       setState(() {
+  //         count -= 1;
+  //       });
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Consumer<GetFoodMenuProvider>(builder: (context, value, child) {
+      int counter = value.listProduct[widget.index].count;
+      return Row(
       children: [
         Text(
           widget.title ?? 'ຈຳນວນ',
@@ -54,11 +57,7 @@ class _AddAmountState extends State<AddAmount> {
         GestureDetector(
           onTap: () async {
             
-            setNumber(false);
-            context.read<FoodMenuProvider>().remove(count);
-            if (count<1) {
-               context.read<GetFoodMenuProvider>().addtochartbutton(widget.index, false);
-            }
+            value.deletecount(widget.index);
           },
           child: FoodMenuButton(
             title: '-',
@@ -69,7 +68,7 @@ class _AddAmountState extends State<AddAmount> {
           child: Column(
             children: [
               Text(
-                count < 10 ? '0$count' : '$count',
+                counter < 10 ? '0$counter' : '$counter',
                 style: TextStyle(color: AppTheme.BASE_COLOR, fontSize: 14.sp),
               ),
               Container(
@@ -82,13 +81,8 @@ class _AddAmountState extends State<AddAmount> {
         ),
         GestureDetector(
           onTap: () async {
-            print("conut:$count");
-           
-            setNumber(true);
-            context.read<FoodMenuProvider>().increment(count);
-             if (count >0) {
-            context.read<GetFoodMenuProvider>().addtochartbutton(widget.index, true);
-            }
+        value.addcount(widget.index);
+  
           },
           child: FoodMenuButton(
             title: '+',
@@ -96,5 +90,7 @@ class _AddAmountState extends State<AddAmount> {
         ),
       ],
     );
+      
+    });
   }
 }

@@ -19,7 +19,9 @@ import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/provider/updatetable/update_table_provider.dart';
 import 'package:erp_pos/services/checkexpiredpackage/check_expired_package_service.dart';
+import 'package:erp_pos/services/updatestatus/updatestatus_service.dart';
 import 'package:erp_pos/utils/set_size.dart';
+import 'package:erp_pos/utils/setdata/setdata_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/calculate_money.dart';
 import 'package:erp_pos/widget/eat_resturant.dart';
@@ -36,13 +38,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PlaceToEatCard extends StatefulWidget {
   GetTable? data;
 
-
   VoidCallback onback;
 
   PlaceToEatCard({
     required this.onback,
     required this.data,
- 
   });
 
   @override
@@ -101,8 +101,8 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      widget.onback;
                       context.read<GetFoodMenuProvider>().clearKitchenData();
+                      widget.onback;
                     },
                     child: Container(
                       height: 50.h,
@@ -167,20 +167,23 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                 ),
                               );
                             });
-                        // context
-                        //     .read<CheckExpiredPackage>()
-                        //     .getCheckExpiredPackage(context);
-                        context.read<UpdateTableProvider>().updateTableProvider(
-                            context,
-                            widget.data!.id!,
-                            widget.data!.name!,
-                            widget.data!.tablearea!.id!,
-                            widget.data!.tablearea!.area!);
-                        await Future.delayed(Duration(seconds: 5));
-                        Navigator.pop(context);
                         String? tablename = await CountPre().getTableName();
+                        await Future.delayed(Duration(seconds: 2));
+                        Navigator.pop(context);
+                        String idtable = context.read<SetData>().getidTable;
+                        String tbname = context.read<SetData>().gettableName;
+                        String idarea = context.read<SetData>().idarea;
+                        String area = context.read<SetData>().areaname;
 
-                        await Navigator.push(
+                        updateStatus(
+                          context,
+                          idarea,
+                          area,
+                          idtable,
+                          tbname,
+                        );
+                       await context.read<AreaProvider>().callTable(context);
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (_) => CalculateMoney(
@@ -188,6 +191,14 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                             ),
                           ),
                         );
+
+                        
+                        // context.read<UpdateTableProvider>().updateTableProvider(
+                        //     context,
+                        //     widget.data?.id,
+                        //     widget.data?.name,
+                        //     widget.data?.tablearea!.id,
+                        //     widget.data?.tablearea!.area);
                       }
                     },
                     child: Container(

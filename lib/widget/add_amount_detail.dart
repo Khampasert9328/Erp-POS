@@ -78,10 +78,10 @@ class _AddAmountDetaitState extends State<AddAmountDetait> {
         ),
         GestureDetector(
           onTap: () {
-            setNumber(
-              false,
-            );
-            context.read<FoodMenuProvider>().remove(count);
+            // setNumber(
+            //   false,
+            // );
+            // context.read<FoodMenuProvider>().remove(count);
           },
           child: buildButton(Icons.add, "-"),
         ),

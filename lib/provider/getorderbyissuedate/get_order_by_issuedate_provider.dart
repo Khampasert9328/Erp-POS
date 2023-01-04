@@ -48,7 +48,7 @@ String? startDate = await CountPre().getDateSupscribe();
     var tendD = end1D.replaceAll("-", "");
 
     _order = await getorderbyissuedate(
-        -1, 0, idToken!, startdate!, startend!, context);
+        -1, 0, idToken!, startdate, startend, context);
 
     if (_order != null) {
       for (var item in _order!.order!) {
@@ -61,6 +61,5 @@ String? startDate = await CountPre().getDateSupscribe();
     }
     _isload = false;
     notifyListeners();
-    
   }
 }

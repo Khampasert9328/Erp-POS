@@ -1,4 +1,5 @@
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:erp_pos/model/category/category_models.dart';
 import 'package:erp_pos/model/checkexpiredpackage/check_expired_package.dart';
 import 'package:erp_pos/model/createordermodel/create_order_models.dart';
 import 'package:erp_pos/model/food_menu_model.dart';
@@ -6,6 +7,7 @@ import 'package:erp_pos/model/getpackage/package_models.dart';
 import 'package:erp_pos/provider/updatetable/update_table_provider.dart';
 import 'package:erp_pos/services/checkexpiredpackage/check_expired_package_service.dart';
 import 'package:erp_pos/services/createroder/create_order_service.dart';
+import 'package:erp_pos/services/getcategory/get_category.dart';
 import 'package:erp_pos/services/getpackage/getpackage.dart';
 import 'package:erp_pos/services/updatestatus/updatestatus_service.dart';
 
@@ -20,6 +22,9 @@ class CheckExpiredPackage extends ChangeNotifier {
   List<CheckExpiredPackageMedels> get getchecklist => checkList;
   CreateOrderModels? _createOrderModels;
   CreateOrderModels? get createOrderModels => _createOrderModels;
+  GetCategoryModels? _category;
+  GetCategoryModels? get category=> _category;
+
 
   Future<List<CheckExpiredPackageMedels>?> getCheckExpiredPackage(
       BuildContext context, String idarea, String area, String idtable, String tablename) async {
@@ -33,6 +38,7 @@ class CheckExpiredPackage extends ChangeNotifier {
 
       CountPre().setDateSupscribe(package.dateSubscribe.toString());
       if (getPackageModels != null) {
+        _category = await getCategory();
         _createOrderModels = await createOrder(context,
             package.dateExpired.toString(), package.dateSubscribe.toString(), idtable);
 

@@ -7,8 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 Future<GetTableAll?> getTable(BuildContext context, String? idtoken, int limit, int page) async {
-  int limit = -1;
-  int page = 0;
   String? idtoken = await CountPre().getToken();
   try {
     String url = "${APIPath.GET_TABLE}/$limit/$page";
