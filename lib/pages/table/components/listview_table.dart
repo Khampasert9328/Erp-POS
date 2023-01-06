@@ -34,9 +34,8 @@ import 'package:erp_pos/constant/routes.dart' as custom_route;
 import '../../../constant/theme.dart';
 
 class ListViewTable extends StatefulWidget {
-  ListViewTable({
-    Key? key,
-  }) : super(key: key);
+  bool fromlogin;
+  ListViewTable({Key? key, required this.fromlogin}) : super(key: key);
 
   @override
   State<ListViewTable> createState() => _ListViewTableState();
@@ -60,7 +59,10 @@ class _ListViewTableState extends State<ListViewTable> {
           MaterialPageRoute(builder: ((context) => Login())),
         );
       } else {
-        context.read<AreaProvider>().getZone(context);
+        if (widget.fromlogin) {
+          context.read<AreaProvider>().getZone(context);
+        }
+        context.read<AreaProvider>().callTable(context);
       }
     });
     super.initState();
@@ -104,6 +106,7 @@ class _ListViewTableState extends State<ListViewTable> {
                                             setState(() {
                                               //  areaindex = index;
                                               selectIndex = index;
+                                              CountPre().setIndex(index);
                                               context
                                                   .read<AreaProvider>()
                                                   .callAPITable(
@@ -189,26 +192,25 @@ class _ListViewTableState extends State<ListViewTable> {
                                                       .table![index].statusAv ==
                                                   1) {
                                                 Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (_) =>
-                                                            DetailOrderTable(
-                                                              data: value
-                                                                  .gettablelist!
-                                                                  .table![index],
-                                                              tablename: value
-                                                                  .gettablelist!
-                                                                  .table![index]
-                                                                  .name!,
-                                                              id: value
-                                                                  .areaModels!
-                                                                  .area![index]
-                                                                  .id!,
-                                                              areaname: value
-                                                                  .areaModels!
-                                                                  .area![index]
-                                                                  .area!,
-                                                            )));
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        DetailOrderTable(
+                                                      data: value.gettablelist!
+                                                          .table![index],
+                                                      tablename: value
+                                                          .gettablelist!
+                                                          .table![index]
+                                                          .name!,
+                                                      id: value.areaModels!
+                                                          .area![index].id!,
+                                                      areaname: value
+                                                          .areaModels!
+                                                          .area![index]
+                                                          .area!,
+                                                    ),
+                                                  ),
+                                                );
                                               } else {
                                                 bool clicktable = true;
                                                 context

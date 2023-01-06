@@ -78,7 +78,7 @@ class AuthenticationProvider extends ChangeNotifier {
           }
           await Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (_) => const HomePage()),
+              MaterialPageRoute(builder: (_) =>  HomePage(fromlogin: true,)),
               (route) => false);
         }
       }

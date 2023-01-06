@@ -117,29 +117,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                     int count = value.getFoodMenuModel[index].amount;
                     String numsize = setSize(size);
                     int specialprice =value.getFoodMenuModel[index].specialprice;
-                    // void setNumber(bool isAdd) {
-                    //   if (isAdd) {
-                    //     setState(() {
-                    //       amountData =
-                    //           value.getFoodMenuModel[index].totalAmount;
-                    //       context
-                    //           .read<GetFoodMenuProvider>()
-                    //           .addTotalAmount(amountData);
-                    //     });
-                    //   } else {
-                    //     if (value.getFoodMenuModel[index].number > 1) {
-                    //       setState(() {
-                    //         amountData =
-                    //             value.getFoodMenuModel[index].totalAmount;
-
-                    //         context
-                    //             .read<GetFoodMenuProvider>()
-                    //             .deleteTotalAmount(amountData);
-                    //       });
-                    //     }
-                    //   }
-                    // }
-
+                  
                     return Stack(
                       children: [
                         Container(
@@ -252,7 +230,6 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                         ),
                                         GestureDetector(
                                           onTap: () async {
-                                            
                                             context
                                                 .read<GetFoodMenuProvider>()
                                                 .addcountdetailproduct(index);

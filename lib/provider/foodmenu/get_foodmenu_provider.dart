@@ -60,7 +60,6 @@ class GetFoodMenuProvider extends ChangeNotifier {
     if (foodData.isEmpty) {
       foodMenuModel.add(FoodMenuModel(
           data: data,
-          number: number,
           totalAmount: totalAmount,
           size: size,
           amount: amount,
@@ -70,9 +69,8 @@ class GetFoodMenuProvider extends ChangeNotifier {
       for (var i in foodMenuModel) {
         if (i.data.id == data.id) {
           i.data = data;
-          i.number = number;
           i.totalAmount = totalAmount;
-          i.amount = amount;
+          i.amount += amount;
           i.specialprice = specailprice;
         }
       }
@@ -115,13 +113,14 @@ class GetFoodMenuProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+
   void addcount(int index) {
     listProduct[index].count++;
     notifyListeners();
   }
 
   void deletecount(int index) {
-    listProduct[index].count--;
+    listProduct[index].count -= 1;
     notifyListeners();
   }
 
@@ -131,12 +130,12 @@ class GetFoodMenuProvider extends ChangeNotifier {
   }
 
   void addcountdetailproduct(int index) {
-    foodMenuModel[index].amount++;
+    foodMenuModel[index].amount += 1;
     notifyListeners();
   }
 
   void deletecountdetail(int index) {
-    foodMenuModel[index].amount--;
+    foodMenuModel[index].amount -= 1;
     notifyListeners();
   }
 }

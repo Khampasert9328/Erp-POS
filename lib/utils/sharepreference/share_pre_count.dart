@@ -38,6 +38,15 @@ class CountPre {
   String connectTokenResponse = 'connectTokenResponse';
   String clickradio = 'clickradio';
   String dateTime = 'DateTime';
+  String index = 'index';
+  Future<void> setIndex(int val)async{
+    preferences = await SharedPreferences.getInstance();
+    preferences.setInt(index, val);
+  }
+  Future<int?> getIndexArea()async{
+     preferences = await SharedPreferences.getInstance();
+     return preferences.getInt(index);
+  }
   Future<void> setDateTime(String date)async{
     preferences = await SharedPreferences.getInstance();
     preferences.setString(dateTime, date);

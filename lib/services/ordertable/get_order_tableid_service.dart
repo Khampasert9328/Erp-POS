@@ -20,10 +20,10 @@ Future<GetOrderTableModels?> getordertableidservice(
       },
     );
     if (respones.statusCode == 200) {
-      print("respones:${respones.body}");
+      // print("respones:${respones.body}");
       return getOrderTableModelsFromJson(respones.body);
     }
   } catch (e) {
-    print("error:$e");
+    print("errorgetOrderTable:$e");
   }
 }

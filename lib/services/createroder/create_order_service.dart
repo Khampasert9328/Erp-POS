@@ -54,12 +54,9 @@ Future<CreateOrderModels?> createOrder(BuildContext context, String dateexpired,
     dynamic data = await ipA.getIpAddress();
     String ipaddress = data["ip"];
     String ipc = ipaddress.replaceAll(".", "");
-
     DateTime time = DateTime.now();
     String issueDate = DateFormat('yyyyMMdd').format(time);
     String date = DateFormat('dd-MM-yyyy HH:mm:ss').format(time);
-    
-
     for (var item in context.read<GetFoodMenuProvider>().getFoodMenuModel) {
       products.add({
         "productId": "${item.data.id}",
@@ -147,11 +144,11 @@ Future<CreateOrderModels?> createOrder(BuildContext context, String dateexpired,
       body: payload,
     );
     if (respones.statusCode == 200) {
-      print("playload:${payload}");
+      // print("playload:${payload}");
       CreateOrderModels models = createOrderModelsFromJson(respones.body);
       return models;
     }
   } catch (e) {
-    print("error1:$e");
+    print("errorcreateOrder:$e");
   }
 }

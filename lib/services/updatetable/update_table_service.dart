@@ -69,10 +69,7 @@ Future<UpdateStatusModels?> updateTableService(BuildContext context, String? tab
       },
       body: playload,
     );
-    // print("playload:${playload}");
-    // print("url:${url}");
     if (respones.statusCode == 200) {
-      print("respone:${respones.body}");
       return updateStatusModelsFromJson(respones.body);
     }
   } catch (e) {

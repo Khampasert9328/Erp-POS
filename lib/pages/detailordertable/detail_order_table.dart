@@ -21,12 +21,14 @@ class DetailOrderTable extends StatefulWidget {
   GetTable data;
   String id;
   String areaname;
-  DetailOrderTable(
-      {super.key,
-      required this.tablename,
-      required this.data,
-      required this.id,
-      required this.areaname});
+
+  DetailOrderTable({
+    super.key,
+    required this.tablename,
+    required this.data,
+    required this.id,
+    required this.areaname,
+  });
 
   @override
   State<DetailOrderTable> createState() => _DetailOrderTableState();
@@ -42,7 +44,9 @@ class _DetailOrderTableState extends State<DetailOrderTable> {
   @override
   void initState() {
     super.initState();
-
+    context
+        .read<GetOrderTableProvider>()
+        .getordertableprovider(context, widget.data.id!);
     _bindingPrinter().then((bool isBind) async => {
           if (isBind)
             {
@@ -73,30 +77,34 @@ class _DetailOrderTableState extends State<DetailOrderTable> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppTheme.WHITE_COLOR,
-        elevation: 0,
-        title: Text(
-          "ລາຍການອໍເດີ ${widget.tablename}",
-          style: TextStyle(
-            fontFamily: 'Phetsarath-OT',
-            color: AppTheme.BASE_COLOR,
+        appBar: AppBar(
+          backgroundColor: AppTheme.WHITE_COLOR,
+          elevation: 0,
+          title: Text(
+            "ລາຍການອໍເດີ ${widget.tablename}",
+            style: TextStyle(
+              fontFamily: 'Phetsarath-OT',
+              color: AppTheme.BASE_COLOR,
+            ),
           ),
         ),
-      ),
-      bottomNavigationBar: FutureBuilder<List<GetOrderTable?>>(
-        future: context
-            .read<GetOrderTableProvider>()
-            .getordertableprovider(context, widget.data.id!),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Consumer<GetOrderTableProvider>(
-              builder: ((context, model, _) {
+        bottomNavigationBar: Consumer<GetOrderTableProvider>(
+          builder: ((context, model, _) {
+            if (model.isloading) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              if (model.orderTableModels!.order == null) {
+                return Center(
+                  child: Text("ບໍ່ມີຂໍ້ມູນ"),
+                );
+              } else {
                 return ListView.builder(
                     shrinkWrap: true,
-                    itemCount: model.order.length,
+                    itemCount: model.orderTableModels!.order!.length,
                     itemBuilder: ((context, index) {
-                      data = model.order[index]!.product!;
+                      data = model.orderTableModels!.order![index].product!;
                       int sum = 0;
                       int total = 0;
                       for (var data in data!) {
@@ -126,7 +134,7 @@ class _DetailOrderTableState extends State<DetailOrderTable> {
                                     children: [
                                       Badge(
                                         badgeContent: Text(
-                                          "${model.order.length}",
+                                          "${data!.length}",
                                           style: TextStyle(
                                             color: AppTheme.WHITE_COLOR,
                                           ),
@@ -196,11 +204,9 @@ class _DetailOrderTableState extends State<DetailOrderTable> {
                                               MaterialPageRoute(
                                                 builder: (_) => PayMentMethod(
                                                   tatal: total,
-                                                 
-                                                  data: model
-                                                      .order[index]!.product,
+                                                  data: model.orderTableModels!
+                                                      .order![index].product,
                                                   datatable: widget.data,
-                                                 
                                                 ),
                                               ),
                                             );
@@ -351,211 +357,196 @@ class _DetailOrderTableState extends State<DetailOrderTable> {
                         ),
                       );
                     }));
-              }),
-            );
-          }
-          return Center(
-            child: CircularProgressIndicator(
-              color: AppTheme.BASE_COLOR,
-            ),
-          );
-        },
-      ),
-      body: isload
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : FutureBuilder<List<GetOrderTable?>>(
-              future: context
-                  .read<GetOrderTableProvider>()
-                  .getordertableprovider(context, widget.data.id!),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Consumer<GetOrderTableProvider>(
-                    builder: ((context, model, _) {
-                      return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: model.order.length,
-                          itemBuilder: ((context, index) {
-                            data = model.order[index]!.product!;
-                            return Padding(
-                              padding: const EdgeInsets.all(25),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (_) => FoodMenu()));
-                                        },
-                                        child: Container(
-                                          height: 35.h,
-                                          width: 80.w,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: AppTheme.BASE_COLOR),
-                                              borderRadius:
-                                                  BorderRadius.circular(5)),
-                                          child: Row(
-                                            children: [
-                                              Image.asset(
-                                                ERPImages.addcart,
-                                                height: 22.h,
-                                                width: 22.w,
-                                              ),
-                                              SizedBox(
-                                                width: 10.w,
-                                              ),
-                                              Text(
-                                                "ສັ່ງຕື່ມ",
-                                                style: TextStyle(
-                                                  fontSize: 15.sp,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontFamily: 'Phetsarath-OT',
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+              }
+            }
+          }),
+        ),
+        body: Consumer<GetOrderTableProvider>(
+          builder: ((context, model, _) {
+            if (model.isloading) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              if (model.orderTableModels!.order == null) {
+                return Center(
+                  child: Text("ບໍ່ມີຂໍ້ມູນ"),
+                );
+              } else {
+                return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: model.orderTableModels!.order!.length,
+                    itemBuilder: ((context, index) {
+                      data = model.orderTableModels!.order![index].product!;
+                      return Padding(
+                        padding: const EdgeInsets.all(25),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => FoodMenu()));
+                                  },
+                                  child: Container(
+                                    height: 35.h,
+                                    width: 80.w,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: AppTheme.BASE_COLOR),
+                                        borderRadius: BorderRadius.circular(5)),
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          ERPImages.addcart,
+                                          height: 22.h,
+                                          width: 22.w,
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 10.h,
-                                  ),
-                                  const Divider(),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: Text(
-                                          "ລ/ດ",
+                                        SizedBox(
+                                          width: 10.w,
+                                        ),
+                                        Text(
+                                          "ສັ່ງຕື່ມ",
                                           style: TextStyle(
-                                            fontSize: 14.sp,
+                                            fontSize: 15.sp,
                                             fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 3,
-                                        child: Text(
-                                          "ລາຍການ",
-                                          style: TextStyle(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Text(
-                                          "ຂະໜາດ",
-                                          style: TextStyle(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Text(
-                                          "ຈຳນວນ",
-                                          style: TextStyle(
                                             fontFamily: 'Phetsarath-OT',
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Text(
-                                          "ລາຄາ",
-                                          style: TextStyle(
-                                            fontFamily: 'Phetsarath-OT',
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                  const Divider(),
-                                  for (var food in data!)
-                                    SingleChildScrollView(
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            flex: 1,
-                                            child: Text(
-                                              "${index += 1}",
-                                              style: TextStyle(
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 3,
-                                            child: Text(
-                                              "${food.name}",
-                                              style: TextStyle(
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              "${setSize(food.size!)}",
-                                              style: TextStyle(
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(food.amount)}",
-                                              style: TextStyle(
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(food.pricesale)}",
-                                              style: TextStyle(
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            const Divider(),
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    "ລ/ດ",
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: Text(
+                                    "ລາຍການ",
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    "ຂະໜາດ",
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    "ຈຳນວນ",
+                                    style: TextStyle(
+                                      fontFamily: 'Phetsarath-OT',
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    "ລາຄາ",
+                                    style: TextStyle(
+                                      fontFamily: 'Phetsarath-OT',
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Divider(),
+                            for (var food in data!)
+                              SingleChildScrollView(
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        "${index += 1}",
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
-                                  const Divider(),
-                                ],
+                                    Expanded(
+                                      flex: 3,
+                                      child: Text(
+                                        "${food.name}",
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        "${setSize(food.size!)}",
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(food.amount)}",
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(food.pricesale)}",
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            );
-                          }));
-                    }),
-                  );
-                }
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: AppTheme.BASE_COLOR,
-                  ),
-                );
-              },
-            ),
-    );
+                            const Divider(),
+                          ],
+                        ),
+                      );
+                    }));
+              }
+            }
+          }),
+        ));
   }
 }

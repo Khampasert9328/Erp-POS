@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, unnecessary_import
+// ignore_for_file: unused_import, unnecessary_import, use_build_context_synchronously
 
 import 'package:codecamp_onepay/codecamp_onepay.dart';
 import 'package:devla_sunmi/flutter_sunmi_printer.dart';
@@ -200,7 +200,7 @@ class GenerateQRBCELONE extends ChangeNotifier {
                                 Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) => HomePage()),
+                                        builder: (_) => HomePage(fromlogin: false,)),
                                     (route) => false);
                               } catch (e) {
                                 print("error:$e");

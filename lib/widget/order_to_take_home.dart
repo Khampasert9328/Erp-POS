@@ -34,26 +34,26 @@ class _OrderToTakeHomeState extends State<OrderToTakeHome> {
               String numsize = setSize(size);
               int specialprice = value.getFoodMenuModel[index].specialprice;
               int count = value.getFoodMenuModel[index].amount;
-              void setNumber(bool isAdd) {
-                if (isAdd) {
-                  setState(() {
-                    amountData = value.getFoodMenuModel[index].totalAmount;
-                    context
-                        .read<GetFoodMenuProvider>()
-                        .addTotalAmount(amountData);
-                  });
-                } else {
-                  if (value.getFoodMenuModel[index].number > 1) {
-                    setState(() {
-                      amountData = value.getFoodMenuModel[index].totalAmount;
+              // void setNumber(bool isAdd) {
+              //   if (isAdd) {
+              //     setState(() {
+              //       amountData = value.getFoodMenuModel[index].totalAmount;
+              //       context
+              //           .read<GetFoodMenuProvider>()
+              //           .addTotalAmount(amountData);
+              //     });
+              //   } else {
+              //     if (value.getFoodMenuModel[index].number > 1) {
+              //       setState(() {
+              //         amountData = value.getFoodMenuModel[index].totalAmount;
 
-                      context
-                          .read<GetFoodMenuProvider>()
-                          .deleteTotalAmount(amountData);
-                    });
-                  }
-                }
-              }
+              //         context
+              //             .read<GetFoodMenuProvider>()
+              //             .deleteTotalAmount(amountData);
+              //       });
+              //     }
+              //   }
+              // }
 
               return Column(
                 children: [

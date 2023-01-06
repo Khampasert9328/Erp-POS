@@ -23,10 +23,11 @@ class AreaProvider extends ChangeNotifier {
   bool get isload => isloading;
   GetTableModels? _tablelist;
   GetTableModels? get gettablelist => _tablelist;
+  
 
   Future<void> getZone(BuildContext context) async {
-    String? idtoken = await CountPre().getToken();
     isloading = true;
+      int? index =await CountPre().getIndexArea();
     _areaModels = await getArea();
     if (_areaModels != null) {
       //ຖ້າວ່າ id ມັນບໍ່ມີຄ່າວ່າງແລ້ວໃຫ້ມັນດຶງຂໍ້ມູນໂຕະມາສະແດງ
@@ -39,8 +40,9 @@ class AreaProvider extends ChangeNotifier {
   }
   
 //ຟັງຊັ້ນໃນການດຶງຂໍ້ມູນໂຕະເວລາເຮາກົດ ຊັ້ນ ແລ້ວໃຫ້ມັນສົ່ງ id ຂອງຊັ້ນ
-  Future<void> callAPITable(BuildContext context, String id) async {
+  Future<void> callAPITable(BuildContext context, String id,) async {
     isloading = true;
+     int? index =await CountPre().getIndexArea();
     _tablelist = await getTablebyid(context, id);
     isloading=false;
     notifyListeners();
@@ -49,9 +51,9 @@ class AreaProvider extends ChangeNotifier {
   //ຂໍຂໍ້ມູນໂຕະ
   Future<void> callTable(BuildContext context)async{
       isloading = true;
-    _tablelist = await getTablebyid(context, _areaModels!.area!.first.id!);
+    int? index =await CountPre().getIndexArea();
+    _tablelist = await getTablebyid(context, _areaModels!.area![index!].id!);
      isloading=false;
     notifyListeners();
-
   }
 }

@@ -16,7 +16,7 @@ class Route {
   static final Map<String, WidgetBuilder> _route = {
     '/bill': (context) => Bill(),
     //'/dashboard': (context) => Dasboard(),
-    '/homepage':(context) => HomePage(),
+    //'/homepage':(context) => HomePage(),
    // '/foodmenudetail':(context) => FoodMenuDetailBody(data: ,),
     '/addfoodmenu':(context) => AddFoodMenu(),
     

@@ -13,7 +13,6 @@ import 'package:provider/provider.dart';
 class AddAmount extends StatefulWidget {
   String? title;
   int index;
-  
 
   AddAmount({this.title, required this.index});
 
@@ -42,55 +41,55 @@ class _AddAmountState extends State<AddAmount> {
     return Consumer<GetFoodMenuProvider>(builder: (context, value, child) {
       int counter = value.listProduct[widget.index].count;
       return Row(
-      children: [
-        Text(
-          widget.title ?? 'ຈຳນວນ',
-          style: TextStyle(
-            fontFamily: 'Phetsarath-OT',
-            fontSize: 14.sp,
-            color: AppTheme.BASE_COLOR,
+        children: [
+          Text(
+            widget.title ?? 'ຈຳນວນ',
+            style: TextStyle(
+              fontFamily: 'Phetsarath-OT',
+              fontSize: 14.sp,
+              color: AppTheme.BASE_COLOR,
+            ),
           ),
-        ),
-        SizedBox(
-          width: 20.w,
-        ),
-        GestureDetector(
-          onTap: () async {
-            
-            value.deletecount(widget.index);
-          },
-          child: FoodMenuButton(
-            title: '-',
+          SizedBox(
+            width: 20.w,
           ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5.w),
-          child: Column(
-            children: [
-              Text(
-                counter < 10 ? '0$counter' : '$counter',
-                style: TextStyle(color: AppTheme.BASE_COLOR, fontSize: 14.sp),
-              ),
-              Container(
-                width: 20.w,
-                height: 3.h,
-                decoration: BoxDecoration(color: Color(0xFFD9D9D9)),
-              )
-            ],
+          GestureDetector(
+            onTap: () async {
+              if (counter>0) {
+                value.deletecount(widget.index);
+              }
+              
+            },
+            child: FoodMenuButton(
+              title: '-',
+            ),
           ),
-        ),
-        GestureDetector(
-          onTap: () async {
-        value.addcount(widget.index);
-  
-          },
-          child: FoodMenuButton(
-            title: '+',
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 5.w),
+            child: Column(
+              children: [
+                Text(
+                  counter < 10 ? '0$counter' : '$counter',
+                  style: TextStyle(color: AppTheme.BASE_COLOR, fontSize: 14.sp),
+                ),
+                Container(
+                  width: 20.w,
+                  height: 3.h,
+                  decoration: BoxDecoration(color: Color(0xFFD9D9D9)),
+                )
+              ],
+            ),
           ),
-        ),
-      ],
-    );
-      
+          GestureDetector(
+            onTap: () async {
+              value.addcount(widget.index);
+            },
+            child: FoodMenuButton(
+              title: '+',
+            ),
+          ),
+        ],
+      );
     });
   }
 }

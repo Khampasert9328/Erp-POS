@@ -99,9 +99,9 @@ class PaymentCashProvider extends ChangeNotifier {
                             child: TextButton(
                               onPressed: () async{
 
-                                UpdateTableProvider().updateTableProvider(context, idtable, tablename, idarea, areaname);
+                               await UpdateTableProvider().updateTableProvider(context, idtable, tablename, idarea, areaname);
                                await context.read<AreaProvider>().callTable(context);
-                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>HomePage()), (route) => false);
+                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>HomePage(fromlogin: false,)), (route) => false);
                               },
                               child: Text(
                                 "ປິດໜ້ານີ້",
@@ -224,7 +224,7 @@ class PaymentCashProvider extends ChangeNotifier {
                               Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) => const HomePage()),
+                                        builder: (_) =>  HomePage(fromlogin: false,)),
                                     (route) => false); 
                               },
                               child: Text(

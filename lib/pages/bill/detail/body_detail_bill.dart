@@ -16,9 +16,11 @@ import 'package:intl/intl.dart';
 
 class BodyDetailBill extends StatefulWidget {
   List<Product> data;
-  
 
-  BodyDetailBill({super.key, required this.data,});
+  BodyDetailBill({
+    super.key,
+    required this.data,
+  });
 
   @override
   State<BodyDetailBill> createState() => _BodyDetailBillState();
@@ -49,19 +51,16 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
     // }
     // }
 
-    int sum=0;
+    int sum = 0;
     int total = 0;
-
 
     for (var data in widget.data) {
       int amount = data.amount!;
       int price = int.parse(data.pricesale.toString());
 
-    sum = amount * price;
-    total += sum;
-      
+      sum = amount * price;
+      total += sum;
     }
-   
 
     return Scaffold(
       appBar: AppBar(
@@ -94,10 +93,10 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                   ),
                   child: Row(
                     children: [
-                     
+
                       Badge(
                         badgeContent: Text(
-                          "0",
+                          "${widget.data.length}",
                           style: TextStyle(
                             color: AppTheme.WHITE_COLOR,
                           ),
@@ -106,7 +105,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                           ERPImages.cart,
                           height: 45.h,
                           width: 45.w,
-                          color: AppTheme.GREY_COLOR,
+                          color: AppTheme.BASE_COLOR,
                         ),
                       ),
                       SizedBox(
@@ -130,7 +129,6 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                       ),
                       Row(
                         children: [
-                           for(var i in widget.data)
                           Text(
                             "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(total)} ກີບ",
                             style: TextStyle(
@@ -145,10 +143,8 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                     ],
                   ),
                 ),
-                  for(var i in widget.data)
                 GestureDetector(
                   onTap: () async {
-                   String size = setSize(i.size!);
                     try {
                       await SunmiPrinter.startTransactionPrint();
                       await SunmiPrinter.printText('ໃບບິນ',
@@ -187,15 +183,17 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                               align: SunmiPrintAlign.CENTER,
                               bold: true,
                               fontSize: SunmiFontSize.MD));
-
-                      await SunmiPrinter.printRow(cols: [
-                        ColumnMaker(text: '${i.name}', width: 6),
-                        ColumnMaker(
-                            text:
-                                '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(i.amount)} $size ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(total)}',
-                            width: 6,
-                            align: SunmiPrintAlign.RIGHT),
-                      ]);
+                      for (var i in widget.data) {
+                        String size = setSize(i.size!);
+                        await SunmiPrinter.printRow(cols: [
+                          ColumnMaker(text: '${i.name}', width: 6),
+                          ColumnMaker(
+                              text:
+                                  '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(i.amount)} $size ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(total)}',
+                              width: 6,
+                              align: SunmiPrintAlign.RIGHT),
+                        ]);
+                      }
 
                       await SunmiPrinter.line();
 
@@ -207,8 +205,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                       await SunmiPrinter.lineWrap(3);
                       await SunmiPrinter.submitTransactionPrint();
                       await SunmiPrinter.exitTransactionPrint();
-                    } catch (e) {
-                    }
+                    } catch (e) {}
                   },
                   child: Container(
                     height: 60.h,
@@ -249,8 +246,6 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-           
-            
             Text(
               "ພະນັກງານຮັບອໍເດີ:",
               style: TextStyle(
@@ -331,64 +326,61 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
               ],
             ),
             const Divider(),
-             for(var i in widget.data)
-            
-            Row(
-              children: [
-                 
-                Expanded(
-                  flex: 1,
-                  child: Text(
-                    "1",
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold,
+            for (var i in widget.data)
+              Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Text(
+                      "${widget.data.length}",
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-               
-                Expanded(
-                  flex: 3,
-                  child: Text(
-                    "${i.name}",
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold,
+                  Expanded(
+                    flex: 3,
+                    child: Text(
+                      "${i.name}",
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Text(
-                    "${setSize(i.size!)}",
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold,
+                  Expanded(
+                    flex: 3,
+                    child: Text(
+                      "${setSize(i.size!)}",
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Text(
-                    "${i.amount}",
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold,
+                  Expanded(
+                    flex: 2,
+                    child: Text(
+                      "${i.amount}",
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Text(
-                    "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(i.pricesale)}",
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold,
+                  Expanded(
+                    flex: 2,
+                    child: Text(
+                      "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(i.pricesale)}",
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
             const Divider(),
           ],
         ),

@@ -153,7 +153,7 @@ class _TableBodyState extends State<TableBody> {
             ),
             !isWitch
                 ? Expanded(
-                    child: ListViewTable(),
+                    child: ListViewTable(fromlogin: true),
                   )
                 : Padding(
                     padding: const EdgeInsets.only(top: 150),

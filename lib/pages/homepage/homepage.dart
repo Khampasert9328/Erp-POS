@@ -10,7 +10,8 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  bool fromlogin;
+   HomePage({Key? key, required this.fromlogin}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();

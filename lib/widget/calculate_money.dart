@@ -23,7 +23,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CalculateMoney extends StatefulWidget {
-  String tablename;
+  String? tablename;
   CalculateMoney({
     Key? key,
     required this.tablename,
@@ -79,7 +79,7 @@ class _CalculateMoneyState extends State<CalculateMoney> {
               backgroundColor: AppTheme.WHITE_COLOR,
               elevation: 0,
               title: Text(
-                widget.tablename,
+                widget.tablename!,
                 style: TextStyle(
                     color: AppTheme.BASE_COLOR, fontWeight: FontWeight.bold),
               ),
@@ -182,7 +182,7 @@ class _CalculateMoneyState extends State<CalculateMoney> {
                                       .callTable(context);
                                   Navigator.of(context).pushAndRemoveUntil(
                                       MaterialPageRoute(
-                                          builder: (_) => HomePage()),
+                                          builder: (_) => HomePage(fromlogin: false,)),
                                       (route) => false);
                                 },
                                 child: Text(
@@ -242,7 +242,7 @@ class _CalculateMoneyState extends State<CalculateMoney> {
                                     ColumnMaker(
                                         text:
                                             '${DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now())}',
-                                        width: 3,
+                                        width: 6,
                                         align: SunmiPrintAlign.RIGHT),
                                   ]);
                                   await SunmiPrinter.printRow(cols: [
@@ -308,7 +308,7 @@ class _CalculateMoneyState extends State<CalculateMoney> {
                                   Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (_) => HomePage()),
+                                          builder: (_) => HomePage(fromlogin: false,)),
                                       (route) => false);
                                 }
                               } catch (e) {

@@ -27,9 +27,6 @@ class SetData extends ChangeNotifier {
   String get tablenamestatus => _tablenamestatus;
   String get idareastatus => _idareastatus;
   String get areanamestatus => _areanamestatus;
-
-  
-
   void setIdTableStatus(String idtableS)async{
     _idtablestatus = idtableS;
     notifyListeners();

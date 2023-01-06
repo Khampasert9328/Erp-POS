@@ -219,7 +219,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                                   context,
                                                                   "ກາລຸນາກົດເພື່ອເພີ່ມຈຳນວນອາຫານ");
                                                         } else {
-                                                          getFoodModel.addcount(index);
+                                                        
                                                           int totalAmount =
                                                               (pricesale +
                                                                       specialPrice) *
@@ -265,7 +265,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                                     blurRadius:
                                                                         7,
                                                                     offset:
-                                                                        Offset(
+                                                                        const Offset(
                                                                             0,
                                                                             3))
                                                               ]),
@@ -286,6 +286,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                                   context,
                                                                   "ກາລຸນາກົດເພື່ອເພີ່ມຈຳນວນອາຫານ");
                                                         } else {
+                                                    
                                                           int totalAmount =
                                                               (pricesale +
                                                                       specialPrice) *
@@ -304,9 +305,8 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                               .addTotalAmount(
                                                                   totalAmount);
 
-                                                                  getFoodModel.clearCount(index);
-
-                                                               
+                                                                 getFoodModel.clearCount(index);
+     
                                                         }
                                                         return !isLiked;
                                                       }),
