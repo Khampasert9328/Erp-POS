@@ -13,6 +13,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
 class AreaProvider extends ChangeNotifier {
+  String _idarea = '';
+  String get idarea => _idarea;
   List<String>? _areaID = [];
   List<String>? get getAreaID => _areaID;
   AreaModels? _areaModels;
@@ -23,37 +25,47 @@ class AreaProvider extends ChangeNotifier {
   bool get isload => isloading;
   GetTableModels? _tablelist;
   GetTableModels? get gettablelist => _tablelist;
-  
 
   Future<void> getZone(BuildContext context) async {
     isloading = true;
-      int? index =await CountPre().getIndexArea();
+
     _areaModels = await getArea();
-    if (_areaModels != null) {
-      //ຖ້າວ່າ id ມັນບໍ່ມີຄ່າວ່າງແລ້ວໃຫ້ມັນດຶງຂໍ້ມູນໂຕະມາສະແດງ
-      if (_areaModels!.area!.isNotEmpty) {
-        _tablelist = await getTablebyid(context, _areaModels!.area!.first.id!);
+    if (_tablelist == null) {
+      if (_areaModels != null) {
+        _idarea = _areaModels!.area!.first.id ?? '';
+        //ຖ້າວ່າ id ມັນບໍ່ມີຄ່າວ່າງແລ້ວໃຫ້ມັນດຶງຂໍ້ມູນໂຕະມາສະແດງ
+        if (_areaModels!.area!.isNotEmpty) {
+          _tablelist =
+              await getTablebyid(context, _areaModels!.area!.first.id!);
+        }
       }
     }
     isloading = false;
     notifyListeners();
   }
-  
+
 //ຟັງຊັ້ນໃນການດຶງຂໍ້ມູນໂຕະເວລາເຮາກົດ ຊັ້ນ ແລ້ວໃຫ້ມັນສົ່ງ id ຂອງຊັ້ນ
-  Future<void> callAPITable(BuildContext context, String id,) async {
+  Future<void> callAPITable(BuildContext context, String id) async {
     isloading = true;
-     int? index =await CountPre().getIndexArea();
+
     _tablelist = await getTablebyid(context, id);
-    isloading=false;
+    isloading = false;
     notifyListeners();
   }
 
   //ຂໍຂໍ້ມູນໂຕະ
-  Future<void> callTable(BuildContext context)async{
-      isloading = true;
-    int? index =await CountPre().getIndexArea();
-    _tablelist = await getTablebyid(context, _areaModels!.area![index!].id!);
-     isloading=false;
+  Future<void> callTable(BuildContext context, String idarea) async {
+    isloading = true;
+    //String? idarea = await CountPre().getAreaGetTable();
+    _tablelist = await getTablebyid(context, _idarea);
+    await Future.delayed(Duration(milliseconds: 500));
+    isloading = false;
+    notifyListeners();
+  }
+
+  // ເກັບໄອດີຊັ້ນ
+  Future<void> setAreaID(String id) async {
+    _idarea = id;
     notifyListeners();
   }
 }

@@ -21,5 +21,7 @@ Future<GetTableAll?> getTable(BuildContext context, String? idtoken, int limit, 
     if (respones.statusCode == 200) {
       return getTableAllFromJson(respones.body);
     }
-  } catch (e) {}
+  } catch (e) {
+    rethrow;
+  }
 }

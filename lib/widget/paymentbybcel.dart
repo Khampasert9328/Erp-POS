@@ -8,6 +8,7 @@ import 'package:erp_pos/pages/table/components/textdate.dart';
 import 'package:erp_pos/provider/confirmpaymentbybcel/confirmpaymentbybcel_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/generateQR/generate_qr_bcelone_provider.dart';
+import 'package:erp_pos/provider/getordertable/get_ordertable_provider.dart';
 import 'package:erp_pos/provider/paycash/paymentcash_provider.dart';
 import 'package:erp_pos/services/generateqrBCEL/generate_qr_bcelone.dart';
 import 'package:erp_pos/utils/formattime.dart';
@@ -21,13 +22,13 @@ class PaymentBcelone extends StatefulWidget {
   GetTable datatable;
   final mcid;
   final shopcode;
-  List<Product>? data;
+  
 
   PaymentBcelone({
     Key? key,
     required this.mcid,
     required this.shopcode,
-    required this.data,
+  
     required this.datatable,
   }) : super(key: key);
 
@@ -76,7 +77,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
             context,
             widget.mcid,
             widget.shopcode,
-            widget.data,
+           
             widget.datatable.id!,
             widget.datatable.name!,
             widget.datatable.tablearea!.id!,
@@ -103,11 +104,17 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
   Widget build(BuildContext context) {
     int sum = 0;
     int total = 0;
-    for (var i in widget.data!) {
-      int? amout = i.amount;
-      int pricesale = int.parse(i.pricesale.toString());
+    for (var i in context.read<GetOrderTableProvider>().listOrderTable) {
+      for (var d in i.order!) {
+        for (var j in d!.product!) {
+           int? amout = j!.amount;
+      int pricesale = int.parse(j.pricesale.toString());
       sum = pricesale * amout!;
       total += sum;
+        }
+        
+      }
+     
     }
     return Scaffold(
       appBar: AppBar(
@@ -213,7 +220,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                                 context,
                                 widget.mcid,
                                 widget.shopcode,
-                                widget.data,
+                             
                                 widget.datatable.id!,
                                 widget.datatable.name!,
                                 widget.datatable.tablearea!.id!,
@@ -265,7 +272,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                     PaymentCashProvider().createpaymentcashprovider(
                         context,
                         total,
-                        widget.data,
+                        
                         widget.datatable.id!,
                         widget.datatable.name!,
                         widget.datatable.tablearea!.id!,

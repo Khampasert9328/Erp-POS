@@ -98,11 +98,11 @@ class _SignInState extends State<SignIn> {
                         value: rememberpassword,
                         onChanged: (value) {
                           setState(() {
-                            CountPre().getRadioRememberPassword().then((value) {
+                           
                               if (value != null) {
                                 rememberpassword = value;
                               }
-                            });
+                            
                           });
                         },
                       ),

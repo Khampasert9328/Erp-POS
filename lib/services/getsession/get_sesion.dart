@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 Future<GetSessoin?> getsessionservice() async {
-  int status = 1;
+  int status = 0;
   String? idtoken = await CountPre().getToken();
   String yourToken = idtoken!;
   Map<String, dynamic> decodedToken = JwtDecoder.decode(yourToken);

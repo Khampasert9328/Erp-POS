@@ -202,7 +202,7 @@ class Mystyle {
                     text: 'ຕົກລົງ',
                     onPressed: () async {
                       if (fromkey.currentState!.validate()) {
-                        SessionProvoder()
+                      await SessionProvoder()
                             .getsessoinProvider(context)
                             .then((value) {
                           context.read<SwitchProvider>().changSwitch(true);

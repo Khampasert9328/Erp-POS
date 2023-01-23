@@ -27,7 +27,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         if (rember == true) {
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: ((context) =>  HomePage(fromlogin: true,))),
+              MaterialPageRoute(builder: ((context) =>  HomePage())),
               (route) => false);
         } else {
           Navigator.pushAndRemoveUntil(

@@ -16,10 +16,11 @@ import 'package:intl/intl.dart';
 
 class BodyDetailBill extends StatefulWidget {
   List<Product> data;
-
+  
   BodyDetailBill({
     super.key,
     required this.data,
+   
   });
 
   @override
@@ -27,37 +28,14 @@ class BodyDetailBill extends StatefulWidget {
 }
 
 class _BodyDetailBillState extends State<BodyDetailBill> {
-  // String? name;
-  // int? size;
-  // int? amount;
-  // int? price;
-  // String? nameTable;
-  // @override
-  // void initState() {
-  //   CountPre().getNameTable().then((value) async {
-  //     nameTable = await CountPre().getNameTable();
-  //   });
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // for (var item in widget.dataorder!.order!) {
-    // for (var data in item.product!) {
-    //   name = data.name;
-    //   size = data.size;
-    //   amount = data.amount;
-    //   price = data.pricesale;
-    // }
-    // }
-
     int sum = 0;
     int total = 0;
 
     for (var data in widget.data) {
       int amount = data.amount!;
       int price = int.parse(data.pricesale.toString());
-
       sum = amount * price;
       total += sum;
     }
@@ -93,7 +71,6 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                   ),
                   child: Row(
                     children: [
-
                       Badge(
                         badgeContent: Text(
                           "${widget.data.length}",
@@ -189,11 +166,21 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                           ColumnMaker(text: '${i.name}', width: 6),
                           ColumnMaker(
                               text:
-                                  '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(i.amount)} $size ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(total)}',
+                                  '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(i.amount)} $size ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(i.pricesale)}',
                               width: 6,
                               align: SunmiPrintAlign.RIGHT),
                         ]);
                       }
+                      await SunmiPrinter.line();
+                      await SunmiPrinter.line();
+                      await SunmiPrinter.printRow(cols: [
+                        ColumnMaker(text: 'ລາຄາລວມ', width: 6),
+                        ColumnMaker(
+                            text:
+                                '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(total)}',
+                            width: 6,
+                            align: SunmiPrintAlign.RIGHT),
+                      ]);
 
                       await SunmiPrinter.line();
 

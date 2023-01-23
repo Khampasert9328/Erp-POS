@@ -15,9 +15,6 @@ import 'package:provider/provider.dart';
 Future<CreateOffSessionModels?> createoffsession(BuildContext context, String id, String closeDate, int cashCount, String userclose, String userName) async {
   
   String? idtoken =await CountPre().getToken();
- 
- 
-
   try {
     var url = APIPath.OFF_SESSION;
     String playload = jsonEncode({
@@ -37,12 +34,10 @@ Future<CreateOffSessionModels?> createoffsession(BuildContext context, String id
         'Content-Type': 'application/json'
       },
     );
-   // print("res23:${respones.statusCode}");
     if (respones == 200) {
-     
       return createOffSessionModelsFromJson(respones.body);
     }
   } catch (e) {
-    print("ErrorOffSession:$e");
+    rethrow;
   }
 }

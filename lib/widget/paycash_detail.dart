@@ -4,8 +4,10 @@ import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/ordertable/order_table_models.dart';
 import 'package:erp_pos/model/paymentcash/paymentcash_models.dart';
 import 'package:erp_pos/model/table/table_models.dart';
+import 'package:erp_pos/provider/areaprovider/area_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/paycash/paymentcash_provider.dart';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -14,17 +16,9 @@ import 'package:provider/provider.dart';
 
 class paycash extends StatefulWidget {
   GetTable datatable;
-  
-  List<Product>? data;
+
   int tatal;
-  paycash(
-      {Key? key,
-     
-      required this.datatable,
-    
-      required this.data,
-      required this.tatal
-      })
+  paycash({Key? key, required this.datatable, required this.tatal})
       : super(key: key);
 
   @override
@@ -37,12 +31,11 @@ class _paycashState extends State<paycash> {
   ////////ວິທີການເຮັດການທ້ອນເງິນຢູ່ໜ້າ ການຈ່າຍເງິນສົດ
   int sumall = 0;
   final FocusNode _focusNode = FocusNode();
-
   @override
   void initState() {
     super.initState();
     setState(() {
-     // totalamount = context.read<GetFoodMenuProvider>().totalamont;
+      // totalamount = context.read<GetFoodMenuProvider>().totalamont;
       money.text = NumberFormat.currency(symbol: '', decimalDigits: 0)
           .format(widget.tatal);
     });
@@ -71,17 +64,20 @@ class _paycashState extends State<paycash> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              onPressed: () {
+              onPressed: ()async {
                 String? mmoney = money.text.replaceAll(',', '');
+               CountPre().moneyReceived(mmoney);
+               CountPre().moneyChange(sumall);
                 int? intMoney = int.parse(mmoney);
                 PaymentCashProvider().createpaymentcashprovider(
                     context,
                     intMoney,
-                    widget.data,
                     widget.datatable.id!,
                     widget.datatable.name!,
                     widget.datatable.tablearea!.id!,
-                    widget.datatable.tablearea!.area!);
+                    widget.datatable.tablearea!.area!,
+                   );
+                 
               },
               child: Text(
                 "ຊຳລະເງິນ",
@@ -168,6 +164,8 @@ class _paycashState extends State<paycash> {
                           if (myMoney1 >= widget.tatal) {
                             setState(() {
                               sumall = myMoney1 - widget.tatal;
+                              // print("money:$sumall");
+                              // print("mn:${money.text}");
                             });
                           }
                         } else {

@@ -40,7 +40,7 @@ class _BillDetailState extends State<BillDetail> {
         ),
       ),
       bottomNavigationBar: const BottomBarOfBill(),
-      body:  BodyDetailBill(data:widget.data ,)
+      body:  BodyDetailBill(data:widget.data,)
     );
   }
 }

@@ -22,11 +22,20 @@ class SetData extends ChangeNotifier {
   String _tablenamestatus='';
   String _idareastatus='';
   String _areanamestatus='';
+  String _idtableorder = '';
+  String get idtableorder => _idtableorder;
 
   String get idtablestatus =>_idtablestatus;
   String get tablenamestatus => _tablenamestatus;
   String get idareastatus => _idareastatus;
   String get areanamestatus => _areanamestatus;
+
+  void setIdTableOrer(String id){
+    _idtableorder = id;
+    notifyListeners();
+  }
+
+
   void setIdTableStatus(String idtableS)async{
     _idtablestatus = idtableS;
     notifyListeners();

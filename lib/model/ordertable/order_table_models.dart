@@ -4,9 +4,9 @@
 
 import 'dart:convert';
 
-GetOrderTableModels getOrderTableModelsFromJson(String str) => GetOrderTableModels.fromJson(json.decode(str));
+GetOrderTableModels? getOrderTableModelsFromJson(String str) => GetOrderTableModels.fromJson(json.decode(str));
 
-String getOrderTableModelsToJson(GetOrderTableModels data) => json.encode(data.toJson());
+String getOrderTableModelsToJson(GetOrderTableModels? data) => json.encode(data!.toJson());
 
 class GetOrderTableModels {
     GetOrderTableModels({
@@ -24,7 +24,7 @@ class GetOrderTableModels {
     bool? success;
     String? message;
     String? detail;
-    List<GetOrderTable>? order;
+    List<Order?>? order;
     int? totalcount;
     int? totalpriceproduct;
     int? prefix;
@@ -34,7 +34,7 @@ class GetOrderTableModels {
         success: json["success"],
         message: json["message"],
         detail: json["detail"],
-        order: List<GetOrderTable>.from(json["order"].map((x) => GetOrderTable.fromJson(x))),
+        order: json["order"] == null ? [] : List<Order?>.from(json["order"]!.map((x) => Order.fromJson(x))),
         totalcount: json["totalcount"],
         totalpriceproduct: json["totalpriceproduct"],
         prefix: json["prefix"],
@@ -45,15 +45,15 @@ class GetOrderTableModels {
         "success": success,
         "message": message,
         "detail": detail,
-        "order": List<dynamic>.from(order!.map((x) => x.toJson())),
+        "order": order == null ? [] : List<dynamic>.from(order!.map((x) => x!.toJson())),
         "totalcount": totalcount,
         "totalpriceproduct": totalpriceproduct,
         "prefix": prefix,
     };
 }
 
-class GetOrderTable {
-    GetOrderTable({
+class Order {
+    Order({
         this.id,
         this.issuedate,
         this.date,
@@ -71,19 +71,19 @@ class GetOrderTable {
     String? date;
     String? billid;
     String? tableid;
-    List<Product>? product;
+    List<Product?>? product;
     String? userid;
     Description? description;
     int? status;
     bool? selected;
 
-    factory GetOrderTable.fromJson(Map<String, dynamic> json) => GetOrderTable(
+    factory Order.fromJson(Map<String, dynamic> json) => Order(
         id: json["id"],
         issuedate: json["issuedate"],
         date: json["date"],
         billid: json["billid"],
         tableid: json["tableid"],
-        product: List<Product>.from(json["product"].map((x) => Product.fromJson(x))),
+        product: json["product"] == null ? [] : List<Product?>.from(json["product"]!.map((x) => Product.fromJson(x))),
         userid: json["userid"],
         description: Description.fromJson(json["description"]),
         status: json["status"],
@@ -96,7 +96,7 @@ class GetOrderTable {
         "date": date,
         "billid": billid,
         "tableid": tableid,
-        "product": List<dynamic>.from(product!.map((x) => x.toJson())),
+        "product": product == null ? [] : List<dynamic>.from(product!.map((x) => x!.toJson())),
         "userid": userid,
         "description": description!.toJson(),
         "status": status,
@@ -114,14 +114,14 @@ class Description {
     });
 
     String? customerName;
-    List<String>? contact;
+    List<String?>? contact;
     String? village;
     String? district;
     String? province;
 
     factory Description.fromJson(Map<String, dynamic> json) => Description(
         customerName: json["customerName"],
-        contact: List<String>.from(json["contact"].map((x) => x)),
+        contact: json["contact"] == null ? [] : List<String?>.from(json["contact"]!.map((x) => x)),
         village: json["village"],
         district: json["district"],
         province: json["province"],
@@ -129,7 +129,7 @@ class Description {
 
     Map<String, dynamic> toJson() => {
         "customerName": customerName,
-        "contact": List<dynamic>.from(contact!.map((x) => x)),
+        "contact": contact == null ? [] : List<dynamic>.from(contact!.map((x) => x)),
         "village": village,
         "district": district,
         "province": province,

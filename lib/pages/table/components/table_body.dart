@@ -21,12 +21,15 @@ import 'package:erp_pos/pages/table/components/textdate.dart';
 import 'package:erp_pos/pages/table/components/textdatetime.dart';
 import 'package:erp_pos/provider/switch/switch_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
+import 'package:erp_pos/services/getsession/get_sesion.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/style.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
+import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,16 +52,15 @@ class _TableBodyState extends State<TableBody> {
 
   @override
   void initState() {
-    CountPre().getStatus().then((value) async {
-      status = await CountPre().getStatus();
-      if (status == 1) {
-        context.read<SwitchProvider>().changSwitch(true);
-      } else {
-        context.read<SwitchProvider>().changSwitch(false);
-      }
-    });
-
-   
+    getsessionservice().then(
+      (value) {
+        if (value != null) {
+          context.read<SwitchProvider>().changSwitch(true);
+        } else {
+          context.read<SwitchProvider>().changSwitch(false);
+        }
+      },
+    );
 
     super.initState();
   }
@@ -70,13 +72,19 @@ class _TableBodyState extends State<TableBody> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppTheme.WHITE_COLOR,
-        title: Text(
-          "ສະຖານະປັດຈຸບັນ",
-          style: TextStyle(
-            fontFamily: "Phetsarath-OT",
-            color: AppTheme.BASE_COLOR,
-            fontWeight: FontWeight.bold,
-            fontSize: 21.sp,
+        title: Container(
+          width: 150.w,
+          height: 28.h,
+          child: Marquee(
+            blankSpace: 50,
+            velocity: 150,
+            pauseAfterRound: Duration(seconds: 2),
+            text: 'ສະຖານະປັດຈຸບັນ',
+            style: TextStyle(
+                fontFamily: "Phetsarath-OT",
+                color: AppTheme.BASE_COLOR,
+                fontWeight: FontWeight.bold,
+                fontSize: 21.sp),
           ),
         ),
         actions: [
@@ -125,17 +133,15 @@ class _TableBodyState extends State<TableBody> {
                               color: AppTheme.GREEN_COLOR,
                             ),
                           ),
-                    Switch(
-                      activeColor: AppTheme.GREEN_COLOR,
-                      value: value.switchchang,
-                      onChanged: (vale) async {
-                        if (value.switchchang) {
-                          Mystyle().dialogOff(context);
-                        } else {
-                          Mystyle().dialogOpen(context);
-                        }
-                      },
-                    ),
+                    CupertinoSwitch(
+                        value: value.switchchang,
+                        onChanged: ((val) {
+                          if (value.switchchang) {
+                            Mystyle().dialogOff(context);
+                          } else {
+                            Mystyle().dialogOpen(context);
+                          }
+                        }))
                   ],
                 );
               }),
@@ -153,7 +159,7 @@ class _TableBodyState extends State<TableBody> {
             ),
             !isWitch
                 ? Expanded(
-                    child: ListViewTable(fromlogin: true),
+                    child: ListViewTable(),
                   )
                 : Padding(
                     padding: const EdgeInsets.only(top: 150),

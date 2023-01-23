@@ -7,6 +7,7 @@ import 'package:devla_sunmi/flutter_sunmi_printer.dart';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/model/category/category_models.dart';
 import 'package:erp_pos/model/food_menu_model.dart';
+import 'package:erp_pos/model/ordertable/order_table_models.dart';
 import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/pages/food_menu/components/food_menu_button.dart';
 import 'package:erp_pos/pages/food_menu/models/food_menu_data_model.dart';
@@ -20,6 +21,7 @@ import 'package:erp_pos/provider/tableprovider/table_provider.dart';
 import 'package:erp_pos/provider/updatetable/update_table_provider.dart';
 import 'package:erp_pos/utils/loading.dart';
 import 'package:erp_pos/utils/set_size.dart';
+import 'package:erp_pos/utils/setdata/setdata_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/add_amount.dart';
 import 'package:erp_pos/widget/calculate_money.dart';
@@ -34,13 +36,14 @@ import 'package:sqflite/sqflite.dart';
 import '../constant/theme.dart';
 
 class SelectedMenuCardExpand extends StatefulWidget {
-  VoidCallback onNext;
-  GetTable? data;
+   VoidCallback onNext;
+
+
   bool selectMenu = false;
   SelectedMenuCardExpand({
     required this.onNext,
     required this.selectMenu,
-    required this.data,
+ 
   });
 
   @override
@@ -48,10 +51,21 @@ class SelectedMenuCardExpand extends StatefulWidget {
 }
 
 class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
+  String? tablename;
+  @override
+  void initState() {
+    CountPre().getTableName().then((value) {
+      tablename = value;
+    });
+    super.initState();
+  }
   //int sumData = 0;
   bool checkerror = false;
   Widget build(BuildContext context) {
     bool showClickTable = context.read<ClickTableProvider>().click;
+    
+    bool firstOrder = context.read<ClickTableProvider>().firstOrderMore;
+
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -91,7 +105,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                 color: AppTheme.BASE_COLOR),
                           ),
                           Text(
-                            "${widget.data!.name}",
+                            '$tablename',
                             style: TextStyle(
                                 fontFamily: 'Phetsarath-OT',
                                 fontSize: 18.sp,
@@ -116,8 +130,8 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                     int size = value.getFoodMenuModel[index].size;
                     int count = value.getFoodMenuModel[index].amount;
                     String numsize = setSize(size);
-                    int specialprice =value.getFoodMenuModel[index].specialprice;
-                  
+                    int specialprice =
+                        value.getFoodMenuModel[index].specialprice;
                     return Stack(
                       children: [
                         Container(
@@ -202,7 +216,8 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                         GestureDetector(
                                           onTap: () async {
                                             value.deletecountdetail(index);
-                                            value.deleteTotalAmount(specialprice);
+                                            value.deleteTotalAmount(
+                                                specialprice);
                                           },
                                           child: FoodMenuButton(
                                             title: '-',
@@ -214,7 +229,9 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                           child: Column(
                                             children: [
                                               Text(
-                                                count <10 ? '0$count':'$count',
+                                                count < 10
+                                                    ? '0$count'
+                                                    : '$count',
                                                 style: TextStyle(
                                                     color: AppTheme.BASE_COLOR,
                                                     fontSize: 14.sp),
@@ -233,7 +250,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                             context
                                                 .read<GetFoodMenuProvider>()
                                                 .addcountdetailproduct(index);
-                                             value.addTotalAmount(specialprice);
+                                            value.addTotalAmount(specialprice);
                                           },
                                           child: FoodMenuButton(
                                             title: '+',
@@ -255,9 +272,9 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                         context
                                             .read<GetFoodMenuProvider>()
                                             .deleteData(
-                                                index,
-                                                specialprice*count,
-                                                );
+                                              index,
+                                              specialprice * count,
+                                            );
                                       }),
                                       child: Padding(
                                         padding:
@@ -356,36 +373,39 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
           ),
           showClickTable
               ? sendingtokitchen()
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    context.read<GetFoodMenuProvider>().getFoodMenuModel.isEmpty
-                        ? const SizedBox()
-                        : Padding(
-                            padding: const EdgeInsets.only(bottom: 20),
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 30.w),
-                                    primary: AppTheme.BASE_COLOR),
-                                onPressed: widget.onNext,
-                                child: Text(
-                                  'ຕໍ່ໄປ',
-                                  style: TextStyle(
-                                    fontFamily: 'Phetsarath-OT',
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                )),
-                          ),
-                    SizedBox(
-                      width: 5.w,
-                    )
-                  ],
-                ),
-          SizedBox(
-            height: 10.h,
-          )
+              : firstOrder==true
+                  ? sendingtokitchenagain()
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        context
+                                .read<GetFoodMenuProvider>()
+                                .getFoodMenuModel
+                                .isEmpty
+                            ? const SizedBox()
+                            : Padding(
+                                padding: const EdgeInsets.only(bottom: 20),
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 30.w),
+                                        primary: AppTheme.BASE_COLOR),
+                                    onPressed: widget.onNext,
+                                    child: Text(
+                                      'ຕໍ່ໄປ',
+                                      style: TextStyle(
+                                        fontFamily: 'Phetsarath-OT',
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    )),
+                              ),
+                        SizedBox(
+                          width: 5.w,
+                        )
+                      ],
+                    ),
+         
         ],
       ),
     );
@@ -426,26 +446,73 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                       //provider ໃນການສັ່ງອໍເດີ
                       context
                           .read<CheckExpiredPackage>()
-                          .getCheckExpiredPackage(
-                              context,
-                              widget.data!.tablearea!.id!,
-                              widget.data!.tablearea!.area!,
-                              widget.data!.id!,
-                              widget.data!.name!);
+                          .getCheckExpiredPackage(context);
 
-                      String? tablename = await CountPre().getTableName();
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => CalculateMoney(
-                            tablename: widget.data!.name!,
-                          ),
+                          builder: (_) => CalculateMoney(),
                         ),
                       );
                     }
                   },
                   child: Text(
                     'ສົ່ງຫ້ອງຄົວ',
+                    style: TextStyle(
+                      fontFamily: 'Phetsarath-OT',
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  )),
+        ),
+      );
+
+  sendingtokitchenagain() => Padding(
+        padding: const EdgeInsets.only(right: 18, left: 18, bottom: 10),
+        child: SizedBox(
+          height: 39.h,
+          width: double.infinity,
+          child: context.read<GetFoodMenuProvider>().getFoodMenuModel.isEmpty
+              ? const Text("")
+              : ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 30.w),
+                    primary: AppTheme.BASE_COLOR,
+                  ),
+                  onPressed: () async {
+                    if (context
+                        .read<GetFoodMenuProvider>()
+                        .getFoodMenuModel
+                        .isEmpty) {
+                      Mystyle().showDialogCheckData(
+                          context, "ກາລຸນາກວດສອບອໍເດີຂອງທ່ານກ່ອນ");
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Center(
+                            child: ShowLoading(
+                              title: "ກຳລັງສົ່ງອໍເດີໄປຫ້ອງຄົວ...",
+                            ),
+                          );
+                        },
+                      );
+                      await Future.delayed(Duration(seconds: 2));
+                      Navigator.of(context).pop();
+                      //provider ໃນການສັ່ງອໍເດີ
+                      context.read<CheckExpiredPackage>().orderagain(context);
+                     
+                      String? tablename = await CountPre().getTableName();
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => CalculateMoney(),
+                        ),
+                      );
+                    }
+                  },
+                  child: Text(
+                    'ສັ່ງຕື່ມ',
                     style: TextStyle(
                       fontFamily: 'Phetsarath-OT',
                       fontSize: 18.sp,

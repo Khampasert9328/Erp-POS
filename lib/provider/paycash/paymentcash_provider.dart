@@ -10,6 +10,7 @@ import 'package:erp_pos/pages/table/components/textdate.dart';
 import 'package:erp_pos/provider/areaprovider/area_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/getorderbyissuedate/get_order_by_issuedate_provider.dart';
+import 'package:erp_pos/provider/getordertable/get_ordertable_provider.dart';
 import 'package:erp_pos/provider/offsession/create_off_session_provider.dart';
 import 'package:erp_pos/provider/sessoin/get_session_provider.dart';
 import 'package:erp_pos/provider/updatetable/update_table_provider.dart';
@@ -32,9 +33,12 @@ class PaymentCashProvider extends ChangeNotifier {
   bool isload = false;
   bool get isloading => isload;
 
-  Future<void> createpaymentcashprovider(
-      BuildContext context, int number, List<Product>? data, String idtable, String tablename, String idarea, String areaname) async {
-    String? billid = await CountPre().getBillId();
+  Future<void> createpaymentcashprovider(BuildContext context, int number,
+      String idtable, String tablename, String idareaa, String areaname) async {
+    String? moneyRecive = await CountPre().getmoneyReceived();
+    int replaceString = int.parse(moneyRecive!);
+    int? moneychange = await CountPre().getmoneyChange();
+    String? billid = await CountPre().getBillIdDetail();
     String? sessionid = await CountPre().getSessionId();
     int paymenttype = 0;
     //////////////////////////////////////////////////////
@@ -97,11 +101,29 @@ class PaymentCashProvider extends ChangeNotifier {
                               border: Border.all(color: AppTheme.BASE_COLOR),
                             ),
                             child: TextButton(
-                              onPressed: () async{
+                              onPressed: () async {
+                                await UpdateTableProvider().updateTableProvider(
+                                    context,
+                                    idtable,
+                                    tablename,
+                                    idareaa,
+                                    areaname);
 
-                               await UpdateTableProvider().updateTableProvider(context, idtable, tablename, idarea, areaname);
-                               await context.read<AreaProvider>().callTable(context);
-                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>HomePage(fromlogin: false,)), (route) => false);
+                                GetOrderTableModels? models = context
+                                    .read<GetOrderTableProvider>()
+                                    .orderTableModels;
+                                String? tableid = models!.order!.first!.tableid;
+                                await CountPre().removeOrderUpdate(tableid!);
+                                String idarea =
+                                    context.read<AreaProvider>().idarea;
+                                await context
+                                    .read<AreaProvider>()
+                                    .callTable(context, idarea);
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => HomePage()),
+                                    (route) => false);
                               },
                               child: Text(
                                 "ປິດໜ້ານີ້",
@@ -120,120 +142,156 @@ class PaymentCashProvider extends ChangeNotifier {
                               border: Border.all(color: AppTheme.WHITE_COLOR),
                             ),
                             child: TextButton(
-                              onPressed: () async{
-                                
-                              String? billNo = await CountPre().getBillNo();
-                              int total = 0;
+                              onPressed: () async {
+                                String? billNo = await CountPre().getBillNo();
+                                int total = 0;
 
-                              try {
-                                await SunmiPrinter.startTransactionPrint();
-                                await SunmiPrinter.printText('ໃບບິນ',
-                                    style: SunmiStyle(
-                                        align: SunmiPrintAlign.CENTER,
-                                        bold: true,
-                                        fontSize: SunmiFontSize.LG));
-                                await SunmiPrinter.line();
-
-                                await SunmiPrinter.printRow(cols: [
-                                  ColumnMaker(text: 'ໃບບິນເລກທີ', width: 6),
-                                  ColumnMaker(
-                                      text: '$billNo',
-                                      width: 6,
-                                      align: SunmiPrintAlign.RIGHT),
-                                ]);
-
-                                await SunmiPrinter.printRow(cols: [
-                                  ColumnMaker(text: 'ວັນເວລາ', width: 6),
-                                  ColumnMaker(
-                                      text:
-                                          '${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now())}',
-                                      width: 6,
-                                      align: SunmiPrintAlign.RIGHT),
-                                ]);
-
-                                await SunmiPrinter.printRow(cols: [
-                                  ColumnMaker(text: 'ຊັ້ນ', width: 6),
-                                  ColumnMaker(
-                                      text: '$areaname',
-                                      width: 6,
-                                      align: SunmiPrintAlign.RIGHT),
-                                ]);
-
-                                await SunmiPrinter.printRow(cols: [
-                                  ColumnMaker(text: 'ເລກໂຕະ', width: 6),
-                                  ColumnMaker(
-                                      text: '$tablename',
-                                      width: 6,
-                                      align: SunmiPrintAlign.RIGHT),
-                                ]);
-
-                                await SunmiPrinter.line();
-                                await SunmiPrinter.printText('ລາຍການອາຫານ',
-                                    style: SunmiStyle(
-                                        align: SunmiPrintAlign.CENTER,
-                                        bold: true,
-                                        fontSize: SunmiFontSize.MD));
-
-                                for (var i in data!) {
-                                  String size = setSize(i.size!);
-                                  int sum = 0;
-
-                                  int amount = i.amount!;
-                                  int pricesale =
-                                      int.parse(i.pricesale.toString());
-                                  sum = pricesale * amount;
-                                  total += sum;
+                                try {
+                                  await SunmiPrinter.startTransactionPrint();
+                                  await SunmiPrinter.printText('ໃບບິນ',
+                                      style: SunmiStyle(
+                                          align: SunmiPrintAlign.CENTER,
+                                          bold: true,
+                                          fontSize: SunmiFontSize.LG));
+                                  await SunmiPrinter.line();
 
                                   await SunmiPrinter.printRow(cols: [
-                                    ColumnMaker(text: '${i.name}', width: 6),
+                                    ColumnMaker(text: 'ໃບບິນເລກທີ', width: 6),
                                     ColumnMaker(
-                                        text:
-                                            '${i.amount} $size ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(i.pricesale)}',
+                                        text: '$billNo',
                                         width: 6,
                                         align: SunmiPrintAlign.RIGHT),
                                   ]);
+
+                                  await SunmiPrinter.printRow(cols: [
+                                    ColumnMaker(text: 'ວັນເວລາ', width: 6),
+                                    ColumnMaker(
+                                        text:
+                                            '${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now())}',
+                                        width: 6,
+                                        align: SunmiPrintAlign.RIGHT),
+                                  ]);
+
+                                  await SunmiPrinter.printRow(cols: [
+                                    ColumnMaker(text: 'ຊັ້ນ', width: 6),
+                                    ColumnMaker(
+                                        text: '$areaname',
+                                        width: 6,
+                                        align: SunmiPrintAlign.RIGHT),
+                                  ]);
+
+                                  await SunmiPrinter.printRow(cols: [
+                                    ColumnMaker(text: 'ເລກໂຕະ', width: 6),
+                                    ColumnMaker(
+                                        text: '$tablename',
+                                        width: 6,
+                                        align: SunmiPrintAlign.RIGHT),
+                                  ]);
+
+                                  await SunmiPrinter.line();
+                                  await SunmiPrinter.printText('ລາຍການອາຫານ',
+                                      style: SunmiStyle(
+                                          align: SunmiPrintAlign.CENTER,
+                                          bold: true,
+                                          fontSize: SunmiFontSize.MD));
+
+                                  for (var j in context
+                                      .read<GetOrderTableProvider>()
+                                      .listOrderTable
+                                      .first
+                                      .order!) {
+                                    for (var d in j!.product!) {
+                                      String size = setSize(d!.size!);
+                                      int sum = 0;
+
+                                      int amount = d.amount!;
+                                      int pricesale =
+                                          int.parse(d.pricesale.toString());
+                                      sum = pricesale * amount;
+                                      total += sum;
+
+                                      await SunmiPrinter.printRow(cols: [
+                                        ColumnMaker(
+                                            text: '${d.name}', width: 6),
+                                        ColumnMaker(
+                                            text:
+                                                '${d.amount} $size ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(d.pricesale)}',
+                                            width: 6,
+                                            align: SunmiPrintAlign.RIGHT),
+                                      ]);
+                                    }
+                                  }
+
+                                  await SunmiPrinter.line();
+                                  await SunmiPrinter.printRow(cols: [
+                                    ColumnMaker(text: 'ລາຄາລວມ:', width: 6),
+                                    ColumnMaker(
+                                        text:
+                                            '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(total)} ',
+                                        width: 6,
+                                        align: SunmiPrintAlign.RIGHT),
+                                  ]);
+
+                                  await SunmiPrinter.printRow(cols: [
+                                    ColumnMaker(
+                                        text: 'ເງິນທີ່ໄດ້ຮັບ:', width: 6),
+                                    ColumnMaker(
+                                        text:
+                                            '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(replaceString)}',
+                                        width: 6,
+                                        align: SunmiPrintAlign.RIGHT),
+                                  ]);
+                                  await SunmiPrinter.printRow(cols: [
+                                    ColumnMaker(text: 'ເງິນທອນ:', width: 6),
+                                    ColumnMaker(
+                                        text:
+                                            '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(moneychange)} ',
+                                        width: 6,
+                                        align: SunmiPrintAlign.RIGHT),
+                                  ]);
+
+                                  await SunmiPrinter.line();
+
+                                  await SunmiPrinter.printText('ຂໍຂອບໃຈ',
+                                      style: SunmiStyle(
+                                          align: SunmiPrintAlign.CENTER,
+                                          bold: true,
+                                          fontSize: SunmiFontSize.MD));
+                                  await SunmiPrinter.lineWrap(3);
+                                  await SunmiPrinter.submitTransactionPrint();
+                                  await SunmiPrinter.exitTransactionPrint();
+                                } catch (e) {
+                                  rethrow;
                                 }
-                                await SunmiPrinter.line();
-                                await SunmiPrinter.printRow(cols: [
-                                  ColumnMaker(text: 'ລາຄາລວມ:', width: 6),
-                                  ColumnMaker(
-                                      text:
-                                          '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(total)} ',
-                                      width: 6,
-                                      align: SunmiPrintAlign.RIGHT),
-                                ]);
+                                await Future.delayed(Duration(seconds: 2));
+                                context
+                                    .read<UpdateTableProvider>()
+                                    .updateTableProvider(context, idtable,
+                                        tablename, idareaa, areaname);
 
-                                await SunmiPrinter.line();
+                                GetOrderTableModels? models = context
+                                    .read<GetOrderTableProvider>()
+                                    .orderTableModels;
+                                String? tableid = models!.order!.first!.tableid;
+                                await CountPre().removeOrderUpdate(tableid!);
+                                String idarea =
+                                    context.read<AreaProvider>().idarea;
+                                await context
+                                    .read<AreaProvider>()
+                                    .callTable(context, idarea);
 
-                                await SunmiPrinter.printText('ຂໍຂອບໃຈ',
-                                    style: SunmiStyle(
-                                        align: SunmiPrintAlign.CENTER,
-                                        bold: true,
-                                        fontSize: SunmiFontSize.MD));
-                                await SunmiPrinter.lineWrap(3);
-                                await SunmiPrinter.submitTransactionPrint();
-                                await SunmiPrinter.exitTransactionPrint();
-
-                                
-                                
-                              } catch (e) {
-                              }
-                               await Future.delayed(Duration(seconds: 2));
-                              context.read<UpdateTableProvider>().updateTableProvider(context, idtable, tablename, idarea, areaname);
-                             await context.read<AreaProvider>().callTable(context);
-                              Navigator.pushAndRemoveUntil(
+                                Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) =>  HomePage(fromlogin: false,)),
-                                    (route) => false); 
+                                        builder: (_) => HomePage()),
+                                    (route) => false);
                               },
                               child: Text(
                                 "ພິມໃບບິນ",
                                 style: TextStyle(
                                     color: AppTheme.WHITE_COLOR,
                                     fontFamily: 'Phetsarath-OT',
-                                    fontWeight: FontWeight.bold
-                                    ),
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
@@ -244,7 +302,6 @@ class PaymentCashProvider extends ChangeNotifier {
                 ),
               );
             });
-
       }
     } catch (e) {
       return showDialog(

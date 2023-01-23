@@ -13,11 +13,10 @@ import 'package:provider/provider.dart';
 class ListAccountBCELONE extends StatelessWidget {
   GetTable datatable;
 
-  List<Product>? data;
+  
   ListAccountBCELONE({
     super.key,
 
-    required this.data,
     required this.datatable,
    
   });
@@ -51,7 +50,7 @@ class ListAccountBCELONE extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) => PaymentBcelone(
-                                    data: data,
+                                  
                                     mcid: snapshot.data![index].merchid,
                                     shopcode: snapshot.data![index].shopcode,
                                     datatable: datatable,

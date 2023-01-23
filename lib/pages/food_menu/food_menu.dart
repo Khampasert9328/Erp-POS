@@ -1,5 +1,6 @@
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
+import 'package:erp_pos/model/ordertable/order_table_models.dart';
 import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/pages/food_menu/components/food_menu_body.dart';
 import 'package:erp_pos/pages/food_menu_detail/components/food_menu_detail_body.dart';
@@ -11,25 +12,25 @@ import 'package:erp_pos/constant/routes.dart' as custom_route;
 import 'package:provider/provider.dart';
 
 class FoodMenu extends StatefulWidget {
-  FoodMenu({Key? key}) : super(key: key);
+   GetTable? data;
+
+  FoodMenu({Key? key,}) : super(key: key);
 
   @override
   State<FoodMenu> createState() => _FoodMenuState();
 }
 
 class _FoodMenuState extends State<FoodMenu> {
-  GetTable? data;
+ 
   @override
   void initState() {
     super.initState();
     context.read<GetFoodMenuProvider>().getProduct(true);
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FoodMenuBody(
-        data: data,
       ),
     );
   }

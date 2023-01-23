@@ -8,7 +8,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GetTableAllProvider extends ChangeNotifier {
-
   List<String> _idtable = [];
   List<String> get idtable => _idtable;
   GetTableAll? _tableModels;
@@ -21,13 +20,7 @@ class GetTableAllProvider extends ChangeNotifier {
     String? idToken = await CountPre().getToken();
 
     _tableModels = await getTable(context, idToken, -1, 0);
-    // if (_tableModels != null) {
-    //   for (var item in _tableModels!.table!) {
-    //     _idtable.add(item.id!);
-        
-    //   }
-      
-    // }
+
     _isload = false;
     notifyListeners();
   }

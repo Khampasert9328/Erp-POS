@@ -5,12 +5,14 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:erp_pos/constant/api_path.dart';
+import 'package:erp_pos/model/createOrderMore/create_order_more.dart';
 import 'package:erp_pos/model/createordermodel/create_order_models.dart';
 import 'package:erp_pos/model/food_menu_model.dart';
+import 'package:erp_pos/model/ordertable/order_table_models.dart';
+import 'package:erp_pos/model/updateorder/update_order_models.dart';
 import 'package:erp_pos/pages/onboardingscreen/models/content_models.dart';
 import 'package:erp_pos/pages/table/components/textdatetime.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
-import 'package:erp_pos/utils/set_size.dart';
 
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,20 +23,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-Future<CreateOrderModels?> createOrder(BuildContext context, String? dateexpired,
-    String? datesup) async {
+Future<CreateOrderAgainModles?>createOrderAgain(BuildContext context, String dateexpired,
+    String datesup, String? tableid, String billid, String orderid) async {
   try {
     var str = "$dateexpired";
     var parts = str.split(' ');
     var prefix = parts[0].trim(); // prefix: "date"
     var rmDash = prefix.replaceAll('-', '');
-   // var dateExp = parts.sublist(0).join('').trim();
+    var dateExp = parts.sublist(0).join('').trim();
 
     var strsup = "$datesup";
     var partsup = strsup.split(' ');
     var prefixsup = partsup[0].trim();
     var rmDate = prefixsup.replaceAll("-", ''); // prefix: "date"
-    //var dateSup = partsup.sublist(0).join('').trim();
+    var dateSup = partsup.sublist(0).join('').trim();
 
     String? idtoken = await CountPre().getToken();
     //ວິທີການເເຕກເອົາຂໍ້ມູນໃນ token
@@ -58,84 +60,70 @@ Future<CreateOrderModels?> createOrder(BuildContext context, String? dateexpired
     DateTime time = DateTime.now();
     String issueDate = DateFormat('yyyyMMdd').format(time);
     String date = DateFormat('dd-MM-yyyy HH:mm:ss').format(time);
-    String? tableid = await CountPre().getTableId();
     for (var item in context.read<GetFoodMenuProvider>().getFoodMenuModel) {
       products.add({
         "productId": "${item.data.id}",
+        "productid": "${item.data.id}",
         "name": "${item.data.name}",
-        "size": item.size,
+        "size": 0,
         "amount": item.amount,
-        "priceSale": item.specialprice,
+        "priceSale": item.data.pricesale,
+        "pricesale": item.data.pricesale,
         "priceImport": item.data.priceimport,
+        "priceimport": item.data.priceimport,
         "discount": 0,
         "freeamount": 0,
         "description": "none",
         "cooked": true,
         "timeCooked": "none",
+         "timecooked": "none",
         "categoryOrder": {
           "categoryId": "${item.data.categoryid}",
           "categoryName": "${item.categoryname}"
-        }
+        },
+        "category": {
+          "categoryid": "${item.data.categoryid}",
+          "categoryname": "${item.categoryname}"
+        },
       });
     }
-    var url = "${APIPath.CREATE_ORDER}";
+    var url = "${APIPath.UPDATE_ORDER_More}";
     String payload = jsonEncode({
-      "order": {
-        "id": "none",
-        "issueDate": "$issueDate",
-        "date": date,
-        "billId": "none",
-        "tableId": tableid,
-        "product":products,
-        "userId": "$username",
-        "description": {
-          "customerName": "none",
-          "contact": ["none"],
-          "village": "none",
-          "district": "none",
-          "province": "none"
-        },
-        "status": 0,
-        "domain": "$domain",
-        "metaData": {
-          "modified": 0,
-          "modifiedID": "$userid",
-          "ipAddress": ipc,
-          "createID": "$userid",
-          "created": 0,
-          "computer": "$computer",
-          "note": "none",
-          "jobId": "none"
-        }
+      "id": "$orderid",
+      "issueDate": "$issueDate",
+      "date": "$date",
+      "billId": "$billid",
+      "tableId": "$tableid",
+      "tableid": "$tableid",
+      "product": products,
+      "userId": "$username",
+      "description": {
+        "customerName": "none",
+        "contact": ["none"],
+        "village": "none",
+        "district": "none",
+        "province": "none"
       },
-      "bill": {
-        "id": "none",
-        "prefixid": "none",
-        "issuedate": "$issueDate",
-        "date": date,
-        "discount": 0,
-        "total_price": 0,
-        "paid": 0,
-        "credit": 0,
-        "customerid": "none",
-        "paymentMethod": 0,
-        "timeReport": "none",
-        "time": "none",
-        "domain": "$domain",
-        "metaData": {
-          "modified": 0,
-          "modifiedID": "$userid",
-          "ipAddress": ipc,
-          "createID": "$userid",
-          "created": 0,
-          "computer": "$computer",
-          "note": "none",
-          "jobId": "none"
-        }
+      "status": 0,
+      "domain": "$domain",
+      "metaData": {
+        "modified": 0,
+        "modifiedID": "$userid",
+        "ipAddress": "$ipc",
+        "createID": "$userid",
+        "created": 0,
+        "computer": "$computer",
+        "note": "none",
+        "jobId": "none",
+        "domain": "$domain"
       },
+      "isSelected": true,
       "packageDateStart": "$rmDate",
-      "packageDateEnd": "$rmDash"
+      "packageDateEnd": "$rmDash",
+      "select": true
     });
+    await CountPre().setUpdateOrder(Order.fromJson(jsonDecode(payload)));
+
     var respones = await http.post(
       Uri.parse(url),
       headers: {
@@ -145,11 +133,12 @@ Future<CreateOrderModels?> createOrder(BuildContext context, String? dateexpired
       },
       body: payload,
     );
+
     if (respones.statusCode == 200) {
-      CreateOrderModels? models = createOrderModelsFromJson(respones.body);
+      CreateOrderAgainModles? models = CreateOrderAgainModles.fromJson(jsonDecode(respones.body));
       return models;
     }
   } catch (e) {
-  rethrow;
+    rethrow;
   }
 }

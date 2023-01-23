@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
+import 'package:erp_pos/utils/loading.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:http/http.dart' as http;
 import 'package:crypto/crypto.dart';
@@ -52,7 +53,7 @@ Future<ConnectValidateModels?> connectvalidateuser(
       /// ຖ້າບໍ່ມີຜູ້ໃຊ້ໃນລະບົບ
       if (data.code == "USERNAME_NOT_FOUND") {
 
-        print("No user");
+       Mystyle().showAlertloadingError(context,"ແຈ້ງເຕືອນ!", "ບໍ່ມີຢູເຊີນີ້ໃນລະບົບ ກາລຸນາສະໝັກສະມາຊິກ");
 
         AuthenticationProvider().registerUser(context, email, name, lastname);
 

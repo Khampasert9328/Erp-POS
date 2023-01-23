@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_unnecessary_containers, sort_child_properties_last, unused_import
+import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:erp_pos/bussiness%20logic/authentication.dart';
@@ -15,6 +16,7 @@ import 'package:erp_pos/pages/table/components/navbar_status_booking_next.dart';
 import 'package:erp_pos/pages/table_detail/components/table_detail_body.dart';
 import 'package:erp_pos/provider/areaprovider/area_provider.dart';
 import 'package:erp_pos/provider/areaprovider/insert_area_provider.dart';
+import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/listtable/list_table_provider.dart';
 import 'package:erp_pos/provider/tableprovider/click_table_provider.dart';
 import 'package:erp_pos/provider/tableprovider/table_provider.dart';
@@ -23,19 +25,20 @@ import 'package:erp_pos/services/getArea/get_area.dart';
 import 'package:erp_pos/services/updatetable/update_table_service.dart';
 import 'package:erp_pos/utils/check_status.dart';
 import 'package:erp_pos/utils/set_size.dart';
+import 'package:erp_pos/utils/setdata/setdata_provider.dart';
 
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:erp_pos/constant/routes.dart' as custom_route;
 
 import '../../../constant/theme.dart';
 
 class ListViewTable extends StatefulWidget {
-  bool fromlogin;
-  ListViewTable({Key? key, required this.fromlogin}) : super(key: key);
+  ListViewTable({Key? key}) : super(key: key);
 
   @override
   State<ListViewTable> createState() => _ListViewTableState();
@@ -50,38 +53,61 @@ int selectTable = 0;
 int? statusTable;
 
 class _ListViewTableState extends State<ListViewTable> {
-  @override
-  void initState() {
-    AuthenticationProvider().tokenManagement(context).then((value) {
+  bool isloading = false;
+  void delayisload() {
+    setState(() {
+      isloading = true;
+    });
+    Timer(Duration(milliseconds: 1000), () {
+      setState(() {
+        isloading = false;
+      });
+    });
+    AuthenticationProvider().tokenManagement(context).then((value) async {
       if (value == null) {
         Navigator.push(
           context,
           MaterialPageRoute(builder: ((context) => Login())),
         );
-      } else {
-        if (widget.fromlogin) {
-          context.read<AreaProvider>().getZone(context);
-        }
-        context.read<AreaProvider>().callTable(context);
       }
     });
-    super.initState();
   }
 
-  // int areaindex = 0;
-  final _refresh = GlobalKey<RefreshIndicatorState>();
-  bool isloading = false;
+  @override
+  void initState() {
+    delayisload();
+
+      context.read<AreaProvider>().getZone(context);
+    
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return isloading
         ? Center(
-            child: CircularProgressIndicator(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(
+                  color: AppTheme.BASE_COLOR,
+                ),
+                SizedBox(
+                  height: 5.h,
+                ),
+                const Text(
+                  "ກຳລັງໂຫຼດຂໍ້ມູນ...",
+                  style: TextStyle(
+                    fontFamily: 'Phetsarath-OT',
+                  ),
+                )
+              ],
+            ),
           )
         : Consumer<AreaProvider>(
             builder: ((context, value, child) {
               if (value.areaModels == null) {
-                return Text("ບໍ່ມີຂໍ້ມູນ");
+                return const Text("ບໍ່ມີຂໍ້ມູນ");
               } else {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,62 +121,83 @@ class _ListViewTableState extends State<ListViewTable> {
                             scrollDirection: Axis.horizontal,
                             itemCount: value.areaModels!.area!.length,
                             itemBuilder: (context, index) {
+                              String idArea =
+                                  value.areaModels!.area![index].id ?? '';
+                              String beforeID = value.idarea;
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
                                     child: Column(
                                       children: [
-                                        GestureDetector(
-                                          onTap: () async {
-                                            setState(() {
-                                              //  areaindex = index;
-                                              selectIndex = index;
-                                              CountPre().setIndex(index);
-                                              context
-                                                  .read<AreaProvider>()
-                                                  .callAPITable(
-                                                      context,
-                                                      value.areaModels!
-                                                          .area![index].id!);
-                                            });
-                                          },
-                                          child: Column(
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                  right: 8,
-                                                ),
-                                                child: Container(
-                                                  height: 40.h,
-                                                  padding: EdgeInsets.symmetric(
-                                                    horizontal: 15.w,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    color: selectIndex == index
-                                                        ? AppTheme.BASE_COLOR
-                                                        : AppTheme.WHITE_COLOR,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    border: Border.all(
-                                                        color: AppTheme
-                                                            .BASE_COLOR),
-                                                  ),
-                                                  child: Center(
-                                                    child: Mystyle().syleText(
-                                                        value.areaModels!
-                                                            .area![index].area!,
-                                                        selectIndex == index
+                                        Column(
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () async {
+                                                context
+                                                    .read<AreaProvider>()
+                                                    .setAreaID(idArea);
+                                                setState(() {
+                                                  selectIndex = index;
+
+                                                  context
+                                                      .read<AreaProvider>()
+                                                      .callAPITable(
+                                                        context,
+                                                        idArea,
+                                                      );
+                                                });
+                                              },
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                      right: 8,
+                                                    ),
+                                                    child: AnimatedContainer(
+                                                      duration: const Duration(
+                                                          milliseconds: 300),
+                                                      height: 40.h,
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                        horizontal: 15.w,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        color: idArea == beforeID
                                                             ? AppTheme
-                                                                .WHITE_COLOR
-                                                            : Colors.grey,
-                                                        18.sp),
+                                                                .BASE_COLOR
+                                                            : AppTheme
+                                                                .WHITE_COLOR,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5),
+                                                        border: Border.all(
+                                                            color: AppTheme
+                                                                .BASE_COLOR),
+                                                      ),
+                                                      child: Center(
+                                                        child: Mystyle().syleText(
+                                                            value
+                                                                .areaModels!
+                                                                .area![index]
+                                                                .area!,
+                                                            idArea == beforeID
+                                                                ? AppTheme
+                                                                    .WHITE_COLOR
+                                                                : Colors.grey,
+                                                            18.sp),
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                            SizedBox(
+                                              height: 5.h,
+                                            ),
+                                          
+                                          ],
                                         ),
                                       ],
                                     ),
@@ -158,6 +205,9 @@ class _ListViewTableState extends State<ListViewTable> {
                                 ],
                               );
                             })),
+                    SizedBox(
+                      height: 5.h,
+                    ),
                     NavBarStatusBooking(),
                     SizedBox(
                       height: 10.h,
@@ -165,8 +215,22 @@ class _ListViewTableState extends State<ListViewTable> {
                     Expanded(
                       child: value.isloading
                           ? Center(
-                              child: CircularProgressIndicator(
-                                color: AppTheme.BASE_COLOR,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CircularProgressIndicator(
+                                    color: AppTheme.BASE_COLOR,
+                                  ),
+                                  SizedBox(
+                                    height: 5.h,
+                                  ),
+                                  const Text(
+                                    "ກຳລັງໂຫຼດຂໍ້ມູນ...",
+                                    style: TextStyle(
+                                      fontFamily: 'Phetsarath-OT',
+                                    ),
+                                  )
+                                ],
                               ),
                             )
                           : value.gettablelist == null
@@ -187,15 +251,30 @@ class _ListViewTableState extends State<ListViewTable> {
                                             value.gettablelist!.table!.length,
                                             (index) {
                                           return GestureDetector(
-                                            onTap: (() {
+                                            onTap: (() async {
+                                              setState(() {
+                                                selectIndex = index;
+                                              });
                                               if (value.gettablelist!
                                                       .table![index].statusAv ==
                                                   1) {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (_) =>
-                                                        DetailOrderTable(
+                                                print(
+                                                    "idtable:${value.gettablelist!.table![index].id}");
+                                                context
+                                                    .read<GetFoodMenuProvider>()
+                                                    .clearKitchenData();
+                                                selectTable = index;
+                                                CountPre().setTableId(value
+                                                    .gettablelist!
+                                                    .table![index]
+                                                    .id!);
+                                                CountPre().setTableName(value
+                                                    .gettablelist!
+                                                    .table![index]
+                                                    .name!);
+
+                                                Get.to(
+                                                    DetailOrderTable(
                                                       data: value.gettablelist!
                                                           .table![index],
                                                       tablename: value
@@ -209,34 +288,42 @@ class _ListViewTableState extends State<ListViewTable> {
                                                           .area![index]
                                                           .area!,
                                                     ),
-                                                  ),
-                                                );
+                                                    transition:
+                                                        Transition.zoom);
                                               } else {
-                                                bool clicktable = true;
+                                                 print(
+                                                    "idtable:${value.gettablelist!.table![index].id}");
                                                 context
-                                                    .read<ClickTableProvider>()
-                                                    .clickTableProvider(
-                                                        clicktable);
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: ((context) =>
-                                                        TableDetail(
-                                                          data: value
-                                                              .gettablelist!
-                                                              .table![index],
-                                                        )),
-                                                  ),
-                                                );
+                                                    .read<GetFoodMenuProvider>()
+                                                    .clearKitchenData();
                                                 setState(() {
                                                   selectTable = index;
-                                                  context
-                                                      .read<ListTableProvider>()
-                                                      .addTable(value
-                                                          .gettablelist!
-                                                          .table![index]
-                                                          .name!);
                                                 });
+                                                CountPre().setTableId(value
+                                                    .gettablelist!
+                                                    .table![index]
+                                                    .id!);
+                                                CountPre().setTableName(value
+                                                    .gettablelist!
+                                                    .table![index]
+                                                    .name!);
+                                                CountPre().setArea(value
+                                                    .gettablelist!
+                                                    .table![index]
+                                                    .tablearea!
+                                                    .area!);
+
+                                                context
+                                                    .read<ClickTableProvider>()
+                                                    .clickTableProvider(true);
+
+                                                Get.to(
+                                                    TableDetail(
+                                                      data: value.gettablelist!
+                                                          .table![index],
+                                                    ),
+                                                    transition:
+                                                        Transition.zoom);
                                               }
                                             }),
                                             child: SingleChildScrollView(

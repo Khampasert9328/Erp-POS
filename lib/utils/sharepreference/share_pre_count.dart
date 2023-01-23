@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:erp_pos/model/createordermodel/create_order_models.dart';
+import 'package:erp_pos/model/ordertable/order_table_models.dart';
 import 'package:erp_pos/pages/table/components/listview_table.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,7 +31,6 @@ class CountPre {
   String nametable = 'nametable';
   String clicktable = 'clicktable';
   String count = "count";
-  String idarea = 'idarea';
   String merchid = 'merchid';
   String merchname = 'merchname';
   String accountnumber = 'accountnumber';
@@ -38,20 +40,130 @@ class CountPre {
   String connectTokenResponse = 'connectTokenResponse';
   String clickradio = 'clickradio';
   String dateTime = 'DateTime';
-  String index = 'index';
-  Future<void> setIndex(int val)async{
+
+  String firstOrderMore = 'firsOrderMore';
+  String billidDetail = 'billidDetail';
+  String orderid = 'orderid';
+
+  String updateorder = 'updateorder';
+  String money_received = 'money_received';
+  String money_change = 'money_change';
+
+  Future<void> moneyReceived(String money) async {
     preferences = await SharedPreferences.getInstance();
-    preferences.setInt(index, val);
+    preferences.setString(money_received, money);
   }
-  Future<int?> getIndexArea()async{
-     preferences = await SharedPreferences.getInstance();
-     return preferences.getInt(index);
+
+  Future<String?> getmoneyReceived() async {
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getString(money_received);
   }
-  Future<void> setDateTime(String date)async{
+
+  Future<void> moneyChange(int money) async {
+    preferences = await SharedPreferences.getInstance();
+    preferences.setInt(money_change, money);
+  }
+
+  Future<int?> getmoneyChange() async {
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getInt(money_change);
+  }
+
+  Future<void> setUpdateOrder(Order orderModels) async {
+    try {
+      preferences = await SharedPreferences.getInstance();
+      List<String> orderData = preferences.getStringList(updateorder) ?? [];
+      List<Order> create = [];
+      for (var i in orderData) {
+        create.add(Order.fromJson(jsonDecode(i)));
+      }
+      bool isthereData =
+          create.any((element) => element.tableid == orderModels.tableid);
+      if (isthereData) {
+        for (var i in create) {
+          if (i.tableid == orderModels.tableid) {
+      
+            for (var j in i.product!) {
+              orderModels.product!.add(j);
+            }
+            create.removeWhere((element) => element.tableid == i.tableid);
+            create.add(orderModels);
+          }
+        }
+      } else {
+        create.add(orderModels);
+      }
+      List<String> list = [];
+      for (var i in create) {
+        list.add(jsonEncode(i));
+      }
+      await preferences.setStringList(updateorder, list);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<Order>> getUpdateOrder() async {
+    preferences = await SharedPreferences.getInstance();
+    List<String> orderData = preferences.getStringList(updateorder) ?? [];
+    List<Order> create = [];
+    for (var i in orderData) {
+      create.add(Order.fromJson(jsonDecode(i)));
+    }
+    return create;
+  }
+
+  Future<void> removeOrderUpdate(String tableid) async {
+    preferences = await SharedPreferences.getInstance();
+    List<String> orderData = preferences.getStringList(updateorder) ?? [];
+    List<Order> create = [];
+    for (var i in orderData) {
+      create.add(Order.fromJson(jsonDecode(i)));
+    }
+    create.removeWhere((element) => element.tableid == tableid);
+    List<String> list = [];
+    for (var i in create) {
+      list.add(jsonEncode(i));
+    }
+    await preferences.setStringList(updateorder, list);
+  }
+
+  Future<void> setOrderId(String id) async {
+    preferences = await SharedPreferences.getInstance();
+    preferences.setString(orderid, id);
+  }
+
+  Future<String?> getOrderId() async {
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getString(orderid);
+  }
+
+  Future<void> setBillDetail(String id) async {
+    preferences = await SharedPreferences.getInstance();
+    preferences.setString(billidDetail, id);
+  }
+
+  Future<String?> getBillIdDetail() async {
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getString(billidDetail);
+  }
+
+  Future<void> setFirstOrderMore(bool val) async {
+    preferences = await SharedPreferences.getInstance();
+    preferences.setBool(firstOrderMore, val);
+  }
+
+  Future<bool?> getFirstOrderMore() async {
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getBool(firstOrderMore);
+  }
+
+  Future<void> setDateTime(String date) async {
     preferences = await SharedPreferences.getInstance();
     preferences.setString(dateTime, date);
   }
-  Future<String?> getDateTimebill()async{
+
+  Future<String?> getDateTimebill() async {
     preferences = await SharedPreferences.getInstance();
     return preferences.getString(dateTime);
   }
@@ -125,16 +237,6 @@ class CountPre {
   Future<String?> getMerchName() async {
     preferences = await SharedPreferences.getInstance();
     return preferences.getString(merchname);
-  }
-
-  Future<void> setAreaId(String val) async {
-    preferences = await SharedPreferences.getInstance();
-    preferences.setString(idarea, val);
-  }
-
-  Future<String?> getAreaId() async {
-    preferences = await SharedPreferences.getInstance();
-    return preferences.getString(idarea);
   }
 
   Future<void> setCount(int val) async {

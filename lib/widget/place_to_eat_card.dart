@@ -36,27 +36,28 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PlaceToEatCard extends StatefulWidget {
-  GetTable? data;
-
   VoidCallback onback;
 
   PlaceToEatCard({
     required this.onback,
-    required this.data,
   });
 
   @override
   State<PlaceToEatCard> createState() => _PlaceToEatCardState();
 }
 
-class _PlaceToEatCardState extends State<PlaceToEatCard> {
+class _PlaceToEatCardState extends State<PlaceToEatCard>
+    with SingleTickerProviderStateMixin {
   FoodMenuModel? model;
   TabController? controller;
   PrinterStatus? _printerStatus;
   PrinterMode? _printerMode;
+  TabController? _tabController;
   @override
   void initState() {
     super.initState();
+
+    _tabController = TabController(vsync: this, length: 2);
 
     _bindingPrinter().then((bool isBind) async => {
           if (isBind)
@@ -65,6 +66,12 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
               _printerMode = await _getPrinterMode(),
             }
         });
+  }
+
+  @override
+  void dispose() {
+    _tabController!.dispose();
+    super.dispose();
   }
 
   /// must binding ur printer at first init in app
@@ -99,36 +106,24 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      context.read<GetFoodMenuProvider>().clearKitchenData();
-                      widget.onback;
-                    },
-                    child: Container(
-                      height: 50.h,
-                      width: 150.w,
-                      decoration: BoxDecoration(
-                        color: AppTheme.WHITE_COLOR,
-                        border: Border.all(color: AppTheme.BASE_COLOR),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "ກັບຄືນ",
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.bold,
-                              color: AppTheme.BASE_COLOR,
-                              fontFamily: 'Phetsarath-OT',
-                            ),
+                  Container(
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 50.w, vertical: 14.h),
+                          primary: AppTheme.BASE_COLOR,
+                        ),
+                        onPressed: widget.onback,
+                        child: Text(
+                          'ກັບຄືນ',
+                          style: TextStyle(
+                            fontFamily: 'Phetsarath-OT',
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w700,
                           ),
-                        ],
-                      ),
-                    ),
+                        )),
                   ),
-                  //SizedBox(width: 15.w,),
+                 
                   GestureDetector(
                     onTap: () async {
                       if (context
@@ -167,38 +162,22 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                                 ),
                               );
                             });
-                        String? tablename = await CountPre().getTableName();
+
                         await Future.delayed(Duration(seconds: 2));
                         Navigator.pop(context);
-                        String idtable = context.read<SetData>().getidTable;
-                        String tbname = context.read<SetData>().gettableName;
-                        String idarea = context.read<SetData>().idarea;
-                        String area = context.read<SetData>().areaname;
-
-                        updateStatus(
-                          context,
-                          idarea,
-                          area,
-                          idtable,
-                          tbname,
-                        );
-                       await context.read<AreaProvider>().callTable(context);
+                        context
+                            .read<CheckExpiredPackage>()
+                            .getCheckExpiredPackage(context);
+                        String areaid = context.read<AreaProvider>().idarea;
+                        await context
+                            .read<AreaProvider>()
+                            .callTable(context, areaid);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => CalculateMoney(
-                              tablename: tablename ?? "ບໍ່ມີໂຕະ",
-                            ),
+                            builder: (_) => CalculateMoney(),
                           ),
                         );
-
-                        
-                        // context.read<UpdateTableProvider>().updateTableProvider(
-                        //     context,
-                        //     widget.data?.id,
-                        //     widget.data?.name,
-                        //     widget.data?.tablearea!.id,
-                        //     widget.data?.tablearea!.area);
                       }
                     },
                     child: Container(
@@ -237,6 +216,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                 height: 10.h,
               ),
               TabBar(
+                controller: _tabController,
                 indicatorPadding: EdgeInsets.only(left: 10.0, right: 10.0),
                 indicatorWeight: 3.0,
                 indicatorColor: AppTheme.BASE_COLOR,
@@ -245,6 +225,14 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
                   fontSize: 18.sp,
                   fontFamily: 'Phetsarath-OT',
                 ),
+                onTap: ((value) {
+                  if (value == 1) {
+                   CountPre().setTableId("none");
+                  }
+                  else{
+                    print("value==$value");
+                  }
+                }),
                 tabs: const [
                   Tab(
                     text: 'ກິນຢູ່ຮ້ານ',
@@ -259,6 +247,7 @@ class _PlaceToEatCardState extends State<PlaceToEatCard> {
               ),
               Expanded(
                 child: TabBarView(
+                  controller: _tabController,
                   children: [
                     EatResturant(),
                     OrderToTakeHome(),

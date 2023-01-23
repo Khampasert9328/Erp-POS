@@ -69,8 +69,6 @@ Future<UpdateStatusModels?> updateStatus(BuildContext context, String? idarea, S
       
     );
     if (respones.statusCode == 200) {
-      // print("resUpdate:${respones.body}");
-     // UpdateStatusModels updateStatusModels = UpdateStatusModels.fromJson(json.decode(respones.body));
       return updateStatusModelsFromJson(respones.body);
     }
   } catch (e) {

@@ -7,6 +7,7 @@ import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/provider/confirmpaymentbybcel/confirmpaymentbybcel_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/generateqrmmoney/generate_qr_mmoney_provider.dart';
+import 'package:erp_pos/provider/getordertable/get_ordertable_provider.dart';
 import 'package:erp_pos/provider/paycash/paymentcash_provider.dart';
 import 'package:erp_pos/utils/formattime.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class PaymentMmoney extends StatefulWidget {
   final qrdata;
   final username;
   final walletid;
-   List<Product>? data;
+
   String idtable;
   String tablename;
   String id;
@@ -31,7 +32,7 @@ class PaymentMmoney extends StatefulWidget {
       required this.qrdata,
       required this.username,
       required this.walletid,
-      required this.data,
+     
       required this.id,
       required this.areaname,
       required this.idtable,
@@ -66,11 +67,17 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
   Widget build(BuildContext context) {
      int sum = 0;
     int total = 0;
-    for (var i in widget.data!) {
-      int? amout = i.amount;
-      int pricesale = int.parse(i.pricesale.toString());
+     for (var i in context.read<GetOrderTableProvider>().listOrderTable) {
+      for (var d in i.order!) {
+        for (var j in d!.product!) {
+           int? amout = j!.amount;
+      int pricesale = int.parse(j.pricesale.toString());
       sum = pricesale * amout!;
       total += sum;
+        }
+        
+      }
+     
     }
     return Scaffold(
       appBar: AppBar(
@@ -170,7 +177,7 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
                     borderRadius: BorderRadius.circular(10)),
                 child: TextButton(
                   onPressed: () {
-                    PaymentCashProvider().createpaymentcashprovider(context, total, widget.data, widget.idtable, widget.tablename, widget.id, widget.areaname);
+                    PaymentCashProvider().createpaymentcashprovider(context, total,widget.idtable, widget.tablename, widget.id, widget.areaname);
                   },
                   child: Text(
                     "ຢືນຢັນການຊຳລະ",

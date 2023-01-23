@@ -26,7 +26,6 @@ class GenerateQrMmoneyProvider extends ChangeNotifier {
       BuildContext context,
       String username,
       String walletid,
-      List<Product>? data,
       String idtable,
       String tablename,
       String idarea,
@@ -40,7 +39,7 @@ class GenerateQrMmoneyProvider extends ChangeNotifier {
           builder: (_) => PaymentMmoney(
             areaname: area,
             id: idarea,
-            data: data,
+            
             qrdata: _generateQrMmoney!.qrcodeStr,
             idtable: idtable,
             tablename: tablename,

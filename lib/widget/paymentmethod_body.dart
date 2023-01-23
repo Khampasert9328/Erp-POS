@@ -14,12 +14,12 @@ import 'package:provider/provider.dart';
 
 class PaymentBody extends StatefulWidget {
   GetTable datatable;
-  List<Product>? data;
+ 
   int tatal;
   PaymentBody(
       {Key? key,
     
-      required this.data,
+  
       required this.datatable,
       
       required this.tatal
@@ -43,8 +43,7 @@ class _PaymentBodyState extends State<PaymentBody> {
                   context,
                   MaterialPageRoute(
                       builder: (_) => paycash(
-                            data: widget.data,
-                          
+                        
                             datatable: widget.datatable,
                           
                             tatal: widget.tatal,
@@ -98,8 +97,7 @@ class _PaymentBodyState extends State<PaymentBody> {
                             fontSize: 16.sp),
                       ),
                       content: ListAccountBCELONE(
-                       
-                        data: widget.data,
+                      
                         datatable: widget.datatable,
                       
                       ),
@@ -155,7 +153,7 @@ class _PaymentBodyState extends State<PaymentBody> {
                       ),
                       content: ListAccountMmoney(
                         table: widget.datatable,
-                        data: widget.data,
+                      
                       ),
                     );
                   });

@@ -3,9 +3,11 @@ import 'dart:ui';
 
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:erp_pos/model/ordertable/order_table_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -29,11 +31,9 @@ import 'package:erp_pos/widget/selected_menu_card.dart';
 import 'package:erp_pos/widget/selected_menu_card_expand.dart';
 
 class FoodMenuBody extends StatefulWidget {
-  GetTable? data;
   
-
   FoodMenuBody(
-      {Key? key, required this.data,})
+      {Key? key,})
       : super(key: key);
   @override
   State<FoodMenuBody> createState() => _FoodMenuBodyState();
@@ -57,20 +57,28 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
   bool isSelectedMenuCard = true;
   @override
   Widget build(BuildContext context) {
+    
     _panelHeightOpen = MediaQuery.of(context).size.height * .80;
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+       
         backgroundColor: AppTheme.WHITE_COLOR,
         elevation: 0,
-        title: Text(
-          "ລາຍການອາຫານ",
-          style: TextStyle(
-            fontFamily: 'Phetsarath-OT',
-            fontSize: 18.sp,
-            color: AppTheme.BASE_COLOR,
-            fontWeight: FontWeight.bold,
+        title: Container(
+          width: 150.w,
+          height: 28.h,
+          child: Marquee(
+            blankSpace: 50,
+            velocity: 150,
+            pauseAfterRound: Duration(seconds: 2),
+            text: 'ລາຍການອາຫານ',
+            style: TextStyle(
+              fontFamily: "Phetsarath-OT",
+              color: AppTheme.BASE_COLOR,
+              fontWeight: FontWeight.bold,
+              fontSize: 21.sp
+            ),
           ),
         ),
         actions: [
@@ -228,7 +236,7 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
       removeTop: true,
       child: isSelectedMenuCard
           ? SelectedMenuCardExpand(
-              data: widget.data,
+            
              
               onNext: () async {
                 setState(() {
@@ -238,7 +246,6 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
               selectMenu: isSelectedMenuCard,
             )
           : PlaceToEatCard(
-              data: widget.data,
              
               onback: () {
                 setState(() {

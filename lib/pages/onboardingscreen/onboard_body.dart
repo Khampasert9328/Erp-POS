@@ -109,7 +109,7 @@ class _OnboardBodyState extends State<OnboardBody> {
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                          builder: ((context) =>  HomePage(fromlogin: true,))),
+                          builder: ((context) =>  HomePage())),
                       (route) => false);
                 } else {
                   Navigator.pushAndRemoveUntil(

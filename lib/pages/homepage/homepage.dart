@@ -1,17 +1,23 @@
+import 'dart:async';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:erp_pos/bussiness%20logic/authentication.dart';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/pages/homepage/data.dart';
+import 'package:erp_pos/pages/login/login.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/tableprovider/click_table_provider.dart';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
+import 'dart:developer' as developer;
 
 class HomePage extends StatefulWidget {
-  bool fromlogin;
-   HomePage({Key? key, required this.fromlogin}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -22,6 +28,52 @@ class _HomePageState extends State<HomePage> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+    });
+  }
+
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    initConnectivity();
+
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      developer.log('ກາລຸນາກວດເບິ່ງອິນເຕີເນັດຂອງທ່ານ', error: e);
+      return;
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) {
+      return Future.value(null);
+    }
+
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
     });
   }
 
@@ -50,12 +102,10 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.all(16.0),
             onTabChange: (int index) {
               _onItemTapped(index);
-            context.read<GetFoodMenuProvider>().clearKitchenData();
-            context.read<ClickTableProvider>().clearbool();
+              context.read<GetFoodMenuProvider>().clearKitchenData();
+              context.read<ClickTableProvider>().clearbool();
+              context.read<ClickTableProvider>().firsOrderMoreTB(false);
             },
-            //style: text(
-            //fontFamily: 'NotoSansLao-Regular',
-            //),
             tabs: const [
               GButton(
                 icon: Icons.table_bar,

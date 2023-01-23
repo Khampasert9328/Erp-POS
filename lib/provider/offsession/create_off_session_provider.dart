@@ -42,10 +42,7 @@ CreateOffSessionModels? get createOffSessionModels => _createOffSessionModels;
           }
         }
         _createOffSessionModels = await createoffsession(context, _idsession!, _openDate!, cashCount!, _userOpenName!, _userOpenName!);
-        if (_createOffSessionModels != null) {
-         
-          
-        }
+        
 
         notifyListeners();
       }

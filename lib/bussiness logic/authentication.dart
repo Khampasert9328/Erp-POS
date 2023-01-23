@@ -57,6 +57,7 @@ class AuthenticationProvider extends ChangeNotifier {
           );
         },
       );
+
       ConnectValidateModels? connectValidateModels =
           await connectvalidateuser(email, context, name, lastname);
 
@@ -70,19 +71,19 @@ class AuthenticationProvider extends ChangeNotifier {
           CountPre().setRememberPassword(rememberpass);
           CountPre().setModelsToken(connectTokenModels.content!.accessToken!);
           _sessoin = await getsessionservice();
+
           if (_sessoin != null) {
             for (var item in _sessoin!.sessionItems!) {
               CountPre().setStatus(item.status!);
               CountPre().setSessionId(item.id!);
             }
           }
-          await Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (_) =>  HomePage(fromlogin: true,)),
-              (route) => false);
+          await Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (_) => HomePage()), (route) => false);
         }
       }
     } catch (e) {
+      Navigator.pop(context);
       Mystyle()
           .dialogError(context, "ເເຈ້ງເຕືອນ", "ກາລຸນາກວດສອບອິນເຕີເນັດຂອງທ່ານ");
     }

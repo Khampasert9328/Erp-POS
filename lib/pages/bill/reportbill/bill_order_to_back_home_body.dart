@@ -42,8 +42,8 @@ class _BodyOfBillOrderToBackHomeState extends State<BodyOfBillOrderToBackHome> {
                 String tablename = 'ສັ່ງກັບບ້ານ';
                 String prefix = '';
                 for (var data in table.tableModels!.table!) {
-                  if (value.order!.order![index].tableid == data.id) {
-                   tablename = data.name!;
+                  if (value.order!.order![index].tableid == 'none') {
+                    tablename = data.name!;
                   }
                 }
                 for (var data in value.getOrderByListId!.bill!) {
@@ -74,7 +74,7 @@ class _BodyOfBillOrderToBackHomeState extends State<BodyOfBillOrderToBackHome> {
                                     MaterialPageRoute(
                                         builder: (_) => BodyDetailBill(
                                             data: value.order!.order![index]
-                                                .product!)),
+                                                .product!,)),
                                   );
                                 },
                                 child: Container(
@@ -134,7 +134,13 @@ class _BodyOfBillOrderToBackHomeState extends State<BodyOfBillOrderToBackHome> {
                                                           BorderRadius.circular(
                                                               5)),
                                                   child: Center(
-                                                    child: Text("$tablename"),
+                                                    child: Text(
+                                                      "$tablename",
+                                                      style: TextStyle(
+                                                        fontSize: 12.sp,
+                                                         fontFamily: 'Phetsarath-OT',
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
                                                 SizedBox(
@@ -176,6 +182,7 @@ class _BodyOfBillOrderToBackHomeState extends State<BodyOfBillOrderToBackHome> {
                                             "ໂຕະ ${tablename}",
                                             style: TextStyle(
                                                 fontSize: 18.sp,
+                                                 fontFamily: 'Phetsarath-OT',
                                                 color: AppTheme.BASE_COLOR,
                                                 fontWeight: FontWeight.bold),
                                           ),

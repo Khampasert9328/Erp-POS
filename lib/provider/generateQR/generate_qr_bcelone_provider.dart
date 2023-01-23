@@ -6,7 +6,9 @@ import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/ordertable/order_table_models.dart';
 import 'package:erp_pos/pages/homepage/homepage.dart';
+import 'package:erp_pos/provider/areaprovider/area_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
+import 'package:erp_pos/provider/getordertable/get_ordertable_provider.dart';
 import 'package:erp_pos/provider/updatetable/update_table_provider.dart';
 import 'package:erp_pos/services/generateqrBCEL/generate_qr_bcelone.dart';
 
@@ -39,8 +41,15 @@ class GenerateQRBCELONE extends ChangeNotifier {
   //ສຳລັບ transaction
   String token =
       '${double.parse("${getTime() - 15 * 60 * 10000000}").toInt()}0000';
-  Future<String> getGenerateQR(BuildContext context, String mcid,
-      String shopcode, List<Product>? data, String idtable, String tablename, String idarea, String areaname) async {
+  Future<String> getGenerateQR(
+      BuildContext context,
+      String mcid,
+      String shopcode,
+     
+      String idtable,
+      String tablename,
+      String idarea,
+      String areaname) async {
     transaction = token;
     qrData = CodecampOnepay.initQR(
       mcid,
@@ -91,8 +100,21 @@ class GenerateQRBCELONE extends ChangeNotifier {
                               color: AppTheme.BASE_COLOR,
                               borderRadius: BorderRadius.circular(5)),
                           child: TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
+                            onPressed: () async {
+                              await context
+                                  .read<UpdateTableProvider>()
+                                  .updateTableProvider(context, idtable,
+                                      tablename, idarea, areaname);
+                              await context
+                                  .read<AreaProvider>()
+                                  .callAPITable(context, idarea);
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => HomePage(
+                                           
+                                          )),
+                                  (route) => false);
                             },
                             child: Text(
                               "ປິດ",
@@ -111,8 +133,7 @@ class GenerateQRBCELONE extends ChangeNotifier {
                               borderRadius: BorderRadius.circular(5)),
                           child: TextButton(
                             onPressed: () async {
-                              String? billNo =
-                                  context.read<SetData>().billNo;
+                              String? billNo = context.read<SetData>().billNo;
                               int total = 0;
 
                               try {
@@ -156,24 +177,29 @@ class GenerateQRBCELONE extends ChangeNotifier {
                                         bold: true,
                                         fontSize: SunmiFontSize.MD));
 
-                                for (var i in data!) {
-                                  String size = setSize(i.size!);
+                                for (var i in context.read<GetOrderTableProvider>().listOrderTable) {
+                                for (var j in i.order!) {
+                                  for (var d in j!.product!) {
+                                      String size = setSize(d!.size!);
                                   int sum = 0;
 
-                                  int amount = i.amount!;
+                                  int amount = d.amount!;
                                   int pricesale =
-                                      int.parse(i.pricesale.toString());
+                                      int.parse(d.pricesale.toString());
                                   sum = pricesale * amount;
                                   total += sum;
 
                                   await SunmiPrinter.printRow(cols: [
-                                    ColumnMaker(text: '${i.name}', width: 6),
+                                    ColumnMaker(text: '${d.name}', width: 6),
                                     ColumnMaker(
                                         text:
-                                            '${i.amount} $size ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(i.pricesale)}',
+                                            '${d.amount} $size ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(d.pricesale)}',
                                         width: 6,
                                         align: SunmiPrintAlign.RIGHT),
                                   ]);
+                                  }
+                                  
+                                }
                                 }
                                 await SunmiPrinter.line();
                                 await SunmiPrinter.printRow(cols: [
@@ -195,12 +221,20 @@ class GenerateQRBCELONE extends ChangeNotifier {
                                 await SunmiPrinter.lineWrap(3);
                                 await SunmiPrinter.submitTransactionPrint();
                                 await SunmiPrinter.exitTransactionPrint();
-                                context.read<UpdateTableProvider>().updateTableProvider(context, idtable, tablename, idarea, areaname);
+                                await context
+                                    .read<UpdateTableProvider>()
+                                    .updateTableProvider(context, idtable,
+                                        tablename, idarea, areaname);
+                                await context
+                                    .read<AreaProvider>()
+                                    .callAPITable(context, idarea);
                                 await Future.delayed(Duration(seconds: 2));
                                 Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) => HomePage(fromlogin: false,)),
+                                        builder: (_) => HomePage(
+                                             
+                                            )),
                                     (route) => false);
                               } catch (e) {
                                 print("error:$e");

@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 
 class PayMentMethod extends StatelessWidget {
   GetTable datatable;
-  List<Product>? data;
+  
   int tatal;
   PayMentMethod(
       {Key? key,
-      required this.data,
+     
       required this.datatable,
       required this.tatal
       })
@@ -33,7 +33,7 @@ class PayMentMethod extends StatelessWidget {
       ),
       body: PaymentBody(
         tatal: tatal,
-        data: data,
+    
         datatable: datatable,
       
       ),

@@ -1,15 +1,24 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:erp_pos/model/category/category_models.dart';
 import 'package:erp_pos/model/checkexpiredpackage/check_expired_package.dart';
+import 'package:erp_pos/model/createOrderMore/create_order_more.dart';
 import 'package:erp_pos/model/createordermodel/create_order_models.dart';
 import 'package:erp_pos/model/food_menu_model.dart';
+import 'package:erp_pos/model/getorderbylistid/get_order_by_list_id_models.dart';
 import 'package:erp_pos/model/getpackage/package_models.dart';
+import 'package:erp_pos/model/ordertable/order_table_models.dart';
+import 'package:erp_pos/model/updateorder/update_order_models.dart';
+import 'package:erp_pos/provider/areaprovider/area_provider.dart';
 import 'package:erp_pos/provider/updatetable/update_table_provider.dart';
 import 'package:erp_pos/services/checkexpiredpackage/check_expired_package_service.dart';
+import 'package:erp_pos/services/createroder/create_order_again.dart';
 import 'package:erp_pos/services/createroder/create_order_service.dart';
 import 'package:erp_pos/services/getcategory/get_category.dart';
 import 'package:erp_pos/services/getpackage/getpackage.dart';
 import 'package:erp_pos/services/updatestatus/updatestatus_service.dart';
+import 'package:erp_pos/utils/setdata/setdata_provider.dart';
 
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,11 +32,16 @@ class CheckExpiredPackage extends ChangeNotifier {
   CreateOrderModels? _createOrderModels;
   CreateOrderModels? get createOrderModels => _createOrderModels;
   GetCategoryModels? _category;
-  GetCategoryModels? get category=> _category;
-
+  GetCategoryModels? get category => _category;
+ CreateOrderAgainModles? _updateOrderModels;
+ CreateOrderAgainModles? get updateOrderModels => _updateOrderModels;
 
   Future<List<CheckExpiredPackageMedels>?> getCheckExpiredPackage(
-      BuildContext context, String idarea, String area, String idtable, String tablename) async {
+      BuildContext context) async {
+    String? idtable = await CountPre().getTableId();
+    String? tablename = await CountPre().getTableName();
+    String idarea = context.read<AreaProvider>().idarea;
+    String? areaname = await CountPre().getArea();
     CheckExpiredPackageMedels? package = await checkExpiredPackage();
 
     if (package != null) {
@@ -40,14 +54,32 @@ class CheckExpiredPackage extends ChangeNotifier {
       if (getPackageModels != null) {
         _category = await getCategory();
         _createOrderModels = await createOrder(context,
-            package.dateExpired.toString(), package.dateSubscribe.toString(), idtable);
+            package.dateExpired.toString(), package.dateSubscribe.toString());
 
         if (_createOrderModels != null) {
-          updateStatus(context, idarea, area, idtable, tablename);
           CountPre().setBillId(_createOrderModels!.billId!);
           CountPre().setBillNo(_createOrderModels!.billNo!);
+         await updateStatus(context, idarea, areaname, idtable, tablename);
+        //  await  context
+        //             .read<AreaProvider>()
+        //             .callAPITable(context, idarea);
         }
       }
     }
+  }
+
+  Future<void> orderagain(BuildContext context) async {
+    String? dateexpired = await CountPre().getDateExpired();
+    String? datesup = await CountPre().getDateSupscribe();
+    String? billid = await CountPre().getBillIdDetail();
+    String? orderid = await CountPre().getOrderId();
+    String? tableid = await CountPre().getTableId();
+    _updateOrderModels = await createOrderAgain(context, dateexpired.toString(),
+    
+        datesup.toString(), tableid, billid.toString(), orderid.toString());
+       if (_updateOrderModels !=null) {
+        
+       }
+    notifyListeners();
   }
 }

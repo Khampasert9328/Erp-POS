@@ -10,12 +10,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class ListAccountMmoney extends StatelessWidget {
-  List<Product>? data;
   GetTable table;
 
   ListAccountMmoney({
     super.key,
-    required this.data,
+   
     required this.table,
   });
 
@@ -50,7 +49,7 @@ class ListAccountMmoney extends StatelessWidget {
                                       context,
                                       snapshot.data![index].accountnumber!,
                                       snapshot.data![index].merchid!,
-                                      data,
+                                     
                                       table.tablearea!.area!,
                                       table.tablearea!.id!,
                                       table.id!,

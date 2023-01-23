@@ -14,10 +14,7 @@ Future<GetOrderTableModels?> getordertableidservice(
     var url = '${APIPath.GET_ORDER_TABLE}/$idtable';
     var respones = await http.get(
       Uri.parse(url),
-      headers: {
-        "accept":"text/plain",
-        "Authorization":"Bearer $idtoken"
-      },
+      headers: {"accept": "text/plain", "Authorization": "Bearer $idtoken"},
     );
     if (respones.statusCode == 200) {
       // print("respones:${respones.body}");
