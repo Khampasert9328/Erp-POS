@@ -8,19 +8,29 @@ import 'package:erp_pos/model/getorderbyissuedate/get_order_by_isuedatemodels.da
 import 'package:erp_pos/model/gettableall/gettable_all_models.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/utils/set_size.dart';
+import 'package:erp_pos/utils/setdata/setdata_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/bottombar_of_bill.dart';
+import 'package:erp_pos/widget/paymentmethod.dart';
+import 'package:erp_pos/widget/paymentmethod_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class BodyDetailBill extends StatefulWidget {
   List<Product> data;
-  
+  String date;
+  String tablename;
+
+  int status;
+
   BodyDetailBill({
     super.key,
     required this.data,
-   
+    required this.date,
+    required this.tablename,
+    required this.status,
   });
 
   @override
@@ -40,13 +50,16 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
       total += sum;
     }
 
+    var endD = "${widget.date}";
+    var senD = endD.split(" ");
+    var showdate = senD[0].trim();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppTheme.WHITE_COLOR,
         elevation: 0,
-        centerTitle: true,
         title: Text(
-          "ເລກໂຕະ",
+          "ເລກໂຕະ ${widget.tablename}",
           style: TextStyle(
             color: AppTheme.BASE_COLOR,
             fontWeight: FontWeight.bold,
@@ -120,108 +133,156 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                     ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: () async {
-                    try {
-                      await SunmiPrinter.startTransactionPrint();
-                      await SunmiPrinter.printText('ໃບບິນ',
-                          style: SunmiStyle(
-                              align: SunmiPrintAlign.CENTER,
-                              bold: true,
-                              fontSize: SunmiFontSize.LG));
-                      await SunmiPrinter.line();
-
-                      await SunmiPrinter.printRow(cols: [
-                        ColumnMaker(text: 'ໃບບິນເລກທີ', width: 6),
-                        ColumnMaker(
-                            text: 'none',
-                            width: 6,
-                            align: SunmiPrintAlign.RIGHT),
-                      ]);
-
-                      await SunmiPrinter.printRow(cols: [
-                        ColumnMaker(text: 'ວັນເວລາ', width: 6),
-                        ColumnMaker(
-                            text:
-                                '${DateFormat("yyy-MM-dd HH:mm").format(DateTime.now())}',
-                            width: 6,
-                            align: SunmiPrintAlign.RIGHT),
-                      ]);
-
-                      await SunmiPrinter.printRow(cols: [
-                        ColumnMaker(text: 'ເລກໂຕະ', width: 6),
-                        ColumnMaker(
-                            text: '', width: 6, align: SunmiPrintAlign.RIGHT),
-                      ]);
-
-                      await SunmiPrinter.line();
-                      await SunmiPrinter.printText('ລາຍການອາຫານ',
-                          style: SunmiStyle(
-                              align: SunmiPrintAlign.CENTER,
-                              bold: true,
-                              fontSize: SunmiFontSize.MD));
-                      for (var i in widget.data) {
-                        String size = setSize(i.size!);
-                        await SunmiPrinter.printRow(cols: [
-                          ColumnMaker(text: '${i.name}', width: 6),
-                          ColumnMaker(
-                              text:
-                                  '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(i.amount)} $size ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(i.pricesale)}',
-                              width: 6,
-                              align: SunmiPrintAlign.RIGHT),
-                        ]);
-                      }
-                      await SunmiPrinter.line();
-                      await SunmiPrinter.line();
-                      await SunmiPrinter.printRow(cols: [
-                        ColumnMaker(text: 'ລາຄາລວມ', width: 6),
-                        ColumnMaker(
-                            text:
-                                '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(total)}',
-                            width: 6,
-                            align: SunmiPrintAlign.RIGHT),
-                      ]);
-
-                      await SunmiPrinter.line();
-
-                      await SunmiPrinter.printText('ຂໍຂອບໃຈ',
-                          style: SunmiStyle(
-                              align: SunmiPrintAlign.CENTER,
-                              bold: true,
-                              fontSize: SunmiFontSize.MD));
-                      await SunmiPrinter.lineWrap(3);
-                      await SunmiPrinter.submitTransactionPrint();
-                      await SunmiPrinter.exitTransactionPrint();
-                    } catch (e) {}
-                  },
-                  child: Container(
-                    height: 60.h,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: AppTheme.BASE_COLOR,
-                        )),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(ERPImages.printbill),
-                        SizedBox(
-                          width: 10.w,
-                        ),
-                        Center(
-                          child: Text(
-                            "ພິມໃບບິນ",
-                            style: TextStyle(
-                              fontSize: 18.sp,
-                              color: AppTheme.BASE_COLOR,
-                              fontWeight: FontWeight.bold,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    widget.status == 0
+                        ? GestureDetector(
+                            onTap: () async {
+                              context
+                                  .read<SetData>()
+                                  .setCheckOrderToBlackhome(false);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => PayMentMethod(
+                                
+                                            tatal: total,
+                                            tablename: widget.tablename,
+                                          )));
+                            },
+                            child: Container(
+                              height: 60.h,
+                              width: 150.w,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: AppTheme.BASE_COLOR,
+                                  )),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Center(
+                                    child: Text(
+                                      "ຄິດໄລ່ເງິນ",
+                                      style: TextStyle(
+                                        fontSize: 18.sp,
+                                        color: AppTheme.BASE_COLOR,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
+                          )
+                        : SizedBox(),
+                    GestureDetector(
+                      onTap: () async {
+                        try {
+                          await SunmiPrinter.startTransactionPrint();
+                          await SunmiPrinter.printText('ໃບບິນ',
+                              style: SunmiStyle(
+                                  align: SunmiPrintAlign.CENTER,
+                                  bold: true,
+                                  fontSize: SunmiFontSize.LG));
+                          await SunmiPrinter.line();
+
+                          await SunmiPrinter.printRow(cols: [
+                            ColumnMaker(text: 'ໃບບິນເລກທີ', width: 6),
+                            ColumnMaker(
+                                text: 'none',
+                                width: 6,
+                                align: SunmiPrintAlign.RIGHT),
+                          ]);
+
+                          await SunmiPrinter.printRow(cols: [
+                            ColumnMaker(text: 'ວັນເວລາ', width: 6),
+                            ColumnMaker(
+                                text:
+                                    '${DateFormat("yyy-MM-dd HH:mm").format(DateTime.now())}',
+                                width: 6,
+                                align: SunmiPrintAlign.RIGHT),
+                          ]);
+
+                          await SunmiPrinter.printRow(cols: [
+                            ColumnMaker(text: 'ເລກໂຕະ', width: 6),
+                            ColumnMaker(
+                                text: '',
+                                width: 6,
+                                align: SunmiPrintAlign.RIGHT),
+                          ]);
+
+                          await SunmiPrinter.line();
+                          await SunmiPrinter.printText('ລາຍການອາຫານ',
+                              style: SunmiStyle(
+                                  align: SunmiPrintAlign.CENTER,
+                                  bold: true,
+                                  fontSize: SunmiFontSize.MD));
+                          for (var i in widget.data) {
+                            String size = setSize(i.size!);
+                            await SunmiPrinter.printRow(cols: [
+                              ColumnMaker(text: '${i.name}', width: 6),
+                              ColumnMaker(
+                                  text:
+                                      '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(i.amount)} $size ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(i.pricesale)}',
+                                  width: 6,
+                                  align: SunmiPrintAlign.RIGHT),
+                            ]);
+                          }
+                          await SunmiPrinter.line();
+                          await SunmiPrinter.line();
+                          await SunmiPrinter.printRow(cols: [
+                            ColumnMaker(text: 'ລາຄາລວມ', width: 6),
+                            ColumnMaker(
+                                text:
+                                    '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(total)}',
+                                width: 6,
+                                align: SunmiPrintAlign.RIGHT),
+                          ]);
+
+                          await SunmiPrinter.line();
+
+                          await SunmiPrinter.printText('ຂໍຂອບໃຈ',
+                              style: SunmiStyle(
+                                  align: SunmiPrintAlign.CENTER,
+                                  bold: true,
+                                  fontSize: SunmiFontSize.MD));
+                          await SunmiPrinter.lineWrap(3);
+                          await SunmiPrinter.submitTransactionPrint();
+                          await SunmiPrinter.exitTransactionPrint();
+                        } catch (e) {}
+                      },
+                      child: Container(
+                        height: 60.h,
+                        width: 150.w,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: AppTheme.BASE_COLOR,
+                            )),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(ERPImages.printbill),
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            Center(
+                              child: Text(
+                                "ພິມໃບບິນ",
+                                style: TextStyle(
+                                  fontSize: 18.sp,
+                                  color: AppTheme.BASE_COLOR,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),
@@ -233,12 +294,6 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "ພະນັກງານຮັບອໍເດີ:",
-              style: TextStyle(
-                fontSize: 15.sp,
-              ),
-            ),
             SizedBox(
               height: 18.h,
             ),
@@ -252,7 +307,13 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                //Text("# Order ${widget.dataorder!.prefix}"),
+                Text(
+                  "ວັນທີ: $showdate",
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
             const Divider(),
@@ -313,62 +374,67 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
               ],
             ),
             const Divider(),
-            for (var i in widget.data)
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Text(
-                      "${widget.data.length}",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      "${i.name}",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      "${setSize(i.size!)}",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      "${i.amount}",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(i.pricesale)}",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            const Divider(),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: widget.data.length,
+                  itemBuilder: ((context, index) {
+                    String size = setSize(widget.data[index].size!);
+                    return Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            "${index + 1}",
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Text(
+                            "${widget.data[index].name}",
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Text(
+                            "$size",
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            "${widget.data[index].amount}",
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(widget.data[index].pricesale)}",
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  })),
+            )
           ],
         ),
       ),

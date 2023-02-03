@@ -5,17 +5,14 @@ import 'package:erp_pos/model/ordertable/order_table_models.dart';
 import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/provider/generateqrmmoney/generate_qr_mmoney_provider.dart';
 import 'package:erp_pos/provider/getaccount/getaccount_provider.dart';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class ListAccountMmoney extends StatelessWidget {
-  GetTable table;
-
   ListAccountMmoney({
     super.key,
-   
-    required this.table,
   });
 
   @override
@@ -41,21 +38,25 @@ class ListAccountMmoney extends StatelessWidget {
                             height: 10.h,
                           ),
                           GestureDetector(
-                            onTap: (() {
-                           
+                            onTap: (() async {
+                              String? tablename =
+                                  await CountPre().getTableName();
+                              String? tableid = await CountPre().getTableId();
+                              String? areaid = await CountPre().getAreaId();
+                              String? areaname = await CountPre().getArea();
+
+                              // ignore: use_build_context_synchronously
                               context
                                   .read<GenerateQrMmoneyProvider>()
                                   .getqrmmoney(
-                                      context,
-                                      snapshot.data![index].accountnumber!,
-                                      snapshot.data![index].merchid!,
-                                     
-                                      table.tablearea!.area!,
-                                      table.tablearea!.id!,
-                                      table.id!,
-                                      table.name!);
-
-                                    
+                                    context,
+                                    snapshot.data![index].accountnumber!,
+                                    snapshot.data![index].merchid!,
+                                    areaname!,
+                                    areaid!,
+                                    tableid!,
+                                    tablename!,
+                                  );
                             }),
                             child: Container(
                               height: 50.h,

@@ -5,16 +5,10 @@ import 'package:erp_pos/widget/paymentmethod_body.dart';
 import 'package:flutter/material.dart';
 
 class PayMentMethod extends StatelessWidget {
-  GetTable datatable;
-  
+ 
   int tatal;
-  PayMentMethod(
-      {Key? key,
-     
-      required this.datatable,
-      required this.tatal
-      })
-      : super(key: key);
+  String tablename;
+  PayMentMethod({Key? key, required this.tatal, required this.tablename, }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +18,7 @@ class PayMentMethod extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          datatable.name!,
+          tablename,
           style: TextStyle(
             color: AppTheme.BASE_COLOR,
             fontWeight: FontWeight.bold,
@@ -33,9 +27,7 @@ class PayMentMethod extends StatelessWidget {
       ),
       body: PaymentBody(
         tatal: tatal,
-    
-        datatable: datatable,
-      
+        tablename: tablename,
       ),
     );
   }

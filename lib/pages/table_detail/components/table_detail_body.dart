@@ -64,7 +64,7 @@ class _TableDetailState extends State<TableDetail> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => FoodMenuBody(),
+                        builder: (_) => FoodMenuBody(tablename: widget.data.name!,),
                       ),
                     );
                   },

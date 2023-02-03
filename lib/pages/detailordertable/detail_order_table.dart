@@ -38,7 +38,6 @@ class DetailOrderTable extends StatefulWidget {
 }
 
 class _DetailOrderTableState extends State<DetailOrderTable> {
-  List<Product>? data;
   @override
   PrinterStatus? _printerStatus;
   PrinterMode? _printerMode;
@@ -47,9 +46,7 @@ class _DetailOrderTableState extends State<DetailOrderTable> {
   @override
   void initState() {
     super.initState();
-    context
-        .read<GetOrderTableProvider>()
-        .getordertableprovider(context, widget.data.id!);
+    context.read<GetOrderTableProvider>().getordertableprovider(context);
     _bindingPrinter().then((bool isBind) async => {
           if (isBind)
             {
@@ -109,6 +106,7 @@ class _DetailOrderTableState extends State<DetailOrderTable> {
                       CountPre().setBillDetail(food.order!.first!.billid!);
                       for (var i in food.order!) {
                         CountPre().setOrderId(i!.id!);
+
                         for (var j in i.product!) {
                           amount = j!.amount!;
                           pricesale = j.pricesale!;
@@ -194,12 +192,15 @@ class _DetailOrderTableState extends State<DetailOrderTable> {
                                 child: Center(
                                   child: TextButton(
                                     onPressed: () {
+                                      context
+                                          .read<SetData>()
+                                          .setCheckOrderToBlackhome(false);
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (_) => PayMentMethod(
+                                            tablename: widget.tablename,
                                             tatal: total,
-                                            datatable: widget.data,
                                           ),
                                         ),
                                       );
@@ -379,7 +380,9 @@ class _DetailOrderTableState extends State<DetailOrderTable> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => FoodMenuBody(),
+                                    builder: (_) => FoodMenuBody(
+                                      tablename: widget.tablename,
+                                    ),
                                   ),
                                 );
                               },
@@ -482,60 +485,73 @@ class _DetailOrderTableState extends State<DetailOrderTable> {
                           itemBuilder: ((context, index) {
                             product = model.orderTableModels!.order!.first!
                                 .product![index]!;
-
-                            return SingleChildScrollView(
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    flex: 1,
-                                    child: Text(
-                                      "${index += 1}",
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.bold,
+                            if (model.isloading) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else {
+                              if (model.orderTableModels!.order!.first!
+                                      .product ==
+                                  null) {
+                                return const Center(
+                                  child: Text("ບໍ່ມີຂໍ້ມູນ"),
+                                );
+                              } else {
+                                return SingleChildScrollView(
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Text(
+                                          "${index += 1}",
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 3,
-                                    child: Text(
-                                      "${product.name}",
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.bold,
+                                      Expanded(
+                                        flex: 3,
+                                        child: Text(
+                                          "${product.name}",
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "${setSize(product.size!)}",
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.bold,
+                                      Expanded(
+                                        child: Text(
+                                          "${setSize(product.size!)}",
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "${product.amount}",
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.bold,
+                                      Expanded(
+                                        child: Text(
+                                          "${product.amount}",
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(product.pricesale)} ",
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.bold,
+                                      Expanded(
+                                        child: Text(
+                                          "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(product.pricesale)} ",
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            );
+                                );
+                              }
+                            }
                           }),
                         )
                       ],

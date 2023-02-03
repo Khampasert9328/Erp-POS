@@ -64,6 +64,8 @@ class _ListViewTableState extends State<ListViewTable> {
       });
     });
     AuthenticationProvider().tokenManagement(context).then((value) async {
+      String? idsession = await CountPre().getSessionId();
+      print("idsession:$idsession");
       if (value == null) {
         Navigator.push(
           context,
@@ -77,8 +79,8 @@ class _ListViewTableState extends State<ListViewTable> {
   void initState() {
     delayisload();
 
-      context.read<AreaProvider>().getZone(context);
-    
+    context.read<AreaProvider>().getZone(context);
+
     super.initState();
   }
 
@@ -143,9 +145,7 @@ class _ListViewTableState extends State<ListViewTable> {
                                                   context
                                                       .read<AreaProvider>()
                                                       .callAPITable(
-                                                        context,
-                                                        idArea,
-                                                      );
+                                                          context, idArea);
                                                 });
                                               },
                                               child: Column(
@@ -196,7 +196,6 @@ class _ListViewTableState extends State<ListViewTable> {
                                             SizedBox(
                                               height: 5.h,
                                             ),
-                                          
                                           ],
                                         ),
                                       ],
@@ -258,8 +257,18 @@ class _ListViewTableState extends State<ListViewTable> {
                                               if (value.gettablelist!
                                                       .table![index].statusAv ==
                                                   1) {
-                                                print(
-                                                    "idtable:${value.gettablelist!.table![index].id}");
+                                                //                 await context
+                                                // .read<UpdateTableProvider>()
+                                                // .updateTableProvider(context, value.gettablelist!
+                                                //                 .table![index].id,
+                                                //     value.gettablelist!
+                                                //                 .table![index].name, value.gettablelist!
+                                                //                 .table![index].tablearea!.id, value.gettablelist!
+                                                //                 .table![index].tablearea!.area);
+                                                context
+                                                    .read<SetData>()
+                                                    .setCheckOrderToBlackhome(
+                                                        false);
                                                 context
                                                     .read<GetFoodMenuProvider>()
                                                     .clearKitchenData();
@@ -272,6 +281,17 @@ class _ListViewTableState extends State<ListViewTable> {
                                                     .gettablelist!
                                                     .table![index]
                                                     .name!);
+                                                CountPre().setArea(value
+                                                    .gettablelist!
+                                                    .table![index]
+                                                    .tablearea!
+                                                    .area!);
+
+                                                CountPre().setAreaId(value
+                                                    .gettablelist!
+                                                    .table![index]
+                                                    .tablearea!
+                                                    .id!);
 
                                                 Get.to(
                                                     DetailOrderTable(
@@ -291,8 +311,6 @@ class _ListViewTableState extends State<ListViewTable> {
                                                     transition:
                                                         Transition.zoom);
                                               } else {
-                                                 print(
-                                                    "idtable:${value.gettablelist!.table![index].id}");
                                                 context
                                                     .read<GetFoodMenuProvider>()
                                                     .clearKitchenData();
@@ -312,6 +330,12 @@ class _ListViewTableState extends State<ListViewTable> {
                                                     .table![index]
                                                     .tablearea!
                                                     .area!);
+
+                                                CountPre().setAreaId(value
+                                                    .gettablelist!
+                                                    .table![index]
+                                                    .tablearea!
+                                                    .id!);
 
                                                 context
                                                     .read<ClickTableProvider>()

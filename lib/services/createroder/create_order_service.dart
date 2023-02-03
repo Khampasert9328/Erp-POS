@@ -21,14 +21,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-Future<CreateOrderModels?> createOrder(BuildContext context, String? dateexpired,
-    String? datesup) async {
+Future<CreateOrderModels?> createOrder(
+    BuildContext context, String? dateexpired, String? datesup) async {
   try {
     var str = "$dateexpired";
     var parts = str.split(' ');
     var prefix = parts[0].trim(); // prefix: "date"
     var rmDash = prefix.replaceAll('-', '');
-   // var dateExp = parts.sublist(0).join('').trim();
+    // var dateExp = parts.sublist(0).join('').trim();
 
     var strsup = "$datesup";
     var partsup = strsup.split(' ');
@@ -85,8 +85,8 @@ Future<CreateOrderModels?> createOrder(BuildContext context, String? dateexpired
         "issueDate": "$issueDate",
         "date": date,
         "billId": "none",
-        "tableId": tableid,
-        "product":products,
+        "tableId": tableid??"none",
+        "product": products,
         "userId": "$username",
         "description": {
           "customerName": "none",
@@ -150,6 +150,6 @@ Future<CreateOrderModels?> createOrder(BuildContext context, String? dateexpired
       return models;
     }
   } catch (e) {
-  rethrow;
+    rethrow;
   }
 }

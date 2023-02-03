@@ -37,6 +37,8 @@ class AreaProvider extends ChangeNotifier {
         if (_areaModels!.area!.isNotEmpty) {
           _tablelist =
               await getTablebyid(context, _areaModels!.area!.first.id!);
+
+               await Future.delayed(Duration(milliseconds: 500));
         }
       }
     }
@@ -47,7 +49,6 @@ class AreaProvider extends ChangeNotifier {
 //ຟັງຊັ້ນໃນການດຶງຂໍ້ມູນໂຕະເວລາເຮາກົດ ຊັ້ນ ແລ້ວໃຫ້ມັນສົ່ງ id ຂອງຊັ້ນ
   Future<void> callAPITable(BuildContext context, String id) async {
     isloading = true;
-
     _tablelist = await getTablebyid(context, id);
     isloading = false;
     notifyListeners();

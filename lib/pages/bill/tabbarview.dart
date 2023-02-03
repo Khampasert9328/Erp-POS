@@ -76,7 +76,7 @@ class _BillBodyState extends State<BillBody> {
                       ),
                       Text(
                         _dateTime == null
-                            ? ""
+                            ? "ເວລາ ແລະ ວັນທີ"
                             : DateFormat('dd-MM-yyyy').format(_dateTime!),
                         style: TextStyle(
                             fontFamily: 'Phetsarath-OT',

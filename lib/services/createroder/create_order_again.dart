@@ -13,6 +13,7 @@ import 'package:erp_pos/model/updateorder/update_order_models.dart';
 import 'package:erp_pos/pages/onboardingscreen/models/content_models.dart';
 import 'package:erp_pos/pages/table/components/textdatetime.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
+import 'package:erp_pos/provider/getordertable/get_ordertable_provider.dart';
 
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,8 +24,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-Future<CreateOrderAgainModles?>createOrderAgain(BuildContext context, String dateexpired,
-    String datesup, String? tableid, String billid, String orderid) async {
+Future<CreateOrderAgainModles?> createOrderAgain(
+    BuildContext context,
+    String dateexpired,
+    String datesup,
+    String? tableid,
+    String billid,
+    String orderid) async {
   try {
     var str = "$dateexpired";
     var parts = str.split(' ');
@@ -61,31 +67,82 @@ Future<CreateOrderAgainModles?>createOrderAgain(BuildContext context, String dat
     String issueDate = DateFormat('yyyyMMdd').format(time);
     String date = DateFormat('dd-MM-yyyy HH:mm:ss').format(time);
     for (var item in context.read<GetFoodMenuProvider>().getFoodMenuModel) {
-      products.add({
-        "productId": "${item.data.id}",
-        "productid": "${item.data.id}",
-        "name": "${item.data.name}",
-        "size": 0,
-        "amount": item.amount,
-        "priceSale": item.data.pricesale,
-        "pricesale": item.data.pricesale,
-        "priceImport": item.data.priceimport,
-        "priceimport": item.data.priceimport,
-        "discount": 0,
-        "freeamount": 0,
-        "description": "none",
-        "cooked": true,
-        "timeCooked": "none",
-         "timecooked": "none",
-        "categoryOrder": {
-          "categoryId": "${item.data.categoryid}",
-          "categoryName": "${item.categoryname}"
-        },
-        "category": {
-          "categoryid": "${item.data.categoryid}",
-          "categoryname": "${item.categoryname}"
-        },
-      });
+      int productIDIndex = products
+          .indexWhere((element) => element['productid'] == item.data.id);
+
+      if (productIDIndex > -1 &&
+          products[productIDIndex]['size'] == item.data.size) {
+        int amount = products[productIDIndex]['amount'];
+        products[productIDIndex]['amount'] = amount + item.amount;
+      } else {
+        products.add({
+          "productId": "${item.data.id}",
+          "productid": "${item.data.id}",
+          "name": "${item.data.name}",
+          "size": item.size,
+          "amount": item.amount,
+          "priceSale": item.data.pricesale,
+          "pricesale": item.data.pricesale,
+          "priceImport": item.data.priceimport,
+          "priceimport": item.data.priceimport,
+          "discount": 0,
+          "freeamount": 0,
+          "description": "none",
+          "cooked": true,
+          "timeCooked": "none",
+          "timecooked": "none",
+          "categoryOrder": {
+            "categoryId": "${item.data.categoryid}",
+            "categoryName": "${item.categoryname}"
+          },
+          "category": {
+            "categoryid": "${item.data.categoryid}",
+            "categoryname": "${item.categoryname}"
+          },
+        });
+      }
+    }
+
+    for (var data in context
+        .read<GetOrderTableProvider>()
+        .orderTableModels!
+        .order!
+        .first!
+        .product!) {
+      int productIDIndex = products
+          .indexWhere((element) => element['productid'] == data!.productid);
+
+      if (productIDIndex > -1 &&
+          products[productIDIndex]['size'] == data!.size) {
+        int amount = products[productIDIndex]['amount'];
+        products[productIDIndex]['amount'] = amount + data.amount!;
+      } else {
+        products.add({
+          "productId": "${data!.productid}",
+          "productid": "${data.productid}",
+          "name": "${data.name}",
+          "size": data.size,
+          "amount": data.amount,
+          "priceSale": data.pricesale,
+          "pricesale": data.pricesale,
+          "priceImport": data.priceimport,
+          "priceimport": data.priceimport,
+          "discount": 0,
+          "freeamount": 0,
+          "description": "none",
+          "cooked": true,
+          "timeCooked": "none",
+          "timecooked": "none",
+          "categoryOrder": {
+            "categoryId": "${data.category!.categoryid}",
+            "categoryName": "${data.category!.categoryname}"
+          },
+          "category": {
+            "categoryid": "${data.category!.categoryid}",
+            "categoryname": "${data.category!.categoryname}"
+          },
+        });
+      }
     }
     var url = "${APIPath.UPDATE_ORDER_More}";
     String payload = jsonEncode({
@@ -122,7 +179,6 @@ Future<CreateOrderAgainModles?>createOrderAgain(BuildContext context, String dat
       "packageDateEnd": "$rmDash",
       "select": true
     });
-    await CountPre().setUpdateOrder(Order.fromJson(jsonDecode(payload)));
 
     var respones = await http.post(
       Uri.parse(url),
@@ -135,7 +191,8 @@ Future<CreateOrderAgainModles?>createOrderAgain(BuildContext context, String dat
     );
 
     if (respones.statusCode == 200) {
-      CreateOrderAgainModles? models = CreateOrderAgainModles.fromJson(jsonDecode(respones.body));
+      CreateOrderAgainModles? models =
+          CreateOrderAgainModles.fromJson(jsonDecode(respones.body));
       return models;
     }
   } catch (e) {

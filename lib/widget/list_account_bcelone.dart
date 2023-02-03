@@ -11,13 +11,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class ListAccountBCELONE extends StatelessWidget {
-  GetTable datatable;
-
+ 
   
   ListAccountBCELONE({
     super.key,
 
-    required this.datatable,
+  
    
   });
 
@@ -53,7 +52,7 @@ class ListAccountBCELONE extends StatelessWidget {
                                   
                                     mcid: snapshot.data![index].merchid,
                                     shopcode: snapshot.data![index].shopcode,
-                                    datatable: datatable,
+                                 
                                
                                   ),
                                 ),

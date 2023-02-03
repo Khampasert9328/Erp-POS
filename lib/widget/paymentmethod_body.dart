@@ -13,18 +13,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class PaymentBody extends StatefulWidget {
-  GetTable datatable;
- 
   int tatal;
-  PaymentBody(
-      {Key? key,
-    
-  
-      required this.datatable,
-      
-      required this.tatal
-      })
-      : super(key: key);
+  String tablename;
+  PaymentBody({Key? key, required this.tatal, required this.tablename}) : super(key: key);
 
   @override
   State<PaymentBody> createState() => _PaymentBodyState();
@@ -43,9 +34,6 @@ class _PaymentBodyState extends State<PaymentBody> {
                   context,
                   MaterialPageRoute(
                       builder: (_) => paycash(
-                        
-                            datatable: widget.datatable,
-                          
                             tatal: widget.tatal,
                           )));
             },
@@ -96,11 +84,7 @@ class _PaymentBodyState extends State<PaymentBody> {
                             fontWeight: FontWeight.bold,
                             fontSize: 16.sp),
                       ),
-                      content: ListAccountBCELONE(
-                      
-                        datatable: widget.datatable,
-                      
-                      ),
+                      content: ListAccountBCELONE(),
                     );
                   });
             },
@@ -151,10 +135,7 @@ class _PaymentBodyState extends State<PaymentBody> {
                             fontWeight: FontWeight.bold,
                             fontSize: 16.sp),
                       ),
-                      content: ListAccountMmoney(
-                        table: widget.datatable,
-                      
-                      ),
+                      content: ListAccountMmoney(),
                     );
                   });
             },

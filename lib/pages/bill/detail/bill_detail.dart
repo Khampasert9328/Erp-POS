@@ -13,34 +13,45 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class BillDetail extends StatefulWidget {
- List<Product> data;
-
-   BillDetail({super.key, required this.data});
+  List<Product> data;
+  String date;
+  String tablename;
+  int index;
+  int status;
+  BillDetail(
+      {super.key,
+      required this.data,
+      required this.date,
+      required this.tablename,
+      required this.index,
+      required this.status});
 
   @override
   State<BillDetail> createState() => _BillDetailState();
 }
 
 class _BillDetailState extends State<BillDetail> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppTheme.WHITE_COLOR,
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          "ເລກໂຕະ ",
-          style: TextStyle(
-            color: AppTheme.BASE_COLOR,
-            fontWeight: FontWeight.bold,
+        appBar: AppBar(
+          backgroundColor: AppTheme.WHITE_COLOR,
+          elevation: 0,
+          centerTitle: true,
+          title: Text(
+            "ເລກໂຕະ ",
+            style: TextStyle(
+              color: AppTheme.BASE_COLOR,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-      ),
-      bottomNavigationBar: const BottomBarOfBill(),
-      body:  BodyDetailBill(data:widget.data,)
-    );
+        bottomNavigationBar: const BottomBarOfBill(),
+        body: BodyDetailBill(
+          data: widget.data,
+          date: widget.date,
+          tablename: widget.tablename,
+          status: widget.status,
+        ));
   }
 }

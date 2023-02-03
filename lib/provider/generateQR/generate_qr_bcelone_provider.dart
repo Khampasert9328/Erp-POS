@@ -13,6 +13,7 @@ import 'package:erp_pos/provider/updatetable/update_table_provider.dart';
 import 'package:erp_pos/services/generateqrBCEL/generate_qr_bcelone.dart';
 
 import 'package:erp_pos/utils/setdata/setdata_provider.dart';
+import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/utils/transaction/transaction.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,11 +46,7 @@ class GenerateQRBCELONE extends ChangeNotifier {
       BuildContext context,
       String mcid,
       String shopcode,
-     
-      String idtable,
-      String tablename,
-      String idarea,
-      String areaname) async {
+     ) async {
     transaction = token;
     qrData = CodecampOnepay.initQR(
       mcid,
@@ -101,13 +98,17 @@ class GenerateQRBCELONE extends ChangeNotifier {
                               borderRadius: BorderRadius.circular(5)),
                           child: TextButton(
                             onPressed: () async {
+                              String? tablename = await CountPre().getTableName();
+                              String? idtable =await CountPre().getTableId();
+                              String? idarea = await CountPre().getAreaId();
+                              String? areaname = await CountPre().getArea();
                               await context
                                   .read<UpdateTableProvider>()
                                   .updateTableProvider(context, idtable,
                                       tablename, idarea, areaname);
                               await context
                                   .read<AreaProvider>()
-                                  .callAPITable(context, idarea);
+                                  .callAPITable(context, idarea!);
                               Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
@@ -133,6 +134,10 @@ class GenerateQRBCELONE extends ChangeNotifier {
                               borderRadius: BorderRadius.circular(5)),
                           child: TextButton(
                             onPressed: () async {
+                               String? tablename = await CountPre().getTableName();
+                              String? idtable =await CountPre().getTableId();
+                              String? idarea = await CountPre().getAreaId();
+                              String? areaname = await CountPre().getArea();
                               String? billNo = context.read<SetData>().billNo;
                               int total = 0;
 
@@ -227,7 +232,7 @@ class GenerateQRBCELONE extends ChangeNotifier {
                                         tablename, idarea, areaname);
                                 await context
                                     .read<AreaProvider>()
-                                    .callAPITable(context, idarea);
+                                    .callAPITable(context, idarea!);
                                 await Future.delayed(Duration(seconds: 2));
                                 Navigator.pushAndRemoveUntil(
                                     context,

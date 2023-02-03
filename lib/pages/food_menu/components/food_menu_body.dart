@@ -31,10 +31,9 @@ import 'package:erp_pos/widget/selected_menu_card.dart';
 import 'package:erp_pos/widget/selected_menu_card_expand.dart';
 
 class FoodMenuBody extends StatefulWidget {
-  
-  FoodMenuBody(
-      {Key? key,})
-      : super(key: key);
+  String tablename;
+
+  FoodMenuBody({Key? key, required this.tablename}) : super(key: key);
   @override
   State<FoodMenuBody> createState() => _FoodMenuBodyState();
 }
@@ -57,12 +56,10 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
   bool isSelectedMenuCard = true;
   @override
   Widget build(BuildContext context) {
-    
     _panelHeightOpen = MediaQuery.of(context).size.height * .80;
 
     return Scaffold(
       appBar: AppBar(
-       
         backgroundColor: AppTheme.WHITE_COLOR,
         elevation: 0,
         title: Container(
@@ -74,11 +71,10 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
             pauseAfterRound: Duration(seconds: 2),
             text: 'ລາຍການອາຫານ',
             style: TextStyle(
-              fontFamily: "Phetsarath-OT",
-              color: AppTheme.BASE_COLOR,
-              fontWeight: FontWeight.bold,
-              fontSize: 21.sp
-            ),
+                fontFamily: "Phetsarath-OT",
+                color: AppTheme.BASE_COLOR,
+                fontWeight: FontWeight.bold,
+                fontSize: 21.sp),
           ),
         ),
         actions: [
@@ -236,8 +232,7 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
       removeTop: true,
       child: isSelectedMenuCard
           ? SelectedMenuCardExpand(
-            
-             
+              tablename: widget.tablename,
               onNext: () async {
                 setState(() {
                   isSelectedMenuCard = !isSelectedMenuCard;
@@ -246,7 +241,7 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
               selectMenu: isSelectedMenuCard,
             )
           : PlaceToEatCard(
-             
+              tablename: widget.tablename,
               onback: () {
                 setState(() {
                   isSelectedMenuCard = !isSelectedMenuCard;

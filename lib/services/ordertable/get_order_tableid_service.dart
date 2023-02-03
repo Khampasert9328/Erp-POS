@@ -8,19 +8,21 @@ import 'package:http/http.dart' as http;
 
 Future<GetOrderTableModels?> getordertableidservice(
     BuildContext context, String idtable) async {
-  // String idtable = context.read<SetIdTable>().getidTable;
   String? idtoken = await CountPre().getToken();
   try {
     var url = '${APIPath.GET_ORDER_TABLE}/$idtable';
     var respones = await http.get(
       Uri.parse(url),
-      headers: {"accept": "text/plain", "Authorization": "Bearer $idtoken"},
+      headers: {
+        "accept": "text/plain",
+        "Authorization": "Bearer $idtoken",
+      },
     );
     if (respones.statusCode == 200) {
       // print("respones:${respones.body}");
       return getOrderTableModelsFromJson(respones.body);
     }
   } catch (e) {
-    print("errorgetOrderTable:$e");
+    rethrow;
   }
 }

@@ -12,7 +12,7 @@ import 'package:erp_pos/constant/routes.dart' as custom_route;
 import 'package:provider/provider.dart';
 
 class FoodMenu extends StatefulWidget {
-   GetTable? data;
+ 
 
   FoodMenu({Key? key,}) : super(key: key);
 
@@ -21,6 +21,7 @@ class FoodMenu extends StatefulWidget {
 }
 
 class _FoodMenuState extends State<FoodMenu> {
+  String? tablename;
  
   @override
   void initState() {
@@ -31,6 +32,8 @@ class _FoodMenuState extends State<FoodMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FoodMenuBody(
+        tablename: tablename??"ສັ່ງກັບບ້ານ",
+       
       ),
     );
   }

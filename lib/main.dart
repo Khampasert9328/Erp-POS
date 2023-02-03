@@ -13,7 +13,8 @@ import 'package:erp_pos/provider/category/category_provider.dart';
 
 import 'package:erp_pos/provider/checkexpiredpackage/check_exp_package_provider.dart';
 import 'package:erp_pos/provider/confirmpaymentbybcel/confirmpaymentbybcel_provider.dart';
-import 'package:erp_pos/provider/createorder/create_order_provider.dart';
+import 'package:erp_pos/provider/createordertobackhome/createorder_to_backhome.dart';
+
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/foodmenu_provider.dart';
 import 'package:erp_pos/provider/generateQR/generate_qr_bcelone_provider.dart';
@@ -73,7 +74,6 @@ class MyApp extends StatelessWidget {
                 create: (_) => GetOrderByIssueDateProvider()),
             ChangeNotifierProvider(create: (_) => SessionProvoder()),
             ChangeNotifierProvider(create: (_)=>CreateOffSessionProvider()),
-            ChangeNotifierProvider(create: (_)=>CreateOrderProvider()),
             ChangeNotifierProvider(create: (_)=>SwitchProvider()),
            ChangeNotifierProvider(create: (_)=>GetTableAllProvider()),
             ChangeNotifierProvider(create: (_)=>PaymentCashProvider()),
@@ -85,7 +85,8 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (_)=>ClickTableProvider()),
             ChangeNotifierProvider(create: (_)=>SetData()),
             ChangeNotifierProvider(create: (_)=>GetOrderTableProvider()),
-            ChangeNotifierProvider(create: (_)=>CategoryProvider())
+            ChangeNotifierProvider(create: (_)=>CategoryProvider()),
+            ChangeNotifierProvider(create: (_)=>CreateOrderToBackHomeProvider())
           ],
           child: GetMaterialApp(
             theme: ThemeData(

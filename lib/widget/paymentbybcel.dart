@@ -19,17 +19,13 @@ import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class PaymentBcelone extends StatefulWidget {
-  GetTable datatable;
   final mcid;
   final shopcode;
-  
 
   PaymentBcelone({
     Key? key,
     required this.mcid,
     required this.shopcode,
-  
-    required this.datatable,
   }) : super(key: key);
 
   @override
@@ -74,14 +70,10 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
     super.initState();
     GenerateQRBCELONE()
         .getGenerateQR(
-            context,
-            widget.mcid,
-            widget.shopcode,
-           
-            widget.datatable.id!,
-            widget.datatable.name!,
-            widget.datatable.tablearea!.id!,
-            widget.datatable.tablearea!.area!)
+      context,
+      widget.mcid,
+      widget.shopcode,
+    )
         .then((value) {
       setState(() {
         qrData = value;
@@ -107,14 +99,12 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
     for (var i in context.read<GetOrderTableProvider>().listOrderTable) {
       for (var d in i.order!) {
         for (var j in d!.product!) {
-           int? amout = j!.amount;
-      int pricesale = int.parse(j.pricesale.toString());
-      sum = pricesale * amout!;
-      total += sum;
+          int? amout = j!.amount;
+          int pricesale = int.parse(j.pricesale.toString());
+          sum = pricesale * amout!;
+          total += sum;
         }
-        
       }
-     
     }
     return Scaffold(
       appBar: AppBar(
@@ -122,7 +112,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
         backgroundColor: AppTheme.WHITE_COLOR,
         elevation: 0,
         title: Text(
-          widget.datatable.name!,
+         "name",
           style: TextStyle(color: AppTheme.BASE_COLOR),
         ),
       ),
@@ -220,11 +210,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                                 context,
                                 widget.mcid,
                                 widget.shopcode,
-                             
-                                widget.datatable.id!,
-                                widget.datatable.name!,
-                                widget.datatable.tablearea!.id!,
-                                widget.datatable.tablearea!.area!)
+                                )
                             .then((value) {
                           setState(() {
                             qrData = value;
@@ -270,13 +256,9 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                 child: TextButton(
                   onPressed: () {
                     PaymentCashProvider().createpaymentcashprovider(
-                        context,
-                        total,
-                        
-                        widget.datatable.id!,
-                        widget.datatable.name!,
-                        widget.datatable.tablearea!.id!,
-                        widget.datatable.tablearea!.area!);
+                      context,
+                      total,
+                    );
                   },
                   child: Text(
                     "ຢືນຢັນການຊຳລະ",

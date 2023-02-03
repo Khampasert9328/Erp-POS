@@ -33,39 +33,39 @@ class CheckExpiredPackage extends ChangeNotifier {
   CreateOrderModels? get createOrderModels => _createOrderModels;
   GetCategoryModels? _category;
   GetCategoryModels? get category => _category;
- CreateOrderAgainModles? _updateOrderModels;
- CreateOrderAgainModles? get updateOrderModels => _updateOrderModels;
+  CreateOrderAgainModles? _updateOrderModels;
+  CreateOrderAgainModles? get updateOrderModels => _updateOrderModels;
 
   Future<List<CheckExpiredPackageMedels>?> getCheckExpiredPackage(
       BuildContext context) async {
-    String? idtable = await CountPre().getTableId();
-    String? tablename = await CountPre().getTableName();
-    String idarea = context.read<AreaProvider>().idarea;
-    String? areaname = await CountPre().getArea();
-    CheckExpiredPackageMedels? package = await checkExpiredPackage();
+    try {
+      CheckExpiredPackageMedels? package = await checkExpiredPackage();
 
-    if (package != null) {
-      CountPre().setPackageId(package.packageId.toString());
-      CountPre().setDateExpired(package.dateExpired.toString());
-      CountPre().setDateSupscribe(package.dateSubscribe.toString());
-      GetPackageModels? getPackageModels = await getPackage();
+      if (package != null) {
+        CountPre().setPackageId(package.packageId.toString());
+        CountPre().setDateExpired(package.dateExpired.toString());
+        CountPre().setDateSupscribe(package.dateSubscribe.toString());
+        GetPackageModels? getPackageModels = await getPackage();
 
-      CountPre().setDateSupscribe(package.dateSubscribe.toString());
-      if (getPackageModels != null) {
-        _category = await getCategory();
-        _createOrderModels = await createOrder(context,
-            package.dateExpired.toString(), package.dateSubscribe.toString());
-
-        if (_createOrderModels != null) {
-          CountPre().setBillId(_createOrderModels!.billId!);
-          CountPre().setBillNo(_createOrderModels!.billNo!);
-         await updateStatus(context, idarea, areaname, idtable, tablename);
-        //  await  context
-        //             .read<AreaProvider>()
-        //             .callAPITable(context, idarea);
+        CountPre().setDateSupscribe(package.dateSubscribe.toString());
+        if (getPackageModels != null) {
+          _category = await getCategory();
+          if (_category != null) {
+            _createOrderModels = await createOrder(
+                context,
+                package.dateExpired.toString(),
+                package.dateSubscribe.toString());
+            if (_createOrderModels != null) {
+              CountPre().setBillId(_createOrderModels!.billId!);
+              CountPre().setBillNo(_createOrderModels!.billNo!);
+            }
+          }
         }
       }
+    } catch (e) {
+      rethrow;
     }
+    notifyListeners();
   }
 
   Future<void> orderagain(BuildContext context) async {
@@ -74,12 +74,17 @@ class CheckExpiredPackage extends ChangeNotifier {
     String? billid = await CountPre().getBillIdDetail();
     String? orderid = await CountPre().getOrderId();
     String? tableid = await CountPre().getTableId();
-    _updateOrderModels = await createOrderAgain(context, dateexpired.toString(),
-    
-        datesup.toString(), tableid, billid.toString(), orderid.toString());
-       if (_updateOrderModels !=null) {
-        
-       }
+    try {
+      _updateOrderModels = await createOrderAgain(
+          context,
+          dateexpired.toString(),
+          datesup.toString(),
+          tableid,
+          billid.toString(),
+          orderid.toString());
+    } catch (e) {
+      rethrow;
+    }
     notifyListeners();
   }
 }

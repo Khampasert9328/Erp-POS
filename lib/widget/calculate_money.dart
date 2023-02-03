@@ -13,6 +13,7 @@ import 'package:erp_pos/provider/areaprovider/area_provider.dart';
 import 'package:erp_pos/provider/checkexpiredpackage/check_exp_package_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/tableprovider/click_table_provider.dart';
+import 'package:erp_pos/provider/updatetable/update_table_provider.dart';
 import 'package:erp_pos/utils/loading.dart';
 import 'package:erp_pos/utils/set_size.dart';
 import 'package:erp_pos/utils/setdata/setdata_provider.dart';
@@ -26,9 +27,8 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CalculateMoney extends StatefulWidget {
-  CalculateMoney({
-    Key? key,
-  }) : super(key: key);
+  String tablename;
+  CalculateMoney({Key? key, required this.tablename}) : super(key: key);
 
   @override
   State<CalculateMoney> createState() => _CalculateMoneyState();
@@ -76,13 +76,42 @@ class _CalculateMoneyState extends State<CalculateMoney> {
         String? tablename = context.read<SetData>().gettableName;
         return Scaffold(
             appBar: AppBar(
-              centerTitle: true,
               backgroundColor: AppTheme.WHITE_COLOR,
               elevation: 0,
-              title: Text(
-                tablename,
-                style: TextStyle(
-                    color: AppTheme.BASE_COLOR, fontWeight: FontWeight.bold),
+              title: Row(
+                children: [
+                  GestureDetector(
+                    onTap: (() async {
+                      String? tablename1 = await CountPre().getTableName();
+                      String? tableid1 = await CountPre().getTableId();
+                      String? area1 = await CountPre().getArea();
+                      String? areaid1 = await CountPre().getAreaId();
+                      await UpdateTableProvider().updatetableStatus(
+                          context, areaid1!, area1!, tableid1!, tablename1!);
+                      String idarea = context.read<AreaProvider>().idarea;
+                      await context
+                          .read<AreaProvider>()
+                          .callTable(context, idarea);
+
+                      await Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (_) => HomePage()),
+                          (route) => false);
+                    }),
+                    child: const Icon(Icons.arrow_back),
+                  ),
+                  SizedBox(
+                    width: 40.w,
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "ໂຕະ ${widget.tablename}",
+                      style: TextStyle(
+                          color: AppTheme.BASE_COLOR,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
               ),
             ),
             bottomNavigationBar: Container(
@@ -173,6 +202,19 @@ class _CalculateMoneyState extends State<CalculateMoney> {
                             child: Center(
                               child: TextButton(
                                 onPressed: () async {
+                                  String? tablename1 =
+                                      await CountPre().getTableName();
+                                  String? tableid1 =
+                                      await CountPre().getTableId();
+                                  String? area1 = await CountPre().getArea();
+                                  String? areaid1 =
+                                      await CountPre().getAreaId();
+                                  await UpdateTableProvider().updatetableStatus(
+                                      context,
+                                      areaid1!,
+                                      area1!,
+                                      tableid1!,
+                                      tablename1!);
                                   String idarea =
                                       context.read<AreaProvider>().idarea;
                                   await context
@@ -305,15 +347,15 @@ class _CalculateMoneyState extends State<CalculateMoney> {
                                   context
                                       .read<GetFoodMenuProvider>()
                                       .clearKitchenData();
-                                  String idarea =
-                                      context.read<AreaProvider>().idarea;
-                                  await context
-                                      .read<AreaProvider>()
-                                      .callTable(context, idarea);
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                      MaterialPageRoute(
-                                          builder: (_) => HomePage()),
-                                      (route) => false);
+                                  // String idarea =
+                                  //     context.read<AreaProvider>().idarea;
+                                  // await context
+                                  //     .read<AreaProvider>()
+                                  //     .callTable(context, idarea);
+                                  // Navigator.of(context).pushAndRemoveUntil(
+                                  //     MaterialPageRoute(
+                                  //         builder: (_) => HomePage()),
+                                  //     (route) => false);
                                 }
                               } catch (e) {
                                 throw Exception("ບໍ່ມີປິ່ນເຕີ$e");

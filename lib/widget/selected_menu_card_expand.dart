@@ -12,8 +12,10 @@ import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/pages/food_menu/components/food_menu_button.dart';
 import 'package:erp_pos/pages/food_menu/models/food_menu_data_model.dart';
 import 'package:erp_pos/pages/homepage/homepage.dart';
+import 'package:erp_pos/provider/areaprovider/area_provider.dart';
 
 import 'package:erp_pos/provider/checkexpiredpackage/check_exp_package_provider.dart';
+import 'package:erp_pos/provider/createordertobackhome/createorder_to_backhome.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/foodmenu/foodmenu_provider.dart';
 import 'package:erp_pos/provider/tableprovider/click_table_provider.dart';
@@ -25,6 +27,9 @@ import 'package:erp_pos/utils/setdata/setdata_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/add_amount.dart';
 import 'package:erp_pos/widget/calculate_money.dart';
+import 'package:erp_pos/widget/paycash_detail.dart';
+import 'package:erp_pos/widget/paymentmethod.dart';
+import 'package:erp_pos/widget/paymentmethod_body.dart';
 import 'package:erp_pos/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,36 +41,35 @@ import 'package:sqflite/sqflite.dart';
 import '../constant/theme.dart';
 
 class SelectedMenuCardExpand extends StatefulWidget {
-   VoidCallback onNext;
-
+  VoidCallback onNext;
+  String tablename;
 
   bool selectMenu = false;
-  SelectedMenuCardExpand({
-    required this.onNext,
-    required this.selectMenu,
- 
-  });
+  SelectedMenuCardExpand(
+      {required this.onNext,
+      required this.selectMenu,
+      required this.tablename});
 
   @override
   State<SelectedMenuCardExpand> createState() => _SelectedMenuCardExpandState();
 }
 
 class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
-  String? tablename;
-  @override
-  void initState() {
-    CountPre().getTableName().then((value) {
-      tablename = value;
-    });
-    super.initState();
-  }
+  // String? tablename;
+  // @override
+  // void initState() {
+  //   CountPre().getTableName().then((value) {
+  //     tablename = value;
+  //   });
+  //   super.initState();
+  // }
+
   //int sumData = 0;
   bool checkerror = false;
   Widget build(BuildContext context) {
     bool showClickTable = context.read<ClickTableProvider>().click;
-    
-    bool firstOrder = context.read<ClickTableProvider>().firstOrderMore;
 
+    bool firstOrder = context.read<ClickTableProvider>().firstOrderMore;
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -105,7 +109,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                 color: AppTheme.BASE_COLOR),
                           ),
                           Text(
-                            '$tablename',
+                            '${widget.tablename}',
                             style: TextStyle(
                                 fontFamily: 'Phetsarath-OT',
                                 fontSize: 18.sp,
@@ -373,39 +377,63 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
           ),
           showClickTable
               ? sendingtokitchen()
-              : firstOrder==true
+              : firstOrder == true
                   ? sendingtokitchenagain()
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        context
-                                .read<GetFoodMenuProvider>()
-                                .getFoodMenuModel
-                                .isEmpty
-                            ? const SizedBox()
-                            : Padding(
-                                padding: const EdgeInsets.only(bottom: 20),
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 30.w),
-                                        primary: AppTheme.BASE_COLOR),
-                                    onPressed: widget.onNext,
-                                    child: Text(
-                                      'ຕໍ່ໄປ',
-                                      style: TextStyle(
-                                        fontFamily: 'Phetsarath-OT',
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    )),
-                              ),
-                        SizedBox(
-                          width: 5.w,
-                        )
-                      ],
+                  : Padding(
+                      padding: const EdgeInsets.only(bottom: 20, top: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 50.w, vertical: 15.h),
+                                  primary: AppTheme.BASE_COLOR),
+                              onPressed: widget.onNext,
+                              child: Text(
+                                'ກິນຢູ່ຮ້ານ',
+                                style: TextStyle(
+                                  fontFamily: 'Phetsarath-OT',
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              )),
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 50.w, vertical: 15.h),
+                                  primary: AppTheme.BASE_COLOR),
+                              onPressed: () async {
+                                CountPre().setTableId("none");
+                                context
+                                    .read<SetData>()
+                                    .setCheckOrderToBlackhome(true);
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => PayMentMethod(
+                                        tablename: widget.tablename,
+                                        tatal: context
+                                            .read<GetFoodMenuProvider>()
+                                            .totalamont),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'ສັ່ງກັບບ້ານ',
+                                style: TextStyle(
+                                  fontFamily: 'Phetsarath-OT',
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              )),
+                        ],
+                      ),
                     ),
-         
+          SizedBox(
+            width: 5.w,
+          ),
         ],
       ),
     );
@@ -446,14 +474,17 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                       //provider ໃນການສັ່ງອໍເດີ
                       context
                           .read<CheckExpiredPackage>()
-                          .getCheckExpiredPackage(context);
-
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => CalculateMoney(),
-                        ),
-                      );
+                          .getCheckExpiredPackage(context)
+                          .then((value) {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => CalculateMoney(
+                                tablename: widget.tablename,
+                              ),
+                            ),
+                            (route) => false);
+                      });
                     }
                   },
                   child: Text(
@@ -501,12 +532,14 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                       Navigator.of(context).pop();
                       //provider ໃນການສັ່ງອໍເດີ
                       context.read<CheckExpiredPackage>().orderagain(context);
-                     
+
                       String? tablename = await CountPre().getTableName();
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => CalculateMoney(),
+                          builder: (_) => CalculateMoney(
+                            tablename: widget.tablename,
+                          ),
                         ),
                       );
                     }

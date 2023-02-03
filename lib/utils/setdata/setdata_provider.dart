@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SetData extends ChangeNotifier {
- 
+ bool _checkordertobackhome = false;
+ bool _checkorderbill = false;
   String _idTable = '';
   String _tablename = '';
   String _billid = "";
@@ -29,6 +30,20 @@ class SetData extends ChangeNotifier {
   String get tablenamestatus => _tablenamestatus;
   String get idareastatus => _idareastatus;
   String get areanamestatus => _areanamestatus;
+  bool get checkordertoblackhome =>_checkordertobackhome;
+  bool get checkorderbill => _checkorderbill;
+
+  void setOrderbill(bool val){
+    _checkorderbill = val;
+    notifyListeners();
+  }
+
+
+  void setCheckOrderToBlackhome(bool val){
+    _checkordertobackhome = val;
+    notifyListeners();
+  }
+
 
   void setIdTableOrer(String id){
     _idtableorder = id;

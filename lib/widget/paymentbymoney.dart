@@ -177,7 +177,7 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
                     borderRadius: BorderRadius.circular(10)),
                 child: TextButton(
                   onPressed: () {
-                    PaymentCashProvider().createpaymentcashprovider(context, total,widget.idtable, widget.tablename, widget.id, widget.areaname);
+                    PaymentCashProvider().createpaymentcashprovider(context, total);
                   },
                   child: Text(
                     "ຢືນຢັນການຊຳລະ",

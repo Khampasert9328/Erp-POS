@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:math';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:erp_pos/constant/theme.dart';
@@ -5,8 +7,11 @@ import 'package:erp_pos/model/ordertable/order_table_models.dart';
 import 'package:erp_pos/model/paymentcash/paymentcash_models.dart';
 import 'package:erp_pos/model/table/table_models.dart';
 import 'package:erp_pos/provider/areaprovider/area_provider.dart';
+import 'package:erp_pos/provider/checkexpiredpackage/check_exp_package_provider.dart';
+import 'package:erp_pos/provider/createordertobackhome/createorder_to_backhome.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/paycash/paymentcash_provider.dart';
+import 'package:erp_pos/utils/setdata/setdata_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,11 +20,9 @@ import 'package:pattern_formatter/numeric_formatter.dart';
 import 'package:provider/provider.dart';
 
 class paycash extends StatefulWidget {
-  GetTable datatable;
-
   int tatal;
-  paycash({Key? key, required this.datatable, required this.tatal})
-      : super(key: key);
+
+  paycash({Key? key, required this.tatal}) : super(key: key);
 
   @override
   State<paycash> createState() => _paycashState();
@@ -44,13 +47,15 @@ class _paycashState extends State<paycash> {
   @override
   Widget build(BuildContext context) {
 ////////////////////////////////////////////////////////////
+    // bool checkOrderToBlackhome = context.read<SetData>().checkordertoblackhome;
+
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: AppTheme.WHITE_COLOR,
           elevation: 0,
           title: Text(
-            widget.datatable.name!,
+            "ສັ່ງກັບບ້ານ",
             style: TextStyle(color: AppTheme.BASE_COLOR),
           ),
         ),
@@ -64,20 +69,34 @@ class _paycashState extends State<paycash> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              onPressed: ()async {
-                String? mmoney = money.text.replaceAll(',', '');
-               CountPre().moneyReceived(mmoney);
-               CountPre().moneyChange(sumall);
-                int? intMoney = int.parse(mmoney);
-                PaymentCashProvider().createpaymentcashprovider(
-                    context,
-                    intMoney,
-                    widget.datatable.id!,
-                    widget.datatable.name!,
-                    widget.datatable.tablearea!.id!,
-                    widget.datatable.tablearea!.area!,
-                   );
-                 
+              onPressed: () async {
+                bool check = context.read<SetData>().checkordertoblackhome;
+                if (check) {
+                  try {
+                    await context
+                        .read<CreateOrderToBackHomeProvider>()
+                        .getCheckExpiredPackagetobackhom(context);
+                    String? mmoney = money.text.replaceAll(',', '');
+                    CountPre().moneyReceived(mmoney);
+                    CountPre().moneyChange(sumall);
+                    int? intMoney = int.parse(mmoney);
+                    PaymentCashProvider()
+                        .createpaymentcashprovider(context, intMoney);
+                  } catch (e) {
+                    rethrow;
+                  }
+                } else {
+                  try {
+                    String? mmoney = money.text.replaceAll(',', '');
+                    CountPre().moneyReceived(mmoney);
+                    CountPre().moneyChange(sumall);
+                    int? intMoney = int.parse(mmoney);
+                    PaymentCashProvider()
+                        .createpaymentcashprovider(context, intMoney);
+                  } catch (e) {
+                    rethrow;
+                  }
+                }
               },
               child: Text(
                 "ຊຳລະເງິນ",

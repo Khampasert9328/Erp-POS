@@ -7,6 +7,7 @@ import 'package:erp_pos/pages/homepage/data.dart';
 import 'package:erp_pos/pages/login/login.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/tableprovider/click_table_provider.dart';
+import 'package:erp_pos/utils/setdata/setdata_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -105,6 +106,8 @@ class _HomePageState extends State<HomePage> {
               context.read<GetFoodMenuProvider>().clearKitchenData();
               context.read<ClickTableProvider>().clearbool();
               context.read<ClickTableProvider>().firsOrderMoreTB(false);
+              context.read<SetData>().setCheckOrderToBlackhome(false);
+               context.read<SetData>().setOrderbill(false);
             },
             tabs: const [
               GButton(
