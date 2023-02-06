@@ -60,7 +60,7 @@ class _BodyOfBillOrderToBackHomeState extends State<BodyOfBillOrderToBackHome> {
                 } else {
                   tablename = 'ສັ່ງກັບບ້ານ';
                   status = checkstatus1(value.order!.order![index].status!);
-                   cl = checkcolor(value.order!.order![index].status!);
+                  cl = checkcolor(value.order!.order![index].status!);
                 }
 
                 for (var data in value.getOrderByListId!.bill!) {
@@ -75,7 +75,7 @@ class _BodyOfBillOrderToBackHomeState extends State<BodyOfBillOrderToBackHome> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                           context.read<SetData>().setOrderbill(false);
+                          context.read<SetData>().setOrderbill(false);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -85,9 +85,8 @@ class _BodyOfBillOrderToBackHomeState extends State<BodyOfBillOrderToBackHome> {
                                 tablename: tablename!,
                                 billid: value.order!.order![index].billid!,
                                 orderid: value.order!.order![index].id!,
-                         
-                                status:
-                                   value.order!.order![index].status!,
+                                tableid: value.order!.order![index].tableid!,
+                                status: value.order!.order![index].status!,
                               ),
                             ),
                           );

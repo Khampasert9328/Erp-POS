@@ -20,6 +20,7 @@ class BillDetail extends StatefulWidget {
   int status;
   String billid;
   String orderid;
+  String tableid;
   BillDetail(
       {super.key,
       required this.data,
@@ -28,7 +29,8 @@ class BillDetail extends StatefulWidget {
       required this.index,
       required this.status,
       required this.billid,
-      required this.orderid
+      required this.orderid,
+      required this.tableid
       });
 
   @override
@@ -59,6 +61,7 @@ class _BillDetailState extends State<BillDetail> {
           status: widget.status,
           billid: widget.billid,
           orderid: widget.orderid,
+        tableid: widget.tableid,
         ));
   }
 }

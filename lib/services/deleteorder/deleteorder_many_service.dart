@@ -2,15 +2,14 @@ import 'dart:convert';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:erp_pos/constant/api_path.dart';
-import 'package:erp_pos/model/deleteorderall/delete_order_all_models.dart';
+import 'package:erp_pos/model/deleteorder/deleteorder_many_models.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:get_ip_address/get_ip_address.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 
-Future<DeleteOrderAllModels?> deleOrderAll(
-    String billid, String orderid) async {
-  String? idtoken = await CountPre().getToken();
+Future<DeleteOrderManyModels?> deleteOrdermany(String orderid, String billid, String productsid, int size) async {
+   String? idtoken = await CountPre().getToken();
   //ວິທີການເເຕກເອົາຂໍ້ມູນໃນ token
   String yourToken = idtoken!;
   Map<String, dynamic> decodedToken = JwtDecoder.decode(yourToken);
@@ -27,7 +26,7 @@ Future<DeleteOrderAllModels?> deleOrderAll(
   AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
   String? computer = await androidInfo.model;
   try {
-    var url = "${APIPath.DELETE_ORDER_ALL}";
+    var url = "${APIPath.DELETE_ORDER_MANY}";
     String playload = jsonEncode({
       "modified": 0,
       "modifiedID": userid,
@@ -40,23 +39,27 @@ Future<DeleteOrderAllModels?> deleOrderAll(
       "domain": domain,
       "orderId": orderid,
       "billId": billid,
-      "productId": "n...xxssdf/.ghf  nnnnnone",
-      "cancelDescription": "ຍົກເລີກອໍເດີທັງໝົດ",
-      "cancelStatus": 0,
+      "products": [
+        {
+          "productId": productsid,
+          "size": size,
+        }
+      ],
+      "cancelDescription": "ຍົກເລີກອາຫານບາງປະເພດ",
+      "cancelStatus": 2,
       "cancelUser": "N/A"
     });
     var respones = await http.post(
       Uri.parse(url),
       body: playload,
       headers: {
-        "accept": "text/plain",
+         "accept": "text/plain",
         "Authorization": "Bearer $idtoken",
         "Content-Type": "application/json",
       },
     );
-    if (respones.statusCode == 200) {
-      DeleteOrderAllModels models = deleteOrderAllModelsFromJson(respones.body);
-      return models;
+    if (respones.statusCode==200) {
+      return deleteOrderManyModelsFromJson(respones.body);
     }
   } catch (e) {
     rethrow;

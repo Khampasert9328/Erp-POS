@@ -8,7 +8,7 @@ import 'package:erp_pos/model/getorderbyissuedate/get_order_by_isuedatemodels.da
 import 'package:erp_pos/model/gettableall/gettable_all_models.dart';
 import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/provider/areaprovider/area_provider.dart';
-import 'package:erp_pos/provider/deleteorderall/delete_order_all_provider.dart';
+import 'package:erp_pos/provider/deleteorder/delete_order_all_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/utils/set_size.dart';
 import 'package:erp_pos/utils/setdata/setdata_provider.dart';
@@ -28,11 +28,12 @@ class BodyDetailBill extends StatefulWidget {
   String tablename;
   String billid;
   String orderid;
-
+  String tableid;
   int status;
 
   BodyDetailBill(
       {super.key,
+      required this.tableid,
       required this.data,
       required this.date,
       required this.tablename,
@@ -543,7 +544,66 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                                 flex: 1,
                                 child: GestureDetector(
                                   onTap: (() {
-                                    print("index:$index");
+                                    showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: ((context) {
+                                        return CupertinoAlertDialog(
+                                          title: Text(
+                                            "ຕ້ອງການຍົກເລີກອໍເດີໂຕະນີ້ແທ້ບໍ?",
+                                            style: TextStyle(
+                                              fontFamily: 'Phetsarath-OT',
+                                              fontSize: 18.sp,
+                                            ),
+                                          ),
+                                          actions: [
+                                            CupertinoDialogAction(
+                                              child: Text(
+                                                "ບໍ່, ຕ້ອງການ",
+                                                style: TextStyle(
+                                                  fontFamily: 'Phetsarath-OT',
+                                                  fontSize: 15.sp,
+                                                ),
+                                              ),
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                            ),
+                                            CupertinoDialogAction(
+                                              child: Text(
+                                                "ຕ້ອງການ",
+                                                style: TextStyle(
+                                                  fontFamily: 'Phetsarath-OT',
+                                                  fontSize: 15.sp,
+                                                ),
+                                              ),
+                                              onPressed: () async {
+                                                context
+                                                    .read<
+                                                        DeleteOrderAllProvider>()
+                                                    .deleteOrderManyProvider(
+                                                      widget.orderid,
+                                                      widget.billid,
+                                                      widget.data[index]
+                                                          .productid!,
+                                                      widget.data[index].size!,
+                                                    )
+                                                    .then((value) {
+                                                  context
+                                                      .read<
+                                                          DeleteOrderAllProvider>()
+                                                      .updateOrderProvider(
+                                                          context,
+                                                          widget.tableid,
+                                                          widget.billid,
+                                                          widget.orderid,
+                                                          index);
+                                                });
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      }),
+                                    );
                                   }),
                                   child: Icon(
                                     Icons.delete_forever_outlined,

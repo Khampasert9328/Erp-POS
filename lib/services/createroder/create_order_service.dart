@@ -70,7 +70,7 @@ Future<CreateOrderModels?> createOrder(
         "discount": 0,
         "freeamount": 0,
         "description": "none",
-        "cooked": true,
+        "cooked": false,
         "timeCooked": "none",
         "categoryOrder": {
           "categoryId": "${item.data.categoryid}",
