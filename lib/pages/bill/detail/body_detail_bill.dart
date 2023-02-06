@@ -6,6 +6,9 @@ import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/model/getorderbyissuedate/get_order_by_isuedatemodels.dart';
 import 'package:erp_pos/model/gettableall/gettable_all_models.dart';
+import 'package:erp_pos/pages/homepage/homepage.dart';
+import 'package:erp_pos/provider/areaprovider/area_provider.dart';
+import 'package:erp_pos/provider/deleteorderall/delete_order_all_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/utils/set_size.dart';
 import 'package:erp_pos/utils/setdata/setdata_provider.dart';
@@ -13,6 +16,7 @@ import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/bottombar_of_bill.dart';
 import 'package:erp_pos/widget/paymentmethod.dart';
 import 'package:erp_pos/widget/paymentmethod_body.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -22,16 +26,19 @@ class BodyDetailBill extends StatefulWidget {
   List<Product> data;
   String date;
   String tablename;
+  String billid;
+  String orderid;
 
   int status;
 
-  BodyDetailBill({
-    super.key,
-    required this.data,
-    required this.date,
-    required this.tablename,
-    required this.status,
-  });
+  BodyDetailBill(
+      {super.key,
+      required this.data,
+      required this.date,
+      required this.tablename,
+      required this.status,
+      required this.billid,
+      required this.orderid});
 
   @override
   State<BodyDetailBill> createState() => _BodyDetailBillState();
@@ -110,6 +117,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                               fontSize: 18.sp,
                               color: AppTheme.BASE_COLOR,
                               fontWeight: FontWeight.bold,
+                              fontFamily: 'Phetsarath-OT',
                             ),
                           ),
                         ],
@@ -146,7 +154,6 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (_) => PayMentMethod(
-                                
                                             tatal: total,
                                             tablename: widget.tablename,
                                           )));
@@ -169,6 +176,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                                         fontSize: 18.sp,
                                         color: AppTheme.BASE_COLOR,
                                         fontWeight: FontWeight.bold,
+                                        fontFamily: 'Phetsarath-OT',
                                       ),
                                     ),
                                   ),
@@ -275,6 +283,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                                   fontSize: 18.sp,
                                   color: AppTheme.BASE_COLOR,
                                   fontWeight: FontWeight.bold,
+                                  fontFamily: 'Phetsarath-OT',
                                 ),
                               ),
                             ),
@@ -305,6 +314,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                   style: TextStyle(
                     fontSize: 15.sp,
                     fontWeight: FontWeight.bold,
+                    fontFamily: 'Phetsarath-OT',
                   ),
                 ),
                 Text(
@@ -312,6 +322,89 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                   style: TextStyle(
                     fontSize: 15.sp,
                     fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  onTap: (() async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: ((context) {
+                        return CupertinoAlertDialog(
+                          title: Text(
+                            "ຕ້ອງການຍົກເລີກອໍເດີໂຕະນີ້ແທ້ບໍ?",
+                            style: TextStyle(
+                              fontFamily: 'Phetsarath-OT',
+                              fontSize: 18.sp,
+                            ),
+                          ),
+                          actions: [
+                            CupertinoDialogAction(
+                              child: Text(
+                                "ບໍ່, ຕ້ອງການ",
+                                style: TextStyle(
+                                  fontFamily: 'Phetsarath-OT',
+                                  fontSize: 15.sp,
+                                ),
+                              ),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                            CupertinoDialogAction(
+                              child: Text(
+                                "ຕ້ອງການ",
+                                style: TextStyle(
+                                  fontFamily: 'Phetsarath-OT',
+                                  fontSize: 15.sp,
+                                ),
+                              ),
+                              onPressed: () async {
+                                await context
+                                    .read<DeleteOrderAllProvider>()
+                                    .deleteOrderAllProvider(
+                                        context, widget.billid, widget.orderid);
+
+                                String idarea =
+                                    context.read<AreaProvider>().idarea;
+                                // ignore: use_build_context_synchronously
+                                await context
+                                    .read<AreaProvider>()
+                                    .callTable(context, idarea);
+
+                                // ignore: use_build_context_synchronously
+                                await Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => HomePage()),
+                                    (route) => false);
+                              },
+                            ),
+                          ],
+                        );
+                      }),
+                    );
+                  }),
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 30.h,
+                    width: 120.w,
+                    decoration: BoxDecoration(
+                        color: AppTheme.BASE_COLOR,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Text(
+                      "ຍົກເລີກອໍເດີທັງໝົດ",
+                      style: TextStyle(
+                          fontFamily: 'Phetsarath-OT',
+                          fontSize: 15.sp,
+                          color: AppTheme.WHITE_COLOR),
+                    ),
                   ),
                 ),
               ],
@@ -326,6 +419,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
+                      fontFamily: 'Phetsarath-OT',
                     ),
                   ),
                 ),
@@ -336,6 +430,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
+                      fontFamily: 'Phetsarath-OT',
                     ),
                   ),
                 ),
@@ -346,11 +441,12 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
+                      fontFamily: 'Phetsarath-OT',
                     ),
                   ),
                 ),
                 Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: Text(
                     "ຈຳນວນ",
                     style: TextStyle(
@@ -361,7 +457,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                   ),
                 ),
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Text(
                     "ລາຄາ",
                     style: TextStyle(
@@ -371,6 +467,10 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                     ),
                   ),
                 ),
+                const Expanded(
+                  flex: 1,
+                  child: Text(""),
+                )
               ],
             ),
             const Divider(),
@@ -379,57 +479,79 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                   itemCount: widget.data.length,
                   itemBuilder: ((context, index) {
                     String size = setSize(widget.data[index].size!);
-                    return Row(
+                    return Column(
                       children: [
-                        Expanded(
-                          flex: 1,
-                          child: Text(
-                            "${index + 1}",
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                        SizedBox(
+                          height: 7.h,
                         ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            "${widget.data[index].name}",
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.bold,
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                "${index + 1}",
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            "$size",
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.bold,
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                "${widget.data[index].name}",
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Phetsarath-OT',
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            "${widget.data[index].amount}",
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.bold,
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                "$size",
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Phetsarath-OT',
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(widget.data[index].pricesale)}",
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.bold,
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                "${widget.data[index].amount}",
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Phetsarath-OT',
+                                ),
+                              ),
                             ),
-                          ),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(widget.data[index].pricesale)}",
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                                flex: 1,
+                                child: GestureDetector(
+                                  onTap: (() {
+                                    print("index:$index");
+                                  }),
+                                  child: Icon(
+                                    Icons.delete_forever_outlined,
+                                    size: 20.sp,
+                                    color: AppTheme.RED_COLOR,
+                                  ),
+                                )),
+                          ],
                         ),
                       ],
                     );

@@ -32,5 +32,6 @@ class APIPath {
    static const String GET_ORDER_TABLE = BASE_URL + 'OrderService/GetOrderTableId';
    static const String GET_CATEGORY = BASE_URL + 'CategoryService/GetCategory';
      static const String UPDATE_ORDER_More = BASE_URL + 'OrderService/Update_FoodQty';
+      static const String DELETE_ORDER_ALL = BASE_URL + 'OrderService/CancelOrder_All';
 }
 

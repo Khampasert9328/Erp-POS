@@ -83,6 +83,8 @@ class _BodyOfBillOrderToBackHomeState extends State<BodyOfBillOrderToBackHome> {
                                 data: value.order!.order![index].product!,
                                 date: value.order!.order![index].date!,
                                 tablename: tablename!,
+                                billid: value.order!.order![index].billid!,
+                                orderid: value.order!.order![index].id!,
                          
                                 status:
                                    value.order!.order![index].status!,

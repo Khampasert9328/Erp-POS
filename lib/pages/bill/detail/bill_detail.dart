@@ -18,13 +18,18 @@ class BillDetail extends StatefulWidget {
   String tablename;
   int index;
   int status;
+  String billid;
+  String orderid;
   BillDetail(
       {super.key,
       required this.data,
       required this.date,
       required this.tablename,
       required this.index,
-      required this.status});
+      required this.status,
+      required this.billid,
+      required this.orderid
+      });
 
   @override
   State<BillDetail> createState() => _BillDetailState();
@@ -52,6 +57,8 @@ class _BillDetailState extends State<BillDetail> {
           date: widget.date,
           tablename: widget.tablename,
           status: widget.status,
+          billid: widget.billid,
+          orderid: widget.orderid,
         ));
   }
 }

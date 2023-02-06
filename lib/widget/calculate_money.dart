@@ -242,7 +242,7 @@ class _CalculateMoneyState extends State<CalculateMoney> {
                           GestureDetector(
                             onTap: () async {
                               String? getzone = await CountPre().getArea();
-                              String? billNo = await CountPre().getBillId();
+                              String? billNo = await CountPre().getBillNo();
                               try {
                                 if (context
                                     .read<GetFoodMenuProvider>()
@@ -264,7 +264,7 @@ class _CalculateMoneyState extends State<CalculateMoney> {
                                   await Future.delayed(Duration(seconds: 2));
                                   Navigator.of(context).pop();
                                   await SunmiPrinter.startTransactionPrint();
-                                  await SunmiPrinter.printText('ໃບຈ່າຍເງິນ',
+                                  await SunmiPrinter.printText('ໃບບິນຫ້ອງຄົວ',
                                       style: SunmiStyle(
                                           align: SunmiPrintAlign.CENTER,
                                           bold: true,
@@ -298,7 +298,7 @@ class _CalculateMoneyState extends State<CalculateMoney> {
                                   await SunmiPrinter.printRow(cols: [
                                     ColumnMaker(text: 'ເລກໂຕະ', width: 6),
                                     ColumnMaker(
-                                        text: '${tablename}',
+                                        text: '${widget.tablename}',
                                         width: 6,
                                         align: SunmiPrintAlign.RIGHT),
                                   ]);
@@ -344,9 +344,9 @@ class _CalculateMoneyState extends State<CalculateMoney> {
                                   await SunmiPrinter.submitTransactionPrint();
                                   await SunmiPrinter.exitTransactionPrint();
 
-                                  context
-                                      .read<GetFoodMenuProvider>()
-                                      .clearKitchenData();
+                                  // context
+                                  //     .read<GetFoodMenuProvider>()
+                                  //     .clearKitchenData();
                                   // String idarea =
                                   //     context.read<AreaProvider>().idarea;
                                   // await context
