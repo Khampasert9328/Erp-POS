@@ -257,14 +257,6 @@ class _ListViewTableState extends State<ListViewTable> {
                                               if (value.gettablelist!
                                                       .table![index].statusAv ==
                                                   1) {
-                                                //                 await context
-                                                // .read<UpdateTableProvider>()
-                                                // .updateTableProvider(context, value.gettablelist!
-                                                //                 .table![index].id,
-                                                //     value.gettablelist!
-                                                //                 .table![index].name, value.gettablelist!
-                                                //                 .table![index].tablearea!.id, value.gettablelist!
-                                                //                 .table![index].tablearea!.area);
                                                 context
                                                     .read<SetData>()
                                                     .setCheckOrderToBlackhome(
