@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as Badges;
 import 'package:devla_sunmi/flutter_sunmi_printer.dart';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
@@ -127,7 +127,7 @@ class _DetailOrderTableState extends State<DetailOrderTable> {
                             ),
                             child: Row(
                               children: [
-                                Badge(
+                                Badges.Badge(
                                   badgeContent: Text(
                                     "${food.order!.first!.product!.length}",
                                     style: TextStyle(

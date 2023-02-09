@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as Badges;
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
@@ -35,7 +35,7 @@ class _BottomBarOfBillState extends State<BottomBarOfBill> {
                 ),
                 child: Row(
                   children: [
-                    Badge(
+                    Badges.Badge(
                       badgeContent: Text(
                         context
                             .watch<GetFoodMenuProvider>()
@@ -65,7 +65,7 @@ class _BottomBarOfBillState extends State<BottomBarOfBill> {
                             fontSize: 18.sp,
                             color: AppTheme.BASE_COLOR,
                             fontWeight: FontWeight.bold,
-                             fontFamily: 'Phetsarath-OT',
+                            fontFamily: 'Phetsarath-OT',
                           ),
                         ),
                       ],
@@ -108,7 +108,7 @@ class _BottomBarOfBillState extends State<BottomBarOfBill> {
                       child: Text(
                         "ພິມໃບບິນ",
                         style: TextStyle(
-                           fontFamily: 'Phetsarath-OT',
+                          fontFamily: 'Phetsarath-OT',
                           fontSize: 18.sp,
                           color: AppTheme.BASE_COLOR,
                           fontWeight: FontWeight.bold,

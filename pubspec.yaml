@@ -42,7 +42,7 @@ dependencies:
   marquee: ^2.2.3
   get: ^4.6.5
   connectivity_plus: ^3.0.2
-
+  blue_thermal_printer: ^1.2.3
 
 flutter_icons:
   android: true

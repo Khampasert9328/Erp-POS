@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:ui';
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as Badges;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:devla_sunmi/flutter_sunmi_printer.dart';
 import 'package:erp_pos/constant/images.dart';
@@ -299,7 +299,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                         Container(
                           height: 28.h,
                           width: 28.w,
-                          child: Badge(
+                          child: Badges.Badge(
                             badgeContent: Center(
                               child: Text(
                                 "$numsize",

@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as Badges;
 import 'package:devla_sunmi/flutter_sunmi_printer.dart';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
@@ -60,7 +60,7 @@ class _DetailOrderBackHomeState extends State<DetailOrderBackHome> {
                   ),
                   child: Row(
                     children: [
-                      Badge(
+                      Badges.Badge(
                         badgeContent: Text(
                           "${widget.data}",
                           style: TextStyle(
@@ -111,7 +111,7 @@ class _DetailOrderBackHomeState extends State<DetailOrderBackHome> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    String? billNo =await CountPre().getBillNo();
+                    String? billNo = await CountPre().getBillNo();
                     try {
                       await SunmiPrinter.startTransactionPrint();
                       await SunmiPrinter.printText('ໃບບິນ',

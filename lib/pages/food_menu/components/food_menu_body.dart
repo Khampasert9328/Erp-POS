@@ -1,7 +1,7 @@
 // ignore_for_file: unused_field, unused_import, use_key_in_widget_constructors, unnecessary_import, prefer_final_fields
 import 'dart:ui';
 
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as Badges;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:erp_pos/model/ordertable/order_table_models.dart';
 import 'package:flutter/material.dart';
@@ -170,7 +170,7 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
                         closepanel();
                       },
                       child: Container(
-                        child: Badge(
+                        child: Badges.Badge(
                           badgeColor: AppTheme.GREEN_COLOR,
                           badgeContent: Text(
                             context

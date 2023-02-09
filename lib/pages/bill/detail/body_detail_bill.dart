@@ -1,6 +1,6 @@
 // ignore_for_file: unnecessary_string_interpolations
 
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as Badges;
 import 'package:devla_sunmi/flutter_sunmi_printer.dart';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
@@ -92,7 +92,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                   ),
                   child: Row(
                     children: [
-                      Badge(
+                      Badges.Badge(
                         badgeContent: Text(
                           "${widget.data.length}",
                           style: TextStyle(

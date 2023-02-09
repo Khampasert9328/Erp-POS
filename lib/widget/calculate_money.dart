@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, use_build_context_synchronously, unnecessary_string_interpolations
 
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as Badges;
 import 'package:devla_sunmi/flutter_sunmi_printer.dart';
 import 'package:erp_pos/constant/images.dart';
 import 'package:erp_pos/constant/theme.dart';
@@ -133,7 +133,7 @@ class _CalculateMoneyState extends State<CalculateMoney> {
                         ),
                         child: Row(
                           children: [
-                            Badge(
+                            Badges.Badge(
                               badgeContent: Text(
                                 context
                                     .watch<GetFoodMenuProvider>()
