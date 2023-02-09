@@ -80,6 +80,8 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                     children: [
                       GestureDetector(
                         onTap: () {
+                          print("billid:${ value.order!.order![index].billid!}");
+                          print("orderid:${value.order!.order![index].id!}");
                           
                           context.read<SetData>().setOrderbill(true);
                           CountPre().setTableId(tableid!);

@@ -300,7 +300,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(25),
+        padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -483,7 +483,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                     return Column(
                       children: [
                         SizedBox(
-                          height: 7.h,
+                          height: 10.h,
                         ),
                         Row(
                           children: [
@@ -550,7 +550,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                                       builder: ((context) {
                                         return CupertinoAlertDialog(
                                           title: Text(
-                                            "ຕ້ອງການຍົກເລີກອໍເດີໂຕະນີ້ແທ້ບໍ?",
+                                            "ຕ້ອງການລົບອາຫານນີ້ແທ້ບໍ?",
                                             style: TextStyle(
                                               fontFamily: 'Phetsarath-OT',
                                               fontSize: 18.sp,
@@ -577,27 +577,32 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                                                 ),
                                               ),
                                               onPressed: () async {
-                                                context
-                                                    .read<
-                                                        DeleteOrderAllProvider>()
-                                                    .deleteOrderManyProvider(
-                                                      widget.orderid,
-                                                      widget.billid,
-                                                      widget.data[index]
-                                                          .productid!,
-                                                      widget.data[index].size!,
-                                                    )
-                                                    .then((value) {
-                                                  context
-                                                      .read<
-                                                          DeleteOrderAllProvider>()
-                                                      .updateOrderProvider(
-                                                          context,
-                                                          widget.tableid,
-                                                          widget.billid,
-                                                          widget.orderid,
-                                                          index);
-                                                });
+                                                widget.data.removeAt(index);
+                                                // context
+                                                //     .read<
+                                                //         DeleteOrderAllProvider>()
+                                                //     .deleteOrderManyProvider(
+                                                //       widget.orderid,
+                                                //       widget.billid,
+                                                //       widget.data[index]
+                                                //           .productid!,
+                                                //       widget.data[index].size!,
+                                                //     );
+
+                                                // await context
+                                                //     .read<
+                                                //         DeleteOrderAllProvider>()
+                                                //     .updateOrderProvider(
+                                                //       context,
+                                                //       widget.tableid,
+                                                //       widget.billid,
+                                                //       widget.orderid,
+                                                //       index,
+                                                //      widget.data[index].productid!,
+                                                //      widget.data[index].size!
+                                                //     );
+                                                setState(() {});
+                                                Navigator.pop(context);
                                               },
                                             ),
                                           ],
@@ -607,7 +612,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                                   }),
                                   child: Icon(
                                     Icons.delete_forever_outlined,
-                                    size: 20.sp,
+                                    size: 30.sp,
                                     color: AppTheme.RED_COLOR,
                                   ),
                                 )),

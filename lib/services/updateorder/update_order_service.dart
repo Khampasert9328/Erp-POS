@@ -15,7 +15,6 @@ import 'package:erp_pos/pages/table/components/textdatetime.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/getorderbyissuedate/get_order_by_issuedate_provider.dart';
 import 'package:erp_pos/provider/getordertable/get_ordertable_provider.dart';
-
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_ip_address/get_ip_address.dart';
@@ -32,7 +31,9 @@ Future<CreateOrderAgainModles?> updateorder1(
     String? tableid,
     String billid,
     String orderid,
-    int index) async {
+    int index,
+    int size,
+    String productid) async {
   try {
     var str = "$dateexpired";
     var parts = str.split(' ');
@@ -44,7 +45,6 @@ Future<CreateOrderAgainModles?> updateorder1(
     var partsup = strsup.split(' ');
     var prefixsup = partsup[0].trim();
     var rmDate = prefixsup.replaceAll("-", ''); // prefix: "date"
-    var dateSup = partsup.sublist(0).join('').trim();
 
     String? idtoken = await CountPre().getToken();
     //ວິທີການເເຕກເອົາຂໍ້ມູນໃນ token
@@ -68,13 +68,39 @@ Future<CreateOrderAgainModles?> updateorder1(
     DateTime time = DateTime.now();
     String issueDate = DateFormat('yyyyMMdd').format(time);
     String date = DateFormat('dd-MM-yyyy HH:mm:ss').format(time);
+
     for (var data in context
         .read<GetOrderByIssueDateProvider>()
         .order!
         .order!
         .first
         .product!) {
-      products.removeWhere((element) => element['productid']==data);
+      products.add({
+        "productId": "${data.productid}",
+        "productid": "${data.productid}",
+        "name": "${data.name}",
+        "size": data.size,
+        "amount": data.amount,
+        "priceSale": data.pricesale,
+        "pricesale": data.pricesale,
+        "priceImport": data.priceimport,
+        "priceimport": data.priceimport,
+        "discount": 0,
+        "freeamount": 0,
+        "description": "none",
+        "cooked": false,
+        "timeCooked": "none",
+        "timecooked": "none",
+        "categoryOrder": {
+          "categoryId": "${data.category!.categoryid}",
+          "categoryName": "${data.category!.categoryname}"
+        },
+        "category": {
+          "categoryId": "${data.category!.categoryid}",
+          "categoryName": "${data.category!.categoryname}"
+        },
+      });
+      products.removeAt(index);
     }
     var url = "${APIPath.UPDATE_ORDER_More}";
     String payload = jsonEncode({
