@@ -44,7 +44,11 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
           //ໃນກໍລະນີ API ເກີດຂໍ້ຜິດພາດບາງຢ່າງ
           if (value.getOrderByListId == null || value.order == null) {
             return const Center(
-              child: Text("ເກີດຂໍ້ຜິດພາດ"),
+              child: Text("ບໍ່ມີຂໍ້ມູນໃບບິນ",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontFamily: 'Phetsarath-OT',
+                ),),
             );
           } else {
             return ListView.builder(
@@ -80,9 +84,6 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          // print("billid:${ value.order!.order![index].billid!}");
-                          // print("orderid:${value.order!.order![index].id!}");
-                          
                           context.read<SetData>().setOrderbill(true);
                           CountPre().setTableId(tableid!);
                           CountPre().setTableName(tablename);

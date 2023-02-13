@@ -27,8 +27,6 @@ Future<GetOrderByIssuedateModels?> getorderbyissuedate(int limit, int page,
         jsonDecode(respones.body),
       );
       return models;
-    }else if(respones.statusCode==400){
-      Mystyle().showDialogCheckData(context, "ມື້ນີ້ບໍ່ມີຂໍ້ມູນໃບບິນ");
     }
   } catch (e) {
     rethrow;

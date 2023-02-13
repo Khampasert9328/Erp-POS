@@ -74,17 +74,10 @@ class CheckExpiredPackage extends ChangeNotifier {
     String? billid = await CountPre().getBillIdDetail();
     String? orderid = await CountPre().getOrderId();
     String? tableid = await CountPre().getTableId();
-    try {
-      _updateOrderModels = await createOrderAgain(
-          context,
-          dateexpired.toString(),
-          datesup.toString(),
-          tableid,
-          billid.toString(),
-          orderid.toString());
-    } catch (e) {
-      rethrow;
-    }
+
+    _updateOrderModels = await createOrderAgain(context, dateexpired.toString(),
+        datesup.toString(), tableid, billid.toString(), orderid.toString());
+
     notifyListeners();
   }
 }

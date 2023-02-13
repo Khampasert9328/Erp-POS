@@ -257,6 +257,10 @@ class _ListViewTableState extends State<ListViewTable> {
                                               if (value.gettablelist!
                                                       .table![index].statusAv ==
                                                   1) {
+                                                    print("idtable:${value
+                                                    .gettablelist!
+                                                    .table![index]
+                                                    .id!}");
                                                 context
                                                     .read<SetData>()
                                                     .setCheckOrderToBlackhome(
@@ -290,16 +294,13 @@ class _ListViewTableState extends State<ListViewTable> {
                                                           .gettablelist!
                                                           .table![index]
                                                           .name!,
-                                                      id: value.areaModels!
-                                                          .area![index].id!,
-                                                      areaname: value
-                                                          .areaModels!
-                                                          .area![index]
-                                                          .area!,
+                                                      id: value.gettablelist!.table![index].tablearea!.id!,
+                                                      areaname: value.gettablelist!.table![index].tablearea!.area!,
                                                     ),
                                                     transition:
                                                         Transition.zoom);
                                               } else {
+                                                
                                            
                                                 setState(() {
                                                   selectTable = index;

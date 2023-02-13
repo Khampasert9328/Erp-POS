@@ -40,8 +40,6 @@ class _CalculateMoneyState extends State<CalculateMoney> {
   PrinterMode? _printerMode;
   @override
   void initState() {
-    super.initState();
-
     _bindingPrinter().then((bool isBind) async => {
           if (isBind)
             {
@@ -49,6 +47,7 @@ class _CalculateMoneyState extends State<CalculateMoney> {
               _printerMode = await _getPrinterMode(),
             }
         });
+    super.initState();
   }
 
   /// must binding ur printer at first init in app
@@ -73,7 +72,6 @@ class _CalculateMoneyState extends State<CalculateMoney> {
   Widget build(BuildContext context) {
     return Consumer<GetFoodMenuProvider>(
       builder: ((context, value, child) {
-        String? tablename = context.read<SetData>().gettableName;
         return Scaffold(
             appBar: AppBar(
               backgroundColor: AppTheme.WHITE_COLOR,

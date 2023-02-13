@@ -71,370 +71,379 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
 
     bool firstOrder = context.read<ClickTableProvider>().firstOrderMore;
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          SizedBox(
-            height: 15.h,
-          ),
-          Container(
-            height: 10.h,
-            width: 50.w,
-            decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(5)),
-          ),
-          showClickTable
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "ລາຍການອໍເດີ",
-                      style: TextStyle(
-                          fontFamily: 'Phetsarath-OT',
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w700,
-                          color: AppTheme.BASE_COLOR),
-                    ),
-                    Container(
-                      child: Row(
-                        children: [
-                          Text(
-                            "ໂຕະ:",
-                            style: TextStyle(
-                                fontFamily: 'Phetsarath-OT',
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w700,
-                                color: AppTheme.BASE_COLOR),
-                          ),
-                          Text(
-                            '${widget.tablename}',
-                            style: TextStyle(
-                                fontFamily: 'Phetsarath-OT',
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w700,
-                                color: AppTheme.BASE_COLOR),
-                          ),
-                        ],
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 15.h,
+            ),
+            Container(
+              height: 10.h,
+              width: 50.w,
+              decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(5)),
+            ),
+            showClickTable
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "ລາຍການອໍເດີ",
+                        style: TextStyle(
+                            fontFamily: 'Phetsarath-OT',
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w700,
+                            color: AppTheme.BASE_COLOR),
                       ),
-                    ),
-                  ],
-                )
-              : SizedBox(),
-          SizedBox(
-            height: 20.h,
-          ),
-          Expanded(
-            child: Consumer<GetFoodMenuProvider>(
-              builder: (context, value, child) {
-                return ListView.builder(
-                  itemCount: value.getFoodMenuModel.length,
-                  itemBuilder: ((context, index) {
-                    int size = value.getFoodMenuModel[index].size;
-                    int count = value.getFoodMenuModel[index].amount;
-                    String numsize = setSize(size);
-                    int specialprice =
-                        value.getFoodMenuModel[index].specialprice;
-                    return Stack(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 15),
-                          height: 85.h,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(7.r)),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CachedNetworkImage(
-                                  height: 63.h,
-                                  width: 69.w,
-                                  imageBuilder: (context, imageProvider) =>
-                                      Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        image: DecorationImage(
-                                            image: imageProvider)),
-                                  ),
-                                  errorWidget: (context, url, error) => Icon(
-                                      Icons.image_outlined,
-                                      size: 70,
-                                      color: AppTheme.GREY_COLOR),
-                                  imageUrl: value.getFoodMenuModel[index].data
-                                      .thumbnails!.first.uri!,
-                                  placeholder: (context, url) => Center(
-                                    child: CircularProgressIndicator(
-                                      color: AppTheme.BASE_COLOR,
+                      Container(
+                        child: Row(
+                          children: [
+                            Text(
+                              "ໂຕະ:",
+                              style: TextStyle(
+                                  fontFamily: 'Phetsarath-OT',
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppTheme.BASE_COLOR),
+                            ),
+                            Text(
+                              '${widget.tablename}',
+                              style: TextStyle(
+                                  fontFamily: 'Phetsarath-OT',
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppTheme.BASE_COLOR),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                : SizedBox(),
+            SizedBox(
+              height: 20.h,
+            ),
+            Expanded(
+              child: Consumer<GetFoodMenuProvider>(
+                builder: (context, value, child) {
+                  return ListView.builder(
+                    itemCount: value.getFoodMenuModel.length,
+                    itemBuilder: ((context, index) {
+                      int size = value.getFoodMenuModel[index].size;
+                      int count = value.getFoodMenuModel[index].amount;
+                      String numsize = setSize(size);
+                      int specialprice =
+                          value.getFoodMenuModel[index].specialprice;
+                      return Stack(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: 15),
+                            height: 85.h,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(7.r)),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CachedNetworkImage(
+                                    height: 63.h,
+                                    width: 69.w,
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          image: DecorationImage(
+                                              image: imageProvider)),
                                     ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 6),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      value.getFoodMenuModel[index].data.name!,
-                                      style: TextStyle(
-                                          fontFamily: 'Phetsarath-OT',
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w700,
-                                          color: AppTheme.BASE_COLOR),
-                                    ),
-                                    Text.rich(
-                                      TextSpan(
-                                          text: 'ລາຄາ ',
-                                          style: TextStyle(
-                                              fontFamily: 'Phetsarath-OT',
-                                              fontSize: 14.sp,
-                                              color: AppTheme.BASE_COLOR),
-                                          children: <InlineSpan>[
-                                            TextSpan(
-                                              text:
-                                                  '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(specialprice)} ກີບ',
-                                              style: TextStyle(
-                                                fontFamily: 'Phetsarath-OT',
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            )
-                                          ]),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'ຈຳນວນ',
-                                          style: TextStyle(
-                                            fontFamily: 'Phetsarath-OT',
-                                            fontSize: 14.sp,
-                                            color: AppTheme.BASE_COLOR,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10.w,
-                                        ),
-                                        GestureDetector(
-                                          onTap: () async {
-                                            value.deletecountdetail(index);
-                                            value.deleteTotalAmount(
-                                                specialprice);
-                                          },
-                                          child: FoodMenuButton(
-                                            title: '-',
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 5.w),
-                                          child: Column(
-                                            children: [
-                                              Text(
-                                                count < 10
-                                                    ? '0$count'
-                                                    : '$count',
-                                                style: TextStyle(
-                                                    color: AppTheme.BASE_COLOR,
-                                                    fontSize: 14.sp),
-                                              ),
-                                              Container(
-                                                width: 20.w,
-                                                height: 3.h,
-                                                decoration: const BoxDecoration(
-                                                    color: Color(0xFFD9D9D9)),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        GestureDetector(
-                                          onTap: () async {
-                                            context
-                                                .read<GetFoodMenuProvider>()
-                                                .addcountdetailproduct(index);
-                                            value.addTotalAmount(specialprice);
-                                          },
-                                          child: FoodMenuButton(
-                                            title: '+',
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-
-                              //////////////////////ປຸ່ມລົບຂໍ້ມູນ
-                              Expanded(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: (() {
-                                        context
-                                            .read<GetFoodMenuProvider>()
-                                            .deleteData(
-                                              index,
-                                              specialprice * count,
-                                            );
-                                      }),
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 20),
-                                        child: Image.asset(
-                                          ERPImages.icondelete,
-                                          width: 16.w,
-                                          height: 20.h,
-                                        ),
+                                    errorWidget: (context, url, error) => Icon(
+                                        Icons.image_outlined,
+                                        size: 70,
+                                        color: AppTheme.GREY_COLOR),
+                                    imageUrl: value.getFoodMenuModel[index].data
+                                        .thumbnails!.first.uri!,
+                                    placeholder: (context, url) => Center(
+                                      child: CircularProgressIndicator(
+                                        color: AppTheme.BASE_COLOR,
                                       ),
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          height: 28.h,
-                          width: 28.w,
-                          child: Badges.Badge(
-                            badgeContent: Center(
-                              child: Text(
-                                "$numsize",
-                                style: TextStyle(
-                                    color: AppTheme.WHITE_COLOR,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 6),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        value
+                                            .getFoodMenuModel[index].data.name!,
+                                        style: TextStyle(
+                                            fontFamily: 'Phetsarath-OT',
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w700,
+                                            color: AppTheme.BASE_COLOR),
+                                      ),
+                                      Text.rich(
+                                        TextSpan(
+                                            text: 'ລາຄາ ',
+                                            style: TextStyle(
+                                                fontFamily: 'Phetsarath-OT',
+                                                fontSize: 14.sp,
+                                                color: AppTheme.BASE_COLOR),
+                                            children: <InlineSpan>[
+                                              TextSpan(
+                                                text:
+                                                    '${NumberFormat.currency(symbol: '', decimalDigits: 0).format(specialprice)} ກີບ',
+                                                style: TextStyle(
+                                                  fontFamily: 'Phetsarath-OT',
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              )
+                                            ]),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'ຈຳນວນ',
+                                            style: TextStyle(
+                                              fontFamily: 'Phetsarath-OT',
+                                              fontSize: 14.sp,
+                                              color: AppTheme.BASE_COLOR,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10.w,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              value.deletecountdetail(index);
+                                              value.deleteTotalAmount(
+                                                  specialprice);
+                                            },
+                                            child: FoodMenuButton(
+                                              title: '-',
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 5.w),
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                  count < 10
+                                                      ? '0$count'
+                                                      : '$count',
+                                                  style: TextStyle(
+                                                      color:
+                                                          AppTheme.BASE_COLOR,
+                                                      fontSize: 14.sp),
+                                                ),
+                                                Container(
+                                                  width: 20.w,
+                                                  height: 3.h,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          color: Color(
+                                                              0xFFD9D9D9)),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              context
+                                                  .read<GetFoodMenuProvider>()
+                                                  .addcountdetailproduct(index);
+                                              value
+                                                  .addTotalAmount(specialprice);
+                                            },
+                                            child: FoodMenuButton(
+                                              title: '+',
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+
+                                //////////////////////ປຸ່ມລົບຂໍ້ມູນ
+                                Expanded(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: (() {
+                                          context
+                                              .read<GetFoodMenuProvider>()
+                                              .deleteData(
+                                                index,
+                                                specialprice * count,
+                                              );
+                                        }),
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 20),
+                                          child: Image.asset(
+                                            ERPImages.icondelete,
+                                            width: 16.w,
+                                            height: 20.h,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                            badgeColor: AppTheme.GREEN_COLOR,
                           ),
-                        ),
-                      ],
-                    );
-                  }),
-                );
-              },
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
-            decoration: const BoxDecoration(color: Color(0xFFF4F5F6)),
-            child: Row(
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.shopping_cart,
-                        size: (30.w + 30.h) / 2,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20.w,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'ລວມລາຄາ:',
-                          style: TextStyle(
-                            fontFamily: 'Phetsarath-OT',
-                            fontSize: 15.sp,
-                            color: AppTheme.BASE_COLOR,
-                          ),
-                        ),
-                        Container(
-                          child: Row(
-                            children: [
-                              Text(
-                                ' ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ',
-                                style: TextStyle(
-                                  fontFamily: 'Phetsarath-OT',
-                                  fontSize: 15.sp,
-                                  color: AppTheme.BASE_COLOR,
+                          Container(
+                            height: 28.h,
+                            width: 28.w,
+                            child: Badges.Badge(
+                              badgeContent: Center(
+                                child: Text(
+                                  "$numsize",
+                                  style: TextStyle(
+                                      color: AppTheme.WHITE_COLOR,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
-                              Text(
-                                'ກີບ',
-                                style: TextStyle(
-                                    fontFamily: 'Phetsarath-OT',
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 15.sp),
-                              )
-                            ],
+                              badgeColor: AppTheme.GREEN_COLOR,
+                            ),
                           ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ],
+                        ],
+                      );
+                    }),
+                  );
+                },
+              ),
             ),
-          ),
-          showClickTable
-              ? sendingtokitchen()
-              : firstOrder == true
-                  ? sendingtokitchenagain()
-                  : Padding(
-                      padding: const EdgeInsets.only(bottom: 20, top: 5),
-                      child: Row(
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
+              decoration: const BoxDecoration(color: Color(0xFFF4F5F6)),
+              child: Row(
+                children: [
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.shopping_cart,
+                          size: (30.w + 30.h) / 2,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 20.w,
+                      ),
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 50.w, vertical: 15.h),
-                                  primary: AppTheme.BASE_COLOR),
-                              onPressed: widget.onNext,
-                              child: Text(
-                                'ກິນຢູ່ຮ້ານ',
-                                style: TextStyle(
-                                  fontFamily: 'Phetsarath-OT',
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              )),
-                          ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 50.w, vertical: 15.h),
-                                  primary: AppTheme.BASE_COLOR),
-                              onPressed: () async {
-                                CountPre().setTableId("none");
-                                context
-                                    .read<SetData>()
-                                    .setCheckOrderToBlackhome(true);
-
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => PayMentMethod(
-                                        tablename: widget.tablename,
-                                        tatal: context
-                                            .read<GetFoodMenuProvider>()
-                                            .totalamont),
+                          Text(
+                            'ລວມລາຄາ:',
+                            style: TextStyle(
+                              fontFamily: 'Phetsarath-OT',
+                              fontSize: 15.sp,
+                              color: AppTheme.BASE_COLOR,
+                            ),
+                          ),
+                          Container(
+                            child: Row(
+                              children: [
+                                Text(
+                                  ' ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetFoodMenuProvider>().totalamont)} ',
+                                  style: TextStyle(
+                                    fontFamily: 'Phetsarath-OT',
+                                    fontSize: 15.sp,
+                                    color: AppTheme.BASE_COLOR,
                                   ),
-                                );
-                              },
-                              child: Text(
-                                'ສັ່ງກັບບ້ານ',
-                                style: TextStyle(
-                                  fontFamily: 'Phetsarath-OT',
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w700,
                                 ),
-                              )),
+                                Text(
+                                  'ກີບ',
+                                  style: TextStyle(
+                                      fontFamily: 'Phetsarath-OT',
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 15.sp),
+                                )
+                              ],
+                            ),
+                          ),
                         ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            showClickTable
+                ? sendingtokitchen()
+                : firstOrder == true
+                    ? sendingtokitchenagain()
+                    : Padding(
+                        padding: const EdgeInsets.only(bottom: 20, top: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 50.w, vertical: 15.h),
+                                    primary: AppTheme.BASE_COLOR),
+                                onPressed: widget.onNext,
+                                child: Text(
+                                  'ກິນຢູ່ຮ້ານ',
+                                  style: TextStyle(
+                                    fontFamily: 'Phetsarath-OT',
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                )),
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 50.w, vertical: 15.h),
+                                    primary: AppTheme.BASE_COLOR),
+                                onPressed: () async {
+                                  CountPre().setTableId("none");
+                                  context
+                                      .read<SetData>()
+                                      .setCheckOrderToBlackhome(true);
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => PayMentMethod(
+                                          tablename: widget.tablename,
+                                          tatal: context
+                                              .read<GetFoodMenuProvider>()
+                                              .totalamont),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  'ສັ່ງກັບບ້ານ',
+                                  style: TextStyle(
+                                    fontFamily: 'Phetsarath-OT',
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                )),
+                          ],
+                        ),
                       ),
-                    ),
-          SizedBox(
-            width: 5.w,
-          ),
-        ],
+            SizedBox(
+              width: 5.w,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -472,7 +481,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                       await Future.delayed(Duration(seconds: 2));
                       // Navigator.of(context).pop();
                       //provider ໃນການສັ່ງອໍເດີ
-                      await  context
+                      await context
                           .read<CheckExpiredPackage>()
                           .getCheckExpiredPackage(context)
                           .then((value) {
@@ -531,17 +540,18 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                       await Future.delayed(Duration(seconds: 2));
                       Navigator.of(context).pop();
                       //provider ໃນການສັ່ງອໍເດີ
-                      context.read<CheckExpiredPackage>().orderagain(context);
-
-                      String? tablename = await CountPre().getTableName();
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => CalculateMoney(
-                            tablename: widget.tablename,
-                          ),
-                        ),
-                      );
+                      await context
+                          .read<CheckExpiredPackage>()
+                          .orderagain(context)
+                          .then((value) {
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (_) => CalculateMoney(
+                                tablename: widget.tablename,
+                              ),
+                            ),
+                            (route) => false);
+                      });
                     }
                   },
                   child: Text(

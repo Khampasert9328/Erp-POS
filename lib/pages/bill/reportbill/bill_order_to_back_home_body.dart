@@ -44,7 +44,13 @@ class _BodyOfBillOrderToBackHomeState extends State<BodyOfBillOrderToBackHome> {
           //ໃນກໍລະນີ API ເກີດຂໍ້ຜິດພາດບາງຢ່າງ
           if (value.getOrderByListId == null || value.order == null) {
             return const Center(
-              child: Text("ເກີດຂໍ້ຜິດພາດ"),
+              child: Text(
+                "ບໍ່ມີຂໍ້ມູນໃບບິນສັ່ງກັບບ້ານ",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontFamily: 'Phetsarath-OT',
+                ),
+              ),
             );
           } else {
             return ListView.builder(
