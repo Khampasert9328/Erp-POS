@@ -538,7 +538,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                         },
                       );
                       await Future.delayed(Duration(seconds: 2));
-                      Navigator.of(context).pop();
+                     // Navigator.of(context).pop();
                       //provider ໃນການສັ່ງອໍເດີ
                       await context
                           .read<CheckExpiredPackage>()

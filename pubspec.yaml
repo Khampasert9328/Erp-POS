@@ -37,12 +37,9 @@ dependencies:
   pattern_formatter: ^2.0.0
   flutter_launcher_icons: ^0.9.0
   like_button: ^2.0.5
-  esc_pos_bluetooth: ^0.4.1
-  esc_pos_utils: ^1.1.0
   marquee: ^2.2.3
   get: ^4.6.5
-  connectivity_plus: ^3.0.2
-  blue_thermal_printer: ^1.2.3
+  connectivity_plus: ^3.0.3
 
 flutter_icons:
   android: true

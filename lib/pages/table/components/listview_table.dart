@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_unnecessary_containers, sort_child_properties_last, unused_import
 import 'dart:async';
 import 'dart:convert';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:erp_pos/bussiness%20logic/authentication.dart';
 import 'package:erp_pos/constant/api_path.dart';
@@ -29,6 +30,7 @@ import 'package:erp_pos/utils/setdata/setdata_provider.dart';
 
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
 import 'package:erp_pos/widget/style.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -75,10 +77,71 @@ class _ListViewTableState extends State<ListViewTable> {
     });
   }
 
+  //  ConnectivityResult? result;
+  // StreamSubscription? subscription;
+  // bool isConnected = false;
+
+
+  // checkInther() async {
+  //   result = await Connectivity().checkConnectivity();
+  //   if (result != ConnectivityResult.none) {
+  //     isConnected = true;
+  //   } else {
+  //     isConnected = false;
+  //     showDialogInthernet();
+  //   }
+  //   setState(() {});
+  // }
+
+  // showDialogInthernet() {
+  //   showDialog(
+  //     barrierDismissible: false,
+  //     context: context,
+  //     builder: (context) {
+  //       return CupertinoAlertDialog(
+  //         title: Text("ບໍ່ມີການເຊື່ອມຕໍ່"),
+  //         content: Text("ກາລຸນາເຊື່ອມຕໍ່ອິນເຕີເນັດ"),
+  //         actions: [
+  //           Row(
+  //             children: [
+  //               GestureDetector(
+  //                 onTap: () {
+  //                   Navigator.of(context).pop();
+  //                   checkInther();
+  //                 },
+  //                 child: Container(
+  //                   height: 50.h,
+  //                   width: 70.w,
+  //                   decoration: BoxDecoration(
+  //                       color: AppTheme.BASE_COLOR,
+  //                       borderRadius: BorderRadius.circular(5)),
+  //                   child:  Text(
+  //                     "ຕົກລົງ",
+  //                     style: TextStyle(
+  //                       fontFamily: "Phetsarath-OT",
+  //                       fontSize: 15.sp
+  //                     ),
+  //                   ),
+  //                 ),
+  //               )
+  //             ],
+  //           )
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
+
+  // startStreaming(){
+  //   subscription = Connectivity().onConnectivityChanged.listen((event)async {
+  //     checkInther();
+  //   });
+  // }
+
   @override
   void initState() {
     delayisload();
-
+// startStreaming();
     context.read<AreaProvider>().getZone(context);
 
     super.initState();
