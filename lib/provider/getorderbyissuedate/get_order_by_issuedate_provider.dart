@@ -16,7 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class GetOrderByIssueDateProvider extends ChangeNotifier {
   List<String> listID = [];
-  
+
   GetOrderByIssuedateModels? _order;
   bool _isload = false;
   bool get isloading => _isload;
@@ -25,18 +25,24 @@ class GetOrderByIssueDateProvider extends ChangeNotifier {
   GetOrderByListId? get getOrderByListId => _getOrderByListId;
   String? billid;
   String? get _billid => billid;
-  Future<void> getorderfromservice(BuildContext context, ) async {
+  Future<void> getorderfromservice(
+    BuildContext context,
+  ) async {
     _isload = true;
     SharedPreferences pre = await SharedPreferences.getInstance();
-    
-    
+
     String? idToken = await CountPre().getToken();
     DateTime time = DateTime.now();
-    String? startdate =await CountPre().getDateTimebill();
-    String? startend =await CountPre().getDateTimebill();
-   
+    String? startdate = await CountPre().getDateTimebill();
+    String? startend = await CountPre().getDateTimebill();
 
-String? startDate = await CountPre().getDateSupscribe();
+    DateTime timenow = DateTime.now();
+    var startDnow = "$timenow";
+    var stDnow = startDnow.split(" ");
+    var staDnow = stDnow[0].trim();
+    var timnow = staDnow.replaceAll("-", "");
+
+    String? startDate = await CountPre().getDateSupscribe();
     var startD = "$startDate";
     var stD = startD.split(" ");
     var staD = stD[0].trim();
@@ -48,7 +54,7 @@ String? startDate = await CountPre().getDateSupscribe();
     var tendD = end1D.replaceAll("-", "");
 
     _order = await getorderbyissuedate(
-        -1, 0, idToken!, startdate, startend, context);
+        -1, 0, idToken!, startdate ?? timnow, startend ?? timnow, context);
 
     if (_order != null) {
       for (var item in _order!.order!) {
@@ -56,8 +62,7 @@ String? startDate = await CountPre().getDateSupscribe();
         billid = item.billid;
         CountPre().setBillId(item.billid.toString());
       }
-      _getOrderByListId =
-          await getorderbylistid(listID, -1, 0, tstaD, tendD);
+      _getOrderByListId = await getorderbylistid(listID, -1, 0, tstaD, tendD);
     }
     _isload = false;
     notifyListeners();

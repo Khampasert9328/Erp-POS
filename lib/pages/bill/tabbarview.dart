@@ -1,6 +1,7 @@
 import 'package:erp_pos/constant/theme.dart';
 import 'package:erp_pos/pages/bill/reportbill/bill_eat_at_resturant.dart';
 import 'package:erp_pos/pages/bill/reportbill/bill_order_to_back_home.dart';
+import 'package:erp_pos/pages/table/components/textdatetime.dart';
 import 'package:erp_pos/provider/getorderbyissuedate/get_order_by_issuedate_provider.dart';
 import 'package:erp_pos/utils/loading.dart';
 import 'package:erp_pos/utils/setdata/setdata_provider.dart';
@@ -19,6 +20,7 @@ class BillBody extends StatefulWidget {
 
 class _BillBodyState extends State<BillBody> {
   DateTime? _dateTime;
+  DateTime dateTimenow = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -74,14 +76,26 @@ class _BillBodyState extends State<BillBody> {
                           ),
                         ),
                       ),
-                      Text(
-                        _dateTime == null
-                            ? "ເວລາ ແລະ ວັນທີ"
-                            : DateFormat('dd-MM-yyyy').format(_dateTime!),
-                        style: TextStyle(
-                            fontFamily: 'Phetsarath-OT',
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.bold),
+                      Row(
+                        children: [
+                          Text(
+                            "ວັນທີ: ",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18.sp,
+                              fontFamily: 'Phetsarath-OT',
+                            ),
+                          ),
+                          Text(
+                            _dateTime == null
+                                ? DateFormat('dd-MM-yyyy').format(dateTimenow)
+                                : DateFormat('dd-MM-yyyy').format(_dateTime!),
+                            style: TextStyle(
+                                fontFamily: 'Phetsarath-OT',
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
                     ],
                   ),

@@ -577,7 +577,13 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                                                 ),
                                               ),
                                               onPressed: () async {
+
+                                                // print("productsid:${widget.data[index].productid}");
+                                                // print("size:${widget.data[index].size}");
                                                 widget.data.removeAt(index);
+                                                setState(() {
+                                                  
+                                                });
                                                 // context
                                                 //     .read<
                                                 //         DeleteOrderAllProvider>()
@@ -601,7 +607,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                                                 //      widget.data[index].productid!,
                                                 //      widget.data[index].size!
                                                 //     );
-                                                setState(() {});
+                                                
                                                 Navigator.pop(context);
                                               },
                                             ),

@@ -56,7 +56,7 @@ class _BodyOfBillOrderToBackHomeState extends State<BodyOfBillOrderToBackHome> {
                 Color? cl;
 
                 if (value.order!.order![index].tableid != "none") {
-                  return Container();
+                  return SizedBox();
                 } else {
                   tablename = 'ສັ່ງກັບບ້ານ';
                   status = checkstatus1(value.order!.order![index].status!);

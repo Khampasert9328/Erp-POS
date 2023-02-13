@@ -75,32 +75,11 @@ Future<CreateOrderAgainModles?> updateorder1(
         .order!
         .first
         .product!) {
-      products.add({
-        "productId": "${data.productid}",
-        "productid": "${data.productid}",
-        "name": "${data.name}",
-        "size": data.size,
-        "amount": data.amount,
-        "priceSale": data.pricesale,
-        "pricesale": data.pricesale,
-        "priceImport": data.priceimport,
-        "priceimport": data.priceimport,
-        "discount": 0,
-        "freeamount": 0,
-        "description": "none",
-        "cooked": false,
-        "timeCooked": "none",
-        "timecooked": "none",
-        "categoryOrder": {
-          "categoryId": "${data.category!.categoryid}",
-          "categoryName": "${data.category!.categoryname}"
-        },
-        "category": {
-          "categoryId": "${data.category!.categoryid}",
-          "categoryName": "${data.category!.categoryname}"
-        },
-      });
-      products.removeAt(index);
+        int productIndex = products.indexWhere((element) => element['productid']==data.productid);
+        if (productIndex >-1 && products[productIndex]['size']== data.size) {
+          products.remove(data.productid);
+        }
+  
     }
     var url = "${APIPath.UPDATE_ORDER_More}";
     String payload = jsonEncode({

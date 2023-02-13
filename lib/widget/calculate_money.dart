@@ -82,20 +82,7 @@ class _CalculateMoneyState extends State<CalculateMoney> {
                 children: [
                   GestureDetector(
                     onTap: (() async {
-                      String? tablename1 = await CountPre().getTableName();
-                      String? tableid1 = await CountPre().getTableId();
-                      String? area1 = await CountPre().getArea();
-                      String? areaid1 = await CountPre().getAreaId();
-                      await UpdateTableProvider().updatetableStatus(
-                          context, areaid1!, area1!, tableid1!, tablename1!);
-                      String idarea = context.read<AreaProvider>().idarea;
-                      await context
-                          .read<AreaProvider>()
-                          .callTable(context, idarea);
-
-                      await Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (_) => HomePage()),
-                          (route) => false);
+                      await UpdateTableProvider().updatetableStatus(context);
                     }),
                     child: const Icon(Icons.arrow_back),
                   ),
@@ -201,31 +188,9 @@ class _CalculateMoneyState extends State<CalculateMoney> {
                             ),
                             child: Center(
                               child: TextButton(
-                                onPressed: () async {
-                                  String? tablename1 =
-                                      await CountPre().getTableName();
-                                  String? tableid1 =
-                                      await CountPre().getTableId();
-                                  String? area1 = await CountPre().getArea();
-                                  String? areaid1 =
-                                      await CountPre().getAreaId();
-                                  await UpdateTableProvider().updatetableStatus(
-                                      context,
-                                      areaid1!,
-                                      area1!,
-                                      tableid1!,
-                                      tablename1!);
-                                  String idarea =
-                                      context.read<AreaProvider>().idarea;
-                                  await context
-                                      .read<AreaProvider>()
-                                      .callTable(context, idarea);
-
-                                  await Navigator.of(context)
-                                      .pushAndRemoveUntil(
-                                          MaterialPageRoute(
-                                              builder: (_) => HomePage()),
-                                          (route) => false);
+                                onPressed: () {
+                                  UpdateTableProvider()
+                                      .updatetableStatus(context);
                                 },
                                 child: Text(
                                   "ປິດ",
@@ -243,25 +208,26 @@ class _CalculateMoneyState extends State<CalculateMoney> {
                             onTap: () async {
                               String? getzone = await CountPre().getArea();
                               String? billNo = await CountPre().getBillNo();
-                              try {
-                                if (context
-                                    .read<GetFoodMenuProvider>()
-                                    .getFoodMenuModel
-                                    .isEmpty) {
-                                  Mystyle().showDialogCheckData(
-                                      context, "ບໍ່ມີຂໍ້ມູນໃບບິນ");
-                                } else {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return Center(
-                                        child: ShowLoading(
-                                          title: "ກຳລັງພິມໃບບິນ...",
-                                        ),
-                                      );
-                                    },
-                                  );
-                                  await Future.delayed(Duration(seconds: 2));
+
+                              if (context
+                                  .read<GetFoodMenuProvider>()
+                                  .getFoodMenuModel
+                                  .isEmpty) {
+                                Mystyle().showDialogCheckData(
+                                    context, "ບໍ່ມີຂໍ້ມູນໃບບິນ");
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Center(
+                                      child: ShowLoading(
+                                        title: "ກຳລັງພິມໃບບິນ...",
+                                      ),
+                                    );
+                                  },
+                                );
+                                await Future.delayed(Duration(seconds: 5));
+                                try {
                                   Navigator.of(context).pop();
                                   await SunmiPrinter.startTransactionPrint();
                                   await SunmiPrinter.printText('ໃບບິນຫ້ອງຄົວ',
@@ -343,22 +309,9 @@ class _CalculateMoneyState extends State<CalculateMoney> {
                                   await SunmiPrinter.lineWrap(3);
                                   await SunmiPrinter.submitTransactionPrint();
                                   await SunmiPrinter.exitTransactionPrint();
-
-                                  // context
-                                  //     .read<GetFoodMenuProvider>()
-                                  //     .clearKitchenData();
-                                  // String idarea =
-                                  //     context.read<AreaProvider>().idarea;
-                                  // await context
-                                  //     .read<AreaProvider>()
-                                  //     .callTable(context, idarea);
-                                  // Navigator.of(context).pushAndRemoveUntil(
-                                  //     MaterialPageRoute(
-                                  //         builder: (_) => HomePage()),
-                                  //     (route) => false);
+                                } catch (e) {
+                                  print("ກາລຸນາເຊື່ອມປິ່ນເຕີ");
                                 }
-                              } catch (e) {
-                                throw Exception("ບໍ່ມີປິ່ນເຕີ$e");
                               }
                             },
                             child: Container(

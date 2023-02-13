@@ -261,9 +261,6 @@ class _ListViewTableState extends State<ListViewTable> {
                                                     .read<SetData>()
                                                     .setCheckOrderToBlackhome(
                                                         false);
-                                                context
-                                                    .read<GetFoodMenuProvider>()
-                                                    .clearKitchenData();
                                                 selectTable = index;
                                                 CountPre().setTableId(value
                                                     .gettablelist!
@@ -303,9 +300,7 @@ class _ListViewTableState extends State<ListViewTable> {
                                                     transition:
                                                         Transition.zoom);
                                               } else {
-                                                context
-                                                    .read<GetFoodMenuProvider>()
-                                                    .clearKitchenData();
+                                           
                                                 setState(() {
                                                   selectTable = index;
                                                 });
