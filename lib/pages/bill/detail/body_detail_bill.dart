@@ -48,6 +48,7 @@ class BodyDetailBill extends StatefulWidget {
 class _BodyDetailBillState extends State<BodyDetailBill> {
   @override
   Widget build(BuildContext context) {
+    bool checkcancel = context.read<SetData>().checkcancelorder;
     int sum = 0;
     int total = 0;
 
@@ -372,7 +373,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                GestureDetector(
+               checkcancel?SizedBox(): GestureDetector(
                   onTap: (() async {
                     showDialog(
                       barrierDismissible: false,

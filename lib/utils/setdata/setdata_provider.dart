@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SetData extends ChangeNotifier {
- bool _checkordertobackhome = false;
- bool _checkorderbill = false;
+  bool _checkordertobackhome = false;
+  bool _checkorderbill = false;
   String _idTable = '';
   String _tablename = '';
   String _billid = "";
@@ -18,68 +18,73 @@ class SetData extends ChangeNotifier {
   String get getareaname => areaname;
   String dateTime = 'dateTime';
 
-
-  String _idtablestatus='';
-  String _tablenamestatus='';
-  String _idareastatus='';
-  String _areanamestatus='';
+  String _idtablestatus = '';
+  String _tablenamestatus = '';
+  String _idareastatus = '';
+  String _areanamestatus = '';
   String _idtableorder = '';
+  bool _checkbtncancelorder = false;
   String get idtableorder => _idtableorder;
 
-  String get idtablestatus =>_idtablestatus;
+  String get idtablestatus => _idtablestatus;
   String get tablenamestatus => _tablenamestatus;
   String get idareastatus => _idareastatus;
   String get areanamestatus => _areanamestatus;
-  bool get checkordertoblackhome =>_checkordertobackhome;
+  bool get checkordertoblackhome => _checkordertobackhome;
   bool get checkorderbill => _checkorderbill;
+  bool get checkcancelorder=> _checkbtncancelorder;
 
-  void setOrderbill(bool val){
+  void setCheckcancelorder(bool val){
+    _checkbtncancelorder = val;
+    notifyListeners();
+  }
+
+  void setOrderbill(bool val) {
     _checkorderbill = val;
     notifyListeners();
   }
 
-
-  void setCheckOrderToBlackhome(bool val){
+  void setCheckOrderToBlackhome(bool val) {
     _checkordertobackhome = val;
     notifyListeners();
   }
 
-
-  void setIdTableOrer(String id){
+  void setIdTableOrer(String id) {
     _idtableorder = id;
     notifyListeners();
   }
 
-
-  void setIdTableStatus(String idtableS)async{
+  void setIdTableStatus(String idtableS) async {
     _idtablestatus = idtableS;
     notifyListeners();
-
   }
-  void setTBNameStatus(String tbname)async{
+
+  void setTBNameStatus(String tbname) async {
     _tablenamestatus = tbname;
     notifyListeners();
   }
-  void setIdAreaStatus(String idArea)async{
+
+  void setIdAreaStatus(String idArea) async {
     _idareastatus = idArea;
     notifyListeners();
   }
-  void setAreaNameStatus(String NameArea)async{
+
+  void setAreaNameStatus(String NameArea) async {
     _areanamestatus = NameArea;
     notifyListeners();
   }
 
-  void setDateTime(String date)async{
+  void setDateTime(String date) async {
     dateTime = date;
     notifyListeners();
   }
 
   void setTableName(String name) async {
-   _tablename = name;
+    _tablename = name;
     notifyListeners();
   }
 
-  void setIdArea(String id) async{
+  void setIdArea(String id) async {
     _idarea = id;
     notifyListeners();
   }
@@ -93,7 +98,6 @@ class SetData extends ChangeNotifier {
     _idTable = id;
     notifyListeners();
   }
- 
 
   void setBillid(String billid) {
     _billid = billid;

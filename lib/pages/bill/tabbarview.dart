@@ -111,6 +111,13 @@ class _BillBodyState extends State<BillBody> {
                 fontSize: 18.sp,
                 fontFamily: 'Phetsarath-OT',
               ),
+              onTap: (value){
+                if (value ==1) {
+                  context.read<SetData>().setCheckcancelorder(true);
+                }else{
+                  context.read<SetData>().setCheckcancelorder(false);
+                }
+              },
               tabs: const [
                 Tab(
                   text: 'ໃບບິນກິນຢູ່ຮ້ານ',
