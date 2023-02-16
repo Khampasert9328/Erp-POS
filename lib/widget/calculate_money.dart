@@ -360,28 +360,31 @@ class _CalculateMoneyState extends State<CalculateMoney> {
                                   border: Border.all(
                                     color: AppTheme.BASE_COLOR,
                                   )),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    ERPImages.printbill,
-                                    color: AppTheme.WHITE_COLOR,
-                                  ),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      "ພິມໃບບິນຫ້ອງຄົວ",
-                                      style: TextStyle(
-                                        fontSize: 18.sp,
-                                        color: AppTheme.WHITE_COLOR,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Phetsarath-OT',
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 8, left: 8),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      ERPImages.printbill,
+                                      color: AppTheme.WHITE_COLOR,
+                                    ),
+                                    SizedBox(
+                                      width: 10.w,
+                                    ),
+                                    Center(
+                                      child: Text(
+                                        "ພິມບິນຫ້ອງຄົວ",
+                                        style: TextStyle(
+                                          fontSize: 18.sp,
+                                          color: AppTheme.WHITE_COLOR,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Phetsarath-OT',
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),

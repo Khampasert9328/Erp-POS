@@ -216,7 +216,7 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                                   children: [
                                     Container(
                                       height: 35.h,
-                                      width: 70.w,
+                                      width: 75.w,
                                       decoration: BoxDecoration(
                                           color: cl,
                                           borderRadius:

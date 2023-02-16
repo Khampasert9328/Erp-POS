@@ -62,7 +62,7 @@ class _BillBodyState extends State<BillBody> {
                         child: Container(
                           alignment: Alignment.center,
                           height: 30.h,
-                          width: 70.w,
+                          width: 85.w,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               color: AppTheme.BASE_COLOR),
@@ -111,10 +111,10 @@ class _BillBodyState extends State<BillBody> {
                 fontSize: 18.sp,
                 fontFamily: 'Phetsarath-OT',
               ),
-              onTap: (value){
-                if (value ==1) {
+              onTap: (value) {
+                if (value == 1) {
                   context.read<SetData>().setCheckcancelorder(true);
-                }else{
+                } else {
                   context.read<SetData>().setCheckcancelorder(false);
                 }
               },
