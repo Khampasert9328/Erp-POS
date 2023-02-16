@@ -21,11 +21,13 @@ import 'package:qr_flutter/qr_flutter.dart';
 class PaymentBcelone extends StatefulWidget {
   final mcid;
   final shopcode;
+  String tablename;
 
   PaymentBcelone({
     Key? key,
     required this.mcid,
     required this.shopcode,
+    required this.tablename
   }) : super(key: key);
 
   @override
@@ -39,6 +41,8 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
   int count = 5;
   int qrduration = 180;
   int _start = 180;
+  int total = 0;
+  int sum = 0;
 
   void startTimer() {
     const oneSec = const Duration(seconds: 1);
@@ -73,6 +77,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
       context,
       widget.mcid,
       widget.shopcode,
+      total
     )
         .then((value) {
       setState(() {
@@ -94,8 +99,8 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
 
   @override
   Widget build(BuildContext context) {
-    int sum = 0;
-    int total = 0;
+    
+    
     for (var i in context.read<GetOrderTableProvider>().listOrderTable) {
       for (var d in i.order!) {
         for (var j in d!.product!) {
@@ -112,7 +117,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
         backgroundColor: AppTheme.WHITE_COLOR,
         elevation: 0,
         title: Text(
-         "name",
+         "${widget.tablename}",
           style: TextStyle(color: AppTheme.BASE_COLOR),
         ),
       ),
@@ -210,6 +215,7 @@ class _PaymentBceloneState extends State<PaymentBcelone> {
                                 context,
                                 widget.mcid,
                                 widget.shopcode,
+                                total
                                 )
                             .then((value) {
                           setState(() {

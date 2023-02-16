@@ -21,7 +21,6 @@ class PaymentMmoney extends StatefulWidget {
   final qrdata;
   final username;
   final walletid;
-
   String idtable;
   String tablename;
   String id;
@@ -85,7 +84,7 @@ class _PaymentMmoneyState extends State<PaymentMmoney> {
         backgroundColor: AppTheme.WHITE_COLOR,
         elevation: 0,
         title: Text(
-          widget.tablename,
+          "${widget.areaname}",
           style: TextStyle(color: AppTheme.BASE_COLOR),
         ),
       ),

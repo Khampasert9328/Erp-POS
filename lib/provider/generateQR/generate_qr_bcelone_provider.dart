@@ -43,10 +43,7 @@ class GenerateQRBCELONE extends ChangeNotifier {
   String token =
       '${double.parse("${getTime() - 15 * 60 * 10000000}").toInt()}0000';
   Future<String> getGenerateQR(
-      BuildContext context,
-      String mcid,
-      String shopcode,
-     ) async {
+      BuildContext context, String mcid, String shopcode, int total) async {
     transaction = token;
     qrData = CodecampOnepay.initQR(
       mcid,
@@ -98,8 +95,9 @@ class GenerateQRBCELONE extends ChangeNotifier {
                               borderRadius: BorderRadius.circular(5)),
                           child: TextButton(
                             onPressed: () async {
-                              String? tablename = await CountPre().getTableName();
-                              String? idtable =await CountPre().getTableId();
+                              String? tablename =
+                                  await CountPre().getTableName();
+                              String? idtable = await CountPre().getTableId();
                               String? idarea = await CountPre().getAreaId();
                               String? areaname = await CountPre().getArea();
                               await context
@@ -111,10 +109,7 @@ class GenerateQRBCELONE extends ChangeNotifier {
                                   .callAPITable(context, idarea!);
                               Navigator.pushAndRemoveUntil(
                                   context,
-                                  MaterialPageRoute(
-                                      builder: (_) => HomePage(
-                                           
-                                          )),
+                                  MaterialPageRoute(builder: (_) => HomePage()),
                                   (route) => false);
                             },
                             child: Text(
@@ -134,8 +129,9 @@ class GenerateQRBCELONE extends ChangeNotifier {
                               borderRadius: BorderRadius.circular(5)),
                           child: TextButton(
                             onPressed: () async {
-                               String? tablename = await CountPre().getTableName();
-                              String? idtable =await CountPre().getTableId();
+                              String? tablename =
+                                  await CountPre().getTableName();
+                              String? idtable = await CountPre().getTableId();
                               String? idarea = await CountPre().getAreaId();
                               String? areaname = await CountPre().getArea();
                               String? billNo = context.read<SetData>().billNo;
@@ -182,29 +178,31 @@ class GenerateQRBCELONE extends ChangeNotifier {
                                         bold: true,
                                         fontSize: SunmiFontSize.MD));
 
-                                for (var i in context.read<GetOrderTableProvider>().listOrderTable) {
-                                for (var j in i.order!) {
-                                  for (var d in j!.product!) {
+                                for (var i in context
+                                    .read<GetOrderTableProvider>()
+                                    .listOrderTable) {
+                                  for (var j in i.order!) {
+                                    for (var d in j!.product!) {
                                       String size = setSize(d!.size!);
-                                  int sum = 0;
+                                      int sum = 0;
 
-                                  int amount = d.amount!;
-                                  int pricesale =
-                                      int.parse(d.pricesale.toString());
-                                  sum = pricesale * amount;
-                                  total += sum;
+                                      int amount = d.amount!;
+                                      int pricesale =
+                                          int.parse(d.pricesale.toString());
+                                      sum = pricesale * amount;
+                                      total += sum;
 
-                                  await SunmiPrinter.printRow(cols: [
-                                    ColumnMaker(text: '${d.name}', width: 6),
-                                    ColumnMaker(
-                                        text:
-                                            '${d.amount} $size ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(d.pricesale)}',
-                                        width: 6,
-                                        align: SunmiPrintAlign.RIGHT),
-                                  ]);
+                                      await SunmiPrinter.printRow(cols: [
+                                        ColumnMaker(
+                                            text: '${d.name}', width: 6),
+                                        ColumnMaker(
+                                            text:
+                                                '${d.amount} $size ${NumberFormat.currency(symbol: '', decimalDigits: 0).format(d.pricesale)}',
+                                            width: 6,
+                                            align: SunmiPrintAlign.RIGHT),
+                                      ]);
+                                    }
                                   }
-                                  
-                                }
                                 }
                                 await SunmiPrinter.line();
                                 await SunmiPrinter.printRow(cols: [
@@ -237,12 +235,47 @@ class GenerateQRBCELONE extends ChangeNotifier {
                                 Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) => HomePage(
-                                             
-                                            )),
+                                        builder: (_) => HomePage()),
                                     (route) => false);
                               } catch (e) {
-                                print("error:$e");
+                                showDialog(
+                                      context: context,
+                                      builder: (context) => StatefulBuilder(
+                                        builder: ((context, setState) {
+                                          return AlertDialog(
+                                            content: Text(
+                                              "ກາລຸນາເຊື່ອມຕໍ່ປິ່ນເຕີ",
+                                              style: TextStyle(
+                                                fontFamily: 'Phetsarath-OT',
+                                                fontSize: 18.sp,
+                                              ),
+                                            ),
+                                            actions: [
+                                              Container(
+                                            
+                                                height: 40.h,
+                                                width:  60.w,
+                                                decoration: BoxDecoration(
+                                                  color: AppTheme.BASE_COLOR,
+                                                  borderRadius: BorderRadius.circular(5)
+                                                ),
+                                                child: TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text("ຕົກລົງ",
+                                              style: TextStyle(
+                                                fontFamily: 'Phetsarath-OT',
+                                                fontSize: 16.sp,
+                                                color: AppTheme.WHITE_COLOR
+                                              ),),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        }),
+                                      ),
+                                    );
                               }
                             },
                             child: Text(
@@ -261,9 +294,6 @@ class GenerateQRBCELONE extends ChangeNotifier {
               ),
             );
           });
-      // await Future.delayed(Duration(seconds: 3));
-      // Navigator.pop(context);
-      //context.read<UpdateTableProvider>().updateTableProvider(context);
     });
     notifyListeners();
     return qrData;

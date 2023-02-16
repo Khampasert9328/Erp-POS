@@ -66,8 +66,6 @@ class _ListViewTableState extends State<ListViewTable> {
       });
     });
     AuthenticationProvider().tokenManagement(context).then((value) async {
-      String? idsession = await CountPre().getSessionId();
-      print("idsession:$idsession");
       if (value == null) {
         Navigator.push(
           context,
@@ -80,7 +78,6 @@ class _ListViewTableState extends State<ListViewTable> {
   //  ConnectivityResult? result;
   // StreamSubscription? subscription;
   // bool isConnected = false;
-
 
   // checkInther() async {
   //   result = await Connectivity().checkConnectivity();
@@ -320,10 +317,6 @@ class _ListViewTableState extends State<ListViewTable> {
                                               if (value.gettablelist!
                                                       .table![index].statusAv ==
                                                   1) {
-                                                    print("idtable:${value
-                                                    .gettablelist!
-                                                    .table![index]
-                                                    .id!}");
                                                 context
                                                     .read<SetData>()
                                                     .setCheckOrderToBlackhome(
@@ -342,7 +335,6 @@ class _ListViewTableState extends State<ListViewTable> {
                                                     .table![index]
                                                     .tablearea!
                                                     .area!);
-
                                                 CountPre().setAreaId(value
                                                     .gettablelist!
                                                     .table![index]
@@ -357,14 +349,20 @@ class _ListViewTableState extends State<ListViewTable> {
                                                           .gettablelist!
                                                           .table![index]
                                                           .name!,
-                                                      id: value.gettablelist!.table![index].tablearea!.id!,
-                                                      areaname: value.gettablelist!.table![index].tablearea!.area!,
+                                                      id: value
+                                                          .gettablelist!
+                                                          .table![index]
+                                                          .tablearea!
+                                                          .id!,
+                                                      areaname: value
+                                                          .gettablelist!
+                                                          .table![index]
+                                                          .tablearea!
+                                                          .area!,
                                                     ),
                                                     transition:
                                                         Transition.zoom);
                                               } else {
-                                                
-                                           
                                                 setState(() {
                                                   selectTable = index;
                                                 });

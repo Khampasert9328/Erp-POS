@@ -84,7 +84,7 @@ class _PaymentBodyState extends State<PaymentBody> {
                             fontWeight: FontWeight.bold,
                             fontSize: 16.sp),
                       ),
-                      content: ListAccountBCELONE(),
+                      content: ListAccountBCELONE(tablename: widget.tablename,),
                     );
                   });
             },
@@ -135,7 +135,7 @@ class _PaymentBodyState extends State<PaymentBody> {
                             fontWeight: FontWeight.bold,
                             fontSize: 16.sp),
                       ),
-                      content: ListAccountMmoney(),
+                      content: ListAccountMmoney(tablename: widget.tablename,),
                     );
                   });
             },

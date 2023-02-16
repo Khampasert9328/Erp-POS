@@ -260,7 +260,44 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                           await SunmiPrinter.lineWrap(3);
                           await SunmiPrinter.submitTransactionPrint();
                           await SunmiPrinter.exitTransactionPrint();
-                        } catch (e) {}
+                        } catch (e) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => StatefulBuilder(
+                              builder: ((context, setState) {
+                                return AlertDialog(
+                                  content: Text(
+                                    "ກາລຸນາເຊື່ອມຕໍ່ປິ່ນເຕີ",
+                                    style: TextStyle(
+                                      fontFamily: 'Phetsarath-OT',
+                                      fontSize: 18.sp,
+                                    ),
+                                  ),
+                                  actions: [
+                                    Container(
+                                      height: 40.h,
+                                      width: 60.w,
+                                      decoration: BoxDecoration(
+                                          color: AppTheme.BASE_COLOR,
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      child: TextButton(
+                                        onPressed: () {},
+                                        child: Text(
+                                          "ຕົກລົງ",
+                                          style: TextStyle(
+                                              fontFamily: 'Phetsarath-OT',
+                                              fontSize: 16.sp,
+                                              color: AppTheme.WHITE_COLOR),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }),
+                            ),
+                          );
+                        }
                       },
                       child: Container(
                         height: 60.h,
@@ -579,29 +616,6 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                                               onPressed: () async {
                                                 widget.data.removeAt(index);
                                                 setState(() {});
-                                                // context
-                                                //     .read<
-                                                //         DeleteOrderAllProvider>()
-                                                //     .deleteOrderManyProvider(
-                                                //       widget.orderid,
-                                                //       widget.billid,
-                                                //       widget.data[index]
-                                                //           .productid!,
-                                                //       widget.data[index].size!,
-                                                //     );
-
-                                                // await context
-                                                //     .read<
-                                                //         DeleteOrderAllProvider>()
-                                                //     .updateOrderProvider(
-                                                //       context,
-                                                //       widget.tableid,
-                                                //       widget.billid,
-                                                //       widget.orderid,
-                                                //       index,
-                                                //      widget.data[index].productid!,
-                                                //      widget.data[index].size!
-                                                //     );
 
                                                 Navigator.pop(context);
                                               },

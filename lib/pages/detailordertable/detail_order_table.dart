@@ -299,7 +299,47 @@ class _DetailOrderTableState extends State<DetailOrderTable> {
                                     await SunmiPrinter.submitTransactionPrint();
                                     await SunmiPrinter.exitTransactionPrint();
                                   } catch (e) {
-                                    rethrow;
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => StatefulBuilder(
+                                        builder: ((context, setState) {
+                                          return AlertDialog(
+                                            content: Text(
+                                              "ກາລຸນາເຊື່ອມຕໍ່ປິ່ນເຕີ",
+                                              style: TextStyle(
+                                                fontFamily: 'Phetsarath-OT',
+                                                fontSize: 18.sp,
+                                              ),
+                                            ),
+                                            actions: [
+                                              Container(
+                                                height: 40.h,
+                                                width: 60.w,
+                                                decoration: BoxDecoration(
+                                                    color: AppTheme.BASE_COLOR,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5)),
+                                                child: TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text(
+                                                    "ຕົກລົງ",
+                                                    style: TextStyle(
+                                                        fontFamily:
+                                                            'Phetsarath-OT',
+                                                        fontSize: 16.sp,
+                                                        color: AppTheme
+                                                            .WHITE_COLOR),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        }),
+                                      ),
+                                    );
                                   }
                                 },
                                 child: Container(

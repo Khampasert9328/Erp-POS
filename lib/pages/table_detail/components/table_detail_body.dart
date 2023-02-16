@@ -86,31 +86,6 @@ class _TableDetailState extends State<TableDetail> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.end,
-            //   children: [
-            //    cupertinoswitch? Text(
-            //       "ເປິດໂຕະ",
-            //       style: TextStyle(
-            //         fontFamily: 'Phetsarath-OT',
-            //         fontSize: 18.sp
-            //       ),
-            //     ):Text(
-            //       "ປິດໂຕະ",
-            //       style: TextStyle(
-            //         fontFamily: 'Phetsarath-OT',
-            //         fontSize: 18.sp
-            //       ),
-            //     ),
-            //     CupertinoSwitch(
-            //         value: cupertinoswitch,
-            //         onChanged: ((value) {
-            //           setState(() {
-            //             cupertinoswitch = value;
-            //           });
-            //         }))
-            //   ],
-            // ),
             SizedBox(
               height: 25.h,
             ),

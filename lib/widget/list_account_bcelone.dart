@@ -11,13 +11,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class ListAccountBCELONE extends StatelessWidget {
- 
-  
+  String tablename;
   ListAccountBCELONE({
     super.key,
-
-  
-   
+    required this.tablename
   });
 
   @override
@@ -44,16 +41,13 @@ class ListAccountBCELONE extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: (() {
-                        
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) => PaymentBcelone(
-                                  
                                     mcid: snapshot.data![index].merchid,
                                     shopcode: snapshot.data![index].shopcode,
-                                 
-                               
+                                    tablename: tablename,
                                   ),
                                 ),
                               );

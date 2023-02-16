@@ -55,16 +55,6 @@ class SelectedMenuCardExpand extends StatefulWidget {
 }
 
 class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
-  // String? tablename;
-  // @override
-  // void initState() {
-  //   CountPre().getTableName().then((value) {
-  //     tablename = value;
-  //   });
-  //   super.initState();
-  // }
-
-  //int sumData = 0;
   bool checkerror = false;
   Widget build(BuildContext context) {
     bool showClickTable = context.read<ClickTableProvider>().click;

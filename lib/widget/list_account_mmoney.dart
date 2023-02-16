@@ -11,7 +11,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class ListAccountMmoney extends StatelessWidget {
+  String tablename;
   ListAccountMmoney({
+    required this.tablename,
     super.key,
   });
 

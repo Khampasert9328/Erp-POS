@@ -70,7 +70,7 @@ class _BillBodyState extends State<BillBody> {
                             "ເລືອກວັນທີ",
                             style: TextStyle(
                                 fontFamily: 'Phetsarath-OT',
-                                fontSize: 16.sp,
+                                fontSize: 15.sp,
                                 color: AppTheme.WHITE_COLOR,
                                 fontWeight: FontWeight.bold),
                           ),
