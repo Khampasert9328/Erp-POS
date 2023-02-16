@@ -282,7 +282,9 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                                           borderRadius:
                                               BorderRadius.circular(5)),
                                       child: TextButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
                                         child: Text(
                                           "ຕົກລົງ",
                                           style: TextStyle(
