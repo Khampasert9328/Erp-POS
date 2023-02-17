@@ -306,7 +306,7 @@ class _SelectedMenuCardExpandState extends State<SelectedMenuCardExpand> {
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
-                              badgeColor: AppTheme.GREEN_COLOR,
+                              
                             ),
                           ),
                         ],

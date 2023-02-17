@@ -15,7 +15,7 @@ dependencies:
   flutter_screenutil: ^5.5.3+2
   intl: ^0.17.0
   awesome_dialog: ^3.0.1
-  dio: ^4.0.6
+  dio: ^5.0.0
   crypto: ^3.0.2
   flutter_spinkit: ^5.1.0
   cool_alert: ^1.1.0
@@ -24,18 +24,17 @@ dependencies:
   jwt_decoder: ^2.0.1
   cached_network_image: ^3.2.1
   sqflite: ^2.2.2
-  badges: ^2.0.3
+  badges: ^3.0.2
   devla_sunmi: ^2.0.2
   codecamp_onepay: ^1.0.0
   qr_flutter: ^4.0.0
   get_ip_address: ^0.0.5
-  device_info_plus: ^4.1.2
+  device_info_plus: ^8.1.0
   jwt_decode: ^0.3.1
   google_nav_bar: ^5.0.6
-  material_design_icons_flutter: ^5.0.6996
   lite_rolling_switch: ^1.0.0
   pattern_formatter: ^2.0.0
-  flutter_launcher_icons: ^0.9.0
+  flutter_launcher_icons: ^0.11.0
   like_button: ^2.0.5
   marquee: ^2.2.3
   get: ^4.6.5

@@ -171,7 +171,7 @@ class _FoodMenuBodyState extends State<FoodMenuBody> {
                       },
                       child: Container(
                         child: Badges.Badge(
-                          badgeColor: AppTheme.GREEN_COLOR,
+                        
                           badgeContent: Text(
                             context
                                 .watch<GetFoodMenuProvider>()

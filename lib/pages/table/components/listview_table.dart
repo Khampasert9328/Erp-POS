@@ -2,7 +2,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:dio/dio.dart';
 import 'package:erp_pos/bussiness%20logic/authentication.dart';
 import 'package:erp_pos/constant/api_path.dart';
 import 'package:erp_pos/constant/images.dart';
