@@ -104,7 +104,7 @@ class PaymentCashProvider extends ChangeNotifier {
                         children: [
                           Container(
                             height: 40.h,
-                            width: 70.w,
+                            width: 80.w,
                             decoration: BoxDecoration(
                               color: AppTheme.GREY_COLOR,
                               borderRadius: BorderRadius.circular(5),
@@ -140,15 +140,6 @@ class PaymentCashProvider extends ChangeNotifier {
                                   rethrow;
                                 }
 
-                                // GetOrderTableModels? models = context
-                                //     .read<GetOrderTableProvider>()
-                                //     .orderTableModels;
-
-                                // String idarea =
-                                //     context.read<AreaProvider>().idarea;
-                                // await context
-                                //     .read<AreaProvider>()
-                                //     .callTable(context, idarea);
                               },
                               child: Text(
                                 "ປິດໜ້ານີ້",
@@ -160,7 +151,7 @@ class PaymentCashProvider extends ChangeNotifier {
                           ),
                           Container(
                             height: 40.h,
-                            width: 70.w,
+                            width: 80.w,
                             decoration: BoxDecoration(
                               color: AppTheme.BASE_COLOR,
                               borderRadius: BorderRadius.circular(5),
