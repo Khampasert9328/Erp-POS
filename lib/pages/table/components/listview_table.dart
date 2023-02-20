@@ -55,9 +55,7 @@ int selectTable = 0;
 int? statusTable;
 
 class _ListViewTableState extends State<ListViewTable> {
-  StreamSubscription? subscription;
-  var isDeviceConnected = false;
-  bool isAlertSet = false;
+ 
   bool isloading = false;
   void delayisload() {
     setState(() {
@@ -78,136 +76,20 @@ class _ListViewTableState extends State<ListViewTable> {
     });
   }
 
-  //  ConnectivityResult? result;
-  // StreamSubscription? subscription;
-  // bool isConnected = false;
-
-  // checkInther() async {
-  //   result = await Connectivity().checkConnectivity();
-  //   if (result != ConnectivityResult.none) {
-  //     isConnected = true;
-  //   } else {
-  //     isConnected = false;
-  //     showDialogInthernet();
-  //   }
-  //   setState(() {});
-  // }
-
-  // showDialogInthernet() {
-  //   showDialog(
-  //     barrierDismissible: false,
-  //     context: context,
-  //     builder: (context) {
-  //       return CupertinoAlertDialog(
-  //         title: Text("ບໍ່ມີການເຊື່ອມຕໍ່"),
-  //         content: Text("ກາລຸນາເຊື່ອມຕໍ່ອິນເຕີເນັດ"),
-  //         actions: [
-  //           Row(
-  //             children: [
-  //               GestureDetector(
-  //                 onTap: () {
-  //                   Navigator.of(context).pop();
-  //                   checkInther();
-  //                 },
-  //                 child: Container(
-  //                   height: 50.h,
-  //                   width: 70.w,
-  //                   decoration: BoxDecoration(
-  //                       color: AppTheme.BASE_COLOR,
-  //                       borderRadius: BorderRadius.circular(5)),
-  //                   child:  Text(
-  //                     "ຕົກລົງ",
-  //                     style: TextStyle(
-  //                       fontFamily: "Phetsarath-OT",
-  //                       fontSize: 15.sp
-  //                     ),
-  //                   ),
-  //                 ),
-  //               )
-  //             ],
-  //           )
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
-  // startStreaming(){
-  //   subscription = Connectivity().onConnectivityChanged.listen((event)async {
-  //     checkInther();
-  //   });
-  // }
-
   @override
   void initState() {
     delayisload();
 // startStreaming();
     context.read<AreaProvider>().getZone(context);
-    getConnection();
+    
 
     super.initState();
   }
 
-  getConnection() => subscription = Connectivity()
-          .onConnectivityChanged
-          .listen((ConnectivityResult result) async {
-        isDeviceConnected = await InternetConnectionChecker().hasConnection;
-        if (!isDeviceConnected && isAlertSet == false) {
-          showDialogBox();
-          setState(() {
-            isAlertSet = true;
-          });
-        }
-      });
+ 
 
-  @override
-  void dispose() {
-    subscription!.cancel();
-    super.dispose();
-  }
+ 
 
-  showDialogBox() => showCupertinoDialog(
-        context: context,
-        builder: ((context) => CupertinoAlertDialog(
-              title: Text(
-                "ແຈ້ງເຕືອນ",
-                style: TextStyle(
-                  fontFamily: 'Phetsarath-OT',
-                  fontSize: 18.sp
-                ),
-              ),
-              content: Text(
-                "ກາລຸນາເຊື່ອມຕໍ່ອິນເຕີເນັດ",
-                style: TextStyle(
-                  fontFamily: 'Phetsarath-OT',
-                  fontSize: 15.sp
-                ),
-              ),
-              actions: [
-                TextButton(
-                    onPressed: () async{
-                      Navigator.pop(context, 'ຍົກເລີກ');
-                      setState(() {
-                        isAlertSet = false;
-                      });
-                      isDeviceConnected = await InternetConnectionChecker().hasConnection;
-                      if (!isDeviceConnected) {
-                        showDialogBox();
-                        setState(() {
-                          isAlertSet = true;
-                        });
-                      }
-                    },
-                    child: Text(
-                      "ຕົກລົງ",
-                      style: TextStyle(
-                        fontFamily: 'Phetsarath-OT',
-                        fontSize: 15.sp
-                      ),
-                    ))
-              ],
-            )),
-      );
   @override
   Widget build(BuildContext context) {
     return isloading

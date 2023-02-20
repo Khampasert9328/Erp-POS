@@ -9,10 +9,12 @@ import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
 import 'package:erp_pos/provider/tableprovider/click_table_provider.dart';
 import 'package:erp_pos/utils/setdata/setdata_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'dart:developer' as developer;
 
@@ -24,6 +26,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  StreamSubscription? subscription;
+  var isDeviceConnected = false;
+  bool isAlertSet = false;
   int _selectedIndex = 0;
   void _onItemTapped(int index) {
     setState(() {
@@ -31,50 +36,71 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  ConnectivityResult _connectionStatus = ConnectivityResult.none;
-  final Connectivity _connectivity = Connectivity();
-  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
-
   @override
   void initState() {
+    getConnection();
     super.initState();
-    initConnectivity();
-
-    _connectivitySubscription =
-        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
   }
 
+  getConnection() => subscription = Connectivity()
+          .onConnectivityChanged
+          .listen((ConnectivityResult result) async {
+        isDeviceConnected = await InternetConnectionChecker().hasConnection;
+        if (!isDeviceConnected && isAlertSet == false) {
+          showDialogBox();
+          setState(() {
+            isAlertSet = true;
+          });
+        }
+      });
+
+  showDialogBox() => showCupertinoDialog(
+        context: context,
+        builder: ((context) => CupertinoAlertDialog(
+              title: Text(
+                "ແຈ້ງເຕືອນ",
+                style: TextStyle(
+                  fontFamily: 'Phetsarath-OT',
+                  fontSize: 18.sp,
+                ),
+              ),
+              content: Text(
+                "ກາລຸນາເຊື່ອມຕໍ່ອິນເຕີເນັດ",
+                style: TextStyle(
+                  fontFamily: 'Phetsarath-OT',
+                  fontSize: 15.sp,
+                ),
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () async {
+                      Navigator.pop(context, 'ຍົກເລີກ');
+                      setState(() {
+                        isAlertSet = false;
+                      });
+                      isDeviceConnected =
+                          await InternetConnectionChecker().hasConnection;
+                      if (!isDeviceConnected) {
+                        showDialogBox();
+                        setState(() {
+                          isAlertSet = true;
+                        });
+                      }
+                    },
+                    child: Text(
+                      "ຕົກລົງ",
+                      style: TextStyle(
+                        fontFamily: 'Phetsarath-OT',
+                        fontSize: 15.sp,
+                      ),
+                    ))
+              ],
+            )),
+      );
   @override
   void dispose() {
-    _connectivitySubscription.cancel();
+    subscription!.cancel();
     super.dispose();
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initConnectivity() async {
-    late ConnectivityResult result;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      result = await _connectivity.checkConnectivity();
-    } on PlatformException catch (e) {
-      developer.log('ກາລຸນາກວດເບິ່ງອິນເຕີເນັດຂອງທ່ານ', error: e);
-      return;
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) {
-      return Future.value(null);
-    }
-
-    return _updateConnectionStatus(result);
-  }
-
-  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
-    setState(() {
-      _connectionStatus = result;
-    });
   }
 
   @override
@@ -106,7 +132,7 @@ class _HomePageState extends State<HomePage> {
               context.read<ClickTableProvider>().clearbool();
               context.read<ClickTableProvider>().firsOrderMoreTB(false);
               context.read<SetData>().setCheckOrderToBlackhome(false);
-               context.read<SetData>().setOrderbill(false);
+              context.read<SetData>().setOrderbill(false);
             },
             tabs: const [
               GButton(
