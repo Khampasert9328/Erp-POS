@@ -52,11 +52,15 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                   : Scrollbar(
                       child: RefreshIndicator(
                         onRefresh: () async {
-                          setState(() {
-                            context
-                                .read<GetFoodMenuProvider>()
-                                .getProduct(true);
-                          });
+                          await Future.delayed(Duration(seconds: 2)).then(
+                            (value) {
+                              setState(() {
+                                context
+                                    .read<GetFoodMenuProvider>()
+                                    .getProduct(true);
+                              });
+                            },
+                          );
                         },
                         key: _refresh,
                         child: ListView.builder(
@@ -65,7 +69,7 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                               final data = getFoodModel.listProduct[index];
                               int mainsize = data.size;
                               int counter = data.count;
-                          
+
                               int specialPrice =
                                   data.data.size![data.size].specialPrice!;
                               int pricesale = data.data.pricesale!;
@@ -212,14 +216,12 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                         );
                                                       }),
                                                       onTap: ((isLiked) async {
-                                                        
                                                         if (counter == 0) {
                                                           Mystyle()
                                                               .showDialogCheckData(
                                                                   context,
                                                                   "ກາລຸນາກົດເພື່ອເພີ່ມຈຳນວນອາຫານ");
                                                         } else {
-                                                        
                                                           int totalAmount =
                                                               (pricesale +
                                                                       specialPrice) *
@@ -238,7 +240,6 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                           getFoodModel
                                                               .addTotalAmount(
                                                                   totalAmount);
-                                                         
                                                         }
                                                         return !isLiked;
                                                       }),
@@ -279,14 +280,12 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                         );
                                                       }),
                                                       onTap: ((isLiked) async {
-                                                      
                                                         if (counter == 0) {
                                                           Mystyle()
                                                               .showDialogCheckData(
                                                                   context,
                                                                   "ກາລຸນາກົດເພື່ອເພີ່ມຈຳນວນອາຫານ");
                                                         } else {
-                                                    
                                                           int totalAmount =
                                                               (pricesale +
                                                                       specialPrice) *
@@ -305,8 +304,9 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                                               .addTotalAmount(
                                                                   totalAmount);
 
-                                                                 getFoodModel.clearCount(index);
-     
+                                                          getFoodModel
+                                                              .clearCount(
+                                                                  index);
                                                         }
                                                         return !isLiked;
                                                       }),
@@ -330,7 +330,6 @@ class _FoodMenuCardState extends State<FoodMenuCard> {
                                             ),
                                             child: FoodMenuSize(
                                               onPressed: (() {
-                                              
                                                 context
                                                     .read<GetFoodMenuProvider>()
                                                     .setProductSize(

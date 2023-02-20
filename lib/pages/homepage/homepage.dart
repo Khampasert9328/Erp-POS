@@ -39,6 +39,14 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     getConnection();
+    AuthenticationProvider().tokenManagement(context).then((value) async {
+      if (value == null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: ((context) => Login())),
+        );
+      }
+    });
     super.initState();
   }
 
