@@ -20,7 +20,7 @@ class GetOrderTableProvider extends ChangeNotifier {
   Future<void> getordertableprovider(BuildContext context) async {
     String? idtable = await CountPre().getTableId();
     try {
-      _listOrderTable.clear();
+      // _listOrderTable.clear();
       isloading = true;
       _orderTableModels = await getordertableidservice(context, idtable!);
       if (_orderTableModels != null) {

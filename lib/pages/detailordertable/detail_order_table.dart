@@ -97,12 +97,13 @@ class _DetailOrderTableState extends State<DetailOrderTable> {
               padding: const EdgeInsets.all(8.0),
               child: Consumer<GetOrderTableProvider>(
                 builder: (context, value, child) {
-                  int sum = 0;
-                  int total = 0;
-                  int? amount;
-                  int? pricesale;
                   for (var food in value.listOrderTable) {
                     if (food.order!.first!.tableid == widget.data.id) {
+                      int sum = 0;
+                      int total = 0;
+                      int? amount;
+                      int? pricesale;
+
                       CountPre().setBillDetail(food.order!.first!.billid!);
                       for (var i in food.order!) {
                         CountPre().setOrderId(i!.id!);
@@ -390,6 +391,7 @@ class _DetailOrderTableState extends State<DetailOrderTable> {
       body: Consumer<GetOrderTableProvider>(
         builder: ((context, model, _) {
           if (model.isloading) {
+            Future.delayed(Duration(seconds: 2));
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -525,6 +527,7 @@ class _DetailOrderTableState extends State<DetailOrderTable> {
                           itemBuilder: ((context, index) {
                             product = model.orderTableModels!.order!.first!
                                 .product![index]!;
+
                             if (model.isloading) {
                               return const Center(
                                 child: CircularProgressIndicator(),

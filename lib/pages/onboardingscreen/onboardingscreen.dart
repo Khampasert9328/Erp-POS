@@ -13,6 +13,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -25,11 +26,10 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
  
 
-  
-
   @override
   void initState() {
-    
+ 
+
     super.initState();
     CountPre().getLogin().then((firstTime) async {
       if (firstTime == true) {
@@ -48,6 +48,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       }
     });
   }
+
+ 
+
+ 
 
   @override
   Widget build(BuildContext context) {

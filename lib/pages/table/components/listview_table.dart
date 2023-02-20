@@ -33,6 +33,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:erp_pos/constant/routes.dart' as custom_route;
 
@@ -54,6 +55,9 @@ int selectTable = 0;
 int? statusTable;
 
 class _ListViewTableState extends State<ListViewTable> {
+  StreamSubscription? subscription;
+  var isDeviceConnected = false;
+  bool isAlertSet = false;
   bool isloading = false;
   void delayisload() {
     setState(() {
@@ -139,10 +143,71 @@ class _ListViewTableState extends State<ListViewTable> {
     delayisload();
 // startStreaming();
     context.read<AreaProvider>().getZone(context);
+    getConnection();
 
     super.initState();
   }
 
+  getConnection() => subscription = Connectivity()
+          .onConnectivityChanged
+          .listen((ConnectivityResult result) async {
+        isDeviceConnected = await InternetConnectionChecker().hasConnection;
+        if (!isDeviceConnected && isAlertSet == false) {
+          showDialogBox();
+          setState(() {
+            isAlertSet = true;
+          });
+        }
+      });
+
+  @override
+  void dispose() {
+    subscription!.cancel();
+    super.dispose();
+  }
+
+  showDialogBox() => showCupertinoDialog(
+        context: context,
+        builder: ((context) => CupertinoAlertDialog(
+              title: Text(
+                "ແຈ້ງເຕືອນ",
+                style: TextStyle(
+                  fontFamily: 'Phetsarath-OT',
+                  fontSize: 18.sp
+                ),
+              ),
+              content: Text(
+                "ກາລຸນາເຊື່ອມຕໍ່ອິນເຕີເນັດ",
+                style: TextStyle(
+                  fontFamily: 'Phetsarath-OT',
+                  fontSize: 15.sp
+                ),
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () async{
+                      Navigator.pop(context, 'ຍົກເລີກ');
+                      setState(() {
+                        isAlertSet = false;
+                      });
+                      isDeviceConnected = await InternetConnectionChecker().hasConnection;
+                      if (!isDeviceConnected) {
+                        showDialogBox();
+                        setState(() {
+                          isAlertSet = true;
+                        });
+                      }
+                    },
+                    child: Text(
+                      "ຕົກລົງ",
+                      style: TextStyle(
+                        fontFamily: 'Phetsarath-OT',
+                        fontSize: 15.sp
+                      ),
+                    ))
+              ],
+            )),
+      );
   @override
   Widget build(BuildContext context) {
     return isloading
@@ -316,6 +381,8 @@ class _ListViewTableState extends State<ListViewTable> {
                                               if (value.gettablelist!
                                                       .table![index].statusAv ==
                                                   1) {
+                                                print(
+                                                    "idtable:${value.gettablelist!.table![index].id}");
                                                 context
                                                     .read<SetData>()
                                                     .setCheckOrderToBlackhome(
