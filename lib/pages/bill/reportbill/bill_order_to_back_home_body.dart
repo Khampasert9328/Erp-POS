@@ -62,7 +62,7 @@ class _BodyOfBillOrderToBackHomeState extends State<BodyOfBillOrderToBackHome> {
                 Color? cl;
 
                 if (value.order!.order![index].tableid != "none") {
-                  return SizedBox();
+                  return const SizedBox();
                 } else {
                   tablename = 'ສັ່ງກັບບ້ານ';
                   status = checkstatus1(value.order!.order![index].status!);
@@ -74,7 +74,6 @@ class _BodyOfBillOrderToBackHomeState extends State<BodyOfBillOrderToBackHome> {
                     prefix = data.prefixid!;
                   }
                 }
-
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
@@ -86,7 +85,6 @@ class _BodyOfBillOrderToBackHomeState extends State<BodyOfBillOrderToBackHome> {
                             context,
                             MaterialPageRoute(
                               builder: (_) => BodyDetailBill(
-                                data: value.order!.order![index].product!,
                                 date: value.order!.order![index].date!,
                                 tablename: tablename!,
                                 billid: value.order!.order![index].billid!,
@@ -147,7 +145,7 @@ class _BodyOfBillOrderToBackHomeState extends State<BodyOfBillOrderToBackHome> {
                                                   BorderRadius.circular(5)),
                                           child: Center(
                                             child: Text(
-                                              "$tablename",
+                                              tablename,
                                               style: TextStyle(
                                                 fontSize: 12.sp,
                                                 fontFamily: 'Phetsarath-OT',
@@ -187,7 +185,7 @@ class _BodyOfBillOrderToBackHomeState extends State<BodyOfBillOrderToBackHome> {
                               Expanded(
                                 child: ListTile(
                                   title: Text(
-                                    "ໂຕະ ${tablename}",
+                                    "ໂຕະ $tablename",
                                     style: TextStyle(
                                         fontSize: 18.sp,
                                         fontFamily: 'Phetsarath-OT',
@@ -195,7 +193,7 @@ class _BodyOfBillOrderToBackHomeState extends State<BodyOfBillOrderToBackHome> {
                                         fontWeight: FontWeight.bold),
                                   ),
                                   subtitle: Text(
-                                    "# Order ${prefix}",
+                                    "# Order $prefix",
                                     style: TextStyle(
                                       fontSize: 13.sp,
                                       color: AppTheme.BASE_COLOR,
@@ -204,7 +202,7 @@ class _BodyOfBillOrderToBackHomeState extends State<BodyOfBillOrderToBackHome> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(right: 5),
+                                padding: const EdgeInsets.only(right: 5),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [

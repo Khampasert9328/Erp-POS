@@ -96,7 +96,7 @@ class _BilleatatresturantBodyState extends State<BilleatatresturantBody> {
                             context,
                             MaterialPageRoute(
                               builder: (_) => BodyDetailBill(
-                                data: value.order!.order![index].product!,
+                                // data: value.order!.order![index].product!,
                                 date: value.order!.order![index].date!,
                                 tablename: tablename,
                                 status: checkstatus!,

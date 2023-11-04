@@ -244,6 +244,8 @@ class _ListViewTableState extends State<ListViewTable> {
                                               ),
                                               transition: Transition.zoom);
                                         } else {
+                                          //ເຄຍດາຕ້າໃນຫ້ອງຄົວ
+                                          context.read<GetFoodMenuProvider>().clearKitchenData();
                                           setState(() {
                                             selectTable = index;
                                           });

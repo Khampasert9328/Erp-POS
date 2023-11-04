@@ -21,8 +21,7 @@ class SearchDataMune extends StatefulWidget {
 class _SearchDataMuneState extends State<SearchDataMune> {
   TextEditingController search = TextEditingController();
 
-  int add = 0;
-  bool clic = false;
+
 
   @override
   Widget build(BuildContext context) {

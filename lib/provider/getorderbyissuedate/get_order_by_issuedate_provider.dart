@@ -67,4 +67,9 @@ class GetOrderByIssueDateProvider extends ChangeNotifier {
     _isload = false;
     notifyListeners();
   }
+
+  void deleteOrder(int index) {
+    _order!.order!.first.product!.removeAt(index);
+    notifyListeners();
+  }
 }

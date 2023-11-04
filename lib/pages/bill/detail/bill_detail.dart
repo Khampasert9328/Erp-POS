@@ -55,7 +55,7 @@ class _BillDetailState extends State<BillDetail> {
         ),
         bottomNavigationBar: const BottomBarOfBill(),
         body: BodyDetailBill(
-          data: widget.data,
+
           date: widget.date,
           tablename: widget.tablename,
           status: widget.status,

@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_string_interpolations
+// ignore_for_file: unnecessary_string_interpolations, use_build_context_synchronously
 
 import 'package:badges/badges.dart' as Badges;
 import 'package:devla_sunmi/flutter_sunmi_printer.dart';
@@ -10,6 +10,7 @@ import 'package:erp_pos/pages/homepage/homepage.dart';
 import 'package:erp_pos/provider/areaprovider/area_provider.dart';
 import 'package:erp_pos/provider/deleteorder/delete_order_all_provider.dart';
 import 'package:erp_pos/provider/foodmenu/get_foodmenu_provider.dart';
+import 'package:erp_pos/provider/getorderbyissuedate/get_order_by_issuedate_provider.dart';
 import 'package:erp_pos/utils/set_size.dart';
 import 'package:erp_pos/utils/setdata/setdata_provider.dart';
 import 'package:erp_pos/utils/sharepreference/share_pre_count.dart';
@@ -19,11 +20,12 @@ import 'package:erp_pos/widget/paymentmethod_body.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class BodyDetailBill extends StatefulWidget {
-  List<Product> data;
+  // List<Product> data;
   String date;
   String tablename;
   String billid;
@@ -34,7 +36,7 @@ class BodyDetailBill extends StatefulWidget {
   BodyDetailBill(
       {super.key,
       required this.tableid,
-      required this.data,
+      // required this.data,
       required this.date,
       required this.tablename,
       required this.status,
@@ -52,7 +54,12 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
     int sum = 0;
     int total = 0;
 
-    for (var data in widget.data) {
+    for (var data in context
+        .read<GetOrderByIssueDateProvider>()
+        .order!
+        .order!
+        .first
+        .product!) {
       int amount = data.amount!;
       int price = int.parse(data.pricesale.toString());
       sum = amount * price;
@@ -95,7 +102,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                     children: [
                       Badges.Badge(
                         badgeContent: Text(
-                          "${widget.data.length}",
+                          "",
                           style: TextStyle(
                             color: AppTheme.WHITE_COLOR,
                           ),
@@ -229,7 +236,12 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                                   align: SunmiPrintAlign.CENTER,
                                   bold: true,
                                   fontSize: SunmiFontSize.MD));
-                          for (var i in widget.data) {
+                          for (var i in context
+                              .read<GetOrderByIssueDateProvider>()
+                              .order!
+                              .order!
+                              .first
+                              .product!) {
                             String size = setSize(i.size!);
                             await SunmiPrinter.printRow(cols: [
                               ColumnMaker(text: '${i.name}', width: 6),
@@ -373,81 +385,83 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-               checkcancel?SizedBox(): GestureDetector(
-                  onTap: (() async {
-                    showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: ((context) {
-                        return CupertinoAlertDialog(
-                          title: Text(
-                            "ຕ້ອງການຍົກເລີກອໍເດີໂຕະນີ້ແທ້ບໍ?",
+                checkcancel
+                    ? SizedBox()
+                    : GestureDetector(
+                        onTap: (() async {
+                          showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: ((context) {
+                              return CupertinoAlertDialog(
+                                title: Text(
+                                  "ຕ້ອງການຍົກເລີກອໍເດີໂຕະນີ້ແທ້ບໍ?",
+                                  style: TextStyle(
+                                    fontFamily: 'Phetsarath-OT',
+                                    fontSize: 18.sp,
+                                  ),
+                                ),
+                                actions: [
+                                  CupertinoDialogAction(
+                                    child: Text(
+                                      "ບໍ່, ຕ້ອງການ",
+                                      style: TextStyle(
+                                        fontFamily: 'Phetsarath-OT',
+                                        fontSize: 15.sp,
+                                      ),
+                                    ),
+                                    onPressed: () => Navigator.pop(context),
+                                  ),
+                                  CupertinoDialogAction(
+                                    child: Text(
+                                      "ຕ້ອງການ",
+                                      style: TextStyle(
+                                        fontFamily: 'Phetsarath-OT',
+                                        fontSize: 15.sp,
+                                      ),
+                                    ),
+                                    onPressed: () async {
+                                      await context
+                                          .read<DeleteOrderAllProvider>()
+                                          .deleteOrderAllProvider(context,
+                                              widget.billid, widget.orderid);
+
+                                      String idarea =
+                                          context.read<AreaProvider>().idarea;
+                                      // ignore: use_build_context_synchronously
+                                      await context
+                                          .read<AreaProvider>()
+                                          .callTable(context, idarea);
+
+                                      // ignore: use_build_context_synchronously
+                                      await Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => HomePage()),
+                                          (route) => false);
+                                    },
+                                  ),
+                                ],
+                              );
+                            }),
+                          );
+                        }),
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 30.h,
+                          width: 120.w,
+                          decoration: BoxDecoration(
+                              color: AppTheme.BASE_COLOR,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Text(
+                            "ຍົກເລີກອໍເດີທັງໝົດ",
                             style: TextStyle(
-                              fontFamily: 'Phetsarath-OT',
-                              fontSize: 18.sp,
-                            ),
+                                fontFamily: 'Phetsarath-OT',
+                                fontSize: 15.sp,
+                                color: AppTheme.WHITE_COLOR),
                           ),
-                          actions: [
-                            CupertinoDialogAction(
-                              child: Text(
-                                "ບໍ່, ຕ້ອງການ",
-                                style: TextStyle(
-                                  fontFamily: 'Phetsarath-OT',
-                                  fontSize: 15.sp,
-                                ),
-                              ),
-                              onPressed: () => Navigator.pop(context),
-                            ),
-                            CupertinoDialogAction(
-                              child: Text(
-                                "ຕ້ອງການ",
-                                style: TextStyle(
-                                  fontFamily: 'Phetsarath-OT',
-                                  fontSize: 15.sp,
-                                ),
-                              ),
-                              onPressed: () async {
-                                await context
-                                    .read<DeleteOrderAllProvider>()
-                                    .deleteOrderAllProvider(
-                                        context, widget.billid, widget.orderid);
-
-                                String idarea =
-                                    context.read<AreaProvider>().idarea;
-                                // ignore: use_build_context_synchronously
-                                await context
-                                    .read<AreaProvider>()
-                                    .callTable(context, idarea);
-
-                                // ignore: use_build_context_synchronously
-                                await Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => HomePage()),
-                                    (route) => false);
-                              },
-                            ),
-                          ],
-                        );
-                      }),
-                    );
-                  }),
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 30.h,
-                    width: 120.w,
-                    decoration: BoxDecoration(
-                        color: AppTheme.BASE_COLOR,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Text(
-                      "ຍົກເລີກອໍເດີທັງໝົດ",
-                      style: TextStyle(
-                          fontFamily: 'Phetsarath-OT',
-                          fontSize: 15.sp,
-                          color: AppTheme.WHITE_COLOR),
-                    ),
-                  ),
-                ),
+                        ),
+                      ),
               ],
             ),
             const Divider(),
@@ -517,9 +531,21 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
             const Divider(),
             Expanded(
               child: ListView.builder(
-                  itemCount: widget.data.length,
+                  itemCount: context
+                      .read<GetOrderByIssueDateProvider>()
+                      .order!
+                      .order!
+                      .first
+                      .product!
+                      .length,
                   itemBuilder: ((context, index) {
-                    String size = setSize(widget.data[index].size!);
+                    String size = setSize(context
+                        .read<GetOrderByIssueDateProvider>()
+                        .order!
+                        .order!
+                        .first
+                        .product![index]
+                        .size!);
                     return Column(
                       children: [
                         SizedBox(
@@ -540,7 +566,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                             Expanded(
                               flex: 3,
                               child: Text(
-                                "${widget.data[index].name}",
+                                "${context.read<GetOrderByIssueDateProvider>().order!.order!.first.product![index].name}",
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.bold,
@@ -562,7 +588,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                             Expanded(
                               flex: 2,
                               child: Text(
-                                "${widget.data[index].amount}",
+                                "${context.read<GetOrderByIssueDateProvider>().order!.order!.first.product![index].amount}",
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.bold,
@@ -573,7 +599,7 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                             Expanded(
                               flex: 2,
                               child: Text(
-                                "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(widget.data[index].pricesale)}",
+                                "${NumberFormat.currency(symbol: '', decimalDigits: 0).format(context.read<GetOrderByIssueDateProvider>().order!.order!.first.product![index].pricesale)}",
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.bold,
@@ -617,10 +643,66 @@ class _BodyDetailBillState extends State<BodyDetailBill> {
                                                 ),
                                               ),
                                               onPressed: () async {
-                                                widget.data.removeAt(index);
-                                                setState(() {});
+                                                // widget.data.removeAt(index);
+                                                // setState(() {});
 
-                                                Navigator.pop(context);
+                                                // Navigator.pop(context);
+
+                                                await Future.wait([
+                                                  DeleteOrderAllProvider()
+                                                      .deleteOrderManyProvider(
+                                                    widget.orderid,
+                                                    widget.billid,
+                                                    context
+                                                        .read<
+                                                            GetOrderByIssueDateProvider>()
+                                                        .order!
+                                                        .order!
+                                                        .first
+                                                        .product![index]
+                                                        .productid!,
+                                                    context
+                                                        .read<
+                                                            GetOrderByIssueDateProvider>()
+                                                        .order!
+                                                        .order!
+                                                        .first
+                                                        .product![index]
+                                                        .size!,
+                                                  ),
+                                                  DeleteOrderAllProvider()
+                                                      .updateOrderProvider(
+                                                    context,
+                                                    widget.tableid,
+                                                    widget.billid,
+                                                    widget.orderid,
+                                                    index,
+                                                    context
+                                                        .read<
+                                                            GetOrderByIssueDateProvider>()
+                                                        .order!
+                                                        .order!
+                                                        .first
+                                                        .product![index]
+                                                        .productid!,
+                                                    context
+                                                        .read<
+                                                            GetOrderByIssueDateProvider>()
+                                                        .order!
+                                                        .order!
+                                                        .first
+                                                        .product![index]
+                                                        .size!,
+                                                  )
+                                                ]);
+                                                setState(() {
+                                                  context
+                                                      .read<
+                                                          GetOrderByIssueDateProvider>()
+                                                      .deleteOrder(index);
+                                                  Navigator.pop(context);
+                                                });
+                                                // Navigator.of(context).pop();
                                               },
                                             ),
                                           ],

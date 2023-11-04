@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:erp_pos/constant/api_path.dart';
 import 'package:erp_pos/model/createOrderMore/create_order_more.dart';
@@ -75,11 +74,13 @@ Future<CreateOrderAgainModles?> updateorder1(
         .order!
         .first
         .product!) {
-        int productIndex = products.indexWhere((element) => element['productid']==data.productid);
-        if (productIndex >-1 && products[productIndex]['size']== data.size) {
-          products.remove(data.productid);
-        }
-  
+      int productIndex = products
+          .indexWhere((element) => element['productid'] == data.productid);
+      if (productIndex > -1 && products[productIndex]['size'] == data.size) {
+        products.removeAt(index);
+        // products
+        //     .removeWhere((element) => element['productid'] == data.productid);
+      }
     }
     var url = "${APIPath.UPDATE_ORDER_More}";
     String payload = jsonEncode({
